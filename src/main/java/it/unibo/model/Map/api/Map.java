@@ -10,6 +10,6 @@ public interface Map {
 
     List<Chunk> getVisibleChunks();
 
-    
+    List<Chunk> getAllChunks();
 
 }
