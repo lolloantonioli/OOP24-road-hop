@@ -1,6 +1,7 @@
 package it.unibo.model.Map.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import it.unibo.model.Map.api.Chunk;
@@ -12,18 +13,30 @@ public class MapImpl implements Map {
     private final int viewportHeight;
     private final int viewportWidth;
     private int currentPosition;
+    private int scrollSpeed;
 
-    public MapImpl(final int width, final int height) {
+    public MapImpl(final int width, final int height, final int speed) {
+        this.chunks = new ArrayList<>();
         this.viewportWidth = width;
         this.viewportHeight = height;
         this.currentPosition = 0;
-        this.chunks = new ArrayList<>();
+        this.scrollSpeed = speed;
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        this.currentPosition += this.scrollSpeed;
+        this.cleanChunks();
+    }
+
+    private void cleanChunks() {
+        Iterator<Chunk> iterator = chunks.iterator();
+        while (iterator.hasNext()) {
+            Chunk chunk = iterator.next();
+            if (chunk.getPosition() + chunk.getHeight() < currentPosition - viewportHeight) {
+                iterator.remove();
+            }
+        }
     }
 
     @Override
