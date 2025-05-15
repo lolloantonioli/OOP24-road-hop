@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.model.Map.api.Chunk;
+import it.unibo.model.Map.api.ChunkFactory;
 import it.unibo.model.Map.api.GameMap;
 
 public class GameMapImpl implements GameMap {
 
     private final List<Chunk> chunks;
+    private final ChunkFactory chunkFactory;
     private int currentPosition;
     private int scrollSpeed;
 
+    public static final int CHUNKS_NUMBER = 7;
     private static final int BUFFER_CHUNKS = 5;
-    private static final int CHUNKS_NUMBER = 7;
+    private static final int MAX_SPEED = 10;
 
     public GameMapImpl(final int speed) {
         this.chunks = new ArrayList<>();
+        this.chunkFactory = new ChunkFactoryImpl();
         this.currentPosition = 0;
         this.scrollSpeed = speed;
 
@@ -24,61 +28,67 @@ public class GameMapImpl implements GameMap {
     }
 
     private void initializeMap() {
-        
+        for (int i = 0; i < BUFFER_CHUNKS; i++) {
+            chunks.add(chunkFactory.createGrassChunk(i));
+            this.generateNewChunk();
+        }
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        currentPosition += scrollSpeed;
+        this.cleanupChunks();
+        this.ensureBufferChunks();
+    }
+
+    private void cleanupChunks() {
+        chunks.removeIf(chunk -> chunk.getPosition() < currentPosition - CHUNKS_NUMBER);
+    }
+
+    private void ensureBufferChunks() {
+        int farthestPosition = getFarthestChunkPosition();
+        final int targetPosition = currentPosition + BUFFER_CHUNKS + CHUNKS_NUMBER;
+        
+        while (farthestPosition < targetPosition) {
+            generateNewChunk();
+            farthestPosition = getFarthestChunkPosition();
+        }
+    }
+
+    private int getFarthestChunkPosition() {
+        return chunks.stream()
+            .mapToInt(Chunk::getPosition)
+            .max()
+            .orElse(0);
     }
 
     @Override
     public void generateNewChunk() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'generateNewChunk'");
+        final int nextPosition = getFarthestChunkPosition() + 1;
+        final Chunk newChunk = chunkFactory.createRandomChunk(nextPosition);
+        chunks.add(newChunk);
     }
 
     @Override
     public List<Chunk> getVisibleChunks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getVisibleChunks'");
+        return chunks.stream()
+            .filter(chunk -> chunk.getPosition() >= currentPosition && chunk.getPosition() < currentPosition + CHUNKS_NUMBER)
+            .toList();
     }
 
     @Override
     public int getCurrentPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCurrentPosition'");
+        return this.currentPosition;
     }
 
     @Override
     public void increaseScrollSpeed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'increaseScrollSpeed'");
-    }
-
-    @Override
-    public boolean isPositionOutOfBounds(int x, int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isPositionOutOfBounds'");
+        scrollSpeed = Math.min(scrollSpeed + 1, MAX_SPEED);
     }
 
     @Override
     public List<Chunk> getAllChunks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllChunks'");
-    }
-
-    @Override
-    public int getMapWidth() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMapWidth'");
-    }
-
-    @Override
-    public int getMapHeight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMapHeight'");
+        return this.chunks;
     }
 
 }
