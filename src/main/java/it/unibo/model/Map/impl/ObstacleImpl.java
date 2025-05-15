@@ -9,8 +9,8 @@ public class ObstacleImpl extends GameObjectImpl implements Obstacle {
 
     public ObstacleImpl(final int x, final int y, final ObstacleType type, final boolean movable) {
         super(x, y);
+        super.setMovable(movable);
         this.type = type;
-        setMovable(movable);
     }
 
     @Override
