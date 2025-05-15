@@ -2,17 +2,13 @@ package it.unibo.model.Map.api;
 
 public interface GameObject {
 
-    void update(int mapWidth);
+    void update();
 
     boolean collidesWith(int px, int py);
 
     int getX();
 
     int getY();
-
-    int getWidth();
-
-    int getHeight();
 
     int getSpeed();
 
