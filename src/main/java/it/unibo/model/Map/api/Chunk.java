@@ -2,6 +2,8 @@ package it.unibo.model.Map.api;
 
 import java.util.List;
 
+import it.unibo.model.Map.util.ChunkType;
+
 public interface Chunk {
 
     boolean addObjectAt(final GameObject obj, final int cellX);
