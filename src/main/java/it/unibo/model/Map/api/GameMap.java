@@ -1,0 +1,25 @@
+package it.unibo.model.Map.api;
+
+import java.util.List;
+
+public interface GameMap {
+
+    void update();
+
+    void generateNewChunk();
+
+    List<Chunk> getVisibleChunks();
+
+    int getCurrentPosition();
+
+    void increaseScrollSpeed();
+
+    boolean isPositionOutOfBounds(final int x, final int y);
+
+    List<Chunk> getAllChunks();
+
+    int getMapWidth();
+
+    int getMapHeight();
+
+}
