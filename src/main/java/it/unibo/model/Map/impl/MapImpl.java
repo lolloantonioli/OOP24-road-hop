@@ -53,8 +53,7 @@ public class MapImpl implements Map {
 
     @Override
     public List<Chunk> getAllChunks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllChunks'");
+        return this.chunks;
     }
 
 }
