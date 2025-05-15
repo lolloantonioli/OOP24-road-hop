@@ -14,8 +14,6 @@ public interface GameMap {
 
     void increaseScrollSpeed();
 
-    boolean isPositionOutOfBounds(final int x, final int y);
-
     List<Chunk> getAllChunks();
 
     int getMapWidth();
