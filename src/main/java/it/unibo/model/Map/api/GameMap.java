@@ -15,7 +15,5 @@ public interface GameMap {
     void increaseScrollSpeed();
 
     List<Chunk> getAllChunks();
-
-    int getMapHeight();
-
+    
 }
