@@ -1,12 +1,14 @@
 package it.unibo.model.Obstacles.impl;
-/*aggiungi non tutti i metodi insieme, ne mancano, mancano anche degli import, ELIMINA QUESTO COMMENTO*/
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
-import it.unibo.model.Obstacles.api.MovingObstacleManager;
 import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.Obstacles.api.MovingObstacleManager;
 
 /**
  * Implementation of the MovingObstacleManager interface.
@@ -85,7 +87,16 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     @Override
     public List<MovingObstacles> getObstaclesByType(String typeStr) {
-        return null;
+         ObstacleType type;
+        try {
+            type = ObstacleType.valueOf(typeStr);
+        } catch (IllegalArgumentException e) {
+            return new ArrayList<>();
+        }
+        
+        return obstacles.stream()
+            .filter(o -> o.getType() == type)
+            .collect(Collectors.toList());
     }
     
     @Override
@@ -100,12 +111,33 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     @Override
     public void increaseSpeed(int factor) {
-        
+        for (MovingObstacles obstacle : obstacles) {
+            int currentSpeed = obstacle.getSpeed();
+            int newSpeed = currentSpeed;
+            
+            // Incrementa mantenendo il segno (direzione)
+            if (currentSpeed > 0) {
+                newSpeed += factor;
+            } else {
+                newSpeed -= factor;
+            }
+            
+            obstacle.setSpeed(newSpeed);
+        }
     }
     
     @Override
     public void cleanupOffscreenObstacles(int minY, int maxY) {
-        
+        Iterator<MovingObstacles> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            MovingObstacles obstacle = iterator.next();
+            int y = obstacle.getY();
+            
+            // Rimuovi ostacoli fuori dall'area visibile in verticale
+            if (y < minY || y > maxY) {
+                iterator.remove();
+            }
+        }
     }
     
     @Override
@@ -115,6 +147,23 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     @Override
     public void resetAll() {
-       
+        for (MovingObstacles obstacle : obstacles) {
+            obstacle.reset();
+        
+            // Ripristina anche la velocità originale se è stata modificata
+            // Potremmo mantenere una mappa delle velocità iniziali o aggiungere 
+            // un campo initialSpeed a MovingObstacles
+            if (obstacle.getType() == ObstacleType.CAR) {
+                int direction = Integer.signum(obstacle.getSpeed());
+                obstacle.setSpeed(direction * (MovingObstacleFactoryImpl.MIN_CAR_SPEED + 
+                              new Random().nextInt(MovingObstacleFactoryImpl.MAX_CAR_SPEED - 
+                              MovingObstacleFactoryImpl.MIN_CAR_SPEED + 1)));
+            } else if (obstacle.getType() == ObstacleType.TRAIN) {
+                int direction = Integer.signum(obstacle.getSpeed());
+                obstacle.setSpeed(direction * (MovingObstacleFactoryImpl.MIN_TRAIN_SPEED + 
+                              new Random().nextInt(MovingObstacleFactoryImpl.MAX_TRAIN_SPEED - 
+                              MovingObstacleFactoryImpl.MIN_TRAIN_SPEED + 1)));
+            }
+        }
     }
 }
