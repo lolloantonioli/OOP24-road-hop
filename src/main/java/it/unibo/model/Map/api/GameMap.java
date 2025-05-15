@@ -16,8 +16,6 @@ public interface GameMap {
 
     List<Chunk> getAllChunks();
 
-    int getMapWidth();
-
     int getMapHeight();
 
 }
