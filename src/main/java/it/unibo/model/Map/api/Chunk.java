@@ -18,6 +18,4 @@ public interface Chunk {
 
     int getPosition();
 
-    int getCellsPerRow();
-
 }
