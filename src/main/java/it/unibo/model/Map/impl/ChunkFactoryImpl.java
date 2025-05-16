@@ -8,9 +8,7 @@ import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.ObstacleImpl;
 import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.impl.CollectibleImpl;
 
 public class ChunkFactoryImpl implements ChunkFactory {
 
@@ -40,8 +38,8 @@ public class ChunkFactoryImpl implements ChunkFactory {
         
         for (int i = 0; i < treeCount; i++) {
             int treeX = random.nextInt(ChunkImpl.CELLS_PER_ROW);
-            Obstacle tree = new ObstacleImpl(treeX, position, ObstacleType.TREE, false );
-            chunk.addObject(tree);
+            Obstacle tree = new ObstacleImpl(treeX, position, ObstacleType.TREE, false);
+            chunk.addObjectAt(tree, treeX);
         }
         
         // Higher chance for coins in grass (40%)
@@ -51,7 +49,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
                 position, 
                 CollectibleType.COIN
             );
-            chunk.addObject(coin);
+            chunk.addObjectAt(coin, coin.getX());
         }
         
         return chunk;
@@ -65,7 +63,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
                 position, 
                 CollectibleType.COIN
             );
-            chunk.addObject(coin);
+            chunk.addObjectAt(coin, coin.getX());
         }
         return chunk;
     }
@@ -78,7 +76,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
                 position, 
                 CollectibleType.COIN
             );
-            chunk.addObject(coin);
+            chunk.addObjectAt(coin, coin.getX());
         }
         return chunk;
     }
