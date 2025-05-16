@@ -57,19 +57,34 @@ public class ChunkFactoryImpl implements ChunkFactory {
         return chunk;
     }
 
-    private Chunk createRoadChunk(int position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRoadChunk'");
+    private Chunk createRoadChunk(final int position) {
+        final Chunk chunk = new ChunkImpl(position, ChunkType.ROAD);
+        if (random.nextInt(10) < 4) {
+            Collectible coin = new CollectibleImpl(
+                random.nextInt(ChunkImpl.CELLS_PER_ROW), 
+                position, 
+                CollectibleType.COIN
+            );
+            chunk.addObject(coin);
+        }
+        return chunk;
     }
 
-    private Chunk createRailwayChunk(int position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRailwayChunk'");
+    private Chunk createRailwayChunk(final int position) {
+        final Chunk chunk = new ChunkImpl(position, ChunkType.RAILWAY);
+        if (random.nextInt(10) < 4) {
+            Collectible coin = new CollectibleImpl(
+                random.nextInt(ChunkImpl.CELLS_PER_ROW), 
+                position, 
+                CollectibleType.COIN
+            );
+            chunk.addObject(coin);
+        }
+        return chunk;
     }
 
-    private Chunk createRiverChunk(int position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRiverChunk'");
+    private Chunk createRiverChunk(final int position) {
+        return new ChunkImpl(position, ChunkType.RIVER);
     }
 
 }
