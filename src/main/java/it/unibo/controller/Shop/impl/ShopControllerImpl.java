@@ -1,6 +1,7 @@
 package it.unibo.controller.Shop.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,15 @@ import it.unibo.model.Shop.api.Skin;
 public class ShopControllerImpl implements ShopController {
     private int playerCoins;
     private String selectedSkin;
-    private final Map<String, Skin> availableSkins = null;
-    private final GameStateManager gameStateManager = new GameStateManager();
+    private final Map<String, Skin> availableSkins;
+    private final GameStateManager gameStateManager;
+
+    public ShopControllerImpl(GameStateManager gameStateManager) {
+        this.gameStateManager = gameStateManager;
+        this.playerCoins = 0;
+        this.availableSkins = new HashMap<>();
+        this.selectedSkin = "default";
+    }
     
     @Override
     public void setPlayerCoins(int coins) {
