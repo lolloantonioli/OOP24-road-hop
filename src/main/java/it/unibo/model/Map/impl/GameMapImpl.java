@@ -28,9 +28,8 @@ public class GameMapImpl implements GameMap {
     }
 
     private void initializeMap() {
-        for (int i = 0; i < BUFFER_CHUNKS; i++) {
+        for (int i = 0; i < CHUNKS_NUMBER; i++) {
             chunks.add(chunkFactory.createGrassChunk(i));
-            this.generateNewChunk();
         }
     }
 

@@ -28,28 +28,32 @@ public class ChunkFactoryImpl implements ChunkFactory {
         };
     }
 
+    private Chunk createChunk(final int position, final ChunkType type, final boolean placeObstacles, final boolean placeCollectibles) {
+        final Chunk chunk = new ChunkImpl(position, type);
+        if (placeObstacles) {
+            objectPlacer.placeObstacles(chunk);
+        }
+        if (placeCollectibles) {
+            objectPlacer.placeCollectibles(chunk);
+        }
+        return chunk;
+    }
+
     @Override
     public Chunk createGrassChunk(final int position) {
-        final Chunk chunk = new ChunkImpl(position, ChunkType.GRASS);
-        objectPlacer.placeObstacles(chunk);
-        objectPlacer.placeCollectibles(chunk);
-        return chunk;
+        return createChunk(position, ChunkType.GRASS, true, true);
     }
 
     private Chunk createRoadChunk(final int position) {
-        final Chunk chunk = new ChunkImpl(position, ChunkType.ROAD);
-        objectPlacer.placeCollectibles(chunk);
-        return chunk;
+        return createChunk(position, ChunkType.ROAD, false, true);
     }
 
     private Chunk createRailwayChunk(final int position) {
-        final Chunk chunk = new ChunkImpl(position, ChunkType.RAILWAY);
-        objectPlacer.placeCollectibles(chunk);
-        return chunk;
+        return createChunk(position, ChunkType.RAILWAY, false, true);
     }
 
     private Chunk createRiverChunk(final int position) {
-        return new ChunkImpl(position, ChunkType.RIVER);
+        return createChunk(position, ChunkType.RIVER, false, false);
     }
 
 }
