@@ -16,7 +16,7 @@ public class ChunkImpl implements Chunk {
     private final ChunkType type;
     private final int position;
 
-    public static final int CELLS_PER_ROW = 6;
+    public static final int CELLS_PER_ROW = 9;
 
     public ChunkImpl(final int position, final ChunkType type) {
         this.position = position;
