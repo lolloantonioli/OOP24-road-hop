@@ -62,4 +62,39 @@ public class MovingObstacleControllerImpl implements MovingObstacleController{
         throw new UnsupportedOperationException("Unimplemented method 'getObstaclesByType'");
     }
 
+    @Override
+    public List<MovingObstacles> getAllObstacles() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void resetObstacles() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void pauseObstacleGeneration() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void resumeObstacleGeneration() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public MovingObstacles createRandomObstacle(ObstacleType type, int y) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getCurrentDifficultyLevel() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void dispose() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

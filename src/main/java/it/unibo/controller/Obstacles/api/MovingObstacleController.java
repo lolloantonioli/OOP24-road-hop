@@ -61,6 +61,14 @@ public interface MovingObstacleController {
     void update();
     
     /**
+     * Aumenta la difficoltà incrementando la velocità degli ostacoli e
+     * la frequenza di generazione.
+     * 
+     * @param factor Fattore di incremento della difficoltà
+     */
+    void increaseDifficulty(int factor);
+    
+    /**
      * Verifica se c'è una collisione con un ostacolo mobile.
      * 
      * @param x Coordinata X
@@ -76,6 +84,13 @@ public interface MovingObstacleController {
      * @return Lista di ostacoli del tipo specificato
      */
     List<MovingObstacles> getObstaclesByType(ObstacleType type);
+    
+    /**
+     * Ottiene tutti gli ostacoli attivi.
+     * 
+     * @return Lista di tutti gli ostacoli
+     */
+    List<MovingObstacles> getAllObstacles();
     
     /**
      * Reimposta tutti gli ostacoli e riavvia la generazione.
