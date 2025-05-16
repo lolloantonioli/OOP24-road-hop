@@ -5,17 +5,16 @@ import java.util.Random;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.ChunkFactory;
 import it.unibo.model.Map.util.ChunkType;
-import it.unibo.model.Map.util.CollectibleType;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.api.Collectible;
+import it.unibo.model.Map.api.ObjectPlacer;
 
 public class ChunkFactoryImpl implements ChunkFactory {
 
     private final Random random;
+    private final ObjectPlacer objectPlacer;
 
     public ChunkFactoryImpl() {
         this.random = new Random();
+        this.objectPlacer = new ObjectPlacerImpl();
     }
 
     @Override
@@ -32,52 +31,20 @@ public class ChunkFactoryImpl implements ChunkFactory {
     @Override
     public Chunk createGrassChunk(final int position) {
         final Chunk chunk = new ChunkImpl(position, ChunkType.GRASS);
-        
-        // Add 0-3 trees as obstacles
-        final int treeCount = random.nextInt(4);
-        
-        for (int i = 0; i < treeCount; i++) {
-            int treeX = random.nextInt(ChunkImpl.CELLS_PER_ROW);
-            Obstacle tree = new ObstacleImpl(treeX, position, ObstacleType.TREE, false);
-            chunk.addObjectAt(tree, treeX);
-        }
-        
-        // Higher chance for coins in grass (40%)
-        if (random.nextInt(10) < 4) {
-            Collectible coin = new CollectibleImpl(
-                random.nextInt(ChunkImpl.CELLS_PER_ROW), 
-                position, 
-                CollectibleType.COIN
-            );
-            chunk.addObjectAt(coin, coin.getX());
-        }
-        
+        objectPlacer.placeObstacles(chunk);
+        objectPlacer.placeCollectibles(chunk);
         return chunk;
     }
 
     private Chunk createRoadChunk(final int position) {
         final Chunk chunk = new ChunkImpl(position, ChunkType.ROAD);
-        if (random.nextInt(10) < 4) {
-            Collectible coin = new CollectibleImpl(
-                random.nextInt(ChunkImpl.CELLS_PER_ROW), 
-                position, 
-                CollectibleType.COIN
-            );
-            chunk.addObjectAt(coin, coin.getX());
-        }
+        objectPlacer.placeCollectibles(chunk);
         return chunk;
     }
 
     private Chunk createRailwayChunk(final int position) {
         final Chunk chunk = new ChunkImpl(position, ChunkType.RAILWAY);
-        if (random.nextInt(10) < 4) {
-            Collectible coin = new CollectibleImpl(
-                random.nextInt(ChunkImpl.CELLS_PER_ROW), 
-                position, 
-                CollectibleType.COIN
-            );
-            chunk.addObjectAt(coin, coin.getX());
-        }
+        objectPlacer.placeCollectibles(chunk);
         return chunk;
     }
 
