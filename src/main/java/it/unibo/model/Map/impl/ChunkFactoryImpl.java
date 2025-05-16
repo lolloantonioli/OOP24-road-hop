@@ -57,20 +57,17 @@ public class ChunkFactoryImpl implements ChunkFactory {
         return chunk;
     }
 
-    @Override
-    public Chunk createRoadChunk(int position) {
+    private Chunk createRoadChunk(int position) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createRoadChunk'");
     }
 
-    @Override
-    public Chunk createRailwayChunk(int position) {
+    private Chunk createRailwayChunk(int position) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createRailwayChunk'");
     }
 
-    @Override
-    public Chunk createRiverChunk(int position) {
+    private Chunk createRiverChunk(int position) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createRiverChunk'");
     }
