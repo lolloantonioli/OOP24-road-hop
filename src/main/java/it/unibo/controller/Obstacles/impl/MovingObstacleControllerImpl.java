@@ -15,6 +15,8 @@ import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.util.ObstacleType;
 
+//COMMIT DA FARE FINITO DI IMPLEMENTARE I METODI
+
 public class MovingObstacleControllerImpl implements MovingObstacleController{
 
     private final GameMap gameMap;
@@ -54,10 +56,6 @@ public class MovingObstacleControllerImpl implements MovingObstacleController{
         }
     }
     
-    /**
-     * Inizializza e avvia la generazione automatica di ostacoli.
-     * Da chiamare quando il gioco inizia.
-     */
     @Override
     public void startObstacleGeneration() {
         if (obstacleSpawner != null && !obstacleSpawner.isShutdown()) {
@@ -83,10 +81,6 @@ public class MovingObstacleControllerImpl implements MovingObstacleController{
         );
     }
 
-   /**
-     * Ferma la generazione automatica di ostacoli.
-     * Da chiamare quando il gioco viene messo in pausa o terminato.
-     */
     @Override
     public void stopObstacleGeneration() {
         if (obstacleSpawner != null && !obstacleSpawner.isShutdown()) {
@@ -173,15 +167,6 @@ public class MovingObstacleControllerImpl implements MovingObstacleController{
         );
     }
     
-    /**
-     * Crea e aggiunge un nuovo ostacolo mobile alla mappa.
-     * 
-     * @param type Tipo di ostacolo (CAR, TRAIN)
-     * @param x Posizione X
-     * @param y Posizione Y
-     * @param speed Velocità (positiva = destra, negativa = sinistra)
-     * @return L'ostacolo creato
-     */
     @Override
     public MovingObstacles createObstacle(ObstacleType type, int x, int y, int speed) {
         MovingObstacles obstacle = null;
@@ -199,14 +184,6 @@ public class MovingObstacleControllerImpl implements MovingObstacleController{
         return obstacle;
     }
     
-    /**
-     * Crea un gruppo di auto sulla strada.
-     * 
-     * @param y Posizione Y della strada
-     * @param count Numero di auto da creare
-     * @param leftToRight Direzione di movimento
-     * @return Array di ostacoli creati
-     */
     @Override
     public MovingObstacles[] createCarSet(int y, int count, boolean leftToRight) {
         MovingObstacles[] cars = obstacleFactory.createCarSet(
@@ -220,69 +197,121 @@ public class MovingObstacleControllerImpl implements MovingObstacleController{
         obstacleManager.addObstacles(cars);
         return cars;
     }
+    
     @Override
     public MovingObstacles[] createTrainSet(int y, int count, boolean leftToRight) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createTrainSet'");
+        MovingObstacles[] trains = obstacleFactory.createTrainSet(
+            y, 
+            gameMap.getViewportWidth(),
+            count,
+            MIN_DISTANCE_TRAINS,
+            leftToRight
+        );
+        
+        obstacleManager.addObstacles(trains);
+        return trains;
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        obstacleManager.updateAll(gameMap.getViewportWidth());
+        cleanupOffscreenObstacles();
     }
-
+    
+    /**
+     * Rimuove gli ostacoli che non sono più visibili.
+     */
+    private void cleanupOffscreenObstacles() {
+        obstacleManager.cleanupOffscreenObstacles(
+            gameMap.getCurrentPosition() - 200, 
+            gameMap.getCurrentPosition() + gameMap.getViewportHeight() + 200
+        );
+    }
+    
     @Override
     public void increaseDifficulty(int factor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'increaseDifficulty'");
+        currentDifficultyLevel += factor;
+        
+        // Aumenta la velocità degli ostacoli esistenti
+        obstacleManager.increaseSpeed(factor);
+        
+        // Aumenta la frequenza di spawn
+        obstacleSpawnRate = Math.min(obstacleSpawnRate + 1, 5);
+        
+        // Riavvia la generazione di ostacoli con la nuova frequenza
+        if (obstacleSpawner != null && !obstacleSpawner.isShutdown()) {
+            stopObstacleGeneration();
+            startObstacleGeneration();
+        }
     }
-
+    
     @Override
     public boolean checkCollision(int x, int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkCollision'");
+        return obstacleManager.checkCollision(x, y);
     }
-
+    
     @Override
     public List<MovingObstacles> getObstaclesByType(ObstacleType type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getObstaclesByType'");
+        return obstacleManager.getObstaclesByType(type.toString());
     }
-
+    
     @Override
     public List<MovingObstacles> getAllObstacles() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return obstacleManager.getActiveObstacles();
     }
-
+    
     @Override
     public void resetObstacles() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // Ferma la generazione automatica
+        stopObstacleGeneration();
+        
+        // Reimposta gli ostacoli esistenti
+        obstacleManager.resetAll();
+        
+        // Reimposta la difficoltà
+        currentDifficultyLevel = 1;
+        obstacleSpawnRate = 1;
+        
+        // Riavvia la generazione automatica
+        startObstacleGeneration();
     }
-
+    
     @Override
     public void pauseObstacleGeneration() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        stopObstacleGeneration();
     }
-
+    
     @Override
     public void resumeObstacleGeneration() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        startObstacleGeneration();
     }
-
+   
     @Override
     public MovingObstacles createRandomObstacle(ObstacleType type, int y) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        MovingObstacles obstacle = null;
+        boolean leftToRight = Math.random() > 0.5;
+        
+        switch (type) {
+            case CAR -> obstacle = obstacleFactory.createRandomCar(y, gameMap.getViewportWidth(), leftToRight);
+            case TRAIN -> obstacle = obstacleFactory.createRandomTrain(y, gameMap.getViewportWidth(), leftToRight);
+            default -> throw new IllegalArgumentException("Tipo di ostacolo non supportato: " + type);
+        }
+        
+        if (obstacle != null) {
+            obstacleManager.addObstacle(obstacle);
+        }
+        
+        return obstacle;
     }
 
     @Override
     public int getCurrentDifficultyLevel() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return currentDifficultyLevel;
     }
-
+    
     @Override
     public void dispose() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        stopObstacleGeneration();
     }
 
 }
