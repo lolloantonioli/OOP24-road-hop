@@ -6,10 +6,4 @@ public interface ChunkFactory {
 
     Chunk createGrassChunk(final int position);
 
-    Chunk createRoadChunk(final int position);
-
-    Chunk createRailwayChunk(final int position);
-
-    Chunk createRiverChunk(final int position);
-
 }
