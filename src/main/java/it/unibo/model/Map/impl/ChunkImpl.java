@@ -19,6 +19,12 @@ public class ChunkImpl implements Chunk {
     public static final int CELLS_PER_ROW = 9;
 
     public ChunkImpl(final int position, final ChunkType type) {
+        if (position < 0) {
+            throw new IllegalArgumentException("Position cannot be negative");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("ChunkType cannot be null");
+        }
         this.position = position;
         this.type = type;
         this.cells = IntStream.range(0, CELLS_PER_ROW)
@@ -28,6 +34,12 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public boolean addObjectAt(final GameObject obj, final int cellX) {
+        if (obj == null) {
+            throw new IllegalArgumentException("GameObject cannot be null");
+        }
+        if (cellX < 0 || cellX >= CELLS_PER_ROW) {
+            throw new IllegalArgumentException("Cell index out of bounds");
+        }
         return (cellX >= 0 && cellX < CELLS_PER_ROW) && cells.get(cellX).addObject(obj);
     }
 
