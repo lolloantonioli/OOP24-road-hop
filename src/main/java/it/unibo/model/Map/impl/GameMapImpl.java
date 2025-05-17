@@ -19,6 +19,9 @@ public class GameMapImpl implements GameMap {
     private static final int MAX_SPEED = 10;
 
     public GameMapImpl(final int speed) {
+        if (speed < 0 || speed > MAX_SPEED) {
+            throw new IllegalArgumentException("Speed must be between 0 and " + MAX_SPEED);
+        }
         this.chunks = new ArrayList<>();
         this.chunkFactory = new ChunkFactoryImpl();
         this.currentPosition = 0;
