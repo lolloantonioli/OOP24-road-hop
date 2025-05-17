@@ -60,6 +60,9 @@ public class GameObjectImpl implements GameObject {
 
     @Override
     public void setSpeed(final int speed) {
+        if (speed < 0) {
+            throw new IllegalArgumentException("Speed must be non-negative");
+        }
         this.speed = speed;
     }
 
