@@ -1,35 +1,67 @@
 package it.unibo.view.Menu.impl;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 
 import it.unibo.controller.Menu.api.MenuController;
+import it.unibo.view.ScaleManager;
 import it.unibo.view.Menu.api.MenuView;
 
 public class MenuViewImpl implements MenuView {
 
     private MenuController controller;
+    private final ScaleManager scaleManager;
     private BufferedImage backgroundImage;
     private BufferedImage logoImage;
 
     private int currentWidth;
     private int currentHeight;
 
+    /**
+     * Menu View constructor.
+     * 
+     * @param scaleManager The scale manager
+     */
+    public MenuViewImpl(ScaleManager scaleManager) {
+        this.scaleManager = scaleManager;
+        this.currentWidth = scaleManager.getCurrentWidth();
+        this.currentHeight = scaleManager.getCurrentHeight();
+    }
     @Override
     public void render(Graphics g) {
         // Draw the background image
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, currentWidth, currentHeight, null);
+        } else {
+            // If the background image is not available, fill the background with a color
+            g.setColor(new Color(30, 30, 30));
+            g.fillRect(0, 0, currentWidth, currentHeight);
         }
 
         // Draw the logo image
         if (logoImage != null) {
-            int logoX = (currentWidth - logoImage.getWidth()) / 2;
-            int logoY = (currentHeight - logoImage.getHeight()) / 2;
-            g.drawImage(logoImage, logoX, logoY, null);
+            int logoWidth = logoImage.getWidth();
+            int logoHeight = logoImage.getHeight();
+            int logoX = (currentWidth - logoWidth) / 2;
+            int logoY = (currentHeight - logoHeight) / 2;
+            g.drawImage(
+                logoImage,
+                logoX, 
+                logoY,
+                null
+                );
+        } else {
+            g.setFont(scaleFont(new Font("Arial", Font.BOLD, 48)));
+            g.setColor(Color.WHITE);
+            String title = "ROAD HOP";  
+            FontMetrics fm = g.getFontMetrics();
+            int titleWidth = fm.stringWidth(title);
+            g.drawString(title, (currentWidth - titleWidth) / 2, currentHeight / 4);
         }
 
     }
@@ -39,16 +71,12 @@ public class MenuViewImpl implements MenuView {
         this.currentWidth = width;
         this.currentHeight = height;
 
-        // Update the size of the background image if necessary
-        if (backgroundImage != null) {
-            backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        }
+        scaleManager.updateScale(width, height);
     }
 
     @Override
     public Font scaleFont(Font font) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'scaleFont'");
+        return scaleManager.scaleFont(font); 
     }
 
     @Override
@@ -59,8 +87,7 @@ public class MenuViewImpl implements MenuView {
 
     @Override
     public void setController(MenuController controller) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setController'");
+        this.controller = controller;
     }
     
 }
