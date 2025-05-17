@@ -19,6 +19,9 @@ public class ChunkFactoryImpl implements ChunkFactory {
 
     @Override
     public Chunk createRandomChunk(final int position) {
+        if (position < 0) {
+            throw new IllegalArgumentException("Position must be non-negative");
+        }
         final int type = random.nextInt(4);
         return switch (type) {
             case 0 -> createRoadChunk(position);
@@ -29,6 +32,9 @@ public class ChunkFactoryImpl implements ChunkFactory {
     }
 
     private Chunk createChunk(final int position, final ChunkType type, final boolean placeObstacles, final boolean placeCollectibles) {
+        if (type == null) {
+            throw new IllegalArgumentException("Chunk type cannot be null");
+        }
         final Chunk chunk = new ChunkImpl(position, type);
         if (placeObstacles) {
             objectPlacer.placeObstacles(chunk);
