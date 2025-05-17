@@ -32,9 +32,6 @@ public class ChunkFactoryImpl implements ChunkFactory {
     }
 
     private Chunk createChunk(final int position, final ChunkType type, final boolean placeObstacles, final boolean placeCollectibles) {
-        if (type == null) {
-            throw new IllegalArgumentException("Chunk type cannot be null");
-        }
         final Chunk chunk = new ChunkImpl(position, type);
         if (placeObstacles) {
             objectPlacer.placeObstacles(chunk);
