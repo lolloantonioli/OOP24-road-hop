@@ -11,6 +11,9 @@ public class GameObjectImpl implements GameObject {
     private boolean platform;
 
     public GameObjectImpl(final int x, final int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Coordinates must be non-negative");
+        }
         this.x = x;
         this.y = y;
         this.movable = false;
