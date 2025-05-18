@@ -3,6 +3,8 @@ package it.unibo.model.Obstacles.impl;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 
+//METODO UPDATE LASICARNE SOLO UNO! ++ MODIFICA MANAGER + FACTORY????
+
 public class MovingObstacles implements Obstacle{
     private int x;
     private final int y;
@@ -12,6 +14,7 @@ public class MovingObstacles implements Obstacle{
     private boolean visible;
     private int initialX; // per far ricomparire l'ostacolo nella posizione iniziale
     private final int initialSpeed;
+    private int mapWidth;
 
     public MovingObstacles(int x, int y, ObstacleType type, int speed) {
         this.x = x;
@@ -22,6 +25,7 @@ public class MovingObstacles implements Obstacle{
         this.initialSpeed = speed;
         this.movable = true;
         this.visible = true;
+        this.mapWidth = mapWidth;
     }
     
     @Override
@@ -41,11 +45,7 @@ public class MovingObstacles implements Obstacle{
 
     @Override
     public void update() {
-        // Non facciamo nulla qui, la logica di movimento è in update(int mapWidth)
-    }
-
-    public void update(int mapWidth) {
-        if (movable) {
+         if (movable) {
             x += speed;
             
             // Gestione uscita dai bordi della mappa
@@ -57,6 +57,16 @@ public class MovingObstacles implements Obstacle{
                 x = mapWidth;
             }
         }
+    }
+
+    /**
+     * Imposta una nuova larghezza per la mappa.
+     * Utile quando le dimensioni della mappa cambiano dinamicamente.
+     * 
+     * @param mapWidth Nuova larghezza della mappa
+     */
+    public void setMapWidth(int mapWidth) {
+        this.mapWidth = mapWidth;
     }
 
     /**
