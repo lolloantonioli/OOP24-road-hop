@@ -1,6 +1,7 @@
 package it.unibo.model.Map.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.model.Map.api.Chunk;
@@ -90,7 +91,7 @@ public class GameMapImpl implements GameMap {
 
     @Override
     public List<Chunk> getAllChunks() {
-        return this.chunks;
+        return Collections.unmodifiableList(chunks);
     }
 
 }
