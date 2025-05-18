@@ -1,5 +1,6 @@
 package it.unibo.model.Map.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public List<Cell> getCells() {
-        return this.cells;
+        return Collections.unmodifiableList(cells);
     }
 
     @Override
