@@ -21,16 +21,15 @@ public class ObjectPlacerImpl implements ObjectPlacer {
     public ObjectPlacerImpl() {
         this.patterns = new ArrayList<>();
         this.random = new Random();
-        // Aggiungiamo diversi pattern che garantiscono un percorso
-        patterns.add(List.of(0, 2, 4));    // Pattern 1: alberi nelle posizioni 0, 2 e 4
-        patterns.add(List.of(1, 3, 5));    // Pattern 2: alberi nelle posizioni 1, 3 e 5
-        patterns.add(List.of(0, 3, 6));    // Pattern 3: alberi nelle posizioni 0, 3 e 6
-        patterns.add(List.of(1, 4, 7));    // Pattern 4: alberi nelle posizioni 1, 4 e 7
-        patterns.add(List.of(2, 5, 8));    // Pattern 5: alberi nelle posizioni 2, 5 e 8
-        patterns.add(List.of(0, 4, 8));    // Pattern 6: alberi diagonali
-        patterns.add(List.of(0, 2));       // Pattern 7: solo due alberi
-        patterns.add(List.of(5, 7));       // Pattern 8: solo due alberi in posizione diversa
-        patterns.add(List.of());           // Pattern 9: nessun albero
+        patterns.add(List.of(0, 2, 4));
+        patterns.add(List.of(1, 3, 5));
+        patterns.add(List.of(0, 3, 6));
+        patterns.add(List.of(1, 4, 7));
+        patterns.add(List.of(2, 5, 8));
+        patterns.add(List.of(0, 4, 8));
+        patterns.add(List.of(0, 2));
+        patterns.add(List.of(5, 7));
+        patterns.add(List.of());
     }
 
     @Override
@@ -47,9 +46,7 @@ public class ObjectPlacerImpl implements ObjectPlacer {
 
     @Override
     public void placeCollectibles(final Chunk chunk) {
-        // Probabilità del 40% di aggiungere un collezionabile nel chunk di erba
         if (random.nextDouble() < 0.4) {
-            // Trova le posizioni già occupate dagli alberi
             Set<Integer> occupiedPositions = new HashSet<>();
             for (var object : chunk.getObjects()) {
                 if (object instanceof Obstacle) {
@@ -57,7 +54,6 @@ public class ObjectPlacerImpl implements ObjectPlacer {
                 }
             }
             
-            // Se ci sono posizioni libere, aggiungi un collezionabile
             List<Integer> availablePositions = new ArrayList<>();
             for (int i = 0; i < ChunkImpl.CELLS_PER_ROW; i++) {
                 if (!occupiedPositions.contains(i)) {
@@ -66,10 +62,7 @@ public class ObjectPlacerImpl implements ObjectPlacer {
             }
             
             if (!availablePositions.isEmpty()) {
-                // Scegli una posizione casuale tra quelle disponibili
                 int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
-                
-                // Crea e aggiungi il collezionabile
                 Collectible coin = new CollectibleImpl(
                     collectiblePos, 
                     chunk.getPosition(), 
