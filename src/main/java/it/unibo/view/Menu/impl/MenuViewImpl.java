@@ -89,8 +89,16 @@ public class MenuViewImpl implements MenuView {
 
     @Override
     public boolean handleClick(int x, int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleClick'");
+        int unscaledX = scaleManager.unscaleX(x);
+        int unscaledY = scaleManager.unscaleY(y);
+
+        for (MenuButton button : buttons) {
+            if (button.contains(unscaledX, unscaledY)) {
+                button.onClick();
+                return true;
+            }
+        }
+        return false;    
     }
 
     @Override
