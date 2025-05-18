@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Menu;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.controller.Menu.api.MenuController;
@@ -39,6 +40,48 @@ public class MenuViewImpl implements MenuView {
         this.scaleManager = scaleManager;
         this.currentWidth = scaleManager.getCurrentWidth();
         this.currentHeight = scaleManager.getCurrentHeight();
+    
+        initButtons();
+    }
+
+    private void initButtons(){
+        buttons = new ArrayList<>();
+        int buttonWidth = scaleManager.scaleWidth(200);
+        int buttonHeight = scaleManager.scaleHeight(50);
+        int spacing = scaleManager.scaleHeight(20);
+        int startY = currentHeight / 2;
+
+        // Play button
+        MenuButton playButton = new MenuButton(
+            (currentWidth - buttonWidth) / 2,
+            startY,
+            buttonWidth,
+            buttonHeight,
+            "Play",
+            e -> controller.startGame()
+        );
+        buttons.add(playButton);
+
+        // Shop button
+        MenuButton shopButton = new MenuButton(
+            (currentWidth - buttonWidth) / 2,
+            startY + buttonHeight + spacing,
+            buttonWidth,
+            buttonHeight,
+            "Shop",
+            e -> controller.openShop()
+        );
+        buttons.add(shopButton);
+
+        //exit button
+        MenuButton exitButton = new MenuButton(
+            (currentWidth - buttonWidth) / 2,
+            startY + 2 * (buttonHeight + spacing),
+            buttonWidth,
+            buttonHeight,
+            "Exit",
+            e -> controller.exitGame()
+        );
     }
     @Override
     public void render(Graphics g) {
@@ -80,6 +123,9 @@ public class MenuViewImpl implements MenuView {
         this.currentHeight = height;
 
         scaleManager.updateScale(width, height);
+
+        // Update button positions and sizes
+        initButtons();
     }
 
     @Override
