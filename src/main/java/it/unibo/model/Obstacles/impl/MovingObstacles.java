@@ -40,6 +40,10 @@ public class MovingObstacles implements Obstacle{
     }
 
     @Override
+    public void update() {
+        // Non facciamo nulla qui, la logica di movimento è in update(int mapWidth)
+    }
+
     public void update(int mapWidth) {
         if (movable) {
             x += speed;
@@ -88,23 +92,21 @@ public class MovingObstacles implements Obstacle{
      * @return True if the obstacles collide
      */
     public boolean collidesWith(Obstacle other) {
-        if (!visible || !((MovingObstacles)other).isVisible()) {
+        if (!visible) {
             return false;
         }
         
         // Verifica se i rettangoli si sovrappongono
-        return x < other.getX() + other.getWidth() &&
+        return x < other.getX() && 
                x + getWidth() > other.getX() &&
-               y < other.getY() + other.getHeight() &&
+               y < other.getY() &&
                y + getHeight() > other.getY();
     }
     
-    @Override
     public int getWidth() {
         return type == ObstacleType.TRAIN ? 200 : 50;
     }
     
-    @Override
     public int getHeight() {
         return 40;
     }
@@ -180,12 +182,6 @@ public class MovingObstacles implements Obstacle{
     public int getDifficultyLevel() {
         int baseLevel = type == ObstacleType.TRAIN ? 3 : 1;
         return baseLevel + Math.abs(speed) / 2;
-    }
-
-    @Override
-    public void setPosition(int newX, int newY) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
     }
 
 }
