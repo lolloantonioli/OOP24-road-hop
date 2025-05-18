@@ -161,7 +161,9 @@ public class MovingObstacles implements Obstacle{
     @Override
     public void setPlatform(boolean platform) {
         // non applicabile per CAR e TRAIN
-
+        if (platform) {
+            throw new UnsupportedOperationException("Gli ostacoli di tipo " + this.type + " non possono essere impostati come piattaforme");
+        }
     }
 
      /**
