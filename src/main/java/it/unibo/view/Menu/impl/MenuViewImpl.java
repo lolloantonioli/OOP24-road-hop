@@ -7,8 +7,11 @@ import java.awt.Graphics;
 import java.awt.Menu;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import it.unibo.controller.Menu.api.MenuController;
 import it.unibo.view.ScaleManager;
@@ -42,6 +45,7 @@ public class MenuViewImpl implements MenuView {
         this.currentHeight = scaleManager.getCurrentHeight();
     
         initButtons();
+        loadImages();
     }
 
     private void initButtons(){
@@ -82,6 +86,18 @@ public class MenuViewImpl implements MenuView {
             "Exit",
             e -> controller.exitGame()
         );
+    }
+
+    private void loadImages() {
+        try {
+            backgroundImage = ImageIO.read(getClass().getResourceAsStream("Immagine da mettere"));
+            logoImage = ImageIO.read(getClass().getResourceAsStream("Immagine da mettere"));
+        } catch (IOException | NullPointerException e) {
+            // If we can't load the image, use a background color
+            System.err.println("Unable to load menu images: " + e.getMessage());
+            backgroundImage = null;
+            logoImage = null;
+        }
     }
     @Override
     public void render(Graphics g) {
