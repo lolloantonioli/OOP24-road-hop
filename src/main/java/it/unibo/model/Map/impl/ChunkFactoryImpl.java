@@ -4,8 +4,8 @@ import java.util.Random;
 
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.ChunkFactory;
-import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.api.ObjectPlacer;
+import it.unibo.model.Map.util.ChunkType;
 
 public class ChunkFactoryImpl implements ChunkFactory {
 

@@ -15,8 +15,6 @@ import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.util.ObstacleType;
 
-//COMMIT DA FARE FINITO DI IMPLEMENTARE I METODI
-
 public class MovingObstacleControllerImpl implements MovingObstacleController{
 
     private final GameMap gameMap;
