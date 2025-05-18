@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Menu;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -26,9 +25,7 @@ public class MenuViewImpl implements MenuView {
 
     private List<MenuButton> buttons;
     private static final Color BUTTON_COLOR = new Color(76, 175, 80);
-    private static final Color HOVER_COLOR = new Color(129, 199, 132);
     private static final Color TEXT_COLOR = Color.WHITE;
-    private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 48);
     private static final Font BUTTON_FONT = new Font("Arial", Font.BOLD, 24);
 
     private int currentWidth;
