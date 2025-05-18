@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
@@ -41,7 +40,8 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     public void updateAll(int mapWidth) {
         for (MovingObstacles obstacle : obstacles) {
             if (obstacle.isMovable()) {
-                obstacle.update(mapWidth);
+                obstacle.setMapWidth(mapWidth);
+                obstacle.update();
             }
         }
         
@@ -87,16 +87,21 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     @Override
     public List<MovingObstacles> getObstaclesByType(String typeStr) {
-         ObstacleType type;
-        try {
-            type = ObstacleType.valueOf(typeStr);
-        } catch (IllegalArgumentException e) {
-            return new ArrayList<>();
+        List<MovingObstacles> result = new ArrayList<>();
+    
+        // Se typeStr è null, ritorniamo una lista vuota
+        if (typeStr == null) {
+            return result;
         }
-        
-        return obstacles.stream()
-            .filter(o -> o.getType() == type)
-            .collect(Collectors.toList());
+    
+        // Iteriamo attraverso tutti gli ostacoli e confrontiamo il tipo come stringa
+        for (MovingObstacles obstacle : obstacles) {
+            if (obstacle.getType().toString().equalsIgnoreCase(typeStr)) {
+                result.add(obstacle);
+            }
+        }
+    
+        return result;
     }
     
     @Override

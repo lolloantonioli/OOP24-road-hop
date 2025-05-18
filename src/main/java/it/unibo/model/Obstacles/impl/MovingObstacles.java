@@ -3,8 +3,6 @@ package it.unibo.model.Obstacles.impl;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 
-//METODO UPDATE LASICARNE SOLO UNO! ++ MODIFICA MANAGER + FACTORY????
-
 public class MovingObstacles implements Obstacle{
     private int x;
     private final int y;
@@ -25,7 +23,7 @@ public class MovingObstacles implements Obstacle{
         this.initialSpeed = speed;
         this.movable = true;
         this.visible = true;
-        this.mapWidth = mapWidth;
+        this.mapWidth = 0;
     }
     
     @Override
@@ -163,6 +161,7 @@ public class MovingObstacles implements Obstacle{
     @Override
     public void setPlatform(boolean platform) {
         // non applicabile per CAR e TRAIN
+
     }
 
      /**
