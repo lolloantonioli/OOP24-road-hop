@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.util.List;
+import java.awt.Menu;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
+import java.util.List;
 
 import it.unibo.controller.Menu.api.MenuController;
 import it.unibo.view.ScaleManager;
@@ -18,6 +19,13 @@ public class MenuViewImpl implements MenuView {
     private final ScaleManager scaleManager;
     private BufferedImage backgroundImage;
     private BufferedImage logoImage;
+
+    private List<MenuButton> buttons;
+    private static final Color BUTTON_COLOR = new Color(76, 175, 80);
+    private static final Color HOVER_COLOR = new Color(129, 199, 132);
+    private static final Color TEXT_COLOR = Color.WHITE;
+    private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 48);
+    private static final Font BUTTON_FONT = new Font("Arial", Font.BOLD, 24);
 
     private int currentWidth;
     private int currentHeight;
@@ -89,5 +97,89 @@ public class MenuViewImpl implements MenuView {
     public void setController(MenuController controller) {
         this.controller = controller;
     }
-    
+
+    /*
+     * Inner class to manage the buttons
+     */
+    private static class MenuButton {
+        private final Rectangle bounds;
+        private final String text;
+        private final ButtonClickListener listener;
+
+        /**
+         * Button constructor.
+         * 
+         * @param x     The x coordinate
+         * @param y     The y coordinate
+         * @param width The width of the button
+         * @param height The height of the button
+         * @param text The text to display
+         * @param listener The click listener
+         */
+        public MenuButton(int x, int y, int width, int height, String text, ButtonClickListener listener) {
+            this.bounds = new Rectangle(x, y, width, height);
+            this.text = text;
+            this.listener = listener;
+        }
+
+        /**
+         * Render the button.
+         * 
+         * @param g The graphics context
+         * @param menuView The menu view
+         */
+        public void render(Graphics g, MenuView menuView){
+            ScaleManager scaleManager = ((MenuViewImpl) menuView).scaleManager;
+            int scaledX = scaleManager.scaleX(bounds.x);
+            int scaledY = scaleManager.scaleY(bounds.y);
+            int scaledWidth = scaleManager.scaleWidth(bounds.width);
+            int scaledHeight = scaleManager.scaleHeight(bounds.height);
+
+            g.setColor(BUTTON_COLOR);
+            g.fillRoundRect(scaledX, scaledY, scaledWidth, scaledHeight, 15, 15);
+
+            g.setColor(TEXT_COLOR);
+            g.drawRoundRect(scaledX, scaledY, scaledWidth, scaledHeight, 15, 15);
+
+            Font scaledFont = menuView.scaleFont(BUTTON_FONT);
+            g.setFont(scaledFont);
+            g.setColor(TEXT_COLOR);
+
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+            int textHeight = fm.getHeight();
+
+            g.drawString(
+                text,
+                scaledX + (scaledWidth - textWidth) / 2,
+                scaledY + (scaledHeight + textHeight / 2) / 2
+            );
+        }
+
+        /**
+         * Check if the point is in the button zone.
+         * 
+         * @param x The x coordinate
+         * @param y The y coordinate
+         * @return True if it is, false otherwise
+         */
+        public boolean contains(int x, int y) {
+            return bounds.contains(x, y);
+ 
+        }
+        
+        /**
+         * execute the button click action.
+         */
+        public void onClick(){
+            listener.onClick(this);
+        }
+    }
+    /**
+    * listener interface for button clicks
+    */
+    @FunctionalInterface
+    interface ButtonClickListener {
+        void onClick(MenuButton button);
+    }
 }

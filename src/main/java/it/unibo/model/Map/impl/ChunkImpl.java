@@ -1,6 +1,8 @@
 package it.unibo.model.Map.impl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,8 +21,11 @@ public class ChunkImpl implements Chunk {
     public static final int CELLS_PER_ROW = 9;
 
     public ChunkImpl(final int position, final ChunkType type) {
+        if (position < 0) {
+            throw new IllegalArgumentException("Position cannot be negative");
+        }
         this.position = position;
-        this.type = type;
+        this.type = Objects.requireNonNull(type, "ChunkType cannot be null"); // mettere nella doc la dicitura @throws NullPointerException
         this.cells = IntStream.range(0, CELLS_PER_ROW)
             .mapToObj(x -> new CellImpl(x, position))
             .collect(Collectors.toList());
@@ -28,6 +33,10 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public boolean addObjectAt(final GameObject obj, final int cellX) {
+        if (cellX < 0 || cellX >= CELLS_PER_ROW) {
+            throw new IllegalArgumentException("Cell index out of bounds");
+        }
+        Objects.requireNonNull(obj, "GameObject cannot be null");
         return (cellX >= 0 && cellX < CELLS_PER_ROW) && cells.get(cellX).addObject(obj);
     }
 
@@ -42,7 +51,7 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public List<Cell> getCells() {
-        return this.cells;
+        return Collections.unmodifiableList(cells);
     }
 
     @Override
