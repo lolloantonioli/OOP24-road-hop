@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.ChunkFactory;
 import it.unibo.model.Map.api.Collectible;
@@ -20,6 +22,8 @@ public class ChunkFactoryImpl implements ChunkFactory {
     private final Random random;
     private final ObjectPlacer objectPlacer;
 
+    private final static String MSG = "Position must be non-negative";
+
     public ChunkFactoryImpl() {
         this.random = new Random();
         this.objectPlacer = new ObjectPlacerImpl();
@@ -27,9 +31,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
 
     @Override
     public Chunk createRandomChunk(final int position) {
-        if (position < 0) {
-            throw new IllegalArgumentException("Position must be non-negative");
-        }
+        checkArgument(position >= 0, MSG);
         final int type = random.nextInt(4);
         return switch (type) {
             case 0 -> createRoadChunk(position);
