@@ -16,7 +16,7 @@ public class CellImpl implements Cell {
     private static final String MSG = "Coordinates must be non-negative";
 
     public CellImpl(final int x, final int y) {
-        checkArgument(x < 0 || y < 0, MSG);
+        checkArgument(x >= 0 && y >= 0, MSG);
         this.x = x;
         this.y = y;
         this.content = Optional.empty();
