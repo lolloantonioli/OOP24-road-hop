@@ -21,7 +21,7 @@ public interface SkinManager {
      * @param skinId the id of the skin to buy
      * @param coins the number of coins the player has
      */
-    void buySkin(String skinId, int coins);
+    boolean buySkin(String skinId, int coins);
 
     /**
      * Selects a skin if it is unlocked.
