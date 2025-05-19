@@ -3,10 +3,11 @@ package it.unibo.model.Player.api;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.api.Cell;
+import it.unibo.model.Shop.api.Skin;
 
 import java.util.Optional;
 
-
+// può servire un getter della massima posizione raggiunta?
 
 public interface Player extends GameObject {
 
@@ -33,37 +34,41 @@ public interface Player extends GameObject {
     Optional<Cell> getCurrentCell();
 
 
-     /**
-      * Checks if the player is alive
-      *
-      *@return true if the players is alive, false otherwise
-      */
-      boolean isAlive();
+    /**
+    * Checks if the player is alive
+    *
+    *@return true if the players is alive, false otherwise
+    */
+    boolean isAlive();
 
-      /**
-       * Handels the death of the player
-       */
-      void die();
+    /**
+    * Handels the death of the player
+    */
+    void die();
 
-      /**
-       * Gets the number of coins collected by the player
-       * 
-       * @return the number of collected coins
-       */
-      int getCollectedCoins();
+    /**
+     * Resets the player to his initial state
+     */
+    void reset();
+    /**
+    * Gets the number of coins collected by the player
+    * 
+    * @return the number of collected coins
+    */
+    int getCollectedCoins();
 
-      /**
-       * Returns the id of the current skin
-       * 
-       * @return the player's current skin
-       */
-      String getCurrentString();
+    /**
+    * Returns the current skin
+    * 
+    * @return the player's current skin
+    */
+    Skin getCurrentSkin();
 
-      /**
-       * Sets the player's skin
-       * 
-       * @param skin the id of new skin to set
-       */
-      void setSkin(String skin);
+    /**
+    * Sets the player's skin
+    * 
+    * @param skin the new skin to set
+    */
+    void setSkin(Skin skin);
 
 }
