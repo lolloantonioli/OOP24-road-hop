@@ -1,9 +1,9 @@
 package it.unibo.model.Map.impl;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import it.unibo.model.Map.api.Chunk;
@@ -91,7 +91,7 @@ public class GameMapImpl implements GameMap {
 
     @Override
     public List<Chunk> getAllChunks() {
-        return Collections.unmodifiableList(chunks);
+        return ImmutableList.copyOf(chunks);
     }
 
 }

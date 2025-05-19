@@ -2,8 +2,8 @@ package it.unibo.model.Map.impl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import com.google.common.collect.ImmutableList;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,7 +49,7 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public List<Cell> getCells() {
-        return Collections.unmodifiableList(cells);
+        return ImmutableList.copyOf(cells);
     }
 
     @Override
