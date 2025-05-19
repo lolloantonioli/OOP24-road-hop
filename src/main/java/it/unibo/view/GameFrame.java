@@ -1,6 +1,6 @@
 package it.unibo.view;
 
-public interface GameView {
+public interface GameFrame {
 
     void setupView();
 
