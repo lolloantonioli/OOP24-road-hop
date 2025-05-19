@@ -1,8 +1,10 @@
 package it.unibo.model.Map.impl;
 
-import java.util.Collections;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import com.google.common.collect.ImmutableList;
+
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,11 +23,9 @@ public class ChunkImpl implements Chunk {
     public static final int CELLS_PER_ROW = 9;
 
     public ChunkImpl(final int position, final ChunkType type) {
-        if (position < 0) {
-            throw new IllegalArgumentException("Position cannot be negative");
-        }
+        checkArgument(position >= 0, "Position must be non-negative");
         this.position = position;
-        this.type = Objects.requireNonNull(type, "ChunkType cannot be null"); // mettere nella doc la dicitura @throws NullPointerException
+        this.type = checkNotNull(type, "ChunkType cannot be null"); // mettere nella doc la dicitura @throws NullPointerException
         this.cells = IntStream.range(0, CELLS_PER_ROW)
             .mapToObj(x -> new CellImpl(x, position))
             .collect(Collectors.toList());
@@ -33,10 +33,8 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public boolean addObjectAt(final GameObject obj, final int cellX) {
-        if (cellX < 0 || cellX >= CELLS_PER_ROW) {
-            throw new IllegalArgumentException("Cell index out of bounds");
-        }
-        Objects.requireNonNull(obj, "GameObject cannot be null");
+        checkArgument(cellX >= 0 && cellX < CELLS_PER_ROW, "Cell index out of bounds");
+        checkNotNull(obj, "GameObject cannot be null");
         return (cellX >= 0 && cellX < CELLS_PER_ROW) && cells.get(cellX).addObject(obj);
     }
 
@@ -51,7 +49,7 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public List<Cell> getCells() {
-        return Collections.unmodifiableList(cells);
+        return ImmutableList.copyOf(cells);
     }
 
     @Override

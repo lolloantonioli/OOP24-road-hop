@@ -1,7 +1,9 @@
 package it.unibo.model.Map.impl;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import it.unibo.model.Map.api.Chunk;
@@ -20,9 +22,7 @@ public class GameMapImpl implements GameMap {
     private static final int MAX_SPEED = 10;
 
     public GameMapImpl(final int speed) {
-        if (speed < 0 || speed > MAX_SPEED) {
-            throw new IllegalArgumentException("Speed must be between 0 and " + MAX_SPEED);
-        }
+        checkArgument(speed >= 0 && speed <= MAX_SPEED, "Speed must be between 0 and " + MAX_SPEED);
         this.chunks = new ArrayList<>();
         this.chunkFactory = new ChunkFactoryImpl();
         this.currentPosition = 0;
@@ -91,7 +91,7 @@ public class GameMapImpl implements GameMap {
 
     @Override
     public List<Chunk> getAllChunks() {
-        return Collections.unmodifiableList(chunks);
+        return ImmutableList.copyOf(chunks);
     }
 
 }

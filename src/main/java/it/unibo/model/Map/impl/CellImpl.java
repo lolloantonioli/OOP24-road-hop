@@ -1,5 +1,7 @@
 package it.unibo.model.Map.impl;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.Optional;
 
 import it.unibo.model.Map.api.Cell;
@@ -11,10 +13,10 @@ public class CellImpl implements Cell {
     private final int x;
     private final int y;
 
+    private static final String MSG = "Coordinates must be non-negative";
+
     public CellImpl(final int x, final int y) {
-        if (x < 0 || y < 0) {
-            throw new IllegalArgumentException("Coordinates must be non-negative");
-        }
+        checkArgument(x >= 0 && y >= 0, MSG);
         this.x = x;
         this.y = y;
         this.content = Optional.empty();

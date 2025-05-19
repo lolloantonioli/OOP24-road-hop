@@ -1,5 +1,7 @@
 package it.unibo.model.Map.impl;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import it.unibo.model.Map.api.GameObject;
 
 public class GameObjectImpl implements GameObject {
@@ -11,9 +13,7 @@ public class GameObjectImpl implements GameObject {
     private boolean platform;
 
     public GameObjectImpl(final int x, final int y) {
-        if (x < 0 || y < 0) {
-            throw new IllegalArgumentException("Coordinates must be non-negative");
-        }
+        checkArgument(x >= 0 && y >= 0, "Coordinates must be non-negative");
         this.x = x;
         this.y = y;
         this.movable = false;
@@ -60,9 +60,7 @@ public class GameObjectImpl implements GameObject {
 
     @Override
     public void setSpeed(final int speed) {
-        if (speed < 0) {
-            throw new IllegalArgumentException("Speed must be non-negative");
-        }
+        checkArgument(speed >= 0, "Speed must be non-negative");
         this.speed = speed;
     }
 
