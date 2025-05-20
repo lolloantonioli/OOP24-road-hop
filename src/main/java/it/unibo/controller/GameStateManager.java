@@ -1,6 +1,9 @@
 package it.unibo.controller;
 
 public class GameStateManager {
+   
+    private static GameStateManager istance;
+   
     private GameState currentState;
     private final GameInitializer gameInitializer;
     private final ShopInitializer shopInitializer;
@@ -9,6 +12,19 @@ public class GameStateManager {
         this.currentState = GameState.MENU;
         this.gameInitializer = gameInitializer;
         this.shopInitializer = shopInitializer;
+        
+        //Set this as the singleton instance
+        if (istance == null) {
+            istance = this;
+        }
+    }
+
+    /**
+     * Gets the singleton instance of GameStateManager.
+     * @return The singleton instance
+     */
+    public static GameStateManager getInstance() {
+        return istance;
     }
     /**
      * Gets the current state of the game.
@@ -23,7 +39,24 @@ public class GameStateManager {
      * @param state The new state
      */
     public void setState(GameState state) {
-        this.currentState = state;
+        switch (state) {
+            case PLAYING:
+                if (currentState != GameState.PLAYING) {
+                    gameInitializer.initGame();
+                }
+                break;
+            case SHOP:
+                if (currentState != GameState.SHOP) {
+                    shopInitializer.initShop();
+                }
+                break;
+            case MENU:
+                //implement menu logic
+                break;
+            case GAME_OVER:
+                //implement game over logic
+                break;
+        }
     }
 
     /**
