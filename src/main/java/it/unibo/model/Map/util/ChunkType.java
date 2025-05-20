@@ -9,7 +9,7 @@ public final class ChunkType {
 
     private final String name;
 
-    private ChunkType(String name) {
+    private ChunkType(final String name) {
         this.name = name;
     }
 

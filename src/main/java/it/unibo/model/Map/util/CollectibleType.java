@@ -7,7 +7,7 @@ public final class CollectibleType {
 
     private final String name;
 
-    private CollectibleType(String name) {
+    private CollectibleType(final String name) {
         this.name = name;
     }
 
