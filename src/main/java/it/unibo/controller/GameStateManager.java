@@ -2,7 +2,14 @@ package it.unibo.controller;
 
 public class GameStateManager {
     private GameState currentState;
-    
+    private final GameInitializer gameInitializer;
+    private final ShopInitializer shopInitializer;
+
+    public GameStateManager(GameInitializer gameInitializer, ShopInitializer shopInitializer) {
+        this.currentState = GameState.MENU;
+        this.gameInitializer = gameInitializer;
+        this.shopInitializer = shopInitializer;
+    }
     /**
      * Gets the current state of the game.
      * @return The current state
@@ -24,7 +31,7 @@ public class GameStateManager {
      */
     public void startGame() {
         currentState = GameState.PLAYING;
-        // Initialize game logic here
+        gameInitializer.initGame();
     }
 
     /**
@@ -47,6 +54,7 @@ public class GameStateManager {
      */
     public void openShop() {
         currentState = GameState.SHOP;
+        shopInitializer.initShop();
     }
 
     /**
