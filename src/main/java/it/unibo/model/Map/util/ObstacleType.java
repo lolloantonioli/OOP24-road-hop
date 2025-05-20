@@ -9,7 +9,7 @@ public final class ObstacleType {
 
     private final String name;
 
-    private ObstacleType(String name) {
+    private ObstacleType(final String name) {
         this.name = name;
     }
 
