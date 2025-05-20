@@ -1,8 +1,7 @@
 package it.unibo.controller.Shop.api;
 
-import java.util.List;
 
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.view.Shop.api.ShopView;
 
 public interface ShopController {
     
@@ -28,29 +27,10 @@ public interface ShopController {
      * @param skinId The ID of the skin to select
      */
     public void selectSkin(String skinId);
-
     /**
-     * Gets the list of available skins.
-     * @return A List of available skins
+     * Gets the view of the shop.
+     * @return The shop view
      */
-    public List<Skin> getAvailableSkins();
-
-    /**
-     * Gets the currently selected skin.
-     * @return The selected skin 
-     */
-    public Skin getSelectedSkin();
-
-    /**
-     * Gets a skin by its ID.
-     * @param skinId The ID of the skin to get
-     * @return The skin with the specified ID, or null if not found
-     */
-    public Skin getSkinById(String id);
-
-    /**
-     * Returns to the main menu.
-     */
-    public void returnToMainMenu();
+    public ShopView getView();
     
 }

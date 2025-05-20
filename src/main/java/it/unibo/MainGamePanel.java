@@ -87,7 +87,7 @@ public class MainGamePanel extends JPanel implements GameStateManager.GameInitia
 
     @Override
     public void initGame() {
-        if (menuController == null) {
+        if (gameMap == null) {
                 gameMap = new GameMapImpl(scaleManager.getBaseWidth());
                 mapController = new MapControllerImpl(gameMap);
         }
@@ -116,7 +116,9 @@ public class MainGamePanel extends JPanel implements GameStateManager.GameInitia
         
         scaleManager.updateScale(width, height);
 
-        menuController.updateViewDimensions(width, height);
+        if (menuController != null){
+            menuController.updateViewDimensions(width, height);
+        }
         // Update the scale of the menu view
         // Update the scale of the map view
         
@@ -125,7 +127,9 @@ public class MainGamePanel extends JPanel implements GameStateManager.GameInitia
     public void update() {
         switch (gameStateManager.getCurrentState()) {
             case MENU:
-                mapController.updateMap();
+                if (mapController != null){
+                    mapController.updateMap();
+                }
                 break;
             case PLAYING:
                 // Update game logic
@@ -139,5 +143,16 @@ public class MainGamePanel extends JPanel implements GameStateManager.GameInitia
         }
 
         repaint();
+    }
+
+    public void setMenuController(MenuController controller) {
+        this.menuController = controller;
+        if (menuView != null){
+            menuView.setController(controller);
+        }
+    }
+
+    public MenuView getMenuView() {
+        return menuView;
     }
 }
