@@ -30,5 +30,5 @@ public interface MenuController {
      * @param x The X coordinate of the click
      * @param y The Y coordinate of the click
      */
-    void handleClick(int x, int y);
+    boolean handleClick(int x, int y); 
 }   

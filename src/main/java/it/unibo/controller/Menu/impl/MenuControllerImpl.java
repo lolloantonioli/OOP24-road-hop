@@ -1,37 +1,46 @@
 package it.unibo.controller.Menu.impl;
 
+import it.unibo.MainGamePanel;
+import it.unibo.controller.GameState;
 import it.unibo.controller.GameStateManager;
 import it.unibo.controller.Menu.api.MenuController;
 import it.unibo.view.Menu.api.MenuView;
 
 public class MenuControllerImpl implements MenuController {
     
-    private final MenuView view;
+   
+    private  MenuView view;
     private final GameStateManager gameStateManager;
     
     /**
      * Builder for the controller of the menu.
      * @param gameStateManager The game state manager
      */
-    public MenuControllerImpl(MenuView view,GameStateManager gameStateManager) {
+    public MenuControllerImpl(MenuView view) {
+        this.gameStateManager = GameStateManager.getInstance();
         this.view = view;
-        this.gameStateManager = gameStateManager;
-        this.view.setController(this);
+
+        if(this.view != null){
+            this.view.setController(this);
+        }
     }
 
     @Override
     public void startGame() {
-      gameStateManager.startGame();
+        System.out.println("Starting game...");
+      gameStateManager.setState(GameState.PLAYING);
     }
 
     @Override
     public void openShop() {
-       gameStateManager.openShop();
+        System.out.println("Opening shop...");
+        gameStateManager.setState(GameState.SHOP);
     }
 
     @Override
     public void exitGame() {
-       System.exit(0); 
+        System.out.println("Exiting game...");
+        System.exit(0); 
     }
 
     @Override
@@ -39,8 +48,8 @@ public class MenuControllerImpl implements MenuController {
         view.updateDimensions(width, height);}
 
     @Override
-    public void handleClick(int x, int y) {
-       view.handleClick(x, y);
+    public boolean handleClick(int x, int y) {
+       return view.handleClick(x, y);
     }
    
 }
