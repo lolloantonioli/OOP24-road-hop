@@ -1,30 +1,33 @@
 package it.unibo.controller.Shop.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import it.unibo.controller.GameStateManager;
+
+import com.google.common.math.Quantiles.Scale;
+
 import it.unibo.controller.Shop.api.ShopController;
-import it.unibo.model.Shop.api.Skin;
+
+import it.unibo.view.ScaleManager;
+import it.unibo.view.Shop.api.ShopView;
+import it.unibo.view.Shop.api.SkinManager;
+import it.unibo.view.Shop.impl.ShopViewImpl;
 
 public class ShopControllerImpl implements ShopController {
     private int playerCoins;
-    private String selectedSkin;
-    private final Map<String, Skin> availableSkins;
-    private final GameStateManager gameStateManager;
+    private final SkinManager skinManager;
+    private final ShopView shopView;
 
-    public ShopControllerImpl(GameStateManager gameStateManager) {
-        this.gameStateManager = gameStateManager;
+
+
+    public ShopControllerImpl(SkinManager skinManager, ScaleManager scaleManager) {
+        this.skinManager = skinManager;
         this.playerCoins = 0;
-        this.availableSkins = new HashMap<>();
-        this.selectedSkin = "default";
+        this.shopView = new ShopViewImpl(skinManager, scaleManager);
     }
     
     @Override
     public void setPlayerCoins(int coins) {
         this.playerCoins = coins;
+        shopView.setCoins(coins);
     }
 
     @Override
@@ -34,45 +37,24 @@ public class ShopControllerImpl implements ShopController {
 
     @Override
     public void buySkin(String skinId) {
-        if(!availableSkins.containsKey(skinId)) {
-            return;
+        if(skinManager.buySkin(skinId, playerCoins)) {
+            playerCoins -= skinManager.getAvailableSkins().stream()
+                .filter(s -> s.getId().equals(skinId))
+                .findFirst()
+                .orElseThrow()
+                .getPrice();
+            shopView.setCoins(playerCoins);
         }
-        Skin skin = availableSkins.get(skinId);
-
-        //Check if the skin is already owned or if the player has enough coins
-        if (skin.isUnlocked() || playerCoins < skin.getPrice()) {
-            return;
-        }
-
-        //Buy the skin
-        playerCoins -= skin.getPrice();
-        skin.setUnlocked(true);
     }
 
     @Override
     public void selectSkin(String skinId) {
-        if(availableSkins.containsKey(skinId) && availableSkins.get(skinId).isUnlocked())
-        this.selectedSkin = skinId;
+        skinManager.selectSkin(skinId);
     }
 
     @Override
-    public List<Skin> getAvailableSkins() {
-        return new ArrayList<>(availableSkins.values());       
-    }
-
-    @Override
-    public Skin getSelectedSkin() {
-        return availableSkins.get(selectedSkin);
-    }
-
-    @Override
-    public Skin getSkinById(String id) {
-        return availableSkins.get(id);  
-    }
-
-    @Override
-    public void returnToMainMenu() {
-        gameStateManager.returnToMenu();
+    public ShopView getView() {
+        return shopView;
     }
 
     
