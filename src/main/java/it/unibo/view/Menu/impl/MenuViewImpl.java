@@ -59,7 +59,11 @@ public class MenuViewImpl implements MenuView {
             buttonWidth,
             buttonHeight,
             "Play",
-            e -> controller.startGame()
+            e -> {
+                if (controller != null){
+                    controller.startGame();
+                }
+            }
         );
         buttons.add(playButton);
 
@@ -70,7 +74,11 @@ public class MenuViewImpl implements MenuView {
             buttonWidth,
             buttonHeight,
             "Shop",
-            e -> controller.openShop()
+            e -> {
+                if (controller != null){
+                    controller.openShop();
+                }
+            }
         );
         buttons.add(shopButton);
 
@@ -81,7 +89,11 @@ public class MenuViewImpl implements MenuView {
             buttonWidth,
             buttonHeight,
             "Exit",
-            e -> controller.exitGame()
+            e -> {
+                if (controller != null){
+                    controller.exitGame();
+                }
+            }
         );
     }
 
@@ -126,6 +138,11 @@ public class MenuViewImpl implements MenuView {
             FontMetrics fm = g.getFontMetrics();
             int titleWidth = fm.stringWidth(title);
             g.drawString(title, (currentWidth - titleWidth) / 2, currentHeight / 4);
+        }
+
+        // Draw the buttons
+        for (MenuButton button : buttons) {
+            button.render(g, this);
         }
 
     }
