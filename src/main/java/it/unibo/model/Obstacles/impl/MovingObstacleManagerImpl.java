@@ -9,10 +9,6 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 
-/**
- * Implementation of the MovingObstacleManager interface.
- * Manages all moving obstacles in the game.
- */
 public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     private final List<MovingObstacles> obstacles;
@@ -50,8 +46,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     }
     
     /**
-     * Checks for collisions between obstacles and handles them.
-     * This is optional behavior that can create more realistic traffic.
+     * Controlla se ci sono collisioni tra gli ostacoli e se serve le sistema.
      */
     private void checkObstacleCollisions() {
         // Per semplicità, controlliamo solo collisioni tra ostacoli dello stesso tipo
@@ -100,7 +95,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
                 result.add(obstacle);
             }
         }
-    
+
         return result;
     }
     
