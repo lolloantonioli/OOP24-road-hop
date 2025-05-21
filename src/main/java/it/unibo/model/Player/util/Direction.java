@@ -1,24 +1,35 @@
 package it.unibo.model.Player.util;
 
 public enum Direction {
-    UP(1),
-    DOWN(-1),
-    LEFT(-1),
-    RIGHT(1);
+    UP(0, 1),
+    DOWN(0, -1),
+    LEFT(-1, 0),
+    RIGHT(1, 0);
     
-    private final int value;
+    private final int deltaX;
+    private final int deltaY;
     
-    Direction(final int value) {
-        this.value = value;
+    Direction(final int deltaX, final int deltaY) {
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
     }
     
     /**
-     * Gets the movement value associated with this direction.
+     * Gets the X-axis movement value associated with this direction.
      * 
-     * @return the value
+     * @return the delta X value
      */
-    public int getValue() {
-        return value;
+    public int getDeltaX() {
+        return deltaX;
+    }
+
+    /**
+     * Gets the Y-axis movement value associated with this direction.
+     * 
+     * @return the delta Y value
+     */
+    public int getDeltaY() {
+        return deltaY;
     }
     
     /**
@@ -27,7 +38,7 @@ public enum Direction {
      * @return true if horizontal, false if vertical
      */
     public boolean isHorizontal() {
-        return this == LEFT || this == RIGHT;
+        return deltaY == 0;
     }
     
     /**
@@ -36,6 +47,6 @@ public enum Direction {
      * @return true if vertical, false if horizontal
      */
     public boolean isVertical() {
-        return this == UP || this == DOWN;
+        return deltaX == 0;
     }
 }
