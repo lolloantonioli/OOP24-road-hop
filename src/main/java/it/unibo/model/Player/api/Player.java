@@ -35,40 +35,39 @@ public interface Player extends GameObject {
 
 
     /**
-    * Checks if the player is alive
-    *
-    *@return true if the players is alive, false otherwise
-    */
+     * Checks if the player is alive
+     * @return true if the players is alive, false otherwise
+     */
     boolean isAlive();
 
     /**
-    * Handels the death of the player
-    */
+     * Handels the death of the player
+     */
     void die();
 
     /**
      * Resets the player to his initial state
      */
     void reset();
+
     /**
-    * Gets the number of coins collected by the player
-    * 
-    * @return the number of collected coins
-    */
+     * Gets the number of coins collected by the player
+     * @return the number of collected coins
+     */
     int getCollectedCoins();
 
     /**
-    * Returns the current skin
-    * 
-    * @return the player's current skin
-    */
+     * Returns the current skin
+     * 
+     * @return the player's current skin
+     */
     Skin getCurrentSkin();
 
     /**
-    * Sets the player's skin
-    * 
-    * @param skin the new skin to set
-    */
+     * Sets the player's skin
+     * 
+     * @param skin the new skin to set
+     */
     void setSkin(Skin skin);
 
 }
