@@ -68,7 +68,7 @@ public class MovingObstacles implements Obstacle{
     }
 
     /**
-     * Resets the obstacle to its initial position.
+     * Reimposta gli ostacoli alla posizione iniziale.
      */
     public void reset() {
         this.x = initialX;
@@ -76,9 +76,9 @@ public class MovingObstacles implements Obstacle{
     }
 
     /**
-     * Sets a new initial position for the obstacle.
+     * Setta una nuova posizione iniziale.
      * 
-     * @param newX New initial X position
+     * @param newX Nuova X posizione iniziale
      */
     public void setInitialX(int newX) {
         this.initialX = newX;
@@ -94,10 +94,10 @@ public class MovingObstacles implements Obstacle{
     }
 
     /**
-     * Checks if this obstacle collides with another obstacle.
+     * Controlla se un ostacolo collide con un altro.
      * 
-     * @param other Another obstacle to check collision with
-     * @return True if the obstacles collide
+     * @param other Altro ostacolo con cui controllare la collisione
+     * @return Vero se l'ostacolo collide
      */
     public boolean collidesWith(Obstacle other) {
         if (!visible) {
@@ -140,9 +140,9 @@ public class MovingObstacles implements Obstacle{
     }
 
     /**
-     * Increases the speed of the obstacle by the specified amount.
+     * Aumenta la velocità dell'ostacolo di una certa quantità.
      * 
-     * @param amount Amount to increase speed by
+     * @param amount Quantità di cui verrà aumentata
      */
     public void increaseSpeed(int amount) {
         // Mantiene il segno originale (direzione)
@@ -167,28 +167,28 @@ public class MovingObstacles implements Obstacle{
     }
 
      /**
-     * Checks if the obstacle is currently visible.
+     * Controlla se l'ostacolo è visibile.
      * 
-     * @return True if visible
+     * @return Vero se è visibile.
      */
     public boolean isVisible() {
         return visible;
     }
 
     /**
-     * Sets the visibility of the obstacle.
+     * Setta la visibilità dell'ostacolo.
      * 
-     * @param visible True to make the obstacle visible
+     * @param visible Vero per segnare l'ostacolo visibile
      */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
     /**
-     * Gets the obstacle's difficulty level based on its type and speed.
-     * Used for scoring or difficulty adjustments.
+     * Ottiene il livello di difficoltà dell'ostacolo in base al tipo e alla velocità.
+     * Utilizzato per il punteggio o per regolare la difficoltà.
      * 
-     * @return Difficulty value
+     * @return Valore difficoltà
      */
     public int getDifficultyLevel() {
         int baseLevel = type == ObstacleType.TRAIN ? 3 : 1;

@@ -2,13 +2,9 @@ package it.unibo.model.Obstacles.impl;
 
 import java.util.Random;
 
-import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
-/**
- * Implementation of the MovingObstacleFactory interface.
- * Handles creation of different types of moving obstacles.
- */
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
     private final Random random;
@@ -94,7 +90,6 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             
             cars[i] = createCar(x, y, speed);
         }
-        
         return cars;
     }
     
@@ -131,7 +126,6 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             
             trains[i] = createTrain(x, y, speed);
         }
-        
         return trains;
     }
 }
