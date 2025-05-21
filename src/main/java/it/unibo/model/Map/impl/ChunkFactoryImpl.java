@@ -94,7 +94,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
             final List<Integer> selectedPattern = patterns.get(patternIndex);
             for (Integer pos : selectedPattern) {
                 if (pos < ChunkImpl.CELLS_PER_ROW) {
-                    Obstacle tree = new ObstacleImpl(pos, chunk.getPosition(), ObstacleType.TREE, false);
+                    final Obstacle tree = new ObstacleImpl(pos, chunk.getPosition(), ObstacleType.TREE, false);
                     chunk.addObjectAt(tree, pos);
                 }
             }
@@ -103,14 +103,14 @@ public class ChunkFactoryImpl implements ChunkFactory {
         @Override
         public void placeCollectibles(final Chunk chunk) {
             if (random.nextDouble() < 0.4) {
-                Set<Integer> occupiedPositions = new HashSet<>();
+                final Set<Integer> occupiedPositions = new HashSet<>();
                 for (var object : chunk.getObjects()) {
                     if (object instanceof Obstacle) {
                         occupiedPositions.add(object.getX());
                     }
                 }
                 
-                List<Integer> availablePositions = new ArrayList<>();
+                final List<Integer> availablePositions = new ArrayList<>();
                 for (int i = 0; i < ChunkImpl.CELLS_PER_ROW; i++) {
                     if (!occupiedPositions.contains(i)) {
                         availablePositions.add(i);
@@ -118,12 +118,8 @@ public class ChunkFactoryImpl implements ChunkFactory {
                 }
                 
                 if (!availablePositions.isEmpty()) {
-                    int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
-                    Collectible coin = new CollectibleImpl(
-                        collectiblePos, 
-                        chunk.getPosition(), 
-                        CollectibleType.COIN
-                    );
+                    final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
+                    final Collectible coin = new CollectibleImpl(collectiblePos, chunk.getPosition(), CollectibleType.COIN);
                     chunk.addObjectAt(coin, collectiblePos);
                 }
             }
