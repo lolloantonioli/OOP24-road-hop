@@ -131,6 +131,7 @@ class ChunkFactoryTest {
             }
         }
         assertTrue(hasObstacles);
+        assertTrue(hasCollectibles);
     }
 
     @Test
