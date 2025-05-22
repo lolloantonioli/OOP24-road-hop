@@ -14,7 +14,7 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.GameMapImpl;
 
-public class GameMapTest {
+class GameMapTest {
     
     private GameMap gameMap;
 
