@@ -54,7 +54,8 @@ public class ChunkImpl implements Chunk {
 
     @Override
     public Cell getCellAt(final int cellX) {
-        return (cellX >= 0 && cellX < CELLS_PER_ROW) ? cells.get(cellX) : null;
+        checkArgument(cellX >= 0 && cellX < CELLS_PER_ROW, "Cell index out of bounds");
+        return cells.get(cellX);
     }
 
     @Override
