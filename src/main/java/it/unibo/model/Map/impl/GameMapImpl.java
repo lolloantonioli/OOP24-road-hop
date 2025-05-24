@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.ChunkFactory;
@@ -32,9 +33,8 @@ public class GameMapImpl implements GameMap {
     }
 
     private void initializeMap() {
-        for (int i = 0; i < CHUNKS_NUMBER; i++) {
-            chunks.add(chunkFactory.createGrassChunk(i));
-        }
+        IntStream.range(0, CHUNKS_NUMBER)
+            .forEach(i -> chunks.add(chunkFactory.createGrassChunk(i)));
     }
 
     @Override
