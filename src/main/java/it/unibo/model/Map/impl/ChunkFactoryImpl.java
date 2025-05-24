@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.ChunkFactory;
@@ -92,30 +93,26 @@ public class ChunkFactoryImpl implements ChunkFactory {
         public void placeObstacles(final Chunk chunk) {
             final int patternIndex = random.nextInt(patterns.size());
             final List<Integer> selectedPattern = patterns.get(patternIndex);
-            for (Integer pos : selectedPattern) {
+            selectedPattern.forEach(pos -> {
                 if (pos < ChunkImpl.CELLS_PER_ROW) {
                     final Obstacle tree = new ObstacleImpl(pos, chunk.getPosition(), ObstacleType.TREE, false);
                     chunk.addObjectAt(tree, pos);
                 }
-            }
+            });
         }
 
         @Override
         public void placeCollectibles(final Chunk chunk) {
             if (random.nextDouble() < 0.4) {
                 final Set<Integer> occupiedPositions = new HashSet<>();
-                for (var object : chunk.getObjects()) {
-                    if (object instanceof Obstacle) {
-                        occupiedPositions.add(object.getX());
-                    }
-                }
+                chunk.getObjects().stream()
+                    .filter(obj -> obj instanceof Obstacle)
+                    .forEach(obj -> occupiedPositions.add(obj.getX()));
                 
                 final List<Integer> availablePositions = new ArrayList<>();
-                for (int i = 0; i < ChunkImpl.CELLS_PER_ROW; i++) {
-                    if (!occupiedPositions.contains(i)) {
-                        availablePositions.add(i);
-                    }
-                }
+                IntStream.range(0, ChunkImpl.CELLS_PER_ROW)
+                    .filter(i -> !occupiedPositions.contains(i))
+                    .forEach(i -> availablePositions.add(i));
                 
                 if (!availablePositions.isEmpty()) {
                     final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
