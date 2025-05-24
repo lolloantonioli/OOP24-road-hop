@@ -35,7 +35,7 @@ public class ChunkImpl implements Chunk {
     public boolean addObjectAt(final GameObject obj, final int cellX) {
         checkArgument(cellX >= 0 && cellX < CELLS_PER_ROW, "Cell index out of bounds");
         checkNotNull(obj, "GameObject cannot be null");
-        return (cellX >= 0 && cellX < CELLS_PER_ROW) && cells.get(cellX).addObject(obj);
+        return cells.get(cellX).addObject(obj);
     }
 
     @Override
