@@ -2,6 +2,7 @@ package it.unibo.view;
 
 import javax.swing.JFrame;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -22,7 +23,7 @@ public class GameFrameImpl extends JFrame implements GameFrame {
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
 
-        this.setContentPane((Container) menuPanel);
+        this.getContentPane().add((Component) menuPanel);
         this.setSize(sw / 3, sh / 3);
         this.setLocationByPlatform(true);
         this.setVisible(true);
