@@ -1,10 +1,11 @@
 package it.unibo.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.File;
-
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,39 +17,45 @@ public class MenuPanelImpl extends JPanel implements MenuPanel {
     private final JButton playButton;
     private final JButton settingsButton;
     private final JButton shopButton;
-    private final BoxLayout layout;
     private final JLabel logoLabel;
-    private ImageIcon logoIcon;
     
     public static final String SEP = File.separator;
     public static final String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
-
+    
     public MenuPanelImpl() {
-        layout = new BoxLayout(this, BoxLayout.LINE_AXIS);
+        this.setLayout(new GridBagLayout());
+        this.setBackground(Color.RED);
+        
         playButton = new JButton("Play");
         settingsButton = new JButton("Settings");
         shopButton = new JButton("Shop");
-        logoIcon = new ImageIcon(LOGO_PATH);
         logoLabel = new JLabel();
-
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight();
-
-        final int logoWidth = sw / 6;  // Puoi modificare questo rapporto
-        final int logoHeight = sh / 6; // Puoi modificare questo rapporto
-
+        
         ImageIcon originalIcon = new ImageIcon(LOGO_PATH);
-        Image scaledImage = originalIcon.getImage().getScaledInstance(
-            logoWidth, logoHeight, Image.SCALE_SMOOTH);
-        logoIcon = new ImageIcon(scaledImage);
-
+        int logoWidth = originalIcon.getIconWidth() / 4;
+        int logoHeight = originalIcon.getIconHeight() / 4;
+        Image scaledImage = originalIcon.getImage().getScaledInstance(logoWidth, logoHeight, Image.SCALE_SMOOTH);
+        ImageIcon logoIcon = new ImageIcon(scaledImage);
         logoLabel.setIcon(logoIcon);
-        this.setLayout(layout);
-        this.add(logoLabel);
-        this.add(playButton);
-        this.add(settingsButton);
-        this.add(shopButton);
+        
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBackground(Color.RED);
+        
+        logoLabel.setAlignmentX(CENTER_ALIGNMENT);
+        playButton.setAlignmentX(CENTER_ALIGNMENT);
+        settingsButton.setAlignmentX(CENTER_ALIGNMENT);
+        shopButton.setAlignmentX(CENTER_ALIGNMENT);
+        
+        centerPanel.add(logoLabel);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        centerPanel.add(playButton);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        centerPanel.add(settingsButton);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        centerPanel.add(shopButton);
+        
+        this.add(centerPanel);
     }
 
 }

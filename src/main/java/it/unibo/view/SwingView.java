@@ -15,6 +15,7 @@ public class SwingView implements GameView {
         this.frame = new JFrame("Road Hop");
         this.menuPanel = new MenuPanelImpl();
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setMinimumSize(new Dimension(800, 600));
         this.frame.add((Component) menuPanel);
     }
 
@@ -27,7 +28,5 @@ public class SwingView implements GameView {
         this.frame.setLocationByPlatform(true);
         this.frame.setVisible(true);
     }
-
-
 
 }
