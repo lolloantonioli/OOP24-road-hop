@@ -15,6 +15,8 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     private static final int DEFAULT_STARTING_X = 0;
     private static final int DEFAULT_STARTING_Y = 0;
+    private static final int PLAYER_WIDTH = 30; // Larghezza logica del player
+    private static final int PLAYER_HEIGHT = 30; // Altezza logica del player
 
     private int score;
     private int collectedCoins;
@@ -91,6 +93,14 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public void setSkin(Skin skin) {
         checkNotNull(skin, "skin cannot be null");
         currentSkin = skin;
+    }
+
+    public int getPlayerHeight() {
+        return PLAYER_HEIGHT;
+    }
+
+    public int getPlayerWidth() {
+        return PLAYER_WIDTH;
     }
 
 }

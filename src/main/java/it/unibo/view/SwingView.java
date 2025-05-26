@@ -6,10 +6,15 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import it.unibo.view.Shop.api.ShopView;
+import it.unibo.view.Shop.impl.ShopViewImpl;
+
 public class SwingView implements GameView {
 
     private final JFrame frame;
     private final MenuPanel menuPanel;
+    private final ShopView shopView;
+
 
     public SwingView() {
         this.frame = new JFrame("Road Hop");
@@ -17,6 +22,7 @@ public class SwingView implements GameView {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setMinimumSize(new Dimension(800, 600));
         this.frame.add((Component) menuPanel);
+        this.shopView = new ShopViewImpl();
     }
 
     public void display() {

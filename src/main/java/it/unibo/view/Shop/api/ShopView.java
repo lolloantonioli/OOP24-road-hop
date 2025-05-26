@@ -1,6 +1,11 @@
 package it.unibo.view.Shop.api;
 
-import java.awt.Graphics;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import it.unibo.model.Shop.api.Skin;
 
 public interface ShopView {
     
@@ -17,15 +22,20 @@ public interface ShopView {
     void setOnBackToMainMenu(Runnable onBackToMainMenu);
 
     /**
-     * Handles the mouse click event.
-     * @param x the x-coordinate of the mouse click
-     * @param y the y-coordinate of the mouse click
+     * Sets the skin.
+     * @param skin the skin to set
      */
-    void handleMouseClick(int x, int y);
+    void setSkins(List<Skin> skins);
 
     /**
-     * Paints the component.
-     * @param g the graphics context
+     * Sets the Skin to Purchase
+     * @param skin the skin to set
      */
-    void paintComponent(Graphics g);
+    void setOnSkinPurchase(BiConsumer<String, Integer> skinPurchase);
+
+    /**
+     * Sets the action to be performed when a skin is selected.
+     * @param onSkinSelected the action to set
+     */
+    void setOnSkinSelected(Consumer<String> onSkinSelected);
 }

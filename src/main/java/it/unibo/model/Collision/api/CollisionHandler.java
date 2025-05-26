@@ -26,7 +26,16 @@ public interface CollisionHandler {
      * @param map the game map
      * @return true if a fatal collision occurred, false otherwise
      */
-    boolean fatalCollisions(Player player, GameMap map);
+    boolean isFatalCollisions(Player player, GameMap map);
+
+    /**
+     * Detects if the player collided with a collectible object.
+     * 
+     * @param player the player
+     * @param map the game map
+     * @return true if the collision with a collectible occurred, false otherwise
+     */
+    boolean isCollectibleCollision(Player player, GameMap map);
 
     /**
      * Checks if the player can move to the specified coordinates.
