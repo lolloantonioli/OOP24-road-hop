@@ -1,6 +1,6 @@
 package it.unibo.view.Shop.api;
 
-import java.awt.Graphics;
+
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;

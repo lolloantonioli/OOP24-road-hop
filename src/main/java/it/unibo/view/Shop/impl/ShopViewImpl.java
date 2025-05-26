@@ -3,19 +3,13 @@ package it.unibo.view.Shop.impl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,8 +22,6 @@ import javax.swing.SwingConstants;
 import it.unibo.model.Shop.api.Skin;
 
 import it.unibo.view.Shop.api.ShopView;
-import it.unibo.view.Shop.api.SkinManager;
-
 public class ShopViewImpl extends JPanel implements ShopView  {
 
     private JLabel titleLabel;
