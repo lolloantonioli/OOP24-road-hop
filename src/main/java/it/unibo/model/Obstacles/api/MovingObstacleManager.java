@@ -6,7 +6,6 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
 
 /**
  * Interface for managing moving obstacles in the game.
- * Handles collision detection, updates, and difficulty scaling.
  */
 public interface MovingObstacleManager {
     
