@@ -1,11 +1,10 @@
 package it.unibo;
 
-import it.unibo.view.GameFrame;
-import it.unibo.view.GameFrameImpl;
+import it.unibo.view.SwingView;
 
 public class App {
     public static void main(String[] args) {
-        GameFrame gameFrame = new GameFrameImpl();
-        gameFrame.display();
+        SwingView view = new SwingView();
+        view.display();
     }
 }
