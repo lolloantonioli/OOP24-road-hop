@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.Menu.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import it.unibo.view.Menu.api.MenuPanel;
 
 public class MenuPanelImpl extends JPanel implements MenuPanel {
 

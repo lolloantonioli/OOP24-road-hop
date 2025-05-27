@@ -1,5 +1,6 @@
 package it.unibo.view;
 
+import it.unibo.view.Menu.api.MenuPanel;
 import it.unibo.view.Shop.api.ShopView;
 
 public interface GameFrame {

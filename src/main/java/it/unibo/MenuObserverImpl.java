@@ -1,7 +1,7 @@
 package it.unibo;
 
 import it.unibo.controller.MainController;
-import it.unibo.view.MenuPanel;
+import it.unibo.view.Menu.api.MenuPanel;
 
 public class MenuObserverImpl {
 
