@@ -4,7 +4,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Optional;
 
+import it.unibo.model.Collision.api.CollisionHandler;
+import it.unibo.model.Collision.impl.CollisionHandlerImpl;
 import it.unibo.model.Map.api.Cell;
+import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Player.api.Player;
@@ -12,9 +15,7 @@ import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
 public class PlayerImpl extends GameObjectImpl implements Player{
-
-    private static final int DEFAULT_STARTING_X = 0;
-    private static final int DEFAULT_STARTING_Y = 0;
+    
     private static final int PLAYER_WIDTH = 30; // Larghezza logica del player
     private static final int PLAYER_HEIGHT = 30; // Altezza logica del player
 
@@ -23,12 +24,14 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     private boolean isAlive;
     private Cell currentCell;
     private Skin currentSkin;
+    private GameMap map;
+    private CollisionHandler collisionHandler;
 
     //keep track of the starting coordinates for the reset
     private final int initialX;
     private final int initialY;
 
-    public PlayerImpl (final int x, final int y, final Skin skin){
+    public PlayerImpl (final int x, final int y, final Skin skin, final GameMap map){
         super(x, y);
         checkNotNull(skin, "skin cannot be null");
 
@@ -37,18 +40,26 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         this.score = 0;
         this.isAlive = true;
         this.currentSkin = skin;
+        this.map = map;
+        collisionHandler = new CollisionHandlerImpl();
 
         setMovable(true);
     }
 
-    public PlayerImpl(Skin skin){
-        this(DEFAULT_STARTING_X, DEFAULT_STARTING_Y, skin);
-    }
-
     @Override
     public boolean move(Direction direction) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+        Cell newpos = new CellImpl(currentCell.getX() + direction.getDeltaX(), currentCell.getX() + direction.getDeltaX()); 
+        if (collisionHandler.canMoveTo(map, newpos)) {
+            currentCell = newpos;
+            if(currentCell.getY() > score) {
+                score = currentCell.getY();
+            }
+            if(collisionHandler.happenedCollision(newpos, map)) {
+
+            }
+        }
+        
+        return false;
     }
 
     @Override
