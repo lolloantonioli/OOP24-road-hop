@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class MenuPanel extends JPanel {
 
     private final JButton playButton;
-    private final JButton settingsButton;
+    private final JButton instructionsButton;
     private final JButton shopButton;
     private final JLabel logoLabel;
     
@@ -27,7 +27,7 @@ public class MenuPanel extends JPanel {
         this.setBackground(Color.RED);
         
         playButton = new JButton("Play");
-        settingsButton = new JButton("Settings");
+        instructionsButton = new JButton("Instructions");
         shopButton = new JButton("Shop");
         logoLabel = new JLabel();
         
@@ -44,14 +44,14 @@ public class MenuPanel extends JPanel {
         
         logoLabel.setAlignmentX(CENTER_ALIGNMENT);
         playButton.setAlignmentX(CENTER_ALIGNMENT);
-        settingsButton.setAlignmentX(CENTER_ALIGNMENT);
+        instructionsButton.setAlignmentX(CENTER_ALIGNMENT);
         shopButton.setAlignmentX(CENTER_ALIGNMENT);
         
         centerPanel.add(logoLabel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         centerPanel.add(playButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        centerPanel.add(settingsButton);
+        centerPanel.add(instructionsButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         centerPanel.add(shopButton);
         
@@ -63,7 +63,7 @@ public class MenuPanel extends JPanel {
     }
 
     public void setSettingsAction(final Runnable action) {
-        settingsButton.addActionListener(e -> action.run());
+        instructionsButton.addActionListener(e -> action.run());
     }
 
     public void setShopAction(final Runnable action) {

@@ -14,6 +14,7 @@ public class GameFrame extends JFrame {
     private final JPanel root;
     private final MenuPanel menuPanel;
     private final ShopView shopView;
+    private final InstructionsPanel instructionsPanel;
 
     private static final String FRAME_NAME = "Road Hop";
     private static final int FRAME_WIDTH = 800;
@@ -24,12 +25,14 @@ public class GameFrame extends JFrame {
         this.root = new JPanel(this.layout);
         this.menuPanel = new MenuPanel();
         this.shopView = new ShopView();
+        this.instructionsPanel = new InstructionsPanel();
 
         this.setTitle(FRAME_NAME);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         root.add((Component) menuPanel, CardName.MENU.toString());
         root.add((Component) shopView, CardName.SHOP.toString());
+        root.add((Component) instructionsPanel, CardName.INSTRUCTIONS.toString());
         this.add(root);
         this.pack();
         this.setLocationRelativeTo(null);
@@ -46,6 +49,10 @@ public class GameFrame extends JFrame {
 
     public ShopView getShopPanel() {
         return this.shopView;
+    }
+
+    public InstructionsPanel getInstructionsPanel() {
+        return this.instructionsPanel;
     }
 
 }

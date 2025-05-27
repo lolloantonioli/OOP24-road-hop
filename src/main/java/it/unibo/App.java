@@ -4,6 +4,6 @@ import it.unibo.controller.MainControllerImpl;
 
 public class App {
     public static void main(String[] args) {
-        new MainControllerImpl().launch();
+        new MainControllerImpl().goToMenu();
     }
 }

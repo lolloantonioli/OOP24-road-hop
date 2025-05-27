@@ -16,7 +16,7 @@ public class MenuObserverImpl implements MenuObserver{
 
     public void activate() {
         menuPanel.setPlayAction(() -> mainController.goToGame());
-        menuPanel.setSettingsAction(() -> mainController.goToSettings());
+        menuPanel.setSettingsAction(() -> mainController.goToInstructions());
         menuPanel.setShopAction(() -> mainController.goToShop());
     }
 
