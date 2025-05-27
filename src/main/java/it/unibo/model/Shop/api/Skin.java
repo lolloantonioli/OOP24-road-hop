@@ -1,7 +1,5 @@
 package it.unibo.model.Shop.api;
 
-import java.awt.image.BufferedImage;
-
 public interface Skin {
     /**
      * Get the id of the skin.
