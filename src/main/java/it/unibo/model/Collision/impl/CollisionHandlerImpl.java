@@ -2,6 +2,7 @@ package it.unibo.model.Collision.impl;
 
 import it.unibo.model.Collision.api.CollisionHandler;
 import it.unibo.model.Map.api.Chunk;
+import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.api.Obstacle;
@@ -29,12 +30,8 @@ public class CollisionHandlerImpl implements CollisionHandler{
         // Controlla collisioni fatali con tutti gli ostacoli nei chunk visibili
         for (Chunk chunk : map.getVisibleChunks()) {
             for (GameObject obj : chunk.getObjects()) {
-                if (obj instanceof Obstacle) {
-                    Obstacle obstacle = (Obstacle) obj;
-                    
-                    if (checkCollision(position, obstacle)) {
-                        return true;
-                    }
+                if (checkCollision(position, obj)) {
+                    return true;
                 }
             }
         }
@@ -52,12 +49,10 @@ public class CollisionHandlerImpl implements CollisionHandler{
         // Controlla collisioni fatali con tutti gli ostacoli nei chunk visibili
         for (Chunk chunk : map.getVisibleChunks()) {
             for (GameObject obj : chunk.getObjects()) {
-                if (obj instanceof Obstacle) {
+                if (obj instanceof Obstacle && checkCollision(position, obj)) {
                     Obstacle obstacle = (Obstacle) obj;
                     
-                    if (checkCollision(position, obstacle) && 
-                        !obstacle.getType().toString().equals("TREE") && 
-                        !isCollectibleCollision(position, map)) {
+                    if (!obstacle.getType().toString().equals("TREE")) {
                         return true;
                     }
                 }
@@ -78,13 +73,28 @@ public class CollisionHandlerImpl implements CollisionHandler{
 
     @Override
     public boolean isCollectibleCollision(Cell position, GameMap map) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isCollectibleCollision'");
+        if (position == null || map == null) {
+            return false;
+        }
+
+        for (Chunk chunk : map.getVisibleChunks()) {
+            for (GameObject obj : chunk.getObjects()) {
+                if (obj instanceof Collectible && checkCollision(position, obj)) {
+                    Collectible collectible = (Collectible) obj;
+                    
+                    if (!collectible.isCollected()) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
     public boolean isOutOfBounds(Cell position, GameMap map) {
-        // TODO Auto-generated method stub
+        //da capire bene come funziona la mappa
         throw new UnsupportedOperationException("Unimplemented method 'isOutOfBounds'");
     }
 

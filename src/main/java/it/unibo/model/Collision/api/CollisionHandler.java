@@ -43,7 +43,7 @@ public interface CollisionHandler {
      * 
      * @param player the player
      * @param map the game map
-     * @return true if the collision with a collectible occurred, false otherwise
+     * @return true if the collision with a collectible not already collected occurred, false otherwise
      */
     boolean isCollectibleCollision(Cell position, GameMap map);
 

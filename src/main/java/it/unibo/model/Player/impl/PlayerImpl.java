@@ -48,15 +48,23 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public boolean move(Direction direction) {
-        Cell newpos = new CellImpl(currentCell.getX() + direction.getDeltaX(), currentCell.getX() + direction.getDeltaX()); 
+        Cell newpos = new CellImpl(currentCell.getX() + direction.getDeltaX(), currentCell.getY() + direction.getDeltaY()); 
         if (collisionHandler.canMoveTo(map, newpos)) {
             currentCell = newpos;
-            if(currentCell.getY() > score) {
+            if (currentCell.getY() > score) {
                 score = currentCell.getY();
             }
-            if(collisionHandler.happenedCollision(newpos, map)) {
-
+            if (collisionHandler.happenedCollision(newpos, map)) {
+                if (collisionHandler.isFatalCollisions(newpos, map)) {
+                    die();
+                }
+                if (collisionHandler.isCollectibleCollision(newpos, map)) {
+                    //bisogna collectare le cose
+                    //metodo di player o di collisionhandler?
+                }
             }
+            
+            return true;
         }
         
         return false;
@@ -74,7 +82,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public boolean isAlive() {
-        return this.isAlive;
+        return this.isAlive && collisionHandler.isOutOfBounds(currentCell, map);
      }
 
     @Override
