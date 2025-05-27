@@ -1,4 +1,4 @@
-package it.unibo.view.Menu.impl;
+package it.unibo.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,9 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import it.unibo.view.Menu.api.MenuPanel;
-
-public class MenuPanelImpl extends JPanel implements MenuPanel {
+public class MenuPanel extends JPanel {
 
     private final JButton playButton;
     private final JButton settingsButton;
@@ -24,7 +22,7 @@ public class MenuPanelImpl extends JPanel implements MenuPanel {
     public static final String SEP = File.separator;
     public static final String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
     
-    public MenuPanelImpl() {
+    public MenuPanel() {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.RED);
         

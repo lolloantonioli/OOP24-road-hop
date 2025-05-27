@@ -4,7 +4,6 @@ import it.unibo.controller.Menu.api.MenuObserver;
 import it.unibo.controller.Menu.impl.MenuObserverImpl;
 import it.unibo.controller.Util.CardName;
 import it.unibo.view.GameFrame;
-import it.unibo.view.GameFrameImpl;
 
 public class MainControllerImpl implements MainController {
 
@@ -12,7 +11,7 @@ public class MainControllerImpl implements MainController {
     private final MenuObserver menuObserver;
 
     public MainControllerImpl() {
-        this.gameFrame = new GameFrameImpl();
+        this.gameFrame = new GameFrame();
         this.menuObserver = new MenuObserverImpl(this, gameFrame.getMenuPanel());
     }
 

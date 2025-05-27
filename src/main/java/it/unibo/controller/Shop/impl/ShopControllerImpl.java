@@ -7,9 +7,9 @@ import com.google.common.math.Quantiles.Scale;
 import it.unibo.controller.Shop.api.ShopController;
 
 import it.unibo.view.ScaleManager;
+import it.unibo.view.ShopView;
 import it.unibo.view.Shop.api.ShopView;
 import it.unibo.view.Shop.api.SkinManager;
-import it.unibo.view.Shop.impl.ShopViewImpl;
 
 public class ShopControllerImpl implements ShopController {
     private int playerCoins;
@@ -21,7 +21,7 @@ public class ShopControllerImpl implements ShopController {
     public ShopControllerImpl(SkinManager skinManager, ScaleManager scaleManager) {
         this.skinManager = skinManager;
         this.playerCoins = 0;
-        this.shopView = new ShopViewImpl(skinManager, scaleManager);
+        this.shopView = new ShopView(skinManager, scaleManager);
     }
     
     @Override

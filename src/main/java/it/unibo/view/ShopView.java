@@ -1,4 +1,4 @@
-package it.unibo.view.Shop.impl;
+package it.unibo.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,8 +21,7 @@ import javax.swing.SwingConstants;
 
 import it.unibo.model.Shop.api.Skin;
 
-import it.unibo.view.Shop.api.ShopView;
-public class ShopViewImpl extends JPanel implements ShopView  {
+public class ShopView extends JPanel {
 
     private JLabel titleLabel;
     private JLabel coinsLabel; 
@@ -38,7 +37,7 @@ public class ShopViewImpl extends JPanel implements ShopView  {
     private Consumer<String> onSkinSelected;
 
 
-    public ShopViewImpl() {
+    public ShopView() {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
