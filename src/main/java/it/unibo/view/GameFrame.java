@@ -1,11 +1,12 @@
 package it.unibo.view;
 
+import it.unibo.controller.Util.CardName;
 import it.unibo.view.Menu.api.MenuPanel;
 import it.unibo.view.Shop.api.ShopView;
 
 public interface GameFrame {
 
-    public void show(final String name);
+    public void show(final CardName name);
 
     public MenuPanel getMenuPanel();
 

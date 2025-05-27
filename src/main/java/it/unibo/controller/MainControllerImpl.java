@@ -2,6 +2,7 @@ package it.unibo.controller;
 
 import it.unibo.controller.Menu.api.MenuObserver;
 import it.unibo.controller.Menu.impl.MenuObserverImpl;
+import it.unibo.controller.Util.CardName;
 import it.unibo.view.GameFrame;
 import it.unibo.view.GameFrameImpl;
 
@@ -16,20 +17,20 @@ public class MainControllerImpl implements MainController {
     }
 
     public void launch() {
-        gameFrame.show("menu");
+        gameFrame.show(CardName.MENU);
         menuObserver.activate();
     }
 
     public void goToGame() {
-        gameFrame.show("game");
+        gameFrame.show(CardName.GAME);
     }
 
     public void goToSettings() {
-        gameFrame.show("settings");
+        gameFrame.show(CardName.SETTINGS);
     }
 
     public void goToShop() {
-        gameFrame.show("shop");
+        gameFrame.show(CardName.SHOP);
     }
 
 }
