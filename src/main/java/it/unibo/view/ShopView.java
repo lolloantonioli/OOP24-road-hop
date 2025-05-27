@@ -179,33 +179,32 @@ public class ShopView extends JPanel {
     }
 
     
-    @Override
+    
     public void setCoins(int coins) {
        this.coins = coins;
        coinsLabel.setText("Coins: " + coins);
        refreshSkins();
     }    
 
-    @Override
+    
     public void setOnBackToMainMenu(Runnable onBackToMainMenu) {
         this.onBackToMainMenu = onBackToMainMenu;
     }
 
-
-    @Override
+    
     public void setSkins(List<Skin> skins) {
         this.skins = new ArrayList<>(skins);
         refreshSkins();
     }
 
 
-    @Override
+    
     public void setOnSkinPurchase(BiConsumer<String, Integer> skinPurchase) {
         this.onSkinPurchase = skinPurchase;
     }
 
 
-    @Override
+    
     public void setOnSkinSelected(Consumer<String> onSkinSelected) {
         this.onSkinSelected = onSkinSelected;
     }
