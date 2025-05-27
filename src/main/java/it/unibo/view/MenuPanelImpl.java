@@ -58,4 +58,16 @@ public class MenuPanelImpl extends JPanel implements MenuPanel {
         this.add(centerPanel);
     }
 
+    public void setPlayAction(final Runnable action) {
+        playButton.addActionListener(e -> action.run());
+    }
+
+    public void setSettingsAction(final Runnable action) {
+        settingsButton.addActionListener(e -> action.run());
+    }
+
+    public void setShopAction(final Runnable action) {
+        shopButton.addActionListener(e -> action.run());
+    }
+
 }
