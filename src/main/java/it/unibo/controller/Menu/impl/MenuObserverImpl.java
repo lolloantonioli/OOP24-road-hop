@@ -1,9 +1,10 @@
-package it.unibo;
+package it.unibo.controller.Menu.impl;
 
 import it.unibo.controller.MainController;
+import it.unibo.controller.Menu.api.MenuObserver;
 import it.unibo.view.Menu.api.MenuPanel;
 
-public class MenuObserverImpl {
+public class MenuObserverImpl implements MenuObserver {
 
     private final MainController mainController;
     private final MenuPanel menuPanel;

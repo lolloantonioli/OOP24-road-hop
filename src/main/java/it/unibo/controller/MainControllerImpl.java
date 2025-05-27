@@ -1,13 +1,14 @@
 package it.unibo.controller;
 
-import it.unibo.MenuObserverImpl;
+import it.unibo.controller.Menu.api.MenuObserver;
+import it.unibo.controller.Menu.impl.MenuObserverImpl;
 import it.unibo.view.GameFrame;
 import it.unibo.view.GameFrameImpl;
 
 public class MainControllerImpl implements MainController {
 
     private final GameFrame gameFrame;
-    private final MenuObserverImpl menuObserver;
+    private final MenuObserver menuObserver;
 
     public MainControllerImpl() {
         this.gameFrame = new GameFrameImpl();
