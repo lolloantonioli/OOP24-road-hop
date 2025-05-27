@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import it.unibo.view.Menu.api.MenuPanel;
+import it.unibo.view.Menu.impl.MenuPanelImpl;
 import it.unibo.view.Shop.api.ShopView;
 import it.unibo.view.Shop.impl.ShopViewImpl;
 
