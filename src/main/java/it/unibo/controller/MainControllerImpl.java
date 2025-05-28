@@ -6,6 +6,7 @@ import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
 import it.unibo.model.Shop.api.ShopModel;
+import it.unibo.model.Shop.impl.ShopModelImpl;
 import it.unibo.view.GameFrame;
 
 public class MainControllerImpl implements MainController {
@@ -14,13 +15,14 @@ public class MainControllerImpl implements MainController {
     private final Observer menuObserver;
     private final Observer instructionsObserver;
     private final ShopObserver shopObserver;
-    private ShopModel shopModel;
+    private final ShopModel shopModel;
     private final MapController mapController;
 
     public MainControllerImpl() {
         this.gameFrame = new GameFrame();
         this.menuObserver = new MenuObserver(this, gameFrame.getMenuPanel());
         this.instructionsObserver = new InstructionsObserver(this, gameFrame.getInstructionsPanel());
+        this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
         this.mapController = new MapControllerImpl();
     }
