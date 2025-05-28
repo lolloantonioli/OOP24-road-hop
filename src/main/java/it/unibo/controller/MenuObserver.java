@@ -1,12 +1,10 @@
-package it.unibo.controller.Menu.impl;
+package it.unibo.controller;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import it.unibo.controller.MainController;
-import it.unibo.controller.Menu.api.MenuObserver;
 import it.unibo.view.MenuPanel;
 
-public class MenuObserverImpl implements MenuObserver {
+public class MenuObserver implements Observer {
 
     private final MainController mainController;
     private final MenuPanel menuPanel;
@@ -14,7 +12,7 @@ public class MenuObserverImpl implements MenuObserver {
     private static final String MSG_CONTROLLER = "MainController cannot be null";
     private static final String MSG_PANEL = "MenuPanel cannot be null";
 
-    public MenuObserverImpl(final MainController mainController, final MenuPanel menuPanel) {
+    public MenuObserver(final MainController mainController, final MenuPanel menuPanel) {
         this.mainController = checkNotNull(mainController, MSG_CONTROLLER);
         this.menuPanel = checkNotNull(menuPanel, MSG_PANEL);
     }
