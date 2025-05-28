@@ -3,7 +3,6 @@ package it.unibo.model.Collision.impl;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import it.unibo.model.Collision.api.CollisionHandler;
-import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
@@ -14,6 +13,7 @@ import it.unibo.model.Map.util.ObstacleType;
 
 //forse con gli stream si possono mettere a posto i for annidati
 //quando si capirà come funzionano i treni da cambiare
+//da capire anche i fiumi e i tronchi
 
 public class CollisionHandlerImpl implements CollisionHandler{
 
@@ -32,15 +32,10 @@ public class CollisionHandlerImpl implements CollisionHandler{
         checkNotNull(map, "not valid map");
 
         // Controlla collisioni fatali con tutti gli ostacoli nei chunk visibili
-        for (Chunk chunk : map.getVisibleChunks()) {
-            for (GameObject obj : chunk.getObjects()) {
-                if (checkCollision(position, obj)) {
-                    return true;
-                }
-            }
-        }
+        return map.getVisibleChunks().stream()
+            .flatMap(chunk -> chunk.getObjects().stream())
+            .anyMatch(obj -> obj instanceof Obstacle && checkCollision(position, obj));
 
-        return false;
     }
 
 
@@ -50,19 +45,12 @@ public class CollisionHandlerImpl implements CollisionHandler{
         checkNotNull(map, "not valid map");
 
         // Controlla collisioni fatali con tutti gli ostacoli nei chunk visibili
-        for (Chunk chunk : map.getVisibleChunks()) {
-            for (GameObject obj : chunk.getObjects()) {
-                if (obj instanceof Obstacle && checkCollision(position, obj)) {
-                    Obstacle obstacle = (Obstacle) obj;
-                    
-                    if (!obstacle.getType().equals(ObstacleType.TREE)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
+        return map.getVisibleChunks().stream()
+            .flatMap(chunk -> chunk.getObjects().stream())
+            .filter(Obstacle.class::isInstance)
+            .map(Obstacle.class::cast)
+            .filter(obstacle -> checkCollision(position, obstacle))
+            .anyMatch(obstacle -> !obstacle.getType().equals(ObstacleType.TREE));
     }
 
     @Override
@@ -70,20 +58,13 @@ public class CollisionHandlerImpl implements CollisionHandler{
         checkNotNull(newPosition, "not valid position");
         checkNotNull(map, "not valid map");
         
-        for (Chunk chunk : map.getVisibleChunks()) {
-            for (GameObject obj : chunk.getObjects()) {
-                if (obj instanceof Obstacle && checkCollision(newPosition, obj)) {
-                    Obstacle obstacle = (Obstacle) obj;
-                    
-                    //gli alberi bloccano il movimento del player
-                    if (obstacle.getType().equals(ObstacleType.TREE)) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return !isOutOfBounds(newPosition, map);
+        return map.getVisibleChunks().stream()
+            .flatMap(chunk -> chunk.getObjects().stream())
+            .filter(Obstacle.class::isInstance)
+            .map(Obstacle.class::cast)
+            .filter(obstacle -> checkCollision(newPosition, obstacle))
+            .noneMatch(obstacle -> obstacle.getType().equals(ObstacleType.TREE))
+            && !isOutOfBounds(newPosition, map);
 
     }
 
@@ -92,19 +73,14 @@ public class CollisionHandlerImpl implements CollisionHandler{
         checkNotNull(position, "not valid position");
         checkNotNull(map, "not valid map");
 
-        for (Chunk chunk : map.getVisibleChunks()) {
-            for (GameObject obj : chunk.getObjects()) {
-                if (obj instanceof Collectible && checkCollision(position, obj)) {
-                    Collectible collectible = (Collectible) obj;
-                    
-                    if (!collectible.isCollected()) {
-                        return true;
-                    }
-                }
-            }
-        }
 
-        return false;
+        return map.getVisibleChunks().stream()
+            .flatMap(chunk -> chunk.getObjects().stream())
+            .filter(Collectible.class::isInstance)
+            .map(Collectible.class::cast)
+            .filter(collectible -> checkCollision(position, collectible))
+            .anyMatch(collectible -> !collectible.isCollected());
+
     }
 
     @Override

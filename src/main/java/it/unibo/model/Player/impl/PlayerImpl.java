@@ -14,14 +14,14 @@ import it.unibo.model.Player.api.Player;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
+//da fare un po' di metodi e gestione dell'invincibilità
+
 public class PlayerImpl extends GameObjectImpl implements Player{
-    
-    private static final int PLAYER_WIDTH = 30; // Larghezza logica del player
-    private static final int PLAYER_HEIGHT = 30; // Altezza logica del player
 
     private int score;
     private int collectedCoins;
     private boolean isAlive;
+    private boolean isInvincible;
     private Cell currentCell;
     private Skin currentSkin;
     private GameMap map;
@@ -39,9 +39,11 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         this.initialY = y;
         this.score = 0;
         this.isAlive = true;
+        this.isInvincible = false;
         this.currentSkin = skin;
         this.map = map;
         collisionHandler = new CollisionHandlerImpl();
+        this.currentCell = new CellImpl(x, y);
 
         setMovable(true);
     }
@@ -55,7 +57,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
                 score = currentCell.getY();
             }
             if (collisionHandler.happenedCollision(newpos, map)) {
-                if (collisionHandler.isFatalCollisions(newpos, map)) {
+                if (collisionHandler.isFatalCollisions(newpos, map) && !isInvincible) {
                     die();
                 }
                 if (collisionHandler.isCollectibleCollision(newpos, map)) {
@@ -82,7 +84,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public boolean isAlive() {
-        return this.isAlive && collisionHandler.isOutOfBounds(currentCell, map);
+        return this.isAlive && !collisionHandler.isOutOfBounds(currentCell, map);
      }
 
     @Override
@@ -112,14 +114,6 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public void setSkin(Skin skin) {
         checkNotNull(skin, "skin cannot be null");
         currentSkin = skin;
-    }
-
-    public int getPlayerHeight() {
-        return PLAYER_HEIGHT;
-    }
-
-    public int getPlayerWidth() {
-        return PLAYER_WIDTH;
     }
 
 }

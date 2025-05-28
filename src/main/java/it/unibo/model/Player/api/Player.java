@@ -70,8 +70,4 @@ public interface Player extends GameObject {
      */
     void setSkin(Skin skin);
 
-    int getPlayerHeight();
-
-    int getPlayerWidth();
-
 }
