@@ -12,11 +12,11 @@ public class MenuObserverImpl implements MenuObserver{
     private final MenuPanel menuPanel;
 
     private static final String MSG_CONTROLLER = "MainController cannot be null";
-    private static final String MSG2_PANEL = "MenuPanel cannot be null";
+    private static final String MSG_PANEL = "MenuPanel cannot be null";
 
     public MenuObserverImpl(final MainController mainController, final MenuPanel menuPanel) {
         this.mainController = checkNotNull(mainController, MSG_CONTROLLER);
-        this.menuPanel = checkNotNull(menuPanel, MSG2_PANEL);
+        this.menuPanel = checkNotNull(menuPanel, MSG_PANEL);
     }
 
     public void activate() {
