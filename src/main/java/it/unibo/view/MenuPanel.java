@@ -32,17 +32,18 @@ public class MenuPanel extends JPanel {
     public static final String SEP = File.separator;
     public static final String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
     
+    private int logoScale = SCALE;
+    private static final int LOGO_MIN_SCALE = 3;
+    private static final int LOGO_MAX_SCALE = 8;
+
     public MenuPanel() {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
-        
         playButton = new JButton(PLAY_TEXT);
         instructionsButton = new JButton(INSTRUCTIONS_TEXT);
         shopButton = new JButton(SHOP_TEXT);
         logoLabel = new JLabel();
-        
-        final ImageIcon logoIcon = loadScaledIcon(LOGO_PATH, SCALE);
-        logoLabel.setIcon(logoIcon);
+        updateLogoIcon();
         
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -62,6 +63,15 @@ public class MenuPanel extends JPanel {
         centerPanel.add(shopButton);
         
         this.add(centerPanel);
+        
+        logoLabel.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0 && logoScale > LOGO_MIN_SCALE) {
+                logoScale--;
+            } else if (e.getWheelRotation() > 0 && logoScale < LOGO_MAX_SCALE) {
+                logoScale++;
+            }
+            updateLogoIcon();
+        });
     }
 
     private static ImageIcon loadScaledIcon(final String path, final int scaleDiv) {
@@ -74,6 +84,11 @@ public class MenuPanel extends JPanel {
         final int iconHeight = originalIcon.getIconHeight() / scaleDiv;
         final Image scaledImage = originalIcon.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
+    }
+
+    private void updateLogoIcon() {
+        final ImageIcon logoIcon = loadScaledIcon(LOGO_PATH, logoScale);
+        logoLabel.setIcon(logoIcon);
     }
 
     public void setPlayAction(final Runnable action) {

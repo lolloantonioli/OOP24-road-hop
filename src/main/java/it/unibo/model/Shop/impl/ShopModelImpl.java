@@ -1,6 +1,5 @@
 package it.unibo.model.Shop.impl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +11,10 @@ public class ShopModelImpl implements ShopModel {
     private final List<Skin> skins;
     private Skin selectedSkin;
     private int coins;
-    private static final String SAVE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "ShopSave.json";
 
     public ShopModelImpl() {
         this.skins = new ArrayList<>();
-        this.coins = 1000; // aumentato il numero di coins iniziali
+        this.coins = 100;
         initializeSkins();
     }
 
