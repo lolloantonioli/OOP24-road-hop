@@ -32,8 +32,8 @@ public class ShopObserverImpl implements ShopObserver{
             updateView();
         });
 
-        
-
+        // Mostra subito le skin quando si entra nel negozio
+        updateView();
     }
 
 
