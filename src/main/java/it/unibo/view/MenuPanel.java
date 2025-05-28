@@ -34,7 +34,7 @@ public class MenuPanel extends JPanel {
     
     public MenuPanel() {
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.RED);
+        this.setBackground(Color.BLUE);
         
         playButton = new JButton(PLAY_TEXT);
         instructionsButton = new JButton(INSTRUCTIONS_TEXT);
@@ -46,7 +46,7 @@ public class MenuPanel extends JPanel {
         
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.setBackground(Color.RED);
+        centerPanel.setBackground(Color.BLUE);
         
         logoLabel.setAlignmentX(CENTER_ALIGNMENT);
         playButton.setAlignmentX(CENTER_ALIGNMENT);

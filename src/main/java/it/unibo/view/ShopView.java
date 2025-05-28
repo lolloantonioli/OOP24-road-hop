@@ -84,7 +84,7 @@ public class ShopView extends JPanel {
         footerPanel.setBackground(Color.BLACK);
 
         backButton = new JButton("Back");
-        backButton.setBackground(new Color(70,130, 200));
+        backButton.setBackground(Color.BLACK);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
         backButton.setBorder(BorderFactory.createEmptyBorder());

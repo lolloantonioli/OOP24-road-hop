@@ -32,11 +32,11 @@ public class InstructionsPanel extends JPanel {
         instructions.setWrapStyleWord(true);
 
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.RED);
+        this.setBackground(Color.BLUE);
 
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.setBackground(Color.RED);
+        centerPanel.setBackground(Color.BLUE);
 
         instructions.setAlignmentX(CENTER_ALIGNMENT);
         backButton.setAlignmentX(CENTER_ALIGNMENT);
