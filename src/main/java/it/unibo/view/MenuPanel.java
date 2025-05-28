@@ -43,7 +43,8 @@ public class MenuPanel extends JPanel {
         instructionsButton = new JButton(INSTRUCTIONS_TEXT);
         shopButton = new JButton(SHOP_TEXT);
         logoLabel = new JLabel();
-        updateLogoIcon();
+        // Imposta l'icona iniziale in base alla dimensione iniziale del pannello
+        updateLogoIcon(getWidth() > 0 ? getWidth() : 800, getHeight() > 0 ? getHeight() : 600);
         
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -86,9 +87,23 @@ public class MenuPanel extends JPanel {
         return new ImageIcon(scaledImage);
     }
 
+    private void updateLogoIcon(int panelWidth, int panelHeight) {
+        // Calcola la dimensione in base alla dimensione del pannello
+        int minDim = Math.min(panelWidth, panelHeight);
+        int scaleDiv = Math.max(2, minDim / 150); // Più piccolo -> immagine più grande
+        final ImageIcon logoIcon = loadScaledIcon(LOGO_PATH, scaleDiv);
+        logoLabel.setIcon(logoIcon);
+    }
+
     private void updateLogoIcon() {
         final ImageIcon logoIcon = loadScaledIcon(LOGO_PATH, logoScale);
         logoLabel.setIcon(logoIcon);
+    }
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        updateLogoIcon(width, height);
     }
 
     public void setPlayAction(final Runnable action) {
