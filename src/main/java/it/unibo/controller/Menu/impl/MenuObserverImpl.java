@@ -6,7 +6,7 @@ import it.unibo.controller.MainController;
 import it.unibo.controller.Menu.api.MenuObserver;
 import it.unibo.view.MenuPanel;
 
-public class MenuObserverImpl implements MenuObserver{
+public class MenuObserverImpl implements MenuObserver {
 
     private final MainController mainController;
     private final MenuPanel menuPanel;
