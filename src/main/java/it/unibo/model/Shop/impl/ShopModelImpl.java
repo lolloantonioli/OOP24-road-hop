@@ -14,7 +14,7 @@ public class ShopModelImpl implements ShopModel {
 
     public ShopModelImpl() {
         this.skins = new ArrayList<>();
-        this.coins = 100;
+        this.coins = 1000; // aumentato il numero di coins iniziali
         initializeSkins();
     }
 
