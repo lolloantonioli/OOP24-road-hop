@@ -43,6 +43,7 @@ public class MainControllerImpl implements MainController {
 
     public void goToShop() {
         gameFrame.show(CardName.SHOP);
+        shopObserver.activate();
     }
 
     @Override
