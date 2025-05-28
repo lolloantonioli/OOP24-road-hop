@@ -19,6 +19,13 @@ public class MenuPanel extends JPanel {
     private final JButton shopButton;
     private final JLabel logoLabel;
     
+    private static final String PLAY_TEXT = "Play";
+    private static final String INSTRUCTIONS_TEXT = "Instructions";
+    private static final String SHOP_TEXT = "Shop";
+    private static final int BETWEEN_LOGO = 20;
+    private static final int BETWEEN_BUTTONS = 10;
+    private static final int SCALE = 4;
+
     public static final String SEP = File.separator;
     public static final String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
     
@@ -26,19 +33,15 @@ public class MenuPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.RED);
         
-        playButton = new JButton("Play");
-        instructionsButton = new JButton("Instructions");
-        shopButton = new JButton("Shop");
+        playButton = new JButton(PLAY_TEXT);
+        instructionsButton = new JButton(INSTRUCTIONS_TEXT);
+        shopButton = new JButton(SHOP_TEXT);
         logoLabel = new JLabel();
         
-        ImageIcon originalIcon = new ImageIcon(LOGO_PATH);
-        int logoWidth = originalIcon.getIconWidth() / 4;
-        int logoHeight = originalIcon.getIconHeight() / 4;
-        Image scaledImage = originalIcon.getImage().getScaledInstance(logoWidth, logoHeight, Image.SCALE_SMOOTH);
-        ImageIcon logoIcon = new ImageIcon(scaledImage);
+        final ImageIcon logoIcon = loadScaledIcon(LOGO_PATH, SCALE);
         logoLabel.setIcon(logoIcon);
         
-        JPanel centerPanel = new JPanel();
+        final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.RED);
         
@@ -48,14 +51,22 @@ public class MenuPanel extends JPanel {
         shopButton.setAlignmentX(CENTER_ALIGNMENT);
         
         centerPanel.add(logoLabel);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_LOGO)));
         centerPanel.add(playButton);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_BUTTONS)));
         centerPanel.add(instructionsButton);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_BUTTONS)));
         centerPanel.add(shopButton);
         
         this.add(centerPanel);
+    }
+
+    private static ImageIcon loadScaledIcon(final String path, final int scaleDiv) {
+        final ImageIcon originalIcon = new ImageIcon(path);
+        final int iconWidth = originalIcon.getIconWidth() / scaleDiv;
+        final int iconHeight = originalIcon.getIconHeight() / scaleDiv;
+        final Image scaledImage = originalIcon.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
     }
 
     public void setPlayAction(final Runnable action) {
