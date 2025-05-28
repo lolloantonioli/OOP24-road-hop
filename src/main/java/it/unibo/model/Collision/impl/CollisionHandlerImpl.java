@@ -1,5 +1,7 @@
 package it.unibo.model.Collision.impl;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import it.unibo.model.Collision.api.CollisionHandler;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.Collectible;
@@ -8,14 +10,17 @@ import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.impl.CellImpl;
+import it.unibo.model.Map.util.ObstacleType;
+
+//forse con gli stream si possono mettere a posto i for annidati
+//quando si capirà come funzionano i treni da cambiare
 
 public class CollisionHandlerImpl implements CollisionHandler{
 
     @Override
     public boolean checkCollision(Cell position, GameObject obj) {
-        if (obj == null || position == null) {
-            return false;
-        }
+        checkNotNull(position, "not valid position");
+        checkNotNull(obj, "not valid object");
 
         //se non lavoriamo con le celle fare algoritmo aabb con width e height degli oggetti e player
         return position.equals(new CellImpl(obj.getX(), obj.getY()));
@@ -23,9 +28,8 @@ public class CollisionHandlerImpl implements CollisionHandler{
 
     @Override
     public boolean happenedCollision(Cell position, GameMap map) {
-        if (position == null || map == null) {
-            return false;
-        }
+        checkNotNull(position, "not valid position");
+        checkNotNull(map, "not valid map");
 
         // Controlla collisioni fatali con tutti gli ostacoli nei chunk visibili
         for (Chunk chunk : map.getVisibleChunks()) {
@@ -42,9 +46,8 @@ public class CollisionHandlerImpl implements CollisionHandler{
 
     @Override
     public boolean isFatalCollisions(Cell position, GameMap map) {
-        if (position == null || map == null) {
-            return false;
-        }
+        checkNotNull(position, "not valid position");
+        checkNotNull(map, "not valid map");
 
         // Controlla collisioni fatali con tutti gli ostacoli nei chunk visibili
         for (Chunk chunk : map.getVisibleChunks()) {
@@ -52,7 +55,7 @@ public class CollisionHandlerImpl implements CollisionHandler{
                 if (obj instanceof Obstacle && checkCollision(position, obj)) {
                     Obstacle obstacle = (Obstacle) obj;
                     
-                    if (!obstacle.getType().toString().equals("TREE")) {
+                    if (!obstacle.getType().equals(ObstacleType.TREE)) {
                         return true;
                     }
                 }
@@ -64,18 +67,30 @@ public class CollisionHandlerImpl implements CollisionHandler{
 
     @Override
     public boolean canMoveTo(GameMap map, Cell newPosition) {
-        /**controllare se il player sta cercando di entrare in un albero o
-         * se sta cercando di uscire lateralmente dalla mappa
-         * se sta cercando di andare più avanti della parte visualizzata di mappa
-        */ 
-        throw new UnsupportedOperationException("Unimplemented method 'canMoveTo'");
+        checkNotNull(newPosition, "not valid position");
+        checkNotNull(map, "not valid map");
+        
+        for (Chunk chunk : map.getVisibleChunks()) {
+            for (GameObject obj : chunk.getObjects()) {
+                if (obj instanceof Obstacle && checkCollision(newPosition, obj)) {
+                    Obstacle obstacle = (Obstacle) obj;
+                    
+                    //gli alberi bloccano il movimento del player
+                    if (obstacle.getType().equals(ObstacleType.TREE)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return !isOutOfBounds(newPosition, map);
+
     }
 
     @Override
     public boolean isCollectibleCollision(Cell position, GameMap map) {
-        if (position == null || map == null) {
-            return false;
-        }
+        checkNotNull(position, "not valid position");
+        checkNotNull(map, "not valid map");
 
         for (Chunk chunk : map.getVisibleChunks()) {
             for (GameObject obj : chunk.getObjects()) {
@@ -94,8 +109,11 @@ public class CollisionHandlerImpl implements CollisionHandler{
 
     @Override
     public boolean isOutOfBounds(Cell position, GameMap map) {
-        //da capire bene come funziona la mappa
-        throw new UnsupportedOperationException("Unimplemented method 'isOutOfBounds'");
+        checkNotNull(position, "not valid position");
+        checkNotNull(map, "not valid map");
+
+        return !map.getVisibleChunks().stream()
+            .anyMatch(c -> c.getCells().contains(position));
     }
 
     
