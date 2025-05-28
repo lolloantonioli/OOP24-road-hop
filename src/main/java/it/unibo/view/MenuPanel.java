@@ -90,7 +90,7 @@ public class MenuPanel extends JPanel {
     private void updateLogoIcon(int panelWidth, int panelHeight) {
         // Calcola la dimensione in base alla dimensione del pannello
         int minDim = Math.min(panelWidth, panelHeight);
-        int scaleDiv = Math.max(2, minDim / 150); // Più piccolo -> immagine più grande
+        int scaleDiv = Math.max(1, 10 - minDim / 150); // Più grande -> immagine più grande
         final ImageIcon logoIcon = loadScaledIcon(LOGO_PATH, scaleDiv);
         logoLabel.setIcon(logoIcon);
     }
