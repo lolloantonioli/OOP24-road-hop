@@ -219,5 +219,40 @@ public class MovingObstacles implements Obstacle{
         return baseLevel + Math.abs(speed);
     }
 
+    /**
+     * Controlla se l'ostacolo può essere posizionato in una specifica posizione
+     * senza sovrapporsi con altri ostacoli.
+     * 
+     * @param targetCellX Posizione X target
+     * @param otherObstacles Lista di altri ostacoli da controllare
+     * @return true se la posizione è valida
+     */
+    public boolean canBePlacedAt(int targetCellX, java.util.List<MovingObstacles> otherObstacles) {
+        for (MovingObstacles other : otherObstacles) {
+            if (other != this && other.getY() == this.chunkY) {
+                // Controlla sovrapposizione
+                if (targetCellX < other.getX() + other.getWidthInCells() && 
+                    targetCellX + this.getWidthInCells() > other.getX()) {
+                    return false;
+                }
+            }
+        }
+        return targetCellX >= 0 && targetCellX + getWidthInCells() <= CELLS_PER_CHUNK;
+    }
+
+    /**
+     * Ottiene tutte le celle occupate dall'ostacolo.
+     * 
+     * @return Array delle posizioni X delle celle occupate
+     */
+    public int[] getOccupiedCells() {
+        int width = getWidthInCells();
+        int[] cells = new int[width];
+        for (int i = 0; i < width; i++) {
+            cells[i] = cellX + i;
+        }
+        return cells;
+    }
+
 }
 
