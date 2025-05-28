@@ -1,5 +1,7 @@
 package it.unibo.controller;
 
+import it.unibo.controller.Map.api.MapController;
+import it.unibo.controller.Map.impl.MapControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
@@ -13,12 +15,14 @@ public class MainControllerImpl implements MainController {
     private final Observer instructionsObserver;
     private final ShopObserver shopObserver;
     private ShopModel shopModel;
+    private final MapController mapController;
 
     public MainControllerImpl() {
         this.gameFrame = new GameFrame();
         this.menuObserver = new MenuObserver(this, gameFrame.getMenuPanel());
         this.instructionsObserver = new InstructionsObserver(this, gameFrame.getInstructionsPanel());
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
+        this.mapController = new MapControllerImpl();
     }
 
     public void goToMenu() {
@@ -28,6 +32,8 @@ public class MainControllerImpl implements MainController {
 
     public void goToGame() {
         gameFrame.show(CardName.GAME);
+        GameEngine engine = new GameEngine(mapController, () -> gameFrame.getGamePanel().refresh());
+        new Thread(engine).start();
     }
 
     public void goToInstructions() {

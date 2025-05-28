@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import it.unibo.controller.Map.api.MapController;
+import it.unibo.controller.Map.impl.MapControllerImpl;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.impl.ChunkImpl;
@@ -19,8 +20,8 @@ public class GamePanel extends JPanel {
     private final int chunksNumber;
     private final int cellsPerRow;
 
-    public GamePanel(final MapController controller) {
-        this.controller = controller;
+    public GamePanel() {
+        this.controller = new MapControllerImpl();
         this.chunksNumber = GameMapImpl.CHUNKS_NUMBER;
         this.cellsPerRow = ChunkImpl.CELLS_PER_ROW;
     }

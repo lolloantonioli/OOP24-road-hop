@@ -5,13 +5,16 @@ import java.util.List;
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Map.impl.GameMapImpl;
 
 public class MapControllerImpl implements MapController {
 
     private final GameMap mapModel;
 
-    public MapControllerImpl(final GameMap mapModel) {
-        this.mapModel = mapModel;
+    private static final int INITIAL_SPEED = 1;
+
+    public MapControllerImpl() {
+        this.mapModel = new GameMapImpl(INITIAL_SPEED);
     }
 
     @Override

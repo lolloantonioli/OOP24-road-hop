@@ -1,16 +1,16 @@
 package it.unibo.controller;
 
-import it.unibo.model.Map.api.GameMap;
+import it.unibo.controller.Map.api.MapController;
 
 public class GameEngine implements Runnable {
 
-    private final GameMap map;
+    private final MapController mapController;
     private final Runnable onUpdate;
     private boolean running = true;
     private final long period = 20;
 
-    public GameEngine(final GameMap map, final Runnable onUpdate) {
-        this.map = map;
+    public GameEngine(final MapController mapController, final Runnable onUpdate) {
+        this.mapController = mapController;
         this.onUpdate = onUpdate;
     }
 
@@ -20,7 +20,7 @@ public class GameEngine implements Runnable {
         while (running) {
             final long currentStartTime = System.currentTimeMillis();
             //final long elapsedTime = currentStartTime - startTime;
-            map.update();
+            mapController.updateMap();
             onUpdate.run();
             waitForNextFrame(currentStartTime);
             startTime = currentStartTime;
