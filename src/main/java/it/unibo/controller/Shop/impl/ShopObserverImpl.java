@@ -28,7 +28,7 @@ public class ShopObserverImpl implements ShopObserver{
         shopPanel.setOnBackToMainMenu(() -> mainController.goToMenu());
 
         shopPanel.setOnSkinPurchase((skinId, price) -> {
-            shopModel.selectSkin(skinId);
+            shopModel.purchaseSkin(skinId);
             updateView();
         });
 
