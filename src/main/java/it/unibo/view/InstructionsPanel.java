@@ -15,6 +15,7 @@ public class InstructionsPanel extends JPanel {
     private final JTextArea instructions;
     private final JButton backButton;
 
+    private static final int HEIGHT = 20;
     private static final String BACK_BUTTON_TEXT = "Back";
     private static final String INSTRUCTIONS_TEXT = "Instructions:\n"
             + "1. Use WASD to move your character.\n"
@@ -26,7 +27,6 @@ public class InstructionsPanel extends JPanel {
         instructions = new JTextArea(INSTRUCTIONS_TEXT);
         backButton = new JButton(BACK_BUTTON_TEXT);
 
-        instructions.setBounds(50, 50, 300, 200);
         instructions.setEditable(false);
         instructions.setLineWrap(true);
         instructions.setWrapStyleWord(true);
@@ -42,7 +42,7 @@ public class InstructionsPanel extends JPanel {
         backButton.setAlignmentX(CENTER_ALIGNMENT);
 
         centerPanel.add(instructions);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT)));
         centerPanel.add(backButton);
         
         this.add(centerPanel);
