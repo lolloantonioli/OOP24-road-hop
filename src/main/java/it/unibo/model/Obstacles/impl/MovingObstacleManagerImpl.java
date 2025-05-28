@@ -7,6 +7,8 @@ import java.util.List;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 
+// UPDATEALL DA GUARDARE FORSE E' INUTILE
+
 public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     private final List<MovingObstacles> obstacles;
