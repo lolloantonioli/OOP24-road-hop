@@ -4,8 +4,6 @@ public interface GameObject {
 
     void update();
 
-    boolean collidesWith(int px, int py);
-
     int getX();
 
     int getY();

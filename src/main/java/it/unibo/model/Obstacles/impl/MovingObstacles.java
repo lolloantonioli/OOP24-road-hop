@@ -4,36 +4,43 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 
 public class MovingObstacles implements Obstacle{
-    private int x;
-    private final int y;
+    private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)
+    private int chunkY = 0;
     private final ObstacleType type;
     private int speed;
     private boolean movable;
     private boolean visible;
-    private int initialX; // per far ricomparire l'ostacolo nella posizione iniziale
+    private int initialCellX; // per far ricomparire l'ostacolo nella posizione iniziale
     private final int initialSpeed;
-    private int mapWidth;
+    private int mapWidthInChunks;
+    private int updateCounter; // Per gestire movimento sub-cella
+
+    // Costanti per le dimensioni in celle
+    public static final int CAR_WIDTH_CELLS = 1;
+    public static final int TRAIN_WIDTH_CELLS = 4;
+    public static final int CELLS_PER_CHUNK = 9;
 
     public MovingObstacles(int x, int y, ObstacleType type, int speed) {
-        this.x = x;
-        this.initialX = x;
-        this.y = y;
+        this.cellX = cellX;
+        this.initialCellX = cellX;
+        this.chunkY = chunkY;
         this.type = type;
         this.speed = speed;
         this.initialSpeed = speed;
         this.movable = true;
         this.visible = true;
-        this.mapWidth = 0;
+        this.mapWidthInChunks = 0;
+        this.updateCounter = 0;
     }
     
     @Override
     public int getX() {
-        return x;
+        return cellX;
     }
     
     @Override
     public int getY() {
-        return y;
+        return chunkY;
     }
     
     @Override
@@ -43,80 +50,98 @@ public class MovingObstacles implements Obstacle{
 
     @Override
     public void update() {
-         if (movable) {
-            x += speed;
+        if (!movable) {
+            return;
+        }
+
+        updateCounter++;
+        
+        // Movimento basato su velocità (ogni N update muove di una cella)
+        int movementThreshold = Math.max(1, 4 - Math.abs(speed)); // Più veloce = movimento più frequente
+        
+        if (updateCounter >= movementThreshold) {
+            updateCounter = 0;
             
-            // Gestione uscita dai bordi della mappa
-            if (speed > 0 && x > mapWidth) {
-                // Se l'ostacolo esce dal lato destro, lo riportiamo a sinistra
-                x = -getWidth();
-            } else if (speed < 0 && x + getWidth() < 0) {
-                // Se l'ostacolo esce dal lato sinistro, lo riportiamo a destra
-                x = mapWidth;
+            if (speed > 0) {
+                cellX++;
+                // Se esce dal lato destro, riappare a sinistra
+                if (cellX >= CELLS_PER_CHUNK) {
+                    cellX = -getWidthInCells();
+                }
+            } else if (speed < 0) {
+                cellX--;
+                // Se esce dal lato sinistro, riappare a destra
+                if (cellX + getWidthInCells() <= 0) {
+                    cellX = CELLS_PER_CHUNK;
+                }
             }
         }
     }
 
     /**
-     * Imposta una nuova larghezza per la mappa.
-     * Utile quando le dimensioni della mappa cambiano dinamicamente.
+     * Imposta la larghezza della mappa in chunks.
      * 
-     * @param mapWidth Nuova larghezza della mappa
+     * @param mapWidthInChunks Larghezza della mappa in chunks
      */
-    public void setMapWidth(int mapWidth) {
-        this.mapWidth = mapWidth;
+    public void setMapWidthInChunks(int mapWidthInChunks) {
+        this.mapWidthInChunks = mapWidthInChunks;
     }
 
     /**
      * Reimposta gli ostacoli alla posizione iniziale.
      */
     public void reset() {
-        this.x = initialX;
+        this.cellX = initialCellX;
         this.speed = initialSpeed;
+        this.updateCounter = 0;
     }
 
     /**
-     * Setta una nuova posizione iniziale.
+     * Imposta una nuova posizione iniziale.
      * 
-     * @param newX Nuova X posizione iniziale
+     * @param newCellX Nuova posizione X iniziale in celle
      */
-    public void setInitialX(int newX) {
-        this.initialX = newX;
-        this.x = newX;
-    }
-
-    @Override
-    public boolean collidesWith(int px, int py) {
-        if (!visible) {
-            return false;
-        }
-        return px >= x && px < x + getWidth() && py >= y && py < y + getHeight();
+    public void setInitialCellX(int newCellX) {
+        this.initialCellX = newCellX;
+        this.cellX = newCellX;
     }
 
     /**
-     * Controlla se un ostacolo collide con un altro.
+     * Controlla se questo ostacolo collide con un altro.
      * 
-     * @param other Altro ostacolo con cui controllare la collisione
-     * @return Vero se l'ostacolo collide
+     * @param other Altro ostacolo
+     * @return true se c'è collisione
      */
     public boolean collidesWith(Obstacle other) {
-        if (!visible) {
+        if (!visible || other.getY() != chunkY) {
             return false;
         }
         
-        // Verifica se i rettangoli si sovrappongono
-        return x < other.getX() && 
-               x + getWidth() > other.getX() &&
-               y < other.getY() &&
-               y + getHeight() > other.getY();
+        // Verifica sovrapposizione nelle celle
+        return cellX < other.getX() + getOtherWidthInCells(other) && 
+               cellX + getWidthInCells() > other.getX();
     }
     
-    public int getWidth() {
-        return type == ObstacleType.TRAIN ? 200 : 50;
+    /**
+     * Ottiene la larghezza dell'ostacolo in celle.
+     * 
+     * @return Larghezza in celle
+     */
+    public int getWidthInCells() {
+        return type == ObstacleType.TRAIN ? TRAIN_WIDTH_CELLS : CAR_WIDTH_CELLS;
     }
     
-    public int getHeight() {
-        return 40;
+    /**
+     * Ottiene la larghezza di un altro ostacolo in celle.
+     * 
+     * @param other Altro ostacolo
+     * @return Larghezza in celle
+     */
+    private int getOtherWidthInCells(Obstacle other) {
+        if (other instanceof MovingObstacles) {
+            return ((MovingObstacles) other).getWidthInCells();
+        }
+        return 1; // Default per ostacoli statici
     }
 
     @Override
@@ -140,16 +165,15 @@ public class MovingObstacles implements Obstacle{
     }
 
     /**
-     * Aumenta la velocità dell'ostacolo di una certa quantità.
+     * Aumenta la velocità dell'ostacolo mantenendo la direzione.
      * 
-     * @param amount Quantità di cui verrà aumentata
+     * @param amount Quantità da aggiungere
      */
     public void increaseSpeed(int amount) {
-        // Mantiene il segno originale (direzione)
         if (this.speed > 0) {
-            this.speed += amount;
-        } else {
-            this.speed -= amount;
+            setSpeed(this.speed + amount);
+        } else if (this.speed < 0) {
+            setSpeed(this.speed - amount);
         }
     }
 
@@ -192,7 +216,42 @@ public class MovingObstacles implements Obstacle{
      */
     public int getDifficultyLevel() {
         int baseLevel = type == ObstacleType.TRAIN ? 3 : 1;
-        return baseLevel + Math.abs(speed) / 2;
+        return baseLevel + Math.abs(speed);
+    }
+
+    /**
+     * Controlla se l'ostacolo può essere posizionato in una specifica posizione
+     * senza sovrapporsi con altri ostacoli.
+     * 
+     * @param targetCellX Posizione X target
+     * @param otherObstacles Lista di altri ostacoli da controllare
+     * @return true se la posizione è valida
+     */
+    public boolean canBePlacedAt(int targetCellX, java.util.List<MovingObstacles> otherObstacles) {
+        for (MovingObstacles other : otherObstacles) {
+            if (other != this && other.getY() == this.chunkY) {
+                // Controlla sovrapposizione
+                if (targetCellX < other.getX() + other.getWidthInCells() && 
+                    targetCellX + this.getWidthInCells() > other.getX()) {
+                    return false;
+                }
+            }
+        }
+        return targetCellX >= 0 && targetCellX + getWidthInCells() <= CELLS_PER_CHUNK;
+    }
+
+    /**
+     * Ottiene tutte le celle occupate dall'ostacolo.
+     * 
+     * @return Array delle posizioni X delle celle occupate
+     */
+    public int[] getOccupiedCells() {
+        int width = getWidthInCells();
+        int[] cells = new int[width];
+        for (int i = 0; i < width; i++) {
+            cells[i] = cellX + i;
+        }
+        return cells;
     }
 
 }
