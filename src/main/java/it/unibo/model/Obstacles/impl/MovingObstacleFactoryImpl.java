@@ -1,5 +1,7 @@
 package it.unibo.model.Obstacles.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import it.unibo.model.Map.util.ObstacleType;
@@ -11,9 +13,12 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
     // Costanti per i limiti di velocità
     public static final int MIN_CAR_SPEED = 1;
-    public static final int MAX_CAR_SPEED = 3;
-    public static final int MIN_TRAIN_SPEED = 2;
-    public static final int MAX_TRAIN_SPEED = 5;
+    public static final int MAX_CAR_SPEED = 2;
+    public static final int MIN_TRAIN_SPEED = 1;
+    public static final int MAX_TRAIN_SPEED = 3;
+
+    // Costanti per il sistema a griglia
+    public static final int CELLS_PER_CHUNK = 9;
     
     public MovingObstacleFactoryImpl() {
         this.random = new Random();
@@ -36,11 +41,10 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             speed = -speed;
         }
         
-        // Posiziona l'auto fuori dallo schermo se si muove da sinistra a destra,
-        // o vicino al bordo destro se si muove da destra a sinistra
-        int x = leftToRight ? -50 - random.nextInt(100) : mapWidth + random.nextInt(100);
+        // Posiziona l'auto fuori dal chunk visibile
+        int startX = leftToRight ? -2 : CELLS_PER_CHUNK + 1;
         
-        return createCar(x, y, speed);
+        return createCar(startX, y, speed);
     }
     
     @Override
@@ -50,82 +54,90 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             speed = -speed;
         }
         
-        // Posiziona il treno fuori dallo schermo
-        int x = leftToRight ? -200 - random.nextInt(200) : mapWidth + random.nextInt(200);
+        // I treni sono lunghi 4 celle, quindi devono partire più lontano
+        int startX = leftToRight ? -5 : CELLS_PER_CHUNK + 1;
         
-        return createTrain(x, y, speed);
+        return createTrain(startX, y, speed);
     }
     
     @Override
     public MovingObstacles[] createCarSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight) {
-        MovingObstacles[] cars = new MovingObstacles[count];
+        List<MovingObstacles> cars = new ArrayList<>();
         
-        // Calcoliamo la spaziatura totale disponibile
-        int carWidth = 50; // Larghezza standard di un'auto
-        int totalSpace = mapWidth + 2 * carWidth; // Spazio totale includendo aree fuori schermo
-        int spacing = totalSpace / count; // Spaziatura uniforme
-        
-        // Assicuriamo una spaziatura minima
-        if (spacing < minDistance) {
-            count = totalSpace / minDistance;
-            spacing = totalSpace / count;
-        }
+        // Calcola le posizioni per distribuire le auto uniformemente
+        int totalRange = CELLS_PER_CHUNK + 10; // Range esteso per includere aree fuori schermo
+        int spacing = Math.max(minDistance, totalRange / count);
         
         for (int i = 0; i < count; i++) {
-            // Aggiungiamo un po' di randomizzazione alla posizione
-            int randomOffset = random.nextInt(spacing / 2) - spacing / 4;
-            int x = i * spacing + randomOffset;
-            
-            // Se si muovono da destra a sinistra, invertiamo il posizionamento
+            int baseX = i * spacing;
             if (!leftToRight) {
-                x = mapWidth - x;
+                baseX = totalRange - baseX;
             }
             
-            // Randomizziamo un po' la velocità di ogni auto
-            int speedVariation = random.nextInt(2); // 0 o 1
-            int speed = MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1) + speedVariation;
-            if (!leftToRight) {
-                speed = -speed;
+            // Aggiungi un po' di randomizzazione
+            int randomOffset = random.nextInt(spacing / 3) - spacing / 6;
+            int finalX = baseX + randomOffset;
+            
+            // Assicurati che le auto non si sovrappongano
+            boolean validPosition = true;
+            for (MovingObstacles existingCar : cars) {
+                if (Math.abs(existingCar.getX() - finalX) < 2) { // Minima distanza di 2 celle
+                    validPosition = false;
+                    break;
+                }
             }
             
-            cars[i] = createCar(x, y, speed);
+            if (validPosition) {
+                int speed = MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1);
+                if (!leftToRight) {
+                    speed = -speed;
+                }
+                
+                cars.add(createCar(finalX, y, speed));
+            }
         }
-        return cars;
+        
+        return cars.toArray(new MovingObstacles[0]);
     }
     
     @Override
     public MovingObstacles[] createTrainSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight) {
-        MovingObstacles[] trains = new MovingObstacles[count];
+        List<MovingObstacles> trains = new ArrayList<>();
         
-        // I treni sono più grandi e richiedono più spazio
-        int trainWidth = 200; // Larghezza standard di un treno
-        int totalSpace = mapWidth + 2 * trainWidth;
-        int spacing = totalSpace / count;
-        
-        // Assicuriamo una spaziatura minima
-        if (spacing < minDistance) {
-            count = totalSpace / minDistance;
-            spacing = totalSpace / count;
-        }
+        // I treni richiedono più spazio (4 celle + distanza minima)
+        int trainSpacing = Math.max(minDistance, 6); // Minimo 6 celle tra treni
+        int totalRange = CELLS_PER_CHUNK + 20; // Range più ampio per i treni
         
         for (int i = 0; i < count; i++) {
-            // I treni richiedono una spaziatura più precisa, meno randomizzazione
-            int randomOffset = random.nextInt(spacing / 3) - spacing / 6;
-            int x = i * spacing + randomOffset;
-            
-            // Se si muovono da destra a sinistra, invertiamo il posizionamento
+            int baseX = i * trainSpacing;
             if (!leftToRight) {
-                x = mapWidth - x;
+                baseX = totalRange - baseX;
             }
             
-            int speedVariation = random.nextInt(2);
-            int speed = MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1) + speedVariation;
-            if (!leftToRight) {
-                speed = -speed;
+            // Meno randomizzazione per i treni per evitare sovrapposizioni
+            int randomOffset = random.nextInt(2) - 1; // -1, 0, o 1
+            int finalX = baseX + randomOffset;
+            
+            // Controlla che non si sovrapponga con altri treni
+            boolean validPosition = true;
+            for (MovingObstacles existingTrain : trains) {
+                int distance = Math.abs(existingTrain.getX() - finalX);
+                if (distance < MovingObstacles.TRAIN_WIDTH_CELLS + 2) { // 4 celle del treno + 2 di sicurezza
+                    validPosition = false;
+                    break;
+                }
             }
             
-            trains[i] = createTrain(x, y, speed);
+            if (validPosition) {
+                int speed = MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1);
+                if (!leftToRight) {
+                    speed = -speed;
+                }
+                
+                trains.add(createTrain(finalX, y, speed));
+            }
         }
-        return trains;
+        
+        return trains.toArray(new MovingObstacles[0]);
     }
 }
