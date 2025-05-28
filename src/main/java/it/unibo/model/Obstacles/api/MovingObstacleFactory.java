@@ -70,4 +70,31 @@ public interface MovingObstacleFactory {
      * @return Array of train obstacles
      */
     MovingObstacles[] createTrainSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight);
+
+    /**
+     * Creates a set of obstacles for a road chunk, alternating directions.
+     * 
+     * @param chunkY Position Y of the chunk
+     * @param carCount Number of cars to create
+     * @return Array of cars with alternating directions
+     */
+    MovingObstacles[] createRoadChunkObstacles(int chunkY, int carCount);
+
+    /**
+     * Creates a set of obstacles for a railway chunk.
+     * 
+     * @param chunkY Position Y of the chunk
+     * @param trainCount Number of trains to create
+     * @return Array of trains
+     */
+    MovingObstacles[] createRailwayChunkObstacles(int chunkY, int trainCount);
+
+    /**
+     * Creates appropriate obstacles for a specific chunk type.
+     * 
+     * @param chunkY Position Y of the chunk
+     * @param chunkType Type of chunk
+     * @return Array of moving obstacles for the chunk
+     */
+    MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType);
 }

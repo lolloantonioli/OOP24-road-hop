@@ -148,6 +148,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
      * @param carCount Numero di auto da creare
      * @return Array di auto con direzioni alternate
      */
+    @Override
     public MovingObstacles[] createRoadChunkObstacles(int chunkY, int carCount) {
         boolean leftToRight = random.nextBoolean();
         return createCarSet(chunkY, CELLS_PER_CHUNK, carCount, 3, leftToRight);
@@ -160,6 +161,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
      * @param trainCount Numero di treni da creare
      * @return Array di treni
      */
+    @Override
     public MovingObstacles[] createRailwayChunkObstacles(int chunkY, int trainCount) {
         boolean leftToRight = random.nextBoolean();
         return createTrainSet(chunkY, CELLS_PER_CHUNK, trainCount, 8, leftToRight);
@@ -172,6 +174,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
      * @param chunkType Tipo di chunk
      * @return Array di ostacoli mobili per il chunk
      */
+    @Override
     public MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType) {
         return switch (chunkType.toUpperCase()) {
             case "ROAD" -> createRoadChunkObstacles(chunkY, 2 + random.nextInt(3)); // 2-4 auto

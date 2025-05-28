@@ -3,7 +3,6 @@ package it.unibo.model.Obstacles.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
@@ -11,11 +10,9 @@ import it.unibo.model.Obstacles.api.MovingObstacleManager;
 public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     private final List<MovingObstacles> obstacles;
-    private final Random random;
     
     public MovingObstacleManagerImpl() {
         this.obstacles = new ArrayList<>();
-        this.random = new Random();
     }
     
     @Override
@@ -139,6 +136,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     /**
      * Ottiene ostacoli in un chunk specifico.
      */
+    @Override
     public List<MovingObstacles> getObstaclesInChunk(int chunkY) {
         List<MovingObstacles> result = new ArrayList<>();
         
@@ -185,6 +183,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
      /**
      * Pulisce ostacoli che sono usciti completamente dalla griglia.
      */
+    @Override
     public void cleanupOffscreenObstaclesHorizontal() {
         Iterator<MovingObstacles> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
@@ -214,6 +213,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     /**
      * Controlla collisione con un'area specifica (utile per ostacoli multi-cella).
      */
+    @Override
     public boolean checkCollisionInArea(int startCellX, int endCellX, int chunkY) {
         for (MovingObstacles obstacle : obstacles) {
             if (obstacle.getY() != chunkY || !obstacle.isVisible()) {
@@ -234,6 +234,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     /**
      * Controlla se una posizione è sicura per posizionare un nuovo ostacolo.
      */
+    @Override
     public boolean isSafePosition(int cellX, int chunkY, int widthInCells) {
         return !checkCollisionInArea(cellX, cellX + widthInCells, chunkY);
     }

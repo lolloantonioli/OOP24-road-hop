@@ -52,6 +52,14 @@ public interface MovingObstacleManager {
      * @return List of obstacles of the specified type
      */
     List<MovingObstacles> getObstaclesByType(String type);
+
+    /**
+     * Gets obstacles in a specific chunk.
+     * 
+     * @param chunkY Y coordinate of the chunk
+     * @return List of obstacles in the specified chunk
+     */
+    List<MovingObstacles> getObstaclesInChunk(int chunkY);
     
     /**
      * Checks if a point collides with any managed obstacle.
@@ -60,7 +68,7 @@ public interface MovingObstacleManager {
      * @param y Y-coordinate
      * @return True if there is a collision
      */
-    boolean checkCollision(int x, int y);
+    boolean checkCollision(int cellXx, int chunkY);
     
     /**
      * Increases the speed of all obstacles by a factor.
@@ -77,6 +85,11 @@ public interface MovingObstacleManager {
      * @param maxY Maximum Y coordinate to keep obstacles
      */
     void cleanupOffscreenObstacles(int minY, int maxY);
+
+    /**
+     * Cleans up obstacles that have moved completely off the horizontal grid.
+     */
+    void cleanupOffscreenObstaclesHorizontal();
     
     /**
      * Gets the total number of managed obstacles.
@@ -89,4 +102,24 @@ public interface MovingObstacleManager {
     * Resets all obstacles to their initial position and state.
     */
     void resetAll();
+
+    /**
+     * Checks collision with a specific area (useful for multi-cell obstacles).
+     * 
+     * @param startCellX Starting X cell position
+     * @param endCellX Ending X cell position
+     * @param chunkY Y coordinate in chunks
+     * @return True if there is a collision in the area
+     */
+    boolean checkCollisionInArea(int startCellX, int endCellX, int chunkY);
+
+    /**
+     * Checks if a position is safe for placing a new obstacle.
+     * 
+     * @param cellX X position in cells
+     * @param chunkY Y position in chunks
+     * @param widthInCells Width of the obstacle in cells
+     * @return True if the position is safe
+     */
+    boolean isSafePosition(int cellX, int chunkY, int widthInCells);
 }
