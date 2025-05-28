@@ -32,6 +32,11 @@ public class ShopObserverImpl implements ShopObserver{
             updateView();
         });
 
+        shopPanel.setOnSkinSelected(skinId -> {
+            shopModel.selectSkin(skinId);
+            updateView();
+        });
+
         // Mostra subito le skin quando si entra nel negozio
         updateView();
     }
