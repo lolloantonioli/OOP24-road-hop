@@ -106,6 +106,15 @@ public class MovingObstacles implements Obstacle{
         this.cellX = newCellX;
     }
 
+    public boolean collidesWith(int px, int py) {
+        if (!visible || py != chunkY) {
+            return false;
+        }
+        
+        // Controlla se il punto è nell'area occupata dall'ostacolo
+        return px >= cellX && px < cellX + getWidthInCells();
+    }
+
     /**
      * Controlla se questo ostacolo collide con un altro.
      * 

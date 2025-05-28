@@ -28,12 +28,6 @@ public class GameObjectImpl implements GameObject {
     }
 
     @Override
-    public boolean collidesWith(int px, int py) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'collidesWith'");
-    }
-
-    @Override
     public int getX() {
         return this.x;
     }
