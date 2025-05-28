@@ -140,4 +140,43 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         
         return trains.toArray(new MovingObstacles[0]);
     }
+
+    /**
+     * Crea un set di ostacoli per un chunk strada, alternando le direzioni.
+     * 
+     * @param chunkY Posizione Y del chunk
+     * @param carCount Numero di auto da creare
+     * @return Array di auto con direzioni alternate
+     */
+    public MovingObstacles[] createRoadChunkObstacles(int chunkY, int carCount) {
+        boolean leftToRight = random.nextBoolean();
+        return createCarSet(chunkY, CELLS_PER_CHUNK, carCount, 3, leftToRight);
+    }
+
+    /**
+     * Crea un set di ostacoli per un chunk ferrovia.
+     * 
+     * @param chunkY Posizione Y del chunk
+     * @param trainCount Numero di treni da creare
+     * @return Array di treni
+     */
+    public MovingObstacles[] createRailwayChunkObstacles(int chunkY, int trainCount) {
+        boolean leftToRight = random.nextBoolean();
+        return createTrainSet(chunkY, CELLS_PER_CHUNK, trainCount, 8, leftToRight);
+    }
+
+     /**
+     * Crea ostacoli appropriati per un tipo di chunk specifico.
+     * 
+     * @param chunkY Posizione Y del chunk
+     * @param chunkType Tipo di chunk
+     * @return Array di ostacoli mobili per il chunk
+     */
+    public MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType) {
+        return switch (chunkType.toUpperCase()) {
+            case "ROAD" -> createRoadChunkObstacles(chunkY, 2 + random.nextInt(3)); // 2-4 auto
+            case "RAILWAY" -> createRailwayChunkObstacles(chunkY, 1 + random.nextInt(2)); // 1-2 treni
+            default -> new MovingObstacles[0]; // Nessun ostacolo mobile per altri tipi
+        };
+    }
 }
