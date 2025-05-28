@@ -2,6 +2,9 @@ package it.unibo.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -17,6 +20,7 @@ public class GameFrame extends JFrame {
     private final InstructionsPanel instructionsPanel;
 
     private static final String FRAME_NAME = "Road Hop";
+    private static final String MSG = "CardName cannot be null";
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 600;
 
@@ -40,6 +44,7 @@ public class GameFrame extends JFrame {
     }
 
     public void show(final CardName name) {
+        checkNotNull(name, MSG);
         this.layout.show(this.root, name.toString());
     }
 
