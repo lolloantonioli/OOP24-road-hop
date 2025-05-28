@@ -1,5 +1,8 @@
 package it.unibo.view;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -62,7 +65,11 @@ public class MenuPanel extends JPanel {
     }
 
     private static ImageIcon loadScaledIcon(final String path, final int scaleDiv) {
+        checkNotNull(path, "Path cannot be null");
+        checkArgument(scaleDiv > 0, "Scale divisor must be positive");
         final ImageIcon originalIcon = new ImageIcon(path);
+        checkArgument(originalIcon.getIconWidth() > 0 && originalIcon.getIconHeight() > 0,
+                "Image not found or invalid: %s", path);
         final int iconWidth = originalIcon.getIconWidth() / scaleDiv;
         final int iconHeight = originalIcon.getIconHeight() / scaleDiv;
         final Image scaledImage = originalIcon.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
