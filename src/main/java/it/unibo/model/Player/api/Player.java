@@ -35,6 +35,7 @@ public interface Player extends GameObject {
 
     /**
      * Checks if the player is alive
+     * 
      * @return true if the players is alive, false otherwise
      */
     boolean isAlive();
@@ -50,7 +51,13 @@ public interface Player extends GameObject {
     void reset();
 
     /**
+     * Increases the number of coin collected
+    */
+    void collectACoin();
+
+    /**
      * Gets the number of coins collected by the player
+     * 
      * @return the number of collected coins
      */
     int getCollectedCoins();
@@ -68,5 +75,19 @@ public interface Player extends GameObject {
      * @param skin the new skin to set
      */
     void setSkin(Skin skin);
+
+    /**
+     * Check if the palyer has a second life
+     * 
+     * @return true if the player has a second life, false otherwise
+     */
+    public boolean hasSecondLife();
+
+    /**
+     * Gives to the player a second life
+     */
+    public void grantSecondLife();
+
+    
 
 }

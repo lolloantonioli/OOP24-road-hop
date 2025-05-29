@@ -18,7 +18,6 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     private int collectedCoins;
     private boolean isAlive;
     private boolean hasSecondLife;
-    private Cell currentCell;
     private Skin currentSkin;
 
     //keep track of the starting coordinates for the reset
@@ -34,28 +33,35 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         this.isAlive = true;
         this.hasSecondLife = false;
         this.currentSkin = skin;
-        this.currentCell = new CellImpl(x, y);
         setMovable(true);
     }
 
     @Override
     public void move(Cell newPos) {
-        currentCell = newPos;
+        super.setX(newPos.getX());
+        super.setY(newPos.getY());
+        this.updateScore();
+    }
+
+    private void updateScore() {
+        if (super.getY() > score) {
+            score = super.getY();
+        }
     }
 
     @Override
     public int getScore() {
-        return this.score;
+        return score;
     }
 
     @Override
     public Optional<Cell> getCurrentCell() {
-        return Optional.of(this.currentCell);
+        return Optional.of(new CellImpl(super.getX(), super.getY()));
     }
 
     @Override
     public boolean isAlive() {
-        return this.isAlive;
+        return isAlive;
      }
 
     @Override
@@ -70,21 +76,27 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public void reset() {
-        this.currentCell = new CellImpl(initialX, initialY);
-        this.score = 0;
-        this.collectedCoins = 0;
-        this.isAlive = true;
-        this.hasSecondLife = false;
+        super.setX(initialX);
+        super.setY(initialY);
+        score = 0;
+        collectedCoins = 0;
+        isAlive = true;
+        hasSecondLife = false;
+    }
+
+    @Override
+    public void collectACoin() {
+         collectedCoins = collectedCoins + 1;
     }
 
     @Override
     public int getCollectedCoins() {
-        return this.collectedCoins;
+        return collectedCoins;
     }
 
     @Override
     public Skin getCurrentSkin() {
-        return this.currentSkin;
+        return currentSkin;
     }
 
     @Override
@@ -94,11 +106,11 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     }
 
     public void grantSecondLife() {
-        this.hasSecondLife = true;
+        hasSecondLife = true;
     }
 
     public boolean hasSecondLife() {
-        return this.hasSecondLife;
+        return hasSecondLife;
     }
 
 }
