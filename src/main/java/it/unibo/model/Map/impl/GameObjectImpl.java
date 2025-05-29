@@ -78,4 +78,29 @@ public class GameObjectImpl implements GameObject {
         this.y = y;
     }
 
+    // larghezza dell'oggetto
+    @Override
+    public int getWidthInCells() {
+        return 1;
+    }
+
+    // tutte le posizioni x occupate da un oggetto
+    @Override
+    public int[] getOccupiedCells() {
+        int width = getWidthInCells();
+        int[] cells = new int[width];
+        for (int i = 0; i < width; i++) {
+            cells[i] = getX() + i;
+        }
+        return cells;
+    }
+
+    // controlla se un oggetto occupa una specifica cella
+    @Override
+    public boolean occupiesCell(int cellX) {
+        int startX = getX();
+        int endX = startX + getWidthInCells();
+        return cellX >= startX && cellX < endX;
+    }
+
 }

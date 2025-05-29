@@ -1,10 +1,11 @@
 package it.unibo.model.Map.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import java.util.Optional;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import it.unibo.model.Map.api.Cell;
+import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameObject;
 
 public class CellImpl implements Cell {
@@ -54,6 +55,23 @@ public class CellImpl implements Cell {
     @Override
     public int getY() {
         return this.y;
+    }
+
+    @Override
+    public boolean isOccupiedInChunk(Chunk chunk) {
+        // controlla se la cella contiene un oggetto
+        if (hasObject()) {
+            return true;
+        }
+        
+        // controlla se un oggetto multicella occupa la cella
+        for (GameObject obj : chunk.getObjects()) {
+            if (obj.occupiesCell(this.getX())) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
 }
