@@ -39,14 +39,15 @@ public class CollisionProMaxImpl implements CollisionProMax{
     public boolean canMoveTo(GameMap map, Cell newPosition) {
         checkNotNull(newPosition, "not valid position");
         checkNotNull(map, "not valid map");
-        
-        return map.getVisibleChunks().stream()
-            .flatMap(chunk -> chunk.getObjects().stream())
-            .filter(Obstacle.class::isInstance)
-            .map(Obstacle.class::cast)
-            .filter(obstacle -> checkCollision(newPosition, obstacle))
-            .noneMatch(obstacle -> obstacle.getType().equals(ObstacleType.TREE))
-            && !isOutOfBounds(newPosition, map);
+    
+        return !isOutOfBounds(newPosition, map) && getCollidedObject(newPosition, map).map(obj -> {
+            if (obj instanceof Obstacle) {
+                Obstacle obstacle = (Obstacle) obj;
+                return !obstacle.getType().equals(ObstacleType.TREE);
+            }
+            return true;
+
+        }).orElse(true);
 
     }
 
