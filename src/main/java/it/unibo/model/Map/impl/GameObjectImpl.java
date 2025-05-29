@@ -68,4 +68,14 @@ public class GameObjectImpl implements GameObject {
         this.platform = platform;
     }
 
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
+
 }

@@ -8,6 +8,10 @@ public interface GameObject {
 
     int getY();
 
+    void setX(int x);
+
+    void setY(int y);
+
     int getSpeed();
 
     boolean isMovable();
