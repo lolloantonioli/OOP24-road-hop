@@ -138,6 +138,7 @@ public class MovingObstacles implements Obstacle{
      * 
      * @return Larghezza in celle
      */
+    @Override
     public int getWidthInCells() {
         return type == ObstacleType.TRAIN ? TRAIN_WIDTH_CELLS : CAR_WIDTH_CELLS;
     }
@@ -149,8 +150,8 @@ public class MovingObstacles implements Obstacle{
      * @return Larghezza in celle
      */
     private int getOtherWidthInCells(Obstacle other) {
-        if (other instanceof MovingObstacles) {
-            return ((MovingObstacles) other).getWidthInCells();
+        if (other instanceof MovingObstacles movingObstacles) {
+            return movingObstacles.getWidthInCells();
         }
         return 1; // Default per ostacoli statici
     }
@@ -256,6 +257,7 @@ public class MovingObstacles implements Obstacle{
      * 
      * @return Array delle posizioni X delle celle occupate
      */
+    @Override
     public int[] getOccupiedCells() {
         int width = getWidthInCells();
         int[] cells = new int[width];
@@ -263,6 +265,25 @@ public class MovingObstacles implements Obstacle{
             cells[i] = cellX + i;
         }
         return cells;
+    }
+
+    @Override
+    public void setX(int x) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setX'");
+    }
+
+    @Override
+    public void setY(int y) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setY'");
+    }
+
+    @Override
+    public boolean occupiesCell(int cellX) {
+        int startX = getX();
+        int endX = startX + getWidthInCells();
+        return cellX >= startX && cellX < endX;
     }
 
 }
