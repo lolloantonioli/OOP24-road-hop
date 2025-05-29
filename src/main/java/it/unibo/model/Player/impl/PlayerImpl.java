@@ -22,6 +22,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     private int collectedCoins;
     private boolean isAlive;
     private boolean isInvincible;
+    private boolean hasSecondLife;
     private Cell currentCell;
     private Skin currentSkin;
     private GameMap map;
@@ -34,17 +35,16 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public PlayerImpl (final int x, final int y, final Skin skin, final GameMap map){
         super(x, y);
         checkNotNull(skin, "skin cannot be null");
-
         this.initialX = x;
         this.initialY = y;
         this.score = 0;
         this.isAlive = true;
         this.isInvincible = false;
+        this.hasSecondLife = false;
         this.currentSkin = skin;
         this.map = map;
         collisionHandler = new CollisionHandlerImpl();
         this.currentCell = new CellImpl(x, y);
-
         setMovable(true);
     }
 
@@ -68,7 +68,6 @@ public class PlayerImpl extends GameObjectImpl implements Player{
             
             return true;
         }
-        
         return false;
     }
 
@@ -89,7 +88,12 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public void die() {
-        isAlive = false;
+        if (hasSecondLife) {
+            hasSecondLife = false;
+            // Il player "resuscita" e resta vivo
+        } else {
+            isAlive = false;
+        }
     }
 
     @Override
@@ -114,6 +118,13 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public void setSkin(Skin skin) {
         checkNotNull(skin, "skin cannot be null");
         currentSkin = skin;
+    }
+
+    public void grantSecondLife() {
+        this.hasSecondLife = true;
+    }
+    public boolean hasSecondLife() {
+        return this.hasSecondLife;
     }
 
 }
