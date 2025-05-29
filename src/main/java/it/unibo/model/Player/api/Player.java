@@ -1,6 +1,5 @@
 package it.unibo.model.Player.api;
 
-import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Shop.api.Skin;
@@ -12,12 +11,12 @@ import java.util.Optional;
 public interface Player extends GameObject {
 
     /**
-     * Moves the player in the specified direction if it's possible
+     * Moves the player in the new cell
      * 
-     * @param direction the direction to move in
+     * @param newPos the new position the player needs to move in
      * @return true if the player was able to move false otherwise 
      */
-    boolean move(Direction direction);
+    void move(Cell newPos);
 
     /**
      * Gets the score of the player
@@ -36,6 +35,7 @@ public interface Player extends GameObject {
 
     /**
      * Checks if the player is alive
+     * 
      * @return true if the players is alive, false otherwise
      */
     boolean isAlive();
@@ -51,7 +51,13 @@ public interface Player extends GameObject {
     void reset();
 
     /**
+     * Increases the number of coin collected
+    */
+    void collectACoin();
+
+    /**
      * Gets the number of coins collected by the player
+     * 
      * @return the number of collected coins
      */
     int getCollectedCoins();
@@ -69,5 +75,19 @@ public interface Player extends GameObject {
      * @param skin the new skin to set
      */
     void setSkin(Skin skin);
+
+    /**
+     * Check if the palyer has a second life
+     * 
+     * @return true if the player has a second life, false otherwise
+     */
+    public boolean hasSecondLife();
+
+    /**
+     * Gives to the player a second life
+     */
+    public void grantSecondLife();
+
+    
 
 }

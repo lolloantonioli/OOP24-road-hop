@@ -1,10 +1,9 @@
 package it.unibo;
 
-import it.unibo.view.SwingView;
+import it.unibo.controller.MainControllerImpl;
 
 public class App {
     public static void main(String[] args) {
-        SwingView view = new SwingView();
-        view.display();
+        new MainControllerImpl().goToMenu();
     }
 }

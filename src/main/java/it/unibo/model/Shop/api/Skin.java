@@ -1,7 +1,5 @@
 package it.unibo.model.Shop.api;
 
-import java.awt.image.BufferedImage;
-
 public interface Skin {
     /**
      * Get the id of the skin.
@@ -22,12 +20,6 @@ public interface Skin {
     public int getPrice();
 
     /**
-     * Get the image of the skin.
-     * @return the image of the skin
-     */
-    public BufferedImage getImage();
-
-    /**
      * Check if the skin is unlocked.
      * @return true if the skin is unlocked, false otherwise
      */
@@ -35,7 +27,23 @@ public interface Skin {
 
     /**
      * Set the unlocked status of the skin.
-     * @param unlocked true if the skin is unlocked, false otherwise
      */
-    public void setUnlocked(boolean unlocked);
+    public void unlock();
+
+    /**
+     * Check if the skin is equipped.
+     * @return true if the skin is equipped, false otherwise
+     */
+    public boolean isSelected();
+
+    /**
+     * Set the equipped status of the skin.
+     * @param selected true if the skin is equipped, false otherwise
+     */
+    public void select();
+
+    /**
+     * Deselect the skin.
+     */
+    public void deselect();
 }

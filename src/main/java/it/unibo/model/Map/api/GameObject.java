@@ -4,11 +4,13 @@ public interface GameObject {
 
     void update();
 
-    boolean collidesWith(int px, int py);
-
     int getX();
 
     int getY();
+
+    void setX(int x);
+
+    void setY(int y);
 
     int getSpeed();
 

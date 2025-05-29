@@ -108,16 +108,16 @@ public class ChunkFactoryImpl implements ChunkFactory {
                 chunk.getObjects().stream()
                     .filter(obj -> obj instanceof Obstacle)
                     .forEach(obj -> occupiedPositions.add(obj.getX()));
-                
                 final List<Integer> availablePositions = new ArrayList<>();
                 IntStream.range(0, ChunkImpl.CELLS_PER_ROW)
                     .filter(i -> !occupiedPositions.contains(i))
                     .forEach(i -> availablePositions.add(i));
-                
                 if (!availablePositions.isEmpty()) {
                     final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
-                    final Collectible coin = new CollectibleImpl(collectiblePos, chunk.getPosition(), CollectibleType.COIN);
-                    chunk.addObjectAt(coin, collectiblePos);
+                    // 80% coin, 20% seconda vita
+                    CollectibleType type = random.nextDouble() < 0.2 ? CollectibleType.SECOND_LIFE : CollectibleType.COIN;
+                    final Collectible collectible = new CollectibleImpl(collectiblePos, chunk.getPosition(), type);
+                    chunk.addObjectAt(collectible, collectiblePos);
                 }
             }
         }

@@ -8,18 +8,16 @@ import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Player.api.Player;
-import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
-public class PlayerImpl extends GameObjectImpl implements Player{
+//da fare un po' di metodi e gestione dell'invincibilità
 
-    private static final int DEFAULT_STARTING_X = 0;
-    private static final int DEFAULT_STARTING_Y = 0;
+public class PlayerImpl extends GameObjectImpl implements Player{
 
     private int score;
     private int collectedCoins;
     private boolean isAlive;
-    private Cell currentCell;
+    private boolean hasSecondLife;
     private Skin currentSkin;
 
     //keep track of the starting coordinates for the reset
@@ -29,68 +27,90 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public PlayerImpl (final int x, final int y, final Skin skin){
         super(x, y);
         checkNotNull(skin, "skin cannot be null");
-
         this.initialX = x;
         this.initialY = y;
         this.score = 0;
         this.isAlive = true;
+        this.hasSecondLife = false;
         this.currentSkin = skin;
-
         setMovable(true);
     }
 
-    public PlayerImpl(Skin skin){
-        this(DEFAULT_STARTING_X, DEFAULT_STARTING_Y, skin);
+    @Override
+    public void move(Cell newPos) {
+        super.setX(newPos.getX());
+        super.setY(newPos.getY());
+        this.updateScore();
     }
 
-    @Override
-    public boolean move(Direction direction) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+    private void updateScore() {
+        if (super.getY() > score) {
+            score = super.getY();
+        }
     }
 
     @Override
     public int getScore() {
-        return this.score;
+        return score;
     }
 
     @Override
     public Optional<Cell> getCurrentCell() {
-        return Optional.of(this.currentCell);
+        return Optional.of(new CellImpl(super.getX(), super.getY()));
     }
 
     @Override
     public boolean isAlive() {
-        return this.isAlive;
+        return isAlive;
      }
 
     @Override
     public void die() {
-        isAlive = false;
+        if (hasSecondLife) {
+            hasSecondLife = false;
+            // Il player "resuscita" e resta vivo
+        } else {
+            isAlive = false;
+        }
     }
 
     @Override
     public void reset() {
-        this.currentCell = new CellImpl(initialX, initialY);
-        this.score = 0;
-        this.collectedCoins = 0;
-        this.isAlive = true;
+        super.setX(initialX);
+        super.setY(initialY);
+        score = 0;
+        collectedCoins = 0;
+        isAlive = true;
+        hasSecondLife = false;
+    }
+
+    @Override
+    public void collectACoin() {
+         collectedCoins = collectedCoins + 1;
     }
 
     @Override
     public int getCollectedCoins() {
-        return this.collectedCoins;
+        return collectedCoins;
     }
 
     @Override
     public Skin getCurrentSkin() {
-        return this.currentSkin;
+        return currentSkin;
     }
 
     @Override
     public void setSkin(Skin skin) {
         checkNotNull(skin, "skin cannot be null");
         currentSkin = skin;
+    }
+
+    public void grantSecondLife() {
+        hasSecondLife = true;
+    }
+
+    public boolean hasSecondLife() {
+        return hasSecondLife;
     }
 
 }

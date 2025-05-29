@@ -1,0 +1,63 @@
+package it.unibo.model.Collision.impl;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Optional;
+
+import it.unibo.model.Collision.api.CollisionProMax;
+import it.unibo.model.Map.api.Cell;
+import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.Map.api.Obstacle;
+import it.unibo.model.Map.impl.CellImpl;
+import it.unibo.model.Map.util.ObstacleType;
+
+public class CollisionProMaxImpl implements CollisionProMax{
+
+    @Override
+    public boolean checkCollision(Cell position, GameObject obj) {
+        checkNotNull(position, "not valid position");
+        checkNotNull(obj, "not valid object");
+
+        //se non lavoriamo con le celle fare algoritmo aabb con width e height degli oggetti e player
+        return position.equals(new CellImpl(obj.getX(), obj.getY()));
+    }
+
+    @Override
+    public Optional<GameObject> getCollidedObject(Cell position, GameMap map) {
+        
+        //metodo specifico perchè non possono esserci più oggetti nella stessa cella
+        //dovrei espanderlo e poi farlo gestire da game manager?
+        //se mi restituisco una lista e contiene più di un object posso usarlo per capire se ci sono stati errori
+        return map.getVisibleChunks().stream()
+            .flatMap(chunk -> chunk.getObjects().stream())
+            .filter(obj -> checkCollision(position, obj))
+            .findFirst();
+    }
+
+    @Override
+    public boolean canMoveTo(GameMap map, Cell newPosition) {
+        checkNotNull(newPosition, "not valid position");
+        checkNotNull(map, "not valid map");
+    
+        return !isOutOfBounds(newPosition, map) && getCollidedObject(newPosition, map).map(obj -> {
+            if (obj instanceof Obstacle) {
+                Obstacle obstacle = (Obstacle) obj;
+                return !obstacle.getType().equals(ObstacleType.TREE);
+            }
+            return true;
+
+        }).orElse(true);
+
+    }
+
+    @Override
+    public boolean isOutOfBounds(Cell position, GameMap map) {
+        checkNotNull(position, "not valid position");
+        checkNotNull(map, "not valid map");
+
+        return !map.getVisibleChunks().stream()
+            .anyMatch(c -> c.getCells().contains(position));
+    }
+
+}

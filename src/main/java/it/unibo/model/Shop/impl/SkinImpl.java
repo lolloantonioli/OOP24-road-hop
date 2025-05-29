@@ -1,45 +1,61 @@
 package it.unibo.model.Shop.impl;
 
-import java.awt.image.BufferedImage;
-
 import it.unibo.model.Shop.api.Skin;
 
 public class SkinImpl implements Skin{
+    
     private final String id;
     private final String name;
     private final int price;
-    private final BufferedImage image;
     private boolean unlocked;
+    private boolean selected;
 
-    public SkinImpl(String id, String name, int price, BufferedImage image, boolean unlocked) {
+    public SkinImpl(String id, String name, int price, boolean unlocked) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.image = image;
         this.unlocked = unlocked;
+        this.selected = false;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
 
-    public BufferedImage getImage() {
-        return image;
-    }
-
+    @Override
     public boolean isUnlocked() {
         return unlocked;
     }
 
-    public void setUnlocked(boolean unlocked) {
-        this.unlocked = unlocked;
+
+    @Override
+    public void unlock() {
+       this.unlocked = true;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;    
+    }
+
+    @Override
+    public void select() {
+        this.selected = true;
+    }
+
+    @Override
+    public void deselect() {
+        this.selected = false;
     }
 }
