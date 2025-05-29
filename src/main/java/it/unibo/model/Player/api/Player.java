@@ -1,6 +1,5 @@
 package it.unibo.model.Player.api;
 
-import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Shop.api.Skin;
@@ -12,12 +11,12 @@ import java.util.Optional;
 public interface Player extends GameObject {
 
     /**
-     * Moves the player in the specified direction if it's possible
+     * Moves the player in the new cell
      * 
-     * @param direction the direction to move in
+     * @param newPos the new position the player needs to move in
      * @return true if the player was able to move false otherwise 
      */
-    boolean move(Direction direction);
+    void move(Cell newPos);
 
     /**
      * Gets the score of the player

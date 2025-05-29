@@ -24,7 +24,11 @@ public class CollisionProMaxImpl implements CollisionProMax{
     }
 
     @Override
-    public Optional<GameObject> collidedWith(Cell position, GameMap map) {
+    public Optional<GameObject> getCollidedObject(Cell position, GameMap map) {
+        
+        //metodo specifico perchè non possono esserci più oggetti nella stessa cella
+        //dovrei espanderlo e poi farlo gestire da game manager?
+        //se mi restituisco una lista e contiene più di un object posso usarlo per capire se ci sono stati errori
         return map.getVisibleChunks().stream()
             .flatMap(chunk -> chunk.getObjects().stream())
             .filter(obj -> checkCollision(position, obj))

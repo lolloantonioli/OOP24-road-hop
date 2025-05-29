@@ -22,9 +22,9 @@ public interface CollisionProMax {
      * 
      * @param player the player
      * @param map the game map
-     * @return true a collision happened, false otherwise
+     * @return Optional containing the collided object, empty it no collision happened
      */
-    Optional<GameObject> collidedWith(Cell position, GameMap map);
+    Optional<GameObject> getCollidedObject(Cell position, GameMap map);
 
     /**
      * Checks if the player can move to the specified coordinates.
