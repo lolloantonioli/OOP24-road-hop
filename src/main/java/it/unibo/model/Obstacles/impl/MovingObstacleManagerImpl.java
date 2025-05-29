@@ -12,6 +12,8 @@ import it.unibo.model.Obstacles.api.MovingObstacleManager;
 public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     private final List<MovingObstacles> obstacles;
+
+    public static final int CELLS_PER_CHUNK = 9;
     
     public MovingObstacleManagerImpl() {
         this.obstacles = new ArrayList<>();
@@ -20,8 +22,8 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     @Override
     public void addObstacle(MovingObstacles obstacle) {
         // Controlla che non ci siano sovrapposizioni prima di aggiungere
-        if (obstacle.canBePlacedAt(obstacle.getX(), obstacles)) {
-            obstacles.add(obstacle);
+        if (isSafePosition(obstacle.getX(), obstacle.getY(), obstacle.getWidthInCells())) {
+        obstacles.add(obstacle);
         }
     }
     
@@ -154,8 +156,11 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     @Override
     public boolean checkCollision(int cellX, int chunkY) {
         for (MovingObstacles obstacle : obstacles) {
-            if (obstacle.collidesWith(cellX, chunkY)) {
-                return true;
+            if (obstacle.getY() == chunkY && obstacle.isVisible()) {
+                // Usa il metodo occupiesCell per controlli multi-cella
+                if (obstacle.occupiesCell(cellX)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -193,8 +198,14 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
             int x = obstacle.getX();
             int width = obstacle.getWidthInCells();
             
-            // Rimuovi se completamente fuori dalla griglia (con un margine)
-            if (x > MovingObstacles.CELLS_PER_CHUNK + 10 || x + width < -10) {
+            // Per ostacoli che si muovono verso destra
+            if (obstacle.getSpeed() > 0 && x >= CELLS_PER_CHUNK + 5) {
+                iterator.remove();
+                continue;
+            }
+            
+            // Per ostacoli che si muovono verso sinistra
+            if (obstacle.getSpeed() < 0 && x + width <= -5) {
                 iterator.remove();
             }
         }
@@ -238,6 +249,21 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
      */
     @Override
     public boolean isSafePosition(int cellX, int chunkY, int widthInCells) {
-        return !checkCollisionInArea(cellX, cellX + widthInCells, chunkY);
+        for (MovingObstacles obstacle : obstacles) {
+            if (obstacle.getY() != chunkY) {
+                continue; // Diverso chunk, nessuna collisione
+            }
+            
+            // Controlla sovrapposizione tra aree
+            int obstacleStart = obstacle.getX();
+            int obstacleEnd = obstacleStart + obstacle.getWidthInCells();
+            int newObstacleEnd = cellX + widthInCells;
+            
+            // Se c'è sovrapposizione, la posizione non è sicura
+            if (cellX < obstacleEnd && newObstacleEnd > obstacleStart) {
+                return false;
+            }
+        }
+        return true;
     }
 }

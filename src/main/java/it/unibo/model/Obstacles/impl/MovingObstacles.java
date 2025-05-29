@@ -7,7 +7,7 @@ import it.unibo.model.Map.util.ObstacleType;
 
 public class MovingObstacles implements Obstacle{
     private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)
-    private int chunkY;
+    private final int chunkY;
     private final ObstacleType type;
     private int speed;
     private boolean movable;
@@ -22,7 +22,7 @@ public class MovingObstacles implements Obstacle{
     public static final int TRAIN_WIDTH_CELLS = 4;
     public static final int CELLS_PER_CHUNK = 9;
 
-    public MovingObstacles(int x, int y, ObstacleType type, int speed) {
+    public MovingObstacles(int cellX, int chunkY, ObstacleType type, int speed) {
         this.cellX = cellX;
         this.initialCellX = cellX;
         this.chunkY = chunkY;
