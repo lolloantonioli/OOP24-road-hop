@@ -14,7 +14,6 @@ public class MovingObstacles implements Obstacle{
     private boolean visible;
     private int initialCellX; // per far ricomparire l'ostacolo nella posizione iniziale
     private final int initialSpeed;
-    private int mapWidthInChunks;
     private int updateCounter; // Per gestire movimento sub-cella
 
     // Costanti per le dimensioni in celle
@@ -31,7 +30,6 @@ public class MovingObstacles implements Obstacle{
         this.initialSpeed = speed;
         this.movable = true;
         this.visible = true;
-        this.mapWidthInChunks = 0;
         this.updateCounter = 0;
     }
     
@@ -78,15 +76,6 @@ public class MovingObstacles implements Obstacle{
                 }
             }
         }
-    }
-
-    /**
-     * Imposta la larghezza della mappa in chunks.
-     * 
-     * @param mapWidthInChunks Larghezza della mappa in chunks
-     */
-    public void setMapWidthInChunks(int mapWidthInChunks) {
-        this.mapWidthInChunks = mapWidthInChunks;
     }
 
     /**
