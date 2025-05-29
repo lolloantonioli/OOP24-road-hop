@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 
 // UPDATEALL DA GUARDARE FORSE E' INUTILE
@@ -40,77 +39,10 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     }
     
     @Override
-    public void updateAll(int mapWidth) {
-       // Converti la larghezza della mappa da pixel a chunks (se necessario)
-       int mapWidthInChunks = mapWidth / 9; // Assumendo 9 celle per chunk
-        
-       for (MovingObstacles obstacle : obstacles) {
-           if (obstacle.isMovable()) {
-               obstacle.setMapWidthInChunks(mapWidthInChunks);
-               obstacle.update();
-           }
-       }
-       
-       // Gestisci le collisioni tra ostacoli
-       handleObstacleCollisions();
-    }
-    
-    /**
-     * Gestisce le collisioni tra ostacoli mobili.
-     */
-    private void handleObstacleCollisions() {
-        List<MovingObstacles> cars = getObstaclesByType(ObstacleType.CAR.toString());
-        List<MovingObstacles> trains = getObstaclesByType(ObstacleType.TRAIN.toString());
-        
-        // Gestisci collisioni tra auto dello stesso chunk
-        handleSameTypeCollisions(cars);
-        
-        // Gestisci collisioni tra treni dello stesso chunk
-        handleSameTypeCollisions(trains);
-    }
-
-    /**
-     * Gestisce collisioni tra ostacoli dello stesso tipo.
-     */
-    private void handleSameTypeCollisions(List<MovingObstacles> sameTypeObstacles) {
-        for (int i = 0; i < sameTypeObstacles.size(); i++) {
-            MovingObstacles obstacle1 = sameTypeObstacles.get(i);
-            if (!obstacle1.isMovable()) continue;
-            
-            for (int j = i + 1; j < sameTypeObstacles.size(); j++) {
-                MovingObstacles obstacle2 = sameTypeObstacles.get(j);
-                if (!obstacle2.isMovable() || obstacle1.getY() != obstacle2.getY()) continue;
-                
-                // Se si muovono nella stessa direzione e si stanno avvicinando
-                if (Math.signum(obstacle1.getSpeed()) == Math.signum(obstacle2.getSpeed()) && 
-                    obstacle1.collidesWith(obstacle2)) {
-                    
-                    // L'ostacolo più lento rallenta ulteriormente per evitare la collisione
-                    if (Math.abs(obstacle1.getSpeed()) > Math.abs(obstacle2.getSpeed())) {
-                        adjustSpeed(obstacle2, -1);
-                    } else {
-                        adjustSpeed(obstacle1, -1);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Aggiusta la velocità di un ostacolo mantenendo la direzione.
-     */
-    private void adjustSpeed(MovingObstacles obstacle, int adjustment) {
-        int currentSpeed = obstacle.getSpeed();
-        int newSpeed = currentSpeed + adjustment;
-        
-        // Mantieni la direzione ma non permettere velocità negative se era positiva
-        if (currentSpeed > 0) {
-            newSpeed = Math.max(0, newSpeed);
-        } else if (currentSpeed < 0) {
-            newSpeed = Math.min(0, newSpeed);
-        }
-        
-        obstacle.setSpeed(newSpeed);
+    public void updateAll() {
+       obstacles.stream()
+        .filter(MovingObstacles::isMovable)
+        .forEach(MovingObstacles::update);
     }
     
     @Override

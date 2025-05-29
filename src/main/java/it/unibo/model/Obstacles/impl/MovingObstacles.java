@@ -116,22 +116,6 @@ public class MovingObstacles implements Obstacle{
         // Controlla se il punto è nell'area occupata dall'ostacolo
         return px >= cellX && px < cellX + getWidthInCells();
     }
-
-    /**
-     * Controlla se questo ostacolo collide con un altro.
-     * 
-     * @param other Altro ostacolo
-     * @return true se c'è collisione
-     */
-    public boolean collidesWith(Obstacle other) {
-        if (!visible || other.getY() != chunkY) {
-            return false;
-        }
-        
-        // Verifica sovrapposizione nelle celle
-        return cellX < other.getX() + getOtherWidthInCells(other) && 
-               cellX + getWidthInCells() > other.getX();
-    }
     
     /**
      * Ottiene la larghezza dell'ostacolo in celle.
@@ -141,19 +125,6 @@ public class MovingObstacles implements Obstacle{
     @Override
     public int getWidthInCells() {
         return type == ObstacleType.TRAIN ? TRAIN_WIDTH_CELLS : CAR_WIDTH_CELLS;
-    }
-    
-    /**
-     * Ottiene la larghezza di un altro ostacolo in celle.
-     * 
-     * @param other Altro ostacolo
-     * @return Larghezza in celle
-     */
-    private int getOtherWidthInCells(Obstacle other) {
-        if (other instanceof MovingObstacles movingObstacles) {
-            return movingObstacles.getWidthInCells();
-        }
-        return 1; // Default per ostacoli statici
     }
 
     @Override

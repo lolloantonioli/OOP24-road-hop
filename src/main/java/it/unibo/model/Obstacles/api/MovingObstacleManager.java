@@ -32,10 +32,8 @@ public interface MovingObstacleManager {
     
     /**
      * Updates the state of all managed obstacles.
-     * 
-     * @param mapWidth Width of the map for wrapping
      */
-    void updateAll(int mapWidth);
+    void updateAll();
     
     /**
      * Gets all currently active obstacles.
