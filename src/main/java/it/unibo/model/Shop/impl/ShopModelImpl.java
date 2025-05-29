@@ -86,10 +86,11 @@ public class ShopModelImpl implements ShopModel {
 
     @Override
     public void purchaseSkin(String id) {
-        if(canPurchaseSkin(id)) {
+        if (canPurchaseSkin(id)) {
             Skin skin = getSkinById(id);
             spendCoins(skin.getPrice());
             skin.unlock();
+            saveData(); // Salva dopo l'acquisto
         } 
     }
 
@@ -104,11 +105,12 @@ public class ShopModelImpl implements ShopModel {
         Skin skin = getSkinById(id);
         if (skin != null && skin.isUnlocked()) {
             if (selectedSkin != null) {
-                selectedSkin.deselect(); 
+                selectedSkin.deselect();
             }
 
             skin.select();
             selectedSkin = skin;
+            saveData(); // Salva dopo la selezione
         }
     }
 

@@ -35,12 +35,12 @@ public class ShopDataManagerImpl {
             File file = new File(SAVE_FILE_PATH);
             file.getParentFile().mkdirs();
             
-            // Salva il file
+            // Salva il file con try-with-resources
             try (FileOutputStream out = new FileOutputStream(file)) {
                 props.store(out, "Shop Save Data");
             }
             
-            System.out.println("Dati shop salvati con successo!");
+            System.out.println("Dati shop salvati con successo");
             
         } catch (IOException e) {
             System.err.println("Errore nel salvare i dati dello shop: " + e.getMessage());
@@ -98,7 +98,7 @@ public class ShopDataManagerImpl {
      */
     private static ShopSaveData getDefaultSaveData() {
         ShopSaveData defaultData = new ShopSaveData();
-        defaultData.coins = 1000;;
+        defaultData.coins = 1000;
         defaultData.selectedSkin = "Default";
         
         // Skin di default
