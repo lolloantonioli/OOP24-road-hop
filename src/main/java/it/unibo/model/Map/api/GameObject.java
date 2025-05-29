@@ -24,4 +24,10 @@ public interface GameObject {
 
     void setPlatform(boolean platform);
 
+    int getWidthInCells();
+
+    int[] getOccupiedCells();
+
+    boolean occupiesCell(int cellX);
+
 }
