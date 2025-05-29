@@ -3,8 +3,6 @@ package it.unibo.model.Obstacles.impl;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 
-//PROBLEMA DEI TRENI DI 4 CELLE DA RISOLVERE !!!!!!
-
 public class MovingObstacles implements Obstacle{
     private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)
     private final int chunkY;
