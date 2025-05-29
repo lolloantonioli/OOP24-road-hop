@@ -55,7 +55,8 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         }
         
         // I treni sono lunghi 4 celle, quindi devono partire più lontano
-        int startX = leftToRight ? -5 : CELLS_PER_CHUNK + 1;
+        // Assicurati che il treno sia completamente fuori schermo !
+        int startX = leftToRight ? -MovingObstacles.TRAIN_WIDTH_CELLS - 1 : CELLS_PER_CHUNK + 1;
         
         return createTrain(startX, y, speed);
     }
@@ -97,7 +98,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             }
         }
         
-        return cars.toArray(new MovingObstacles[0]);
+        return cars.toArray(MovingObstacles[]::new);
     }
     
     @Override
@@ -122,7 +123,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             boolean validPosition = true;
             for (MovingObstacles existingTrain : trains) {
                 int distance = Math.abs(existingTrain.getX() - finalX);
-                if (distance < MovingObstacles.TRAIN_WIDTH_CELLS + 2) { // 4 celle del treno + 2 di sicurezza
+                if (distance < MovingObstacles.TRAIN_WIDTH_CELLS + minDistance) { // 4 celle del treno + 2 di sicurezza
                     validPosition = false;
                     break;
                 }
@@ -138,7 +139,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             }
         }
         
-        return trains.toArray(new MovingObstacles[0]);
+        return trains.toArray(MovingObstacles[]::new);
     }
 
     /**
