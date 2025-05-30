@@ -5,7 +5,6 @@ import java.util.Optional;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameObject;
 
 public class CellImpl implements Cell {
