@@ -13,7 +13,6 @@ import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.util.CollectibleType;
 
 public class GamePanel extends JPanel {
 
