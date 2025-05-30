@@ -65,7 +65,7 @@ public interface MovingObstacleManager {
      * @param y Y-coordinate
      * @return True if there is a collision
      */
-    boolean checkCollision(int cellXx, int chunkY);
+    boolean checkCollision(int cellX, int chunkY);
     
     /**
      * Increases the speed of all obstacles by a factor.

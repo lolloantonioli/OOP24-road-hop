@@ -7,8 +7,8 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
-// FORSE METODI RANDOM NON SERVONO(????)
-// Aggiornare ChunkFactoryImpl per supportare i tronchi nei fiumi
+// DA RIVEDERE UN PO' STA CLASSE
+// Aggiornare ChunkFactoryImpl per supportare i tronchi nei fiumi ++ COSTANTE CELLSXCHUNK DA CENTRALIZZARE
 
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
