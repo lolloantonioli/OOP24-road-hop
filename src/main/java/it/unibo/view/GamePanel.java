@@ -12,6 +12,7 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.api.Collectible;
 
 public class GamePanel extends JPanel {
@@ -21,7 +22,7 @@ public class GamePanel extends JPanel {
     private final int cellsPerRow;
     private int animationOffset = 0;
 
-    public GamePanel(MapController controller) {
+    public GamePanel(final MapController controller) {
         this.controller = controller;
         this.chunksNumber = GameMapImpl.CHUNKS_NUMBER;
         this.cellsPerRow = ChunkImpl.CELLS_PER_ROW;
@@ -51,7 +52,7 @@ public class GamePanel extends JPanel {
         g.fillRect(x, y, cellWidth, cellHeight);
         cell.getContent().ifPresent(obj -> {
             if (obj instanceof Collectible collectible) {
-                if (collectible.getType().toString().equals("SECOND_LIFE")) {
+                if (collectible.getType() == CollectibleType.SECOND_LIFE) {
                     g.setColor(Color.MAGENTA);
                     g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
                 } else {
@@ -84,12 +85,10 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
-    public void setAnimationOffset(int offset) {
+    public void setAnimationOffset(final int offset) {
         this.animationOffset = offset;
     }
-    public int getChunksNumber() {
-        return this.chunksNumber;
-    }
+
     public int getCellHeight() {
         return getHeight() / chunksNumber;
     }
