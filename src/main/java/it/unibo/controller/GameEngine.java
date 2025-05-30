@@ -14,7 +14,6 @@ public class GameEngine implements Runnable {
     public GameEngine(final MapController mapController, final GamePanel gamePanel) {
         this.mapController = mapController;
         this.gamePanel = gamePanel;
-        System.out.println("GamePanel height: " + gamePanel.getHeight());
     }
 
     @Override
