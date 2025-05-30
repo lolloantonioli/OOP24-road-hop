@@ -1,4 +1,4 @@
-package it.unibo.controller;
+package it.unibo.controller.Util;
 
 /**
  * Enum which represents the possible states of the game.
