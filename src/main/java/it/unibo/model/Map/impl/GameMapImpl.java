@@ -64,7 +64,7 @@ public class GameMapImpl implements GameMap {
     }
 
     private int getFarthestChunkPosition() {
-        return chunks.stream()
+        return new ArrayList<>(chunks).stream()
             .mapToInt(Chunk::getPosition)
             .max()
             .orElse(0);
