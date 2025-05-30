@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Util.CardName;
 
 public class GameFrame extends JFrame {
@@ -25,13 +26,13 @@ public class GameFrame extends JFrame {
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 600;
 
-    public GameFrame() {
+    public GameFrame(MapController mapController) {
         this.layout = new CardLayout();
         this.root = new JPanel(this.layout);
         this.menuPanel = new MenuPanel();
         this.shopView = new ShopView();
         this.instructionsPanel = new InstructionsPanel();
-        this.gamePanel = new GamePanel();
+        this.gamePanel = new GamePanel(mapController);
 
         this.setTitle(FRAME_NAME);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -14,4 +14,6 @@ public interface MapController {
 
     int getCurrentPosition();
 
+    int getScrollSpeed();
+
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import it.unibo.controller.Map.api.MapController;
-import it.unibo.controller.Map.impl.MapControllerImpl;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.impl.ChunkImpl;
@@ -19,9 +18,10 @@ public class GamePanel extends JPanel {
     private final MapController controller;
     private final int chunksNumber;
     private final int cellsPerRow;
+    private int animationOffset = 0;
 
-    public GamePanel() {
-        this.controller = new MapControllerImpl();
+    public GamePanel(MapController controller) {
+        this.controller = controller;
         this.chunksNumber = GameMapImpl.CHUNKS_NUMBER;
         this.cellsPerRow = ChunkImpl.CELLS_PER_ROW;
     }
@@ -38,7 +38,7 @@ public class GamePanel extends JPanel {
             final List<Cell> cells = chunk.getCells();
             for (int col = 0; col < cells.size(); col++) {
                 final int x = col * cellWidth;
-                final int y = row * cellHeight;
+                final int y = (chunks.size() - 1 - row) * cellHeight + animationOffset;
                 drawCell(g, x, y, cellWidth, cellHeight, chunk, cells.get(col));
             }
         }
@@ -71,6 +71,16 @@ public class GamePanel extends JPanel {
 
     public void refresh() {
         repaint();
+    }
+
+    public void setAnimationOffset(int offset) {
+        this.animationOffset = offset;
+    }
+    public int getChunksNumber() {
+        return this.chunksNumber;
+    }
+    public int getCellHeight() {
+        return getHeight() / chunksNumber;
     }
     
 }

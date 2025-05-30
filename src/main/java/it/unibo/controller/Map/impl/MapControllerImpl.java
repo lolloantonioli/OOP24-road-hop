@@ -37,4 +37,8 @@ public class MapControllerImpl implements MapController {
         return mapModel.getCurrentPosition();
     }
 
+    public int getScrollSpeed() {
+        return mapModel.getScrollSpeed();
+    }
+
 }

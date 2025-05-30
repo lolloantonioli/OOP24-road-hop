@@ -21,6 +21,7 @@ public class GameMapImpl implements GameMap {
     public static final int CHUNKS_NUMBER = 7;
     private static final int BUFFER_CHUNKS = 5;
     private static final int MAX_SPEED = 10;
+    //private static final int CELLS_INCREASE_SPEED = 10;
 
     public GameMapImpl(final int speed) {
         checkArgument(speed >= 0 && speed <= MAX_SPEED, "Speed must be between 0 and " + MAX_SPEED);
@@ -43,6 +44,9 @@ public class GameMapImpl implements GameMap {
         currentPosition += scrollSpeed;
         this.cleanupChunks();
         this.ensureBufferChunks();
+        /*if (currentPosition > 0 && currentPosition % CELLS_INCREASE_SPEED == 0) {
+            this.increaseScrollSpeed();
+        }*/
     }
 
     private void cleanupChunks() {
@@ -93,6 +97,10 @@ public class GameMapImpl implements GameMap {
     @Override
     public List<Chunk> getAllChunks() {
         return ImmutableList.copyOf(chunks);
+    }
+
+    public int getScrollSpeed() {
+        return this.scrollSpeed;
     }
 
 }
