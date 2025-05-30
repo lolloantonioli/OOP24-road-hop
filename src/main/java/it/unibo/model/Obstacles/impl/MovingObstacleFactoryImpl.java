@@ -8,6 +8,7 @@ import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
 // FORSE METODI RANDOM NON SERVONO(????)
+// Aggiornare ChunkFactoryImpl per supportare i tronchi nei fiumi
 
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
@@ -37,33 +38,12 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     public MovingObstacles createTrain(int x, int y, int speed) {
         return new MovingObstacles(x, y, ObstacleType.TRAIN, speed);
     }
-    
+
     @Override
-    public MovingObstacles createRandomCar(int y, int mapWidth, boolean leftToRight) {
-        int speed = MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1);
-        if (!leftToRight) {
-            speed = -speed;
-        }
-        
-        // Posiziona l'auto fuori dal chunk visibile
-        int startX = leftToRight ? -2 : CELLS_PER_CHUNK + 1;
-        
-        return createCar(startX, y, speed);
+    public MovingObstacles createLog(int x, int y, int speed) {
+        return new MovingObstacles(x, y, ObstacleType.LOG, speed);
     }
-    
-    @Override
-    public MovingObstacles createRandomTrain(int y, int mapWidth, boolean leftToRight) {
-        int speed = MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1);
-        if (!leftToRight) {
-            speed = -speed;
-        }
-        
-        // I treni sono lunghi 4 celle, quindi devono partire più lontano
-        // Assicurati che il treno sia completamente fuori schermo !
-        int startX = leftToRight ? -MovingObstacles.TRAIN_WIDTH_CELLS - 1 : CELLS_PER_CHUNK + 1;
-        
-        return createTrain(startX, y, speed);
-    }
+
     
     @Override
     public MovingObstacles[] createCarSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight) {
@@ -187,24 +167,6 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             case "RIVER" -> createRiverChunkObstacles(chunkY, 1 + random.nextInt(3)); // 1-3 tronchi
             default -> new MovingObstacles[0]; // Nessun ostacolo mobile per altri tipi
         };
-    }
-
-     @Override
-     public MovingObstacles createLog(int x, int y, int speed) {
-        return new MovingObstacles(x, y, ObstacleType.LOG, speed);
-     }
-
-     @Override
-     public MovingObstacles createRandomLog(int y, int mapWidth, boolean leftToRight) {
-       int speed = MIN_LOG_SPEED + random.nextInt(MAX_LOG_SPEED - MIN_LOG_SPEED + 1);
-        if (!leftToRight) {
-            speed = -speed;
-        }
-        
-        // I tronchi sono lunghi 3 celle
-        int startX = leftToRight ? -MovingObstacles.LOG_WIDTH_CELLS - 1 : CELLS_PER_CHUNK + 1;
-        
-        return createLog(startX, y, speed);
     }
 
      @Override
