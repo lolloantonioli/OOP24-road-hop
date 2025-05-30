@@ -4,16 +4,16 @@ import java.util.Optional;
 
 public interface Cell {
 
-    public boolean addObject(GameObject obj);
+    boolean addObject(GameObject obj);
 
-    public void removeObject();
+    void removeObject();
 
-    public boolean hasObject();
+    boolean hasObject();
 
-    public Optional<GameObject> getContent();
+    Optional<GameObject> getContent();
 
-    public int getX();
+    int getX();
     
-    public int getY();
+    int getY();
 
 }
