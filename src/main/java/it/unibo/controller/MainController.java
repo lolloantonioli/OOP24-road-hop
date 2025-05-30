@@ -4,14 +4,14 @@ import it.unibo.model.Shop.api.ShopModel;
 
 public interface MainController {
 
-    public void goToMenu();
+    void goToMenu();
 
-    public void goToGame();
+    void goToGame();
 
-    public void goToInstructions();
+    void goToInstructions();
     
-    public void goToShop();
+    void goToShop();
 
-    public ShopModel getShopModel();
+    ShopModel getShopModel();
 
 }
