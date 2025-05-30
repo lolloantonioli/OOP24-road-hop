@@ -80,6 +80,9 @@ public class ChunkFactoryImpl implements ChunkFactory {
         private final List<List<Integer>> patterns;
         private final Random random;
 
+        // Variabile di istanza per tenere traccia della posizione "safe" tra le righe
+        private int lastSafeCell = -1;
+
         private ObjectPlacerImpl() {
             this.patterns = new ArrayList<>();
             this.random = new Random();
@@ -96,10 +99,20 @@ public class ChunkFactoryImpl implements ChunkFactory {
 
         @Override
         public void placeObstacles(final Chunk chunk) {
+            // Safe cell collegata tra le righe
+            int safeCell;
+            if (lastSafeCell == -1) {
+                safeCell = random.nextInt(ChunkImpl.CELLS_PER_ROW);
+            } else {
+                int min = Math.max(0, lastSafeCell - 1);
+                int max = Math.min(ChunkImpl.CELLS_PER_ROW - 1, lastSafeCell + 1);
+                safeCell = min + random.nextInt(max - min + 1);
+            }
+            lastSafeCell = safeCell;
             final int patternIndex = random.nextInt(patterns.size());
             final List<Integer> selectedPattern = patterns.get(patternIndex);
             selectedPattern.forEach(pos -> {
-                if (pos < ChunkImpl.CELLS_PER_ROW) {
+                if (pos < ChunkImpl.CELLS_PER_ROW && pos != safeCell) {
                     final Obstacle tree = new ObstacleImpl(pos, chunk.getPosition(), ObstacleType.TREE, false);
                     chunk.addObjectAt(tree, pos);
                 }
