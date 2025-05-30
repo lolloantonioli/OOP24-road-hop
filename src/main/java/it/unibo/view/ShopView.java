@@ -39,18 +39,18 @@ public class ShopView extends JPanel {
 
     public ShopView() {
         setLayout(new BorderLayout());
-        setBackground(Color.BLACK);
+        setBackground(Color.BLUE);
 
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
         skinsPanel = new JPanel();
         skinsPanel.setLayout(new GridLayout(0, 3));
-        skinsPanel.setBackground(Color.BLACK);
+        skinsPanel.setBackground(Color.BLUE);
 
         scrollPane = new JScrollPane(skinsPanel);
-        scrollPane.setBackground(Color.BLACK);
-        scrollPane.getViewport().setBackground(Color.BLACK);
+        scrollPane.setBackground(Color.BLUE);
+        scrollPane.getViewport().setBackground(Color.BLUE);
         scrollPane.setBorder(null);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -65,7 +65,7 @@ public class ShopView extends JPanel {
 
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(Color.BLACK);
+        headerPanel.setBackground(Color.BLUE);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         titleLabel = new JLabel("Skin Shop",SwingConstants.CENTER);
@@ -84,10 +84,10 @@ public class ShopView extends JPanel {
 
     private JPanel createFooterPanel() {
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        footerPanel.setBackground(Color.BLACK);
+        footerPanel.setBackground(Color.BLUE);
 
         backButton = new JButton("Back");
-        backButton.setBackground(Color.BLACK);
+        backButton.setBackground(Color.BLUE);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
         backButton.setBorder(BorderFactory.createEmptyBorder());
@@ -118,7 +118,7 @@ public class ShopView extends JPanel {
 private Component createSkinCard(Skin skin) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBackground(new Color(45, 45, 45));
+        card.setBackground(new Color(171, 205, 239));
         
         // Different border colors based on skin status
         Color borderColor;
