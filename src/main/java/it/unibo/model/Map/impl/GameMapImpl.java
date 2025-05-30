@@ -33,7 +33,8 @@ public class GameMapImpl implements GameMap {
     }
 
     private void initializeMap() {
-        IntStream.range(0, CHUNKS_NUMBER)
+        chunks.add(chunkFactory.createFirstChunk(0));
+        IntStream.range(1, CHUNKS_NUMBER)
             .forEach(i -> chunks.add(chunkFactory.createGrassChunk(i)));
     }
 

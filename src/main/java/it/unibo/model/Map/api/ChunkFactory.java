@@ -6,4 +6,6 @@ public interface ChunkFactory {
 
     Chunk createGrassChunk(final int position);
 
+    Chunk createFirstChunk(final int position);
+
 }

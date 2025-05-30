@@ -58,6 +58,11 @@ public class ChunkFactoryImpl implements ChunkFactory {
         return createChunk(position, ChunkType.GRASS, true, true);
     }
 
+    @Override
+    public Chunk createFirstChunk(final int position) {
+        return createChunk(position, ChunkType.GRASS, false, false);
+    }
+
     private Chunk createRoadChunk(final int position) {
         return createChunk(position, ChunkType.ROAD, false, true);
     }
