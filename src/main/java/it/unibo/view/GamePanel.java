@@ -12,6 +12,8 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.Map.api.Collectible;
+import it.unibo.model.Map.util.CollectibleType;
 
 public class GamePanel extends JPanel {
 
@@ -49,8 +51,18 @@ public class GamePanel extends JPanel {
         g.setColor(getColorForChunk(chunk));
         g.fillRect(x, y, cellWidth, cellHeight);
         cell.getContent().ifPresent(obj -> {
-            g.setColor(Color.BLACK);
-            g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
+            if (obj instanceof Collectible collectible) {
+                if (collectible.getType().toString().equals("SECOND_LIFE")) {
+                    g.setColor(Color.MAGENTA);
+                    g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
+                } else {
+                    g.setColor(Color.YELLOW);
+                    g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
+                }
+            } else {
+                g.setColor(Color.BLACK);
+                g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
+            }
         });
         g.setColor(Color.BLACK);
         g.drawRect(x, y, cellWidth, cellHeight);
