@@ -133,7 +133,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
                 if (!availablePositions.isEmpty()) {
                     final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
                     // 80% coin, 20% seconda vita
-                    CollectibleType type = random.nextDouble() < 0.2 ? CollectibleType.SECOND_LIFE : CollectibleType.COIN;
+                    CollectibleType type = random.nextDouble() < 0.1 ? CollectibleType.SECOND_LIFE : CollectibleType.COIN;
                     final Collectible collectible = new CollectibleImpl(collectiblePos, chunk.getPosition(), type);
                     chunk.addObjectAt(collectible, collectiblePos);
                 }
