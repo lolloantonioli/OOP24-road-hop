@@ -57,21 +57,4 @@ public class CellImpl implements Cell {
         return this.y;
     }
 
-    @Override
-    public boolean isOccupiedInChunk(Chunk chunk) {
-        // controlla se la cella contiene un oggetto
-        if (hasObject()) {
-            return true;
-        }
-        
-        // controlla se un oggetto multicella occupa la cella
-        for (GameObject obj : chunk.getObjects()) {
-            if (obj.occupiesCell(this.getX())) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
 }

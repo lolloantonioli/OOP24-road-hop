@@ -16,6 +16,4 @@ public interface Cell {
     
     public int getY();
 
-     boolean isOccupiedInChunk(Chunk chunk);
-
 }

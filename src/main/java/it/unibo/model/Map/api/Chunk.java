@@ -18,10 +18,4 @@ public interface Chunk {
 
     int getPosition();
 
-    boolean isCellAvailable(int cellX);
-
-    boolean isCellRangeAvailable(int startCellX, int width);
-
-    boolean removeObject(GameObject obj);
-
 }
