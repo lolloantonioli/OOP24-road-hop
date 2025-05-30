@@ -2,7 +2,7 @@ package it.unibo.model.Collision.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Optional;
+import java.util.List;
 
 import it.unibo.model.Collision.api.CollisionProMax;
 import it.unibo.model.Map.api.Cell;
@@ -24,15 +24,16 @@ public class CollisionProMaxImpl implements CollisionProMax{
     }
 
     @Override
-    public Optional<GameObject> getCollidedObject(Cell position, GameMap map) {
+    public List<GameObject> getCollidedObjects(Cell position, GameMap map) {
         
         //metodo specifico perchè non possono esserci più oggetti nella stessa cella
         //dovrei espanderlo e poi farlo gestire da game manager?
         //se mi restituisco una lista e contiene più di un object posso usarlo per capire se ci sono stati errori
+        //PLAYER IS A GAME OBJECT!
         return map.getVisibleChunks().stream()
             .flatMap(chunk -> chunk.getObjects().stream())
             .filter(obj -> checkCollision(position, obj))
-            .findFirst();
+            .toList();
     }
 
     @Override
@@ -40,14 +41,12 @@ public class CollisionProMaxImpl implements CollisionProMax{
         checkNotNull(newPosition, "not valid position");
         checkNotNull(map, "not valid map");
     
-        return !isOutOfBounds(newPosition, map) && getCollidedObject(newPosition, map).map(obj -> {
-            if (obj instanceof Obstacle) {
-                Obstacle obstacle = (Obstacle) obj;
-                return !obstacle.getType().equals(ObstacleType.TREE);
-            }
-            return true;
-
-        }).orElse(true);
+        return !isOutOfBounds(newPosition, map) && 
+            getCollidedObjects(newPosition, map)
+            .stream()
+            .filter(Obstacle.class::isInstance)
+            .map(Obstacle.class::cast)
+            .noneMatch(obstacle -> obstacle.getType().equals(ObstacleType.TREE));
 
     }
 

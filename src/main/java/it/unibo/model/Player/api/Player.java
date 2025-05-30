@@ -1,7 +1,10 @@
 package it.unibo.model.Player.api;
 
 import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.Player.util.Direction;
+import it.unibo.model.Collision.api.CollisionProMax;
 import it.unibo.model.Map.api.Cell;
+import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Shop.api.Skin;
 
 import java.util.Optional;
@@ -11,12 +14,14 @@ import java.util.Optional;
 public interface Player extends GameObject {
 
     /**
-     * Moves the player in the new cell
+     * Moves the player in the the direction if is possible
      * 
-     * @param newPos the new position the player needs to move in
+     * @param direcrion the direction the player tries to move in
+     * @param map the game map
+     * @param collisionHandler a collisioHandler to check if the move is possible
      * @return true if the player was able to move false otherwise 
      */
-    void move(Cell newPos);
+    boolean tryMove(Direction direction, GameMap map, CollisionProMax collisionHandler);
 
     /**
      * Gets the score of the player

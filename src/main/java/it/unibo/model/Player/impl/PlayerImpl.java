@@ -4,13 +4,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Optional;
 
+import it.unibo.model.Collision.api.CollisionProMax;
 import it.unibo.model.Map.api.Cell;
+import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Player.api.Player;
+import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
-//da fare un po' di metodi e gestione dell'invincibilità
+//si potrebbe cambiare move rendendolo un metodo boolean e passando il CollisionProMax in input così diventa meno stupido
+//la gestione dei tronchi totalmente da capire
+//se sono ferma e poi vengo investita come lo capisco?
 
 public class PlayerImpl extends GameObjectImpl implements Player{
 
@@ -36,17 +41,26 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         setMovable(true);
     }
 
-    @Override
-    public void move(Cell newPos) {
+    private void updateScore() {
+        if (super.getY() > score) {
+            score = super.getY();
+        }
+    }
+
+    private void move(Cell newPos) {
         super.setX(newPos.getX());
         super.setY(newPos.getY());
         this.updateScore();
     }
 
-    private void updateScore() {
-        if (super.getY() > score) {
-            score = super.getY();
+    @Override
+    public boolean tryMove(Direction direction, GameMap map, CollisionProMax collisionHandler) {
+        Cell newPos = new CellImpl(super.getX() + direction.getDeltaX(), super.getY() + direction.getDeltaY());
+        if(collisionHandler.canMoveTo(map, newPos)) {
+            move(newPos);
+            return true;
         }
+        return false;
     }
 
     @Override
