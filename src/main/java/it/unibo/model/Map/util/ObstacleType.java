@@ -6,6 +6,7 @@ public final class ObstacleType {
     public static final ObstacleType TRAIN = new ObstacleType("TRAIN");
     public static final ObstacleType TREE = new ObstacleType("TREE");
     public static final ObstacleType WATER = new ObstacleType("WATER");
+    public static final ObstacleType LOG = new ObstacleType("LOG");
 
     private final String name;
 

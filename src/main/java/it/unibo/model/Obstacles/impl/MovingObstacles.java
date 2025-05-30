@@ -3,6 +3,8 @@ package it.unibo.model.Obstacles.impl;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 
+// AGGIUNGI TRONCHI !!!! 
+
 public class MovingObstacles implements Obstacle{
     private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)
     private final int chunkY;
@@ -17,6 +19,7 @@ public class MovingObstacles implements Obstacle{
     // Costanti per le dimensioni in celle
     public static final int CAR_WIDTH_CELLS = 1;
     public static final int TRAIN_WIDTH_CELLS = 4;
+    public static final int LOG_WIDTH_CELLS = 2;
     public static final int CELLS_PER_CHUNK = 9;
 
     public MovingObstacles(int cellX, int chunkY, ObstacleType type, int speed) {
@@ -111,7 +114,11 @@ public class MovingObstacles implements Obstacle{
      */
     @Override
     public int getWidthInCells() {
-        return type == ObstacleType.TRAIN ? TRAIN_WIDTH_CELLS : CAR_WIDTH_CELLS;
+        return switch (type.toString()) {
+            case "TRAIN" -> TRAIN_WIDTH_CELLS;
+            case "LOG" -> LOG_WIDTH_CELLS;
+            default -> CAR_WIDTH_CELLS; // CAR e altri ostacoli di dimensione 1
+        };
     }
 
     @Override
@@ -149,15 +156,16 @@ public class MovingObstacles implements Obstacle{
 
     @Override
     public boolean isPlatform() {
-        return false;
+        return type == ObstacleType.LOG;
     }
 
     @Override
     public void setPlatform(boolean platform) {
-        // non applicabile per CAR e TRAIN
-        if (platform) {
-            throw new UnsupportedOperationException("Gli ostacoli di tipo " + this.type + " non possono essere impostati come piattaforme");
+        // Solo i tronchi possono essere impostati come piattaforme
+        if (platform && type != ObstacleType.LOG) {
+            throw new UnsupportedOperationException("Solo gli ostacoli di tipo LOG possono essere impostati come piattaforme");
         }
+        // Per i tronchi, isPlatform() ritorna sempre true, quindi non serve memorizzare lo stato
     }
 
      /**
@@ -185,7 +193,11 @@ public class MovingObstacles implements Obstacle{
      * @return Valore difficoltà
      */
     public int getDifficultyLevel() {
-        int baseLevel = type == ObstacleType.TRAIN ? 3 : 1;
+        int baseLevel = switch (type.toString()) {
+            case "TRAIN" -> 3;
+            case "LOG" -> 2; // I tronchi hanno difficoltà media
+            default -> 1; // CAR e altri
+        };
         return baseLevel + Math.abs(speed);
     }
 
@@ -242,6 +254,17 @@ public class MovingObstacles implements Obstacle{
         int startX = getX();
         int endX = startX + getWidthInCells();
         return cellX >= startX && cellX < endX;
+    }
+
+    /**
+     * Controlla se il giocatore può stare in piedi su questo ostacolo.
+     * Utilizzato per i tronchi che fungono da piattaforme galleggianti.
+     * 
+     * @param playerCellX Posizione X del giocatore
+     * @return true se il giocatore può stare sul tronco
+     */
+    public boolean canPlayerStandOn(int playerCellX) {
+        return isPlatform() && occupiesCell(playerCellX);
     }
 
 }
