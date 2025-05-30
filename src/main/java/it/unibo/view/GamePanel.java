@@ -40,7 +40,7 @@ public class GamePanel extends JPanel {
             final List<Cell> cells = chunk.getCells();
             for (int col = 0; col < cells.size(); col++) {
                 final int x = col * cellWidth;
-                final int y = (chunks.size() - 1 - row) * cellHeight + animationOffset;
+                final int y = (chunks.size() - 2 - row) * cellHeight + animationOffset;
                 drawCell(g, x, y, cellWidth, cellHeight, chunk, cells.get(col));
             }
         }

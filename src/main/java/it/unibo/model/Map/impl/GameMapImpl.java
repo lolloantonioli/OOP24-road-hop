@@ -35,7 +35,7 @@ public class GameMapImpl implements GameMap {
 
     private void initializeMap() {
         chunks.add(chunkFactory.createFirstChunk(0));
-        IntStream.range(1, CHUNKS_NUMBER)
+        IntStream.range(1, CHUNKS_NUMBER + 1)
             .forEach(i -> chunks.add(chunkFactory.createGrassChunk(i)));
     }
 
@@ -80,7 +80,7 @@ public class GameMapImpl implements GameMap {
     @Override
     public List<Chunk> getVisibleChunks() {
         return chunks.stream()
-            .filter(chunk -> chunk.getPosition() >= currentPosition && chunk.getPosition() < currentPosition + CHUNKS_NUMBER)
+            .filter(chunk -> chunk.getPosition() >= currentPosition && chunk.getPosition() < currentPosition + CHUNKS_NUMBER + 1)
             .toList();
     }
 
