@@ -26,6 +26,16 @@ public interface MovingObstacleFactory {
      * @return A new train obstacle
      */
     MovingObstacles createTrain(int x, int y, int speed);
+
+    /**
+     * Creates a log obstacle moving at a specified speed.
+     *
+     * @param x Starting X-coordinate
+     * @param y Y-coordinate
+     * @param speed Movement speed (positive for right, negative for left)
+     * @return A new log obstacle
+     */
+    MovingObstacles createLog(int x, int y, int speed);
     
     /**
      * Creates a random car with random speed within safe limits.
@@ -46,6 +56,16 @@ public interface MovingObstacleFactory {
      * @return A randomly configured train
      */
     MovingObstacles createRandomTrain(int y, int mapWidth, boolean leftToRight);
+
+    /**
+     * Creates a random log with random speed within safe limits.
+     *
+     * @param y Y-coordinate
+     * @param mapWidth Width of the map for positioning
+     * @param leftToRight Direction of movement (true for left to right)
+     * @return A randomly configured log
+     */
+    MovingObstacles createRandomLog(int y, int mapWidth, boolean leftToRight);
     
     /**
      * Creates a set of cars evenly distributed across a road.
@@ -72,6 +92,18 @@ public interface MovingObstacleFactory {
     MovingObstacles[] createTrainSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight);
 
     /**
+     * Creates a set of logs for a river chunk.
+     *
+     * @param y Y-coordinate of the river
+     * @param mapWidth Width of the map
+     * @param count Number of logs to create
+     * @param minDistance Minimum distance between logs
+     * @param leftToRight Direction of movement
+     * @return Array of log obstacles
+     */
+    MovingObstacles[] createLogSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight);
+
+    /**
      * Creates a set of obstacles for a road chunk, alternating directions.
      * 
      * @param chunkY Position Y of the chunk
@@ -88,6 +120,15 @@ public interface MovingObstacleFactory {
      * @return Array of trains
      */
     MovingObstacles[] createRailwayChunkObstacles(int chunkY, int trainCount);
+
+    /**
+     * Creates a set of obstacles for a river chunk.
+     * 
+     * @param chunkY Position Y of the chunk
+     * @param logCount Number of logs to create
+     * @return Array of logs
+     */
+    MovingObstacles[] createRiverChunkObstacles(int chunkY, int logCount);
 
     /**
      * Creates appropriate obstacles for a specific chunk type.

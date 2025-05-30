@@ -19,7 +19,7 @@ public class MovingObstacles implements Obstacle{
     // Costanti per le dimensioni in celle
     public static final int CAR_WIDTH_CELLS = 1;
     public static final int TRAIN_WIDTH_CELLS = 4;
-    public static final int LOG_WIDTH_CELLS = 2;
+    public static final int LOG_WIDTH_CELLS = 3;
     public static final int CELLS_PER_CHUNK = 9;
 
     public MovingObstacles(int cellX, int chunkY, ObstacleType type, int speed) {

@@ -7,6 +7,8 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
+// FORSE METODI RANDOM NON SERVONO(????)
+
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
     private final Random random;
@@ -16,6 +18,8 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     public static final int MAX_CAR_SPEED = 2;
     public static final int MIN_TRAIN_SPEED = 1;
     public static final int MAX_TRAIN_SPEED = 3;
+    public static final int MIN_LOG_SPEED = 1;
+    public static final int MAX_LOG_SPEED = 2;
 
     // Costanti per il sistema a griglia
     public static final int CELLS_PER_CHUNK = 9;
@@ -180,7 +184,73 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         return switch (chunkType.toUpperCase()) {
             case "ROAD" -> createRoadChunkObstacles(chunkY, 2 + random.nextInt(3)); // 2-4 auto
             case "RAILWAY" -> createRailwayChunkObstacles(chunkY, 1 + random.nextInt(2)); // 1-2 treni
+            case "RIVER" -> createRiverChunkObstacles(chunkY, 1 + random.nextInt(3)); // 1-3 tronchi
             default -> new MovingObstacles[0]; // Nessun ostacolo mobile per altri tipi
         };
     }
+
+     @Override
+     public MovingObstacles createLog(int x, int y, int speed) {
+        return new MovingObstacles(x, y, ObstacleType.LOG, speed);
+     }
+
+     @Override
+     public MovingObstacles createRandomLog(int y, int mapWidth, boolean leftToRight) {
+       int speed = MIN_LOG_SPEED + random.nextInt(MAX_LOG_SPEED - MIN_LOG_SPEED + 1);
+        if (!leftToRight) {
+            speed = -speed;
+        }
+        
+        // I tronchi sono lunghi 3 celle
+        int startX = leftToRight ? -MovingObstacles.LOG_WIDTH_CELLS - 1 : CELLS_PER_CHUNK + 1;
+        
+        return createLog(startX, y, speed);
+    }
+
+     @Override
+     public MovingObstacles[] createLogSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight) {
+        List<MovingObstacles> logs = new ArrayList<>();
+        
+        // I tronchi richiedono spazio (3 celle + distanza minima)
+        int logSpacing = Math.max(minDistance, 4); // Minimo 4 celle tra tronchi
+        int totalRange = CELLS_PER_CHUNK + 15; // Range ampio per i tronchi
+        
+        for (int i = 0; i < count; i++) {
+            int baseX = i * logSpacing;
+            if (!leftToRight) {
+                baseX = totalRange - baseX;
+            }
+            
+            // Piccola randomizzazione per rendere il movimento più naturale
+            int randomOffset = random.nextInt(3) - 1; // -1, 0, o 1
+            int finalX = baseX + randomOffset;
+            
+            // Controlla che non si sovrapponga con altri tronchi
+            boolean validPosition = true;
+            for (MovingObstacles existingLog : logs) {
+                int distance = Math.abs(existingLog.getX() - finalX);
+                if (distance < MovingObstacles.LOG_WIDTH_CELLS + 1) { // 3 celle + 1 di sicurezza
+                    validPosition = false;
+                    break;
+                }
+            }
+            
+            if (validPosition) {
+                int speed = MIN_LOG_SPEED + random.nextInt(MAX_LOG_SPEED - MIN_LOG_SPEED + 1);
+                if (!leftToRight) {
+                    speed = -speed;
+                }
+                
+                logs.add(createLog(finalX, y, speed));
+            }
+        }
+        
+        return logs.toArray(MovingObstacles[]::new);
+     }
+
+     @Override
+     public MovingObstacles[] createRiverChunkObstacles(int chunkY, int logCount) {
+        boolean leftToRight = random.nextBoolean();
+        return createLogSet(chunkY, CELLS_PER_CHUNK, logCount, 3, leftToRight);
+     }
 }
