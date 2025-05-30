@@ -1,5 +1,6 @@
 package it.unibo.model.Obstacles.api;
 
+import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
 /**
@@ -38,97 +39,15 @@ public interface MovingObstacleFactory {
     MovingObstacles createLog(int x, int y, int speed);
     
     /**
-     * Creates a random car with random speed within safe limits.
+     * Creates a set of obstacles evenly distributed across a chunk.
      *
-     * @param y Y-coordinate
-     * @param mapWidth Width of the map for positioning
-     * @param leftToRight Direction of movement (true for left to right)
-     * @return A randomly configured car
-     */
-    MovingObstacles createRandomCar(int y, int mapWidth, boolean leftToRight);
-    
-    /**
-     * Creates a random train with random speed within safe limits.
-     *
-     * @param y Y-coordinate
-     * @param mapWidth Width of the map for positioning
-     * @param leftToRight Direction of movement (true for left to right)
-     * @return A randomly configured train
-     */
-    MovingObstacles createRandomTrain(int y, int mapWidth, boolean leftToRight);
-
-    /**
-     * Creates a random log with random speed within safe limits.
-     *
-     * @param y Y-coordinate
-     * @param mapWidth Width of the map for positioning
-     * @param leftToRight Direction of movement (true for left to right)
-     * @return A randomly configured log
-     */
-    MovingObstacles createRandomLog(int y, int mapWidth, boolean leftToRight);
-    
-    /**
-     * Creates a set of cars evenly distributed across a road.
-     *
+     * @param type Type of obstacle to create
      * @param y Y-coordinate of the road
-     * @param mapWidth Width of the map
      * @param count Number of cars to create
-     * @param minDistance Minimum distance between cars
      * @param leftToRight Direction of movement
-     * @return Array of car obstacles
+     * @return Array of obstacles
      */
-    MovingObstacles[] createCarSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight);
-    
-    /**
-     * Creates a set of trains for a railway chunk.
-     *
-     * @param y Y-coordinate of the railway
-     * @param mapWidth Width of the map
-     * @param count Number of trains to create
-     * @param minDistance Minimum distance between trains
-     * @param leftToRight Direction of movement
-     * @return Array of train obstacles
-     */
-    MovingObstacles[] createTrainSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight);
-
-    /**
-     * Creates a set of logs for a river chunk.
-     *
-     * @param y Y-coordinate of the river
-     * @param mapWidth Width of the map
-     * @param count Number of logs to create
-     * @param minDistance Minimum distance between logs
-     * @param leftToRight Direction of movement
-     * @return Array of log obstacles
-     */
-    MovingObstacles[] createLogSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight);
-
-    /**
-     * Creates a set of obstacles for a road chunk, alternating directions.
-     * 
-     * @param chunkY Position Y of the chunk
-     * @param carCount Number of cars to create
-     * @return Array of cars with alternating directions
-     */
-    MovingObstacles[] createRoadChunkObstacles(int chunkY, int carCount);
-
-    /**
-     * Creates a set of obstacles for a railway chunk.
-     * 
-     * @param chunkY Position Y of the chunk
-     * @param trainCount Number of trains to create
-     * @return Array of trains
-     */
-    MovingObstacles[] createRailwayChunkObstacles(int chunkY, int trainCount);
-
-    /**
-     * Creates a set of obstacles for a river chunk.
-     * 
-     * @param chunkY Position Y of the chunk
-     * @param logCount Number of logs to create
-     * @return Array of logs
-     */
-    MovingObstacles[] createRiverChunkObstacles(int chunkY, int logCount);
+    MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight);
 
     /**
      * Creates appropriate obstacles for a specific chunk type.
@@ -138,4 +57,39 @@ public interface MovingObstacleFactory {
      * @return Array of moving obstacles for the chunk
      */
     MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType);
+
+    /**
+     * Creates a moving obstacle based on its type and position.
+     *
+     * @param type Type of obstacle
+     * @param x Starting X-coordinate
+     * @param y Y-coordinate
+     * @param speed Movement speed (positive for right, negative for left)
+     * @return A new moving obstacle
+     */
+    MovingObstacles createObstacleByType(ObstacleType type, int x, int y, int speed);
+
+    /**
+     * Gets a random speed for the specified obstacle type.
+     *
+     * @param type Type of obstacle
+     * @return Random speed within the defined range for the obstacle type
+     */
+    int getRandomSpeed(ObstacleType type);
+
+    /**
+     * Gets the minimum distance between obstacles of the specified type.
+     *
+     * @param type Type of obstacle
+     * @return Minimum distance in cells
+     */
+    int getMinDistance(ObstacleType type);
+
+    /**
+     * Gets the width of the obstacle in cells.
+     *
+     * @param type Type of obstacle
+     * @return Width in cells
+     */
+    int getObstacleWidth(ObstacleType type);
 }
