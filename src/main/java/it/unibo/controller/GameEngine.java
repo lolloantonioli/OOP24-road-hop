@@ -14,6 +14,7 @@ public class GameEngine implements Runnable {
     public GameEngine(final MapController mapController, final GamePanel gamePanel) {
         this.mapController = mapController;
         this.gamePanel = gamePanel;
+        System.out.println("GamePanel height: " + gamePanel.getHeight());
     }
 
     @Override
@@ -43,16 +44,24 @@ public class GameEngine implements Runnable {
                 gamePanel.setAnimationOffset(0);
                 gamePanel.refresh();
             }
+            this.waitForNextFrame(frameStart);
+        }
+    }
 
-            long frameTime = System.currentTimeMillis() - frameStart;
-            if (frameTime < period) {
-                try {
-                    Thread.sleep(period - frameTime);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+    private void waitForNextFrame(final long frameStart) {
+        final long elapsed = System.currentTimeMillis() - frameStart;
+        if (elapsed < period) {
+            try {
+                Thread.sleep(period - elapsed);
+            } catch (InterruptedException e) {
+                running = false;
+                Thread.currentThread().interrupt();
             }
         }
+    }
+
+    public void stop() {
+        this.running = false;
     }
 
 }

@@ -20,7 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import it.unibo.model.Shop.api.Skin;
-
+// LUCA QUESTO MESSAGGIO È PER TE, BISOGNEREBBE PASSARTI NEL COSTRUTTORE IL MAINCONTROLLER E CON QUELLO FARE
+// backButton.addActionListener(e -> mainController.goToMenu()); E TOGLIERE DALL'OBSERVER QUESTA OPERAZIONE OPPURE TOGLIERLO COMPLETAMENTE
 public class ShopView extends JPanel {
 
     private JLabel titleLabel;

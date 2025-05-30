@@ -12,24 +12,19 @@ import it.unibo.view.GameFrame;
 public class MainControllerImpl implements MainController {
 
     private final GameFrame gameFrame;
-    private final Observer menuObserver;
-    private final Observer instructionsObserver;
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
     private final MapController mapController;
 
     public MainControllerImpl() {
         this.mapController = new MapControllerImpl();
-        this.gameFrame = new GameFrame(mapController);
-        this.menuObserver = new MenuObserver(this, gameFrame.getMenuPanel());
-        this.instructionsObserver = new InstructionsObserver(this, gameFrame.getInstructionsPanel());
+        this.gameFrame = new GameFrame(this, mapController);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
     }
 
     public void goToMenu() {
         gameFrame.show(CardName.MENU);
-        menuObserver.activate();
     }
 
     public void goToGame() {
@@ -40,7 +35,6 @@ public class MainControllerImpl implements MainController {
 
     public void goToInstructions() {
         gameFrame.show(CardName.INSTRUCTIONS);
-        instructionsObserver.activate();
     }
 
     public void goToShop() {

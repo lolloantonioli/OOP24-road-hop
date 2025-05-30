@@ -13,12 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.controller.MainController;
+
 public class MenuPanel extends JPanel {
 
     private final JButton playButton;
     private final JButton instructionsButton;
     private final JButton shopButton;
     private final JLabel titleLabel;
+    private final MainController controller;
     
     private static final String PLAY_TEXT = "Play";
     private static final String INSTRUCTIONS_TEXT = "Instructions";
@@ -31,12 +34,16 @@ public class MenuPanel extends JPanel {
     public static final String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
     
 
-    public MenuPanel() {
+    public MenuPanel(final MainController controller) {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
+        this.controller = controller;
         playButton = new JButton(PLAY_TEXT);
+        this.setPlayAction();
         instructionsButton = new JButton(INSTRUCTIONS_TEXT);
+        this.setSettingsAction();
         shopButton = new JButton(SHOP_TEXT);
+        this.setShopAction();
         // Titolo del gioco
         titleLabel = new JLabel("Road Hop");
         titleLabel.setForeground(Color.WHITE);
@@ -91,16 +98,16 @@ public class MenuPanel extends JPanel {
         titleLabel.setFont(titleLabel.getFont().deriveFont((float) titleFontSize));
     }
 
-    public void setPlayAction(final Runnable action) {
-        playButton.addActionListener(e -> action.run());
+    public void setPlayAction() {
+        playButton.addActionListener(e -> controller.goToGame());
     }
 
-    public void setSettingsAction(final Runnable action) {
-        instructionsButton.addActionListener(e -> action.run());
+    public void setSettingsAction() {
+        instructionsButton.addActionListener(e -> controller.goToInstructions());
     }
 
-    public void setShopAction(final Runnable action) {
-        shopButton.addActionListener(e -> action.run());
+    public void setShopAction() {
+        shopButton.addActionListener(e -> controller.goToShop());
     }
 
 }

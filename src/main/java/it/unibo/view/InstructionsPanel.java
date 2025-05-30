@@ -12,10 +12,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import it.unibo.controller.MainController;
+
 public class InstructionsPanel extends JPanel {
 
     private final JTextArea instructions;
     private final JButton backButton;
+    private final MainController controller;
 
     private static final int HEIGHT = 20;
     private static final String BACK_BUTTON_TEXT = "Back";
@@ -25,9 +28,11 @@ public class InstructionsPanel extends JPanel {
             + "3. Avoid obstacles to stay alive.\n"
             + "4. Reach the maximum score.";
     
-    public InstructionsPanel() {
+    public InstructionsPanel(final MainController controller) {
+        this.controller = controller;
         instructions = new JTextArea(INSTRUCTIONS_TEXT);
         backButton = new JButton(BACK_BUTTON_TEXT);
+        this.setBackAction();
 
         instructions.setEditable(false);
         instructions.setLineWrap(true);
@@ -50,8 +55,8 @@ public class InstructionsPanel extends JPanel {
         this.add(centerPanel);
     }
 
-    public void setBackAction(final Runnable action) {
-        backButton.addActionListener(e -> action.run());
+    public void setBackAction() {
+        backButton.addActionListener(e -> controller.goToMenu());
     }
 
     @Override
