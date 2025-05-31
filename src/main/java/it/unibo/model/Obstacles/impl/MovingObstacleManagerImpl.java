@@ -3,6 +3,7 @@ package it.unibo.model.Obstacles.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 
@@ -18,6 +19,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     
     @Override
     public void addObstacle(MovingObstacles obstacle) {
+        if (obstacle == null) return;
         // Controlla che non ci siano sovrapposizioni prima di aggiungere
         if (isSafePosition(obstacle.getX(), obstacle.getY(), obstacle.getWidthInCells())) {
         obstacles.add(obstacle);
@@ -58,13 +60,9 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
         }
     
         // Iteriamo attraverso tutti gli ostacoli e confrontiamo il tipo come stringa
-        for (MovingObstacles obstacle : obstacles) {
-            if (obstacle.getType().toString().equalsIgnoreCase(typeStr)) {
-                result.add(obstacle);
-            }
-        }
-
-        return result;
+        return obstacles.stream()
+                .filter(obstacle -> obstacle.getType().toString().equalsIgnoreCase(typeStr))
+                .collect(Collectors.toList());
     }
 
     /**

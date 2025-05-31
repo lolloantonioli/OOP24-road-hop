@@ -1,6 +1,6 @@
 package it.unibo.model.Collision.api;
 
-import java.util.Optional;
+import java.util.List;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
@@ -22,9 +22,9 @@ public interface CollisionProMax {
      * 
      * @param player the player
      * @param map the game map
-     * @return Optional containing the collided object, empty it no collision happened
+     * @return List containing the all collided objects, empty it no collision happened
      */
-    Optional<GameObject> getCollidedObject(Cell position, GameMap map);
+    List<GameObject> getCollidedObjects(Cell position, GameMap map);
 
     /**
      * Checks if the player can move to the specified coordinates.

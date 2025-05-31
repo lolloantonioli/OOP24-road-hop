@@ -7,6 +7,9 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
+// DA RIVEDERE UN PO' STA CLASSE
+// Aggiornare ChunkFactoryImpl per supportare i tronchi nei fiumi ++ COSTANTE CELLSXCHUNK DA CENTRALIZZARE
+
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
     private final Random random;
@@ -16,9 +19,16 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     public static final int MAX_CAR_SPEED = 2;
     public static final int MIN_TRAIN_SPEED = 1;
     public static final int MAX_TRAIN_SPEED = 3;
+    public static final int MIN_LOG_SPEED = 1;
+    public static final int MAX_LOG_SPEED = 2;
 
     // Costanti per il sistema a griglia
     public static final int CELLS_PER_CHUNK = 9;
+
+    // Configurazione spacing
+    private static final int MIN_CAR_DISTANCE = 2;
+    private static final int MIN_TRAIN_DISTANCE = 6;
+    private static final int MIN_LOG_DISTANCE = 4;
     
     public MovingObstacleFactoryImpl() {
         this.random = new Random();
@@ -33,154 +43,117 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     public MovingObstacles createTrain(int x, int y, int speed) {
         return new MovingObstacles(x, y, ObstacleType.TRAIN, speed);
     }
-    
+
     @Override
-    public MovingObstacles createRandomCar(int y, int mapWidth, boolean leftToRight) {
-        int speed = MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1);
-        if (!leftToRight) {
-            speed = -speed;
-        }
-        
-        // Posiziona l'auto fuori dal chunk visibile
-        int startX = leftToRight ? -2 : CELLS_PER_CHUNK + 1;
-        
-        return createCar(startX, y, speed);
-    }
-    
-    @Override
-    public MovingObstacles createRandomTrain(int y, int mapWidth, boolean leftToRight) {
-        int speed = MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1);
-        if (!leftToRight) {
-            speed = -speed;
-        }
-        
-        // I treni sono lunghi 4 celle, quindi devono partire più lontano
-        // Assicurati che il treno sia completamente fuori schermo !
-        int startX = leftToRight ? -MovingObstacles.TRAIN_WIDTH_CELLS - 1 : CELLS_PER_CHUNK + 1;
-        
-        return createTrain(startX, y, speed);
-    }
-    
-    @Override
-    public MovingObstacles[] createCarSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight) {
-        List<MovingObstacles> cars = new ArrayList<>();
-        
-        // Calcola le posizioni per distribuire le auto uniformemente
-        int totalRange = CELLS_PER_CHUNK + 10; // Range esteso per includere aree fuori schermo
-        int spacing = Math.max(minDistance, totalRange / count);
-        
-        for (int i = 0; i < count; i++) {
-            int baseX = i * spacing;
-            if (!leftToRight) {
-                baseX = totalRange - baseX;
-            }
-            
-            // Aggiungi un po' di randomizzazione
-            int randomOffset = random.nextInt(spacing / 3) - spacing / 6;
-            int finalX = baseX + randomOffset;
-            
-            // Assicurati che le auto non si sovrappongano
-            boolean validPosition = true;
-            for (MovingObstacles existingCar : cars) {
-                if (Math.abs(existingCar.getX() - finalX) < 2) { // Minima distanza di 2 celle
-                    validPosition = false;
-                    break;
-                }
-            }
-            
-            if (validPosition) {
-                int speed = MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1);
-                if (!leftToRight) {
-                    speed = -speed;
-                }
-                
-                cars.add(createCar(finalX, y, speed));
-            }
-        }
-        
-        return cars.toArray(MovingObstacles[]::new);
-    }
-    
-    @Override
-    public MovingObstacles[] createTrainSet(int y, int mapWidth, int count, int minDistance, boolean leftToRight) {
-        List<MovingObstacles> trains = new ArrayList<>();
-        
-        // I treni richiedono più spazio (4 celle + distanza minima)
-        int trainSpacing = Math.max(minDistance, 6); // Minimo 6 celle tra treni
-        int totalRange = CELLS_PER_CHUNK + 20; // Range più ampio per i treni
-        
-        for (int i = 0; i < count; i++) {
-            int baseX = i * trainSpacing;
-            if (!leftToRight) {
-                baseX = totalRange - baseX;
-            }
-            
-            // Meno randomizzazione per i treni per evitare sovrapposizioni
-            int randomOffset = random.nextInt(2) - 1; // -1, 0, o 1
-            int finalX = baseX + randomOffset;
-            
-            // Controlla che non si sovrapponga con altri treni
-            boolean validPosition = true;
-            for (MovingObstacles existingTrain : trains) {
-                int distance = Math.abs(existingTrain.getX() - finalX);
-                if (distance < MovingObstacles.TRAIN_WIDTH_CELLS + minDistance) { // 4 celle del treno + 2 di sicurezza
-                    validPosition = false;
-                    break;
-                }
-            }
-            
-            if (validPosition) {
-                int speed = MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1);
-                if (!leftToRight) {
-                    speed = -speed;
-                }
-                
-                trains.add(createTrain(finalX, y, speed));
-            }
-        }
-        
-        return trains.toArray(MovingObstacles[]::new);
+    public MovingObstacles createLog(int x, int y, int speed) {
+        return new MovingObstacles(x, y, ObstacleType.LOG, speed);
     }
 
     /**
-     * Crea un set di ostacoli per un chunk strada, alternando le direzioni.
-     * 
-     * @param chunkY Posizione Y del chunk
-     * @param carCount Numero di auto da creare
-     * @return Array di auto con direzioni alternate
+     * Crea un set di ostacoli del tipo specificato
      */
     @Override
-    public MovingObstacles[] createRoadChunkObstacles(int chunkY, int carCount) {
-        boolean leftToRight = random.nextBoolean();
-        return createCarSet(chunkY, CELLS_PER_CHUNK, carCount, 3, leftToRight);
+    public MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight) {
+        List<MovingObstacles> obstacles = new ArrayList<>();
+        
+        int minDistance = getMinDistance(type);
+        int obstacleWidth = getObstacleWidth(type);
+        int totalRange = CELLS_PER_CHUNK + (type == ObstacleType.TRAIN ? 20 : 15);
+        int spacing = Math.max(minDistance, totalRange / Math.max(count, 1));
+        
+        for (int i = 0; i < count; i++) {
+            int baseX = calculateBasePosition(i, spacing, totalRange, leftToRight);
+            int finalX = addRandomOffset(baseX, spacing, type);
+            
+            if (isValidPosition(finalX, obstacles, obstacleWidth, minDistance)) {
+                int speed = getRandomSpeed(type);
+                if (!leftToRight) speed = -speed;
+                
+                MovingObstacles obstacle = createObstacleByType(type, finalX, y, speed);
+                obstacles.add(obstacle);
+            }
+        }
+        
+        return obstacles.toArray(MovingObstacles[]::new);
     }
-
-    /**
-     * Crea un set di ostacoli per un chunk ferrovia.
-     * 
-     * @param chunkY Posizione Y del chunk
-     * @param trainCount Numero di treni da creare
-     * @return Array di treni
-     */
-    @Override
-    public MovingObstacles[] createRailwayChunkObstacles(int chunkY, int trainCount) {
-        boolean leftToRight = random.nextBoolean();
-        return createTrainSet(chunkY, CELLS_PER_CHUNK, trainCount, 8, leftToRight);
-    }
-
-     /**
-     * Crea ostacoli appropriati per un tipo di chunk specifico.
-     * 
-     * @param chunkY Posizione Y del chunk
-     * @param chunkType Tipo di chunk
-     * @return Array di ostacoli mobili per il chunk
-     */
+    
     @Override
     public MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType) {
         return switch (chunkType.toUpperCase()) {
-            case "ROAD" -> createRoadChunkObstacles(chunkY, 2 + random.nextInt(3)); // 2-4 auto
-            case "RAILWAY" -> createRailwayChunkObstacles(chunkY, 1 + random.nextInt(2)); // 1-2 treni
-            default -> new MovingObstacles[0]; // Nessun ostacolo mobile per altri tipi
+            case "ROAD" -> createObstacleSet(ObstacleType.CAR, chunkY, 2 + random.nextInt(3), random.nextBoolean());
+            case "RAILWAY" -> createObstacleSet(ObstacleType.TRAIN, chunkY, 1 + random.nextInt(2), random.nextBoolean());
+            case "RIVER" -> createObstacleSet(ObstacleType.LOG, chunkY, 1 + random.nextInt(3), random.nextBoolean());
+            default -> new MovingObstacles[0];
         };
+    }
+
+    @Override
+    public MovingObstacles createObstacleByType(ObstacleType type, int x, int y, int speed) {
+        if (type == ObstacleType.CAR) {
+            return createCar(x, y, speed);
+        } else if (type == ObstacleType.TRAIN) {
+            return createTrain(x, y, speed);
+        } else if (type == ObstacleType.LOG) {
+            return createLog(x, y, speed);
+        }
+        throw new IllegalArgumentException("Unknown obstacle type: " + type);
+    }
+
+    @Override
+    public int getRandomSpeed(ObstacleType type) {
+        if (type == ObstacleType.CAR) {
+            return MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1);
+        } else if (type == ObstacleType.TRAIN) {
+            return MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1);
+        } else if (type == ObstacleType.LOG) {
+            return MIN_LOG_SPEED + random.nextInt(MAX_LOG_SPEED - MIN_LOG_SPEED + 1);
+        }
+        throw new IllegalArgumentException("Unknown obstacle type: " + type);
+    }
+    
+    @Override
+    public int getMinDistance(ObstacleType type) {
+        if (type == ObstacleType.CAR) {
+            return MIN_CAR_DISTANCE;
+        } else if (type == ObstacleType.TRAIN) {
+            return MIN_TRAIN_DISTANCE;
+        } else if (type == ObstacleType.LOG) {
+            return MIN_LOG_DISTANCE;
+        }
+        throw new IllegalArgumentException("Unknown obstacle type: " + type);
+    }
+    
+    @Override
+    public int getObstacleWidth(ObstacleType type) {
+        if (type == ObstacleType.CAR) {
+            return 1;
+        } else if (type == ObstacleType.TRAIN) {
+            return MovingObstacles.TRAIN_WIDTH_CELLS;
+        } else if (type == ObstacleType.LOG) {
+            return MovingObstacles.LOG_WIDTH_CELLS;
+        }
+        throw new IllegalArgumentException("Unknown obstacle type: " + type);
+    }
+    
+    private int calculateBasePosition(int index, int spacing, int totalRange, boolean leftToRight) {
+        int baseX = index * spacing;
+        return leftToRight ? baseX : totalRange - baseX;
+    }
+    
+    private int addRandomOffset(int baseX, int spacing, ObstacleType type) {
+        int maxOffset;
+        if (type == ObstacleType.CAR) {
+            maxOffset = spacing / 6;
+        } else if (type == ObstacleType.TRAIN || type == ObstacleType.LOG) {
+            maxOffset = 1;
+        } else {
+            maxOffset = 0;
+        }
+        return baseX + random.nextInt(maxOffset * 2 + 1) - maxOffset;
+    }
+    
+    private boolean isValidPosition(int x, List<MovingObstacles> existing, int width, int minDistance) {
+        return existing.stream()
+                .noneMatch(obstacle -> Math.abs(obstacle.getX() - x) < width + minDistance);
     }
 }
