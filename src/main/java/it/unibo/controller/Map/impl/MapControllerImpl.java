@@ -49,18 +49,22 @@ public class MapControllerImpl implements MapController {
         return mapModel.getCurrentPosition();
     }
 
+    @Override
     public int getScrollSpeed() {
         return mapModel.getScrollSpeed();
     }
 
+    @Override
     public void setAnimationOffset(final int offset) {
         view.setAnimationOffset(offset);
     }
 
+    @Override
     public void updateView() {
         view.refresh();
     }
 
+    @Override
     public int getCellHeight() {
         return view.getCellHeight();
     }
