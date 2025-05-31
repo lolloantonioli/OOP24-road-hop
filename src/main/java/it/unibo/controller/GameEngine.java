@@ -8,8 +8,9 @@ public class GameEngine implements Runnable {
     private final MapController mapController;
     private final GamePanel gamePanel;
     private boolean running = true;
-    private final long period = 16; // 60fps
-    private final int animationStep = 1; // pixel per frame
+
+    private static final long PERIOD = 16; // 60fps
+    private static final int ANIMATION_STEP = 1; // pixel per frame
 
     public GameEngine(final MapController mapController, final GamePanel gamePanel) {
         this.mapController = mapController;
@@ -19,41 +20,39 @@ public class GameEngine implements Runnable {
     @Override
     public void run() {
         int animationOffset = 0;
-        int cellHeight = 1;
         while (running) {
             long frameStart = System.currentTimeMillis();
 
-            // Aggiorna cellHeight se la finestra viene ridimensionata
-            cellHeight = gamePanel.getCellHeight();
+            int cellHeight = gamePanel.getCellHeight();
             int speed = mapController.getScrollSpeed();
+            int step = Math.max(1, ANIMATION_STEP * speed);
+            animationOffset = animateStep(animationOffset, cellHeight, step);
 
-            // Più è alta la velocità, più pixel per frame
-            int step = Math.max(1, animationStep * speed);
-
-            if (animationOffset < cellHeight) {
-                animationOffset += step;
-                if (animationOffset > cellHeight) {
-                    animationOffset = cellHeight; // Non superare l'altezza della cella
-                }
-                gamePanel.setAnimationOffset(animationOffset);
-                gamePanel.refresh();
-            } else {
-                mapController.updateMap(); // avanza la posizione logica di una cella
-                animationOffset = 0;
-                gamePanel.setAnimationOffset(0);
-                gamePanel.refresh();
-            }
-            this.waitForNextFrame(frameStart);
+            waitForNextFrame(frameStart);
         }
+    }
+
+    private int animateStep(int animationOffset, final int cellHeight, final int step) {
+        if (animationOffset < cellHeight) {
+            animationOffset = Math.min(animationOffset + step, cellHeight);
+            gamePanel.setAnimationOffset(animationOffset);
+            gamePanel.refresh();
+        } else {
+            mapController.updateMap();
+            animationOffset = 0;
+            gamePanel.setAnimationOffset(0);
+            gamePanel.refresh();
+        }
+        return animationOffset;
     }
 
     private void waitForNextFrame(final long frameStart) {
         final long elapsed = System.currentTimeMillis() - frameStart;
-        if (elapsed < period) {
+        if (elapsed < PERIOD) {
             try {
-                Thread.sleep(period - elapsed);
+                Thread.sleep(PERIOD - elapsed);
             } catch (InterruptedException e) {
-                running = false;
+                this.stop();
                 Thread.currentThread().interrupt();
             }
         }
