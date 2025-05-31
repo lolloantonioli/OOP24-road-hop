@@ -81,6 +81,7 @@ public class MapControllerImpl implements MapController {
 
     @Override
     public Color getChunkBackgroundColor(final int chunkIndex) {
+        checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         final ChunkType type = chunk.getType();
