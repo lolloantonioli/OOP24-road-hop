@@ -18,7 +18,7 @@ public class MainControllerImpl implements MainController {
 
     public MainControllerImpl() {
         this.mapController = new MapControllerImpl();
-        this.gameFrame = new GameFrame(this, mapController);
+        this.gameFrame = new GameFrame(this);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
     }
@@ -45,6 +45,11 @@ public class MainControllerImpl implements MainController {
     @Override
     public ShopModel getShopModel() {
         return shopModel;
+    }
+
+    @Override
+    public MapController getMapController() {
+        return mapController;
     }
 
 }
