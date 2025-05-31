@@ -32,7 +32,7 @@ public class GameFrame extends JFrame {
         this.menuPanel = new MenuPanel(controller);
         this.shopView = new ShopView();
         this.instructionsPanel = new InstructionsPanel(controller);
-        this.gamePanel = new GamePanel(controller.getMapController());
+        this.gamePanel = new GamePanel();
 
         this.setTitle(FRAME_NAME);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

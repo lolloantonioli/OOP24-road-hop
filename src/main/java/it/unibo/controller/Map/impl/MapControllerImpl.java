@@ -12,14 +12,17 @@ import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.CollectibleType;
+import it.unibo.view.GamePanel;
 
 public class MapControllerImpl implements MapController {
 
     private final GameMap mapModel;
+    private final GamePanel view;
 
     private static final int INITIAL_SPEED = 1;
 
-    public MapControllerImpl() {
+    public MapControllerImpl(final GamePanel view) {
+        this.view = view;
         this.mapModel = new GameMapImpl(INITIAL_SPEED);
     }
 
@@ -45,6 +48,18 @@ public class MapControllerImpl implements MapController {
 
     public int getScrollSpeed() {
         return mapModel.getScrollSpeed();
+    }
+
+    public void setAnimationOffset(final int offset) {
+        view.setAnimationOffset(offset);
+    }
+
+    public void updateView() {
+        view.refresh();
+    }
+
+    public int getCellHeight() {
+        return view.getCellHeight();
     }
 
     @Override
@@ -79,25 +94,21 @@ public class MapControllerImpl implements MapController {
         if (chunkIndex < 0 || chunkIndex >= chunks.size()) {
             return false;
         }
-        
         Chunk chunk = chunks.get(chunkIndex);
         if (cellIndex < 0 || cellIndex >= getCellsPerRow()) {
             return false;
         }
-        
         return chunk.getCellAt(cellIndex).hasObject();
     }
 
     @Override
     public Color getCellObjectColor(int chunkIndex, int cellIndex) {
         if (!hasCellObject(chunkIndex, cellIndex)) {
-            return Color.BLACK; // Colore di default
+            return Color.BLACK;
         }
-        
         List<Chunk> chunks = getVisibleChunks();
         Chunk chunk = chunks.get(chunkIndex);
         GameObject obj = chunk.getCellAt(cellIndex).getContent().orElse(null);
-        
         if (obj instanceof Collectible collectible) {
             if (collectible.getType() == CollectibleType.SECOND_LIFE) {
                 return Color.MAGENTA;
@@ -105,8 +116,7 @@ public class MapControllerImpl implements MapController {
                 return Color.YELLOW;
             }
         }
-        
-        return Color.BLACK; // Ostacoli e altri oggetti
+        return Color.BLACK;
     }
 
     @Override
@@ -114,12 +124,9 @@ public class MapControllerImpl implements MapController {
         if (!hasCellObject(chunkIndex, cellIndex)) {
             return false;
         }
-        
         List<Chunk> chunks = getVisibleChunks();
         Chunk chunk = chunks.get(chunkIndex);
         GameObject obj = chunk.getCellAt(cellIndex).getContent().orElse(null);
-        
-        // I collectible sono circolari, gli ostacoli no
         return obj instanceof Collectible;
     }
 

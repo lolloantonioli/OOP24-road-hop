@@ -9,12 +9,12 @@ import it.unibo.controller.Map.api.MapController;
 
 public class GamePanel extends JPanel {
 
-    private final MapController controller;
-    private final int chunksNumber;
-    private final int cellsPerRow;
+    private MapController controller;
+    private int chunksNumber;
+    private int cellsPerRow;
     private int animationOffset = 0;
 
-    public GamePanel(final MapController controller) {
+    public void setController(final MapController controller) {
         this.controller = controller;
         this.chunksNumber = controller.getChunksNumber();
         this.cellsPerRow = controller.getCellsPerRow();

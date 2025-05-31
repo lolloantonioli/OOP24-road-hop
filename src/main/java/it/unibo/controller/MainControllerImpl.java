@@ -17,8 +17,9 @@ public class MainControllerImpl implements MainController {
     private final MapController mapController;
 
     public MainControllerImpl() {
-        this.mapController = new MapControllerImpl();
         this.gameFrame = new GameFrame(this);
+        this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
+        this.gameFrame.getGamePanel().setController(mapController);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
     }
@@ -29,7 +30,7 @@ public class MainControllerImpl implements MainController {
 
     public void goToGame() {
         gameFrame.show(CardName.GAME);
-        GameEngine engine = new GameEngine(mapController, gameFrame.getGamePanel());
+        GameEngine engine = new GameEngine(mapController);
         new Thread(engine).start();
     }
 

@@ -17,11 +17,22 @@ public interface MapController {
 
     int getScrollSpeed();
 
+    void setAnimationOffset(int offset);
+
+    void updateView();
+
+    int getCellHeight();
+
     int getChunksNumber();
+
     int getCellsPerRow();
+    
     Color getChunkBackgroundColor(int chunkIndex);
+    
     boolean hasCellObject(int chunkIndex, int cellIndex);
+    
     Color getCellObjectColor(int chunkIndex, int cellIndex);
+    
     boolean isCellObjectCircular(int chunkIndex, int cellIndex);
 
 }
