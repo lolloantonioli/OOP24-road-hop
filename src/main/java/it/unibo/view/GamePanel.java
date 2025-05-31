@@ -64,7 +64,7 @@ public class GamePanel extends JPanel {
                 g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
             }
         });
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.drawRect(x, y, cellWidth, cellHeight);
     }
 
