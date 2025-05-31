@@ -1,8 +1,5 @@
 package it.unibo.controller.Map.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-
 import java.awt.Color;
 import java.util.List;
 
@@ -81,7 +78,7 @@ public class MapControllerImpl implements MapController {
 
     @Override
     public Color getChunkBackgroundColor(final int chunkIndex) {
-        checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
+        //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         final ChunkType type = chunk.getType();
@@ -98,8 +95,8 @@ public class MapControllerImpl implements MapController {
 
     @Override
     public boolean hasCellObject(final int chunkIndex, final int cellIndex) {
-        checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
-        checkArgument(cellIndex >= 0 && cellIndex < getCellsPerRow(), "Cell index out of bounds: " + cellIndex);
+        //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
+        //checkArgument(cellIndex >= 0 && cellIndex < getCellsPerRow(), "Cell index out of bounds: " + cellIndex);
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         return chunk.getCellAt(cellIndex).hasObject();
@@ -107,8 +104,8 @@ public class MapControllerImpl implements MapController {
 
     @Override
     public Color getCellObjectColor(final int chunkIndex, final int cellIndex) {
-        checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
-        "This method should called only after 'hasCellBobject' check");
+        //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
+        //"This method should called only after 'hasCellBobject' check");
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         final GameObject obj = chunk.getCellAt(cellIndex).getContent().orElse(null);
@@ -124,8 +121,8 @@ public class MapControllerImpl implements MapController {
 
     @Override
     public boolean isCellObjectCircular(final int chunkIndex, final int cellIndex) {
-        checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
-        "This method should called only after 'hasCellBobject' check");
+        //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
+        //"This method should called only after 'hasCellBobject' check");
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         final GameObject obj = chunk.getCellAt(cellIndex).getContent().orElse(null);
