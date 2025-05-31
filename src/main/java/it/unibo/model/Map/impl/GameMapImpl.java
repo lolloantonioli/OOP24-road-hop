@@ -22,9 +22,10 @@ public class GameMapImpl implements GameMap {
     private static final int BUFFER_CHUNKS = 5;
     private static final int MAX_SPEED = 10;
     private static final int CELLS_INCREASE_SPEED = 70;
+    private static final String MSG = "Speed must be between 0 and " + MAX_SPEED;
 
     public GameMapImpl(final int speed) {
-        checkArgument(speed >= 0 && speed <= MAX_SPEED, "Speed must be between 0 and " + MAX_SPEED);
+        checkArgument(speed >= 0 && speed <= MAX_SPEED, MSG);
         this.chunks = new ArrayList<>();
         this.chunkFactory = new ChunkFactoryImpl();
         this.currentPosition = 0;
