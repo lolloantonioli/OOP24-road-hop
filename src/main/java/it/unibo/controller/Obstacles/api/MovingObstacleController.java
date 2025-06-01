@@ -5,6 +5,9 @@ import java.util.List;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
+// controllare checkcollision, se serve o meno
+// e se serve il dispose
+
 public interface MovingObstacleController {
 
     /**
@@ -102,6 +105,15 @@ public interface MovingObstacleController {
      * @return il livello di difficoltà attuale
      */
     int getCurrentDifficultyLevel();
+
+    /**
+     * Verifica se una posizione specifica è in collisione con un ostacolo.
+     * 
+     * @param x la coordinata X da verificare
+     * @param y la coordinata Y da verificare
+     * @return true se c'è una collisione, false altrimenti
+     */
+    boolean checkCollision(int x, int y);
 
     /**
      * Libera tutte le risorse utilizzate dal controller.
