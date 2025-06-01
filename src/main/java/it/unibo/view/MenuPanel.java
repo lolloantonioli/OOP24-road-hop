@@ -41,7 +41,7 @@ public class MenuPanel extends JPanel {
         playButton = new JButton(PLAY_TEXT);
         this.setPlayAction();
         instructionsButton = new JButton(INSTRUCTIONS_TEXT);
-        this.setSettingsAction();
+        this.setInstructionsAction();
         shopButton = new JButton(SHOP_TEXT);
         this.setShopAction();
         // Titolo del gioco
@@ -102,7 +102,7 @@ public class MenuPanel extends JPanel {
         playButton.addActionListener(e -> controller.goToGame());
     }
 
-    public void setSettingsAction() {
+    public void setInstructionsAction() {
         instructionsButton.addActionListener(e -> controller.goToInstructions());
     }
 
