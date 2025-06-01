@@ -5,130 +5,108 @@ import java.util.List;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-/**
- * Interfaccia per il controller dedicato alla gestione degli ostacoli mobili.
- * Gestisce la creazione, posizionamento, comportamento e spawn automatico di tutti gli ostacoli mobili.
- */
 public interface MovingObstacleController {
-    
+
     /**
-     * Inizializza e avvia la generazione automatica di ostacoli.
-     * Da chiamare quando il gioco inizia.
+     * Avvia la generazione automatica degli ostacoli.
+     * Gli ostacoli vengono generati a intervalli regolari basati sul livello di difficoltà.
      */
     void startObstacleGeneration();
-    
+
     /**
-     * Ferma la generazione automatica di ostacoli.
-     * Da chiamare quando il gioco viene messo in pausa o terminato.
+     * Ferma la generazione automatica degli ostacoli.
+     * Termina il servizio di generazione e pulisce le risorse.
      */
     void stopObstacleGeneration();
-    
+
     /**
-     * Crea e aggiunge un nuovo ostacolo mobile alla mappa.
+     * Crea un singolo ostacolo del tipo specificato.
      * 
-     * @param type Tipo di ostacolo (CAR, TRAIN)
-     * @param x Posizione X
-     * @param y Posizione Y
-     * @param speed Velocità (positiva = destra, negativa = sinistra)
-     * @return L'ostacolo creato
+     * @param type il tipo di ostacolo da creare
+     * @param x la posizione X dell'ostacolo
+     * @param y la posizione Y dell'ostacolo
+     * @param speed la velocità dell'ostacolo
+     * @return l'ostacolo creato
      */
     MovingObstacles createObstacle(ObstacleType type, int x, int y, int speed);
-    
+
     /**
-     * Crea un gruppo di auto sulla strada.
+     * Crea un set di macchine sulla stessa riga.
      * 
-     * @param y Posizione Y della strada
-     * @param count Numero di auto da creare
-     * @param leftToRight Direzione di movimento
-     * @return Array di ostacoli creati
+     * @param y la posizione Y (riga) dove creare le macchine
+     * @param count il numero di macchine da creare
+     * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
+     * @return array degli ostacoli macchina creati
      */
     MovingObstacles[] createCarSet(int y, int count, boolean leftToRight);
-    
+
     /**
-     * Crea un gruppo di treni sulla ferrovia.
+     * Crea un set di treni sulla stessa riga.
      * 
-     * @param y Posizione Y della ferrovia
-     * @param count Numero di treni da creare
-     * @param leftToRight Direzione di movimento
-     * @return Array di ostacoli creati
+     * @param y la posizione Y (riga) dove creare i treni
+     * @param count il numero di treni da creare
+     * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
+     * @return array degli ostacoli treno creati
      */
     MovingObstacles[] createTrainSet(int y, int count, boolean leftToRight);
-    
+
+    /**
+     * Crea un set di tronchi sulla stessa riga.
+     * I tronchi fungono da piattaforme sui fiumi e permettono al giocatore di attraversare l'acqua.
+     * 
+     * @param y la posizione Y (riga) dove creare i tronchi
+     * @param count il numero di tronchi da creare
+     * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
+     * @return array degli ostacoli tronco creati
+     */
+    MovingObstacles[] createLogSet(int y, int count, boolean leftToRight);
+
     /**
      * Aggiorna tutti gli ostacoli mobili.
-     * Da chiamare ad ogni ciclo di gioco.
+     * Deve essere chiamato ad ogni frame del gioco per aggiornare posizioni e stato.
      */
     void update();
-    
+
     /**
-     * Aumenta la difficoltà incrementando la velocità degli ostacoli e
-     * la frequenza di generazione.
+     * Ottiene tutti gli ostacoli di un tipo specifico.
      * 
-     * @param factor Fattore di incremento della difficoltà
-     */
-    void increaseDifficulty(int factor);
-    
-    /**
-     * Verifica se c'è una collisione con un ostacolo mobile.
-     * 
-     * @param x Coordinata X
-     * @param y Coordinata Y
-     * @return true se c'è una collisione
-     */
-    boolean checkCollision(int x, int y);
-    
-    /**
-     * Ottiene tutti gli ostacoli attivi di un determinato tipo.
-     * 
-     * @param type Tipo di ostacolo
-     * @return Lista di ostacoli del tipo specificato
+     * @param type il tipo di ostacolo richiesto
+     * @return lista degli ostacoli del tipo specificato
      */
     List<MovingObstacles> getObstaclesByType(ObstacleType type);
-    
+
     /**
-     * Ottiene tutti gli ostacoli attivi.
+     * Ottiene tutti gli ostacoli attualmente attivi.
      * 
-     * @return Lista di tutti gli ostacoli
+     * @return lista di tutti gli ostacoli attivi
      */
     List<MovingObstacles> getAllObstacles();
-    
+
     /**
-     * Reimposta tutti gli ostacoli e riavvia la generazione.
-     * Utile quando il gioco viene riavviato.
+     * Aumenta il livello di difficoltà del gioco.
+     * Incrementa la velocità degli ostacoli esistenti e la frequenza di generazione.
+     * 
+     * @param factor il fattore di incremento della difficoltà
+     */
+    void increaseDifficulty(int factor);
+
+    /**
+     * Resetta tutti gli ostacoli e riavvia la generazione.
+     * Rimuove tutti gli ostacoli esistenti e reimposta il livello di difficoltà.
      */
     void resetObstacles();
-    
-    /**
-     * Sospende temporaneamente la generazione di ostacoli.
-     * Utile quando il gioco viene messo in pausa.
-     */
-    void pauseObstacleGeneration();
-    
-    /**
-     * Riprende la generazione di ostacoli.
-     * Utile quando il gioco viene ripreso dopo una pausa.
-     */
-    void resumeObstacleGeneration();
-    
-    /**
-     * Crea un ostacolo casuale di un tipo specifico in una posizione casuale.
-     * 
-     * @param type Tipo di ostacolo
-     * @param y Posizione Y approssimativa
-     * @return L'ostacolo creato
-     */
-    MovingObstacles createRandomObstacle(ObstacleType type, int y);
-    
+
     /**
      * Ottiene il livello di difficoltà corrente.
      * 
-     * @return Il livello di difficoltà
+     * @return il livello di difficoltà attuale
      */
     int getCurrentDifficultyLevel();
-    
+
     /**
-     * Rilascia le risorse utilizzate dal controller.
-     * Da chiamare quando il gioco viene terminato.
+     * Libera tutte le risorse utilizzate dal controller.
+     * Deve essere chiamato quando il controller non è più necessario.
      */
     void dispose();
+
 }
