@@ -62,31 +62,24 @@ public class InstructionsPanel extends JPanel {
     @Override
     public void setBounds(int x, int y, int width, int height) {
         super.setBounds(x, y, width, height);
-        int minDim = Math.min(width, height);
-        int baseFontSize = Math.max(12, minDim / 18);
-        // Calcola la larghezza massima per il testo
-        FontMetrics fm = instructions.getFontMetrics(new Font("Arial", Font.PLAIN, baseFontSize));
-        int textWidth = fm.stringWidth(instructions.getText());
-        int lines = instructions.getLineCount();
-        int maxWidth = Math.max(width - 40, 100);
-        int maxHeight = Math.max(height - 80, 60);
-        // Adatta il font per riempire sia in larghezza che in altezza
-        while ((fm.getHeight() * lines < maxHeight) && (textWidth < maxWidth)) {
-            baseFontSize++;
-            fm = instructions.getFontMetrics(new Font("Arial", Font.PLAIN, baseFontSize));
-            textWidth = fm.stringWidth(instructions.getText());
-        }
-        baseFontSize = Math.max(12, baseFontSize - 1);
-        instructions.setFont(new Font("Arial", Font.PLAIN, baseFontSize));
-        instructions.setMaximumSize(new Dimension(maxWidth, maxHeight));
+
+        // Calcola la dimensione del font in base sia a larghezza che altezza
+        int fontSizeW = Math.max(16, width / 35);
+        int fontSizeH = Math.max(16, height / 18);
+        int fontSize = Math.min(fontSizeW, fontSizeH);
+
+        instructions.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        instructions.setMaximumSize(new Dimension(width - 40, height - 80));
         instructions.setMinimumSize(new Dimension(60, 40));
-        instructions.setPreferredSize(new Dimension(maxWidth, maxHeight));
-        backButton.setFont(backButton.getFont().deriveFont((float) baseFontSize));
-        int buttonWidth = Math.max(120, width / 3);
+        instructions.setPreferredSize(new Dimension(width - 40, height - 80));
+
+        // Adatta anche il bottone
+        backButton.setFont(backButton.getFont().deriveFont((float) fontSize));
+        int minButtonWidth = getFontMetrics(backButton.getFont()).stringWidth(BACK_BUTTON_TEXT) + 40;
+        int buttonWidth = Math.max(minButtonWidth, width / 3);
         int buttonHeight = Math.max(40, height / 10);
         backButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        backButton.setMinimumSize(new Dimension(0, buttonHeight));
+        backButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
         backButton.setPreferredSize(null);
     }
-
 }
