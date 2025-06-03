@@ -37,6 +37,8 @@ public class InstructionsPanel extends JPanel {
         instructions.setEditable(false);
         instructions.setLineWrap(true);
         instructions.setWrapStyleWord(true);
+        instructions.setBackground(Color.BLUE);
+        instructions.setForeground(Color.WHITE);
 
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
