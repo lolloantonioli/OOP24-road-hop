@@ -1,5 +1,7 @@
 package it.unibo.model.Collision.impl;
 
+/*NON UTILIZZATO */
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;

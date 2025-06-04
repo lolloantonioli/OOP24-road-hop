@@ -2,6 +2,10 @@ package it.unibo.model.Map.impl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
 
 public class GameObjectImpl implements GameObject {
@@ -86,11 +90,11 @@ public class GameObjectImpl implements GameObject {
 
     // tutte le posizioni x occupate da un oggetto
     @Override
-    public int[] getOccupiedCells() {
+    public List<Integer> getOccupiedCells() {
         int width = getWidthInCells();
-        int[] cells = new int[width];
+        List<Integer> cells = new ArrayList<>();
         for (int i = 0; i < width; i++) {
-            cells[i] = getX() + i;
+            cells.add( getX() + i);
         }
         return cells;
     }
@@ -102,5 +106,12 @@ public class GameObjectImpl implements GameObject {
         int endX = startX + getWidthInCells();
         return cellX >= startX && cellX < endX;
     }
+
+    public List<Cell> getOccupiedCells2(){
+        List<Cell> list = new ArrayList<>();
+        getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));
+        return list;
+    }
+
 
 }

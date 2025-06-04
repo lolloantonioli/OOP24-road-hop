@@ -2,6 +2,8 @@ package it.unibo.controller;
 
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Map.impl.MapControllerImpl;
+import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
@@ -18,6 +20,7 @@ public class MainControllerImpl implements MainController {
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
     private final MapController mapController;
+    MovingObstacleController obstacleController = new MovingObstacleControllerImpl();
 
     /**
      * Constructor for MainControllerImpl.
@@ -39,7 +42,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public void goToGame() {
         gameFrame.show(CardName.GAME);
-        GameEngine engine = new GameEngine(mapController);
+        GameEngine engine = new GameEngine(mapController, obstacleController);
         new Thread(engine).start();
     }
 
