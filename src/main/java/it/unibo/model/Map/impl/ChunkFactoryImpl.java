@@ -42,7 +42,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
         checkArgument(position >= 0, MSG);
         final int type = random.nextInt(8);
         return switch (type) {
-            case 0, 1-> createRoadChunk(position);
+            case 0, 1 -> createRoadChunk(position);
             case 2, 3 -> createRailwayChunk(position);
             case 4 -> createRiverChunk(position);
             default -> createGrassChunk(position);
