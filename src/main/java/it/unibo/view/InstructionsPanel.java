@@ -3,8 +3,9 @@ package it.unibo.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -64,24 +65,31 @@ public class InstructionsPanel extends JPanel {
     @Override
     public void setBounds(int x, int y, int width, int height) {
         super.setBounds(x, y, width, height);
-
-        // Calcola la dimensione del font in base sia a larghezza che altezza
-        int fontSizeW = Math.max(16, width / 35);
-        int fontSizeH = Math.max(16, height / 18);
-        int fontSize = Math.min(fontSizeW, fontSizeH);
-
+    
+        // Imposta il layout per occupare tutto lo spazio disponibile
+        setLayout(new BorderLayout());
+    
+        // Aggiorna il font e le dimensioni del JTextArea
+        int fontSize = Math.max(16, Math.min(width / 35, height / 18));
         instructions.setFont(new Font("Arial", Font.PLAIN, fontSize));
-        instructions.setMaximumSize(new Dimension(width - 40, height - 80));
-        instructions.setMinimumSize(new Dimension(60, 40));
-        instructions.setPreferredSize(new Dimension(width - 40, height - 80));
-
-        // Adatta anche il bottone
+        instructions.setPreferredSize(new Dimension(width, height - 100));
+    
+        // Aggiorna il font del JButton
         backButton.setFont(backButton.getFont().deriveFont((float) fontSize));
-        int minButtonWidth = getFontMetrics(backButton.getFont()).stringWidth(BACK_BUTTON_TEXT) + 40;
-        int buttonWidth = Math.max(minButtonWidth, width / 3);
-        int buttonHeight = Math.max(40, height / 10);
-        backButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        backButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
-        backButton.setPreferredSize(null);
+    
+        // Crea un pannello per il pulsante "Back"
+        JPanel buttonPanel = new JPanel(); // Usa il costruttore senza argomenti
+        buttonPanel.setBackground(Color.BLUE); // Imposta il colore di sfondo
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Imposta il layout manualmente
+        buttonPanel.add(backButton);
+    
+        // Aggiungi i componenti al layout
+        removeAll(); // Rimuovi eventuali componenti precedenti
+        add(instructions, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH); // Posiziona il pannello del pulsante in basso
+    
+        // Forza il ridimensionamento e il ridisegno dei componenti
+        revalidate();
+        repaint();
     }
 }

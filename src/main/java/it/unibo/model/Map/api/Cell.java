@@ -1,16 +1,16 @@
 package it.unibo.model.Map.api;
 
-import java.util.Optional;
+import java.util.Set;
 
 public interface Cell {
 
     boolean addObject(GameObject obj);
 
-    void removeObject();
+    boolean removeObject(GameObject obj);
 
     boolean hasObject();
 
-    Optional<GameObject> getContent();
+    Set<GameObject> getContent();
 
     int getX();
     
