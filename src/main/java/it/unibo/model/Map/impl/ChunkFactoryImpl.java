@@ -40,11 +40,11 @@ public class ChunkFactoryImpl implements ChunkFactory {
     @Override
     public Chunk createRandomChunk(final int position) {
         checkArgument(position >= 0, MSG);
-        final int type = random.nextInt(4);
+        final int type = random.nextInt(8);
         return switch (type) {
-            case 0 -> createRoadChunk(position);
-            case 1 -> createRailwayChunk(position);
-            case 2 -> createRiverChunk(position);
+            case 0, 1-> createRoadChunk(position);
+            case 2, 3 -> createRailwayChunk(position);
+            case 4 -> createRiverChunk(position);
             default -> createGrassChunk(position);
         };
     }
