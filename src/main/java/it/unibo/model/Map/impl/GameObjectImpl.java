@@ -1,9 +1,9 @@
 package it.unibo.model.Map.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
@@ -15,14 +15,20 @@ public class GameObjectImpl implements GameObject {
     private boolean movable;
     private int speed;
     private boolean platform;
+    private int widthInCells = 1; // Default width in cells
 
     public GameObjectImpl(final int x, final int y) {
+        this(x, y, 1);
+    }
+
+    public GameObjectImpl(final int x, final int y, final int widthInCells) {
         checkArgument(x >= 0 && y >= 0, "Coordinates must be non-negative");
         this.x = x;
         this.y = y;
         this.movable = false;
         this.speed = 0;
         this.platform = false;
+        this.widthInCells = widthInCells;
     }
 
     @Override
@@ -85,7 +91,7 @@ public class GameObjectImpl implements GameObject {
     // larghezza dell'oggetto
     @Override
     public int getWidthInCells() {
-        return 1;
+        return widthInCells;
     }
 
     // tutte le posizioni x occupate da un oggetto
@@ -107,6 +113,7 @@ public class GameObjectImpl implements GameObject {
         return cellX >= startX && cellX < endX;
     }
 
+    @Override
     public List<Cell> getOccupiedCells2(){
         List<Cell> list = new ArrayList<>();
         getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));

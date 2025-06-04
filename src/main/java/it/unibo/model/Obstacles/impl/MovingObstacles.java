@@ -1,14 +1,14 @@
 package it.unibo.model.Obstacles.impl;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
-// metodi setter da mettere a posto !
+// metodi setter da mettere a posto ! + controlla getoccupiedcells in game object
 
 public class MovingObstacles implements Obstacle{
     private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)

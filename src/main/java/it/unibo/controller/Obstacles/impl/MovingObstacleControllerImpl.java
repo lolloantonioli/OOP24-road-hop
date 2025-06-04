@@ -11,8 +11,6 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-// da finire !
-
 public class MovingObstacleControllerImpl implements MovingObstacleController {
 
     private final MovingObstacleFactory factory;
@@ -82,17 +80,14 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
             boolean leftToRight = random.nextBoolean();
 
             // Genera ostacoli in base al tipo
-            if (obstacleTypeIndex == 0) {
-                // Genera un set di CAR
-                createCarSet(y, random.nextInt(3) + 1, leftToRight);
-            } else if (obstacleTypeIndex == 1) {
-                // Genera un set di TRAIN
-                createTrainSet(y, random.nextInt(2) + 1, leftToRight);
-            } else if (obstacleTypeIndex == 2) {
-                // Genera un set di LOG
-                createLogSet(y, random.nextInt(4) + 1, leftToRight);
-            } else {
-                throw new IllegalArgumentException("Tipo di ostacolo non supportato: " + obstacleTypeIndex);
+            switch (obstacleTypeIndex) {
+                case 0 -> // Genera un set di CAR
+                    createCarSet(y, random.nextInt(3) + 1, leftToRight);
+                case 1 -> // Genera un set di TRAIN
+                    createTrainSet(y, random.nextInt(2) + 1, leftToRight);
+                case 2 -> // Genera un set di LOG
+                    createLogSet(y, random.nextInt(4) + 1, leftToRight);
+                default -> throw new IllegalArgumentException("Tipo di ostacolo non supportato: " + obstacleTypeIndex);
             }
         }
     }
