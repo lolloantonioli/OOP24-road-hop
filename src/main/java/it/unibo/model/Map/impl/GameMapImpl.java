@@ -11,6 +11,9 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.ChunkFactory;
 import it.unibo.model.Map.api.GameMap;
 
+/**
+ * Implementation of the {@code GameMap} interface.
+ */
 public class GameMapImpl implements GameMap {
 
     private final List<Chunk> chunks;
@@ -24,6 +27,12 @@ public class GameMapImpl implements GameMap {
     private static final int CELLS_INCREASE_SPEED = 70;
     private static final String MSG = "Speed must be between 0 and " + MAX_SPEED;
 
+    /**
+     * Constructs a new {@code GameMapImpl} with the specified scroll speed.
+     *
+     * @param speed the initial scroll speed of the map, must be between 0 and {@link #MAX_SPEED}.
+     * @throws IllegalArgumentException if the speed is not in the valid range.
+     */
     public GameMapImpl(final int speed) {
         checkArgument(speed >= 0 && speed <= MAX_SPEED, MSG);
         this.chunks = new ArrayList<>();
@@ -100,6 +109,7 @@ public class GameMapImpl implements GameMap {
         return ImmutableList.copyOf(chunks);
     }
 
+    @Override
     public int getScrollSpeed() {
         return this.scrollSpeed;
     }

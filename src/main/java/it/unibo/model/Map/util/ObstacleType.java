@@ -1,5 +1,8 @@
 package it.unibo.model.Map.util;
 
+/**
+ * Represents the type of a obstacle in the game.
+ */
 public final class ObstacleType {
     
     public static final ObstacleType CAR = new ObstacleType("CAR");
@@ -14,7 +17,6 @@ public final class ObstacleType {
         this.name = name;
     }
 
-    @Override
     public String toString() {
         return name;
     }

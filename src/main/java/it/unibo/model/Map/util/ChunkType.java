@@ -1,5 +1,8 @@
 package it.unibo.model.Map.util;
 
+/**
+ * Represents the type of a chunk in the game map.
+ */
 public final class ChunkType {
     
     public static final ChunkType ROAD = new ChunkType("ROAD");
@@ -13,7 +16,6 @@ public final class ChunkType {
         this.name = name;
     }
 
-    @Override
     public String toString() {
         return name;
     }

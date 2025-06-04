@@ -13,6 +13,9 @@ import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.view.GamePanel;
 
+/**
+ * Implementation of the MapController interface.
+ */
 public class MapControllerImpl implements MapController {
 
     private final GameMap mapModel;
@@ -20,6 +23,11 @@ public class MapControllerImpl implements MapController {
 
     private static final int INITIAL_SPEED = 1;
 
+    /**
+     * Constructor for MapControllerImpl.
+     * Initializes the map model with a default speed and sets the view.
+     * @param view the GamePanel view to be controlled by this controller
+     */
     public MapControllerImpl(final GamePanel view) {
         this.view = view;
         this.mapModel = new GameMapImpl(INITIAL_SPEED);

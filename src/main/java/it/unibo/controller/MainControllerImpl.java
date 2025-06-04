@@ -9,6 +9,9 @@ import it.unibo.model.Shop.api.ShopModel;
 import it.unibo.model.Shop.impl.ShopModelImpl;
 import it.unibo.view.GameFrame;
 
+/**
+ * MainController implementation.
+ */
 public class MainControllerImpl implements MainController {
 
     private final GameFrame gameFrame;
@@ -16,6 +19,10 @@ public class MainControllerImpl implements MainController {
     private final ShopModel shopModel;
     private final MapController mapController;
 
+    /**
+     * Constructor for MainControllerImpl.
+     * Initializes the game frame, map controller, shop model, and shop observer.
+     */
     public MainControllerImpl() {
         this.gameFrame = new GameFrame(this);
         this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
@@ -24,20 +31,24 @@ public class MainControllerImpl implements MainController {
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
     }
 
+    @Override
     public void goToMenu() {
         gameFrame.show(CardName.MENU);
     }
-
+    
+    @Override
     public void goToGame() {
         gameFrame.show(CardName.GAME);
         GameEngine engine = new GameEngine(mapController);
         new Thread(engine).start();
     }
 
+    @Override
     public void goToInstructions() {
         gameFrame.show(CardName.INSTRUCTIONS);
     }
 
+    @Override
     public void goToShop() {
         gameFrame.show(CardName.SHOP);
         shopObserver.activate();

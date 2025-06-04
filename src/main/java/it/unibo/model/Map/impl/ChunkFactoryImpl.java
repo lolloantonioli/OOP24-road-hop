@@ -18,6 +18,10 @@ import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 
+/**
+ * Implementation of the {@code ChunkFactory} interface.
+ * This factory is responsible for creating different types of chunks at specified positions.
+ */
 public class ChunkFactoryImpl implements ChunkFactory {
 
     private final Random random;
@@ -25,6 +29,9 @@ public class ChunkFactoryImpl implements ChunkFactory {
 
     private final static String MSG = "Position must be non-negative";
 
+    /**
+     * Constructs a new {@code ChunkFactoryImpl} with a random number generator and an {@code ObjectPlacer}.
+     */
     public ChunkFactoryImpl() {
         this.random = new Random();
         this.objectPlacer = new ObjectPlacerImpl();

@@ -13,6 +13,10 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.util.ChunkType;
 
+/**
+ * Implementation of the {@code Chunk} interface.
+ * Represents a chunk of the game map, which is a row that can contain multiple {@code Cell} and {@code GameObject}.
+ */
 public class ChunkImpl implements Chunk {
 
     private final List<Cell> cells;
@@ -21,6 +25,14 @@ public class ChunkImpl implements Chunk {
 
     public static final int CELLS_PER_ROW = 9;
 
+    /**
+     * Constructs a new {@code ChunkImpl} with the specified position and type.
+     *
+     * @param position the x-coordinate of the chunk.
+     * @param type the type of the chunk (e.g., road, railway, river, grass).
+     * @throws IllegalArgumentException if position is negative.
+     * @throws NullPointerException if type is null.
+     */
     public ChunkImpl(final int position, final ChunkType type) {
         checkArgument(position >= 0, "Position must be non-negative");
         this.position = position;
