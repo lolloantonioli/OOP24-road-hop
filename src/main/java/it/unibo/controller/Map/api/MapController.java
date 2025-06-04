@@ -27,9 +27,9 @@ public interface MapController {
 
     int getCellsPerRow();
     
-    Color getChunkBackgroundColor(int chunkIndex);
+    Color getChunkColor(int chunkIndex);
     
-    boolean hasCellObject(int chunkIndex, int cellIndex);
+    boolean hasCellObjects(int chunkIndex, int cellIndex);
     
     Color getCellObjectColor(int chunkIndex, int cellIndex);
     

@@ -36,9 +36,9 @@ public class GamePanel extends JPanel {
     }
 
     private void drawCell(final Graphics g, final int x, final int y, final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(controller.getChunkBackgroundColor(chunkIndex));
+        g.setColor(controller.getChunkColor(chunkIndex));
         g.fillRect(x, y, cellWidth, cellHeight);
-        if (controller.hasCellObject(chunkIndex, cellIndex)) {
+        if (controller.hasCellObjects(chunkIndex, cellIndex)) {
             g.setColor(controller.getCellObjectColor(chunkIndex, cellIndex));
             if (controller.isCellObjectCircular(chunkIndex, cellIndex)) {
                 g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);

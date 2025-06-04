@@ -76,7 +76,7 @@ public class MapControllerImpl implements MapController {
     }
 
     @Override
-    public Color getChunkBackgroundColor(final int chunkIndex) {
+    public Color getChunkColor(final int chunkIndex) {
         //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
@@ -93,7 +93,7 @@ public class MapControllerImpl implements MapController {
     }
 
     @Override
-    public boolean hasCellObject(final int chunkIndex, final int cellIndex) {
+    public boolean hasCellObjects(final int chunkIndex, final int cellIndex) {
         //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
         //checkArgument(cellIndex >= 0 && cellIndex < getCellsPerRow(), "Cell index out of bounds: " + cellIndex);
         final List<Chunk> chunks = getVisibleChunks();
