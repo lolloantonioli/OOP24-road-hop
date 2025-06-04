@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -61,7 +62,6 @@ public class InstructionsPanel extends JPanel {
         backButton.addActionListener(e -> controller.goToMenu());
     }
 
-    
     @Override
     public void setBounds(int x, int y, int width, int height) {
         super.setBounds(x, y, width, height);
@@ -74,14 +74,19 @@ public class InstructionsPanel extends JPanel {
         instructions.setFont(new Font("Arial", Font.PLAIN, fontSize));
         instructions.setPreferredSize(new Dimension(width, height - 100));
     
-        // Aggiorna il font e le dimensioni del JButton
+        // Aggiorna il font del JButton
         backButton.setFont(backButton.getFont().deriveFont((float) fontSize));
-        backButton.setPreferredSize(new Dimension(width / 3, 50));
+    
+        // Crea un pannello per il pulsante "Back"
+        JPanel buttonPanel = new JPanel(); // Usa il costruttore senza argomenti
+        buttonPanel.setBackground(Color.BLUE); // Imposta il colore di sfondo
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Imposta il layout manualmente
+        buttonPanel.add(backButton);
     
         // Aggiungi i componenti al layout
         removeAll(); // Rimuovi eventuali componenti precedenti
         add(instructions, BorderLayout.CENTER);
-        add(backButton, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.SOUTH); // Posiziona il pannello del pulsante in basso
     
         // Forza il ridimensionamento e il ridisegno dei componenti
         revalidate();
