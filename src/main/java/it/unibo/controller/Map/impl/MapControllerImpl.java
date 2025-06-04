@@ -7,7 +7,6 @@ import it.unibo.controller.Map.api.MapController;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.util.ChunkType;
@@ -108,15 +107,19 @@ public class MapControllerImpl implements MapController {
         //"This method should called only after 'hasCellBobject' check");
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
-        final GameObject obj = chunk.getCellAt(cellIndex).getContent().orElse(null);
-        if (obj instanceof Collectible collectible) {
-            if (collectible.getType() == CollectibleType.SECOND_LIFE) {
-                return Color.MAGENTA;
-            } else {
-                return Color.YELLOW;
-            }
-        }
-        return Color.BLACK;
+        // Prendi il primo oggetto "visibile" per la view (ad esempio un Collectible, altrimenti il primo oggetto)
+        return chunk.getCellAt(cellIndex).getContent().stream()
+            .filter(obj -> obj instanceof Collectible)
+            .findFirst()
+            .map(obj -> {
+                Collectible collectible = (Collectible) obj;
+                if (collectible.getType() == CollectibleType.SECOND_LIFE) {
+                    return Color.MAGENTA;
+                } else {
+                    return Color.YELLOW;
+                }
+            })
+            .orElse(Color.BLACK);
     }
 
     @Override
@@ -125,8 +128,9 @@ public class MapControllerImpl implements MapController {
         //"This method should called only after 'hasCellBobject' check");
         final List<Chunk> chunks = getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
-        final GameObject obj = chunk.getCellAt(cellIndex).getContent().orElse(null);
-        return obj instanceof Collectible;
+        // Se almeno un oggetto è un Collectible, la cella è circolare
+        return chunk.getCellAt(cellIndex).getContent().stream()
+            .anyMatch(obj -> obj instanceof Collectible);
     }
 
 }
