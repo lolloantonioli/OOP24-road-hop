@@ -15,7 +15,7 @@ import it.unibo.model.Map.api.GameObject;
  */
 public class CellImpl implements Cell {
 
-    private Set<GameObject> content;
+    private final Set<GameObject> content;
     private final int x;
     private final int y;
 
@@ -45,11 +45,7 @@ public class CellImpl implements Cell {
     @Override
     public boolean removeObject(final GameObject obj) {
         checkArgument(obj != null, NULL_MSG);
-        if (content.contains(obj)) {
-            content.remove(obj);
-            return true;
-        }
-        return false;
+        return content.remove(obj);
     }
 
     @Override
