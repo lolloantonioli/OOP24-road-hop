@@ -1,5 +1,7 @@
 package it.unibo.model.Collision.api;
 
+/*NON UTILIZZATO */
+
 import java.util.List;
 
 import it.unibo.model.Map.api.Cell;
