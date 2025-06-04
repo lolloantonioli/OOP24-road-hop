@@ -116,7 +116,7 @@ public class GameObjectImpl implements GameObject {
     @Override
     public List<Cell> getOccupiedCells2(){
         List<Cell> list = new ArrayList<>();
-        getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));
+        getOccupiedCells().forEach(cellX -> list.add(new CellImpl(cellX, getY())));
         return list;
     }
 
