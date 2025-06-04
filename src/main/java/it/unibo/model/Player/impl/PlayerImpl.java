@@ -4,11 +4,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Optional;
 
-import it.unibo.model.Collision.api.CollisionProMax;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.impl.GameObjectImpl;
+import it.unibo.model.Player.api.MovementValidator;
 import it.unibo.model.Player.api.Player;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
@@ -54,9 +54,9 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     }
 
     @Override
-    public boolean tryMove(Direction direction, GameMap map, CollisionProMax collisionHandler) {
+    public boolean tryMove(Direction direction, GameMap map, MovementValidator movementValidator) {
         Cell newPos = new CellImpl(super.getX() + direction.getDeltaX(), super.getY() + direction.getDeltaY());
-        if(collisionHandler.canMoveTo(map, newPos)) {
+        if(movementValidator.canMoveTo(map, newPos)) {
             move(newPos);
             return true;
         }

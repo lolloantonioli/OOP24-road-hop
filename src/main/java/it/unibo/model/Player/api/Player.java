@@ -2,7 +2,6 @@ package it.unibo.model.Player.api;
 
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Player.util.Direction;
-import it.unibo.model.Collision.api.CollisionProMax;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Shop.api.Skin;
@@ -18,10 +17,10 @@ public interface Player extends GameObject {
      * 
      * @param direcrion the direction the player tries to move in
      * @param map the game map
-     * @param collisionHandler a collisioHandler to check if the move is possible
+     * @param movementValidator a movement validator to check if the move is possible
      * @return true if the player was able to move false otherwise 
      */
-    boolean tryMove(Direction direction, GameMap map, CollisionProMax collisionHandler);
+    boolean tryMove(Direction direction, GameMap map, MovementValidator movementValidator);
 
     /**
      * Gets the score of the player
