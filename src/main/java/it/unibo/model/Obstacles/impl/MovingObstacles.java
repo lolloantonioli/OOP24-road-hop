@@ -1,6 +1,11 @@
 package it.unibo.model.Obstacles.impl;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Obstacle;
+import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
 // metodi setter da mettere a posto !
@@ -228,11 +233,11 @@ public class MovingObstacles implements Obstacle{
      * @return Array delle posizioni X delle celle occupate
      */
     @Override
-    public int[] getOccupiedCells() {
+    public List<Integer> getOccupiedCells() {
         int width = getWidthInCells();
-        int[] cells = new int[width];
+        List<Integer> cells = new ArrayList<>();
         for (int i = 0; i < width; i++) {
-            cells[i] = cellX + i;
+            cells.add(cellX + i);
         }
         return cells;
     }
@@ -265,6 +270,13 @@ public class MovingObstacles implements Obstacle{
      */
     public boolean canPlayerStandOn(int playerCellX) {
         return isPlatform() && occupiesCell(playerCellX);
+    }
+
+    @Override
+    public List<Cell> getOccupiedCells2() {
+        List<Cell> list = new ArrayList<>();
+        getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));
+        return list;
     }
 
 }

@@ -1,5 +1,7 @@
 package it.unibo.model.Map.api;
 
+import java.util.List;
+
 public interface GameObject {
 
     void update();
@@ -26,8 +28,11 @@ public interface GameObject {
 
     int getWidthInCells();
 
-    int[] getOccupiedCells();
+    List<Integer> getOccupiedCells();
 
     boolean occupiesCell(int cellX);
+
+    List<Cell> getOccupiedCells2();
+
 
 }
