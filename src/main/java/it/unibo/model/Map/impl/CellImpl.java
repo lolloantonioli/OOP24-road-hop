@@ -1,15 +1,19 @@
 package it.unibo.model.Map.impl;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableSet;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
 
 public class CellImpl implements Cell {
 
-    private Optional<GameObject> content;
+    private Set<GameObject> content;
     private final int x;
     private final int y;
 
@@ -19,31 +23,31 @@ public class CellImpl implements Cell {
         checkArgument(x >= 0 && y >= 0, MSG);
         this.x = x;
         this.y = y;
-        this.content = Optional.empty();
+        this.content = new HashSet<>();
     }
 
     @Override
     public boolean addObject(final GameObject obj) {
-        if (!content.isPresent()) {
-            content = Optional.of(obj);
+        return content.add(obj);
+    }
+
+    @Override
+    public boolean removeObject(final GameObject obj) {
+        if (content.contains(obj)) {
+            content.remove(obj);
             return true;
         }
         return false;
     }
 
     @Override
-    public void removeObject() {
-        content = Optional.empty();
-    }
-
-    @Override
     public boolean hasObject() {
-        return content.isPresent();
+        return !content.isEmpty();
     }
 
     @Override
-    public Optional<GameObject> getContent() {
-        return this.content;
+    public Set<GameObject> getContent() {
+        return ImmutableSet.copyOf(content);
     }
 
     @Override
