@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.Map.util.Position;
 
 /**
  * Implementation of the {@code Cell} interface.
@@ -16,8 +17,7 @@ import it.unibo.model.Map.api.GameObject;
 public class CellImpl implements Cell {
 
     private final Set<GameObject> content;
-    private final int x;
-    private final int y;
+    private final Position position;
 
     private static final String CONSTRUCTOR_MSG = "Coordinates must be non-negative";
     private static final String NULL_MSG = "GameObject cannot be null";
@@ -25,14 +25,12 @@ public class CellImpl implements Cell {
     /**
      * Constructs a new {@code CellImpl} with the specified coordinates.
      *
-     * @param x the x-coordinate of the cell.
-     * @param y the y-coordinate of the cell.
+     * @param position the position of the cell.
      * @throws IllegalArgumentException if x or y is negative.
      */
     public CellImpl(final int x, final int y) {
         checkArgument(x >= 0 && y >= 0, CONSTRUCTOR_MSG);
-        this.x = x;
-        this.y = y;
+        this.position = new Position(x, y);
         this.content = new HashSet<>();
     }
 
@@ -60,12 +58,12 @@ public class CellImpl implements Cell {
 
     @Override
     public int getX() {
-        return this.x;
+        return this.position.x();
     }
 
     @Override
     public int getY() {
-        return this.y;
+        return this.position.y();
     }
 
 }
