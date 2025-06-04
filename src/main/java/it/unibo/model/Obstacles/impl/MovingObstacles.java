@@ -3,7 +3,7 @@ package it.unibo.model.Obstacles.impl;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 
-// metodi setter da mettere a posto ! + controller
+// metodi setter da mettere a posto !
 
 public class MovingObstacles implements Obstacle{
     private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)
