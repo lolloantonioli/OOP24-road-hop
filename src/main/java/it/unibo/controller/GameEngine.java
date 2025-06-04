@@ -1,17 +1,20 @@
 package it.unibo.controller;
 
 import it.unibo.controller.Map.api.MapController;
+import it.unibo.controller.Obstacles.api.MovingObstacleController;
 
 public class GameEngine implements Runnable {
 
     private final MapController mapController;
+    private final MovingObstacleController obstacleController;
     private boolean running = true;
 
     private static final long PERIOD = 16; // 60fps
     private static final int ANIMATION_STEP = 1; // pixel per frame
 
-    public GameEngine(final MapController mapController) {
+    public GameEngine(final MapController mapController, final MovingObstacleController obstacleController) {
         this.mapController = mapController;
+        this.obstacleController = obstacleController;
     }
 
     @Override
@@ -24,6 +27,9 @@ public class GameEngine implements Runnable {
             int speed = mapController.getScrollSpeed();
             int step = Math.max(1, ANIMATION_STEP * speed);
             animationOffset = animateStep(animationOffset, cellHeight, step);
+                
+            // Aggiorna gli ostacoli mobili ad ogni frame
+            obstacleController.update();
 
             waitForNextFrame(frameStart);
         }
@@ -40,6 +46,12 @@ public class GameEngine implements Runnable {
             mapController.setAnimationOffset(0);
             mapController.updateView();
         }
+
+        // Genera nuovi ostacoli quando la mappa viene aggiornata
+        // Puoi adattare il livello di difficoltà in base alla velocità o alla posizione
+        int difficultyLevel = Math.min(3, mapController.getScrollSpeed());
+        obstacleController.generateObstacles(difficultyLevel);
+        
         return animationOffset;
     }
 
