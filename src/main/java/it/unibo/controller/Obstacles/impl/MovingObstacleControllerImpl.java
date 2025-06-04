@@ -17,43 +17,10 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
 
     private final MovingObstacleFactory factory;
     private final MovingObstacleManager manager;
-    private final Random random;
-
-    private boolean generationActive = false;
-    private boolean generationPaused = false;
-    private int difficultyLevel = 1;
 
     public MovingObstacleControllerImpl() {
         this.factory = new MovingObstacleFactoryImpl();
         this.manager = new MovingObstacleManagerImpl();
-        this.random = new Random();
-    }
-
-    @Override
-    public void startObstacleGeneration() {
-         if (generationActive) {
-            return; // Già attivo
-        }
-
-        generationActive = true;
-        generationPaused = false;
-        // Avvia un thread o un task per generare ostacoli a intervalli regolari
-        
-    }
-
-    @Override
-    public void stopObstacleGeneration() {
-        generationActive = false;
-        generationPaused = false;
-
-        // Ferma il thread o task di generazione ostacoli
-    }
-
-    @Override
-    public MovingObstacles createObstacle(ObstacleType type, int x, int y, int speed) {
-        MovingObstacles obstacle = factory.createObstacleByType(type, x, y, speed);
-        manager.addObstacle(obstacle);
-        return obstacle;
     }
 
     @Override
@@ -79,13 +46,12 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
 
     @Override
     public void update() {
-         // Aggiorna tutti gli ostacoli
-        manager.updateAll();
-        
-        // Rimuovi ostacoli fuori schermo
-        manager.cleanupOffscreenObstaclesHorizontal();
-        
-        // Ogni tot update, pulisci anche quelli verticali se necessario
+        try {
+            manager.updateAll();
+            manager.cleanupOffscreenObstaclesHorizontal();
+        } catch (Exception e) {
+            System.err.println("Errore durante l'aggiornamento degli ostacoli: " + e.getMessage());
+        }
     }
 
     @Override
@@ -99,42 +65,36 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     }
 
     @Override
-    public void increaseDifficulty(int factor) {
-        difficultyLevel += factor;
-        
-        // Aumenta la velocità degli ostacoli esistenti
-        manager.increaseSpeed(factor);
-    }
+    public void generateObstacles(int difficultyLevel) {
+        Random random = new Random();
+    
+        // Determina il numero di ostacoli da generare in base al livello di difficoltà
+        int obstacleCount = difficultyLevel + random.nextInt(3); // Aumenta con la difficoltà
 
-    @Override
-    public void resetObstacles() {
-        // Ferma la generazione
-        stopObstacleGeneration();
-        
-        // Reset degli ostacoli esistenti
-        manager.resetAll();
-        
-        // Reset del livello di difficoltà
-        difficultyLevel = 1;
-        
-        // Riavvia la generazione o ANCHE NON QUA(?)
-        startObstacleGeneration();
-    }
+        for (int i = 0; i < obstacleCount; i++) {
+            // Scegli un tipo di ostacolo casualmente tra CAR, TRAIN e LOG
+            int obstacleTypeIndex = random.nextInt(3); // 0 = CAR, 1 = TRAIN, 2 = LOG
 
-    @Override
-    public int getCurrentDifficultyLevel() {
-        return difficultyLevel;
-    }
+            // Scegli una posizione verticale casuale
+            int y = random.nextInt(10) * 50; // Supponendo che l'altezza delle righe sia 50
 
-    @Override
-    public void dispose() {
-        stopObstacleGeneration();
-        // Eventuale pulizia di altre risorse se necessario
-    }
+            // Scegli una direzione casuale
+            boolean leftToRight = random.nextBoolean();
 
-    @Override
-    public boolean checkCollision(int x, int y) {
-        return manager.checkCollision(x, y);
+            // Genera ostacoli in base al tipo
+            if (obstacleTypeIndex == 0) {
+                // Genera un set di CAR
+                createCarSet(y, random.nextInt(3) + 1, leftToRight);
+            } else if (obstacleTypeIndex == 1) {
+                // Genera un set di TRAIN
+                createTrainSet(y, random.nextInt(2) + 1, leftToRight);
+            } else if (obstacleTypeIndex == 2) {
+                // Genera un set di LOG
+                createLogSet(y, random.nextInt(4) + 1, leftToRight);
+            } else {
+                throw new IllegalArgumentException("Tipo di ostacolo non supportato: " + obstacleTypeIndex);
+            }
+        }
     }
 
 }

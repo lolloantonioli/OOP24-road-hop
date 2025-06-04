@@ -11,29 +11,6 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
 public interface MovingObstacleController {
 
     /**
-     * Avvia la generazione automatica degli ostacoli.
-     * Gli ostacoli vengono generati a intervalli regolari basati sul livello di difficoltà.
-     */
-    void startObstacleGeneration();
-
-    /**
-     * Ferma la generazione automatica degli ostacoli.
-     * Termina il servizio di generazione e pulisce le risorse.
-     */
-    void stopObstacleGeneration();
-
-    /**
-     * Crea un singolo ostacolo del tipo specificato.
-     * 
-     * @param type il tipo di ostacolo da creare
-     * @param x la posizione X dell'ostacolo
-     * @param y la posizione Y dell'ostacolo
-     * @param speed la velocità dell'ostacolo
-     * @return l'ostacolo creato
-     */
-    MovingObstacles createObstacle(ObstacleType type, int x, int y, int speed);
-
-    /**
      * Crea un set di macchine sulla stessa riga.
      * 
      * @param y la posizione Y (riga) dove creare le macchine
@@ -86,39 +63,13 @@ public interface MovingObstacleController {
     List<MovingObstacles> getAllObstacles();
 
     /**
-     * Aumenta il livello di difficoltà del gioco.
-     * Incrementa la velocità degli ostacoli esistenti e la frequenza di generazione.
+     * Genera ostacoli in base al livello di difficoltà.
      * 
-     * @param factor il fattore di incremento della difficoltà
+     * @param difficultyLevel il livello di difficoltà (1-3)
+     * 1: Facile - pochi ostacoli
+     * 2: Medio - ostacoli moderati
+     * 3: Difficile - molti ostacoli
      */
-    void increaseDifficulty(int factor);
-
-    /**
-     * Resetta tutti gli ostacoli e riavvia la generazione.
-     * Rimuove tutti gli ostacoli esistenti e reimposta il livello di difficoltà.
-     */
-    void resetObstacles();
-
-    /**
-     * Ottiene il livello di difficoltà corrente.
-     * 
-     * @return il livello di difficoltà attuale
-     */
-    int getCurrentDifficultyLevel();
-
-    /**
-     * Verifica se una posizione specifica è in collisione con un ostacolo.
-     * 
-     * @param x la coordinata X da verificare
-     * @param y la coordinata Y da verificare
-     * @return true se c'è una collisione, false altrimenti
-     */
-    boolean checkCollision(int x, int y);
-
-    /**
-     * Libera tutte le risorse utilizzate dal controller.
-     * Deve essere chiamato quando il controller non è più necessario.
-     */
-    void dispose();
+    void generateObstacles(int difficultyLevel);
 
 }
