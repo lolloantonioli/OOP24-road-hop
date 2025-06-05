@@ -72,14 +72,15 @@ public class MovingObstacles implements Obstacle{
             
             if (speed > 0) {
                 cellX++;
-                // Se la testa esce dal lato destro, segna non visibile
+                // Invisibile solo quando la coda (più a sinistra) ha superato il bordo destro
                 if (cellX >= CELLS_PER_CHUNK) {
                     this.visible = false;
                 }
             } else if (speed < 0) {
                 cellX--;
-                // Se la coda esce dal lato sinistro, segna non visibile
-                if (cellX + getWidthInCells() <= 0) {
+                System.out.println("cellX=" + cellX + " width=" + getWidthInCells() + " visible=" + visible + " speed=" + speed);
+                // Invisibile solo quando la testa (più a destra) ha superato il bordo sinistro
+                if (cellX + getWidthInCells() - 1 < 0) {
                     this.visible = false;
                 }
             }

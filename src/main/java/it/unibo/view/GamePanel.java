@@ -63,10 +63,9 @@ public class GamePanel extends JPanel {
                     break;
                 }
             }
-            if (screenY == -1) {
-                System.out.println("Ostacolo fuori schermo (chunk non visibile)");
+            /*System.out.println("Ostacolo fuori schermo (chunk non visibile)");
                 continue;
-            }
+            }*/
 
             int screenX = (int) obstacle.getX();
             int pixelX = screenX * cellWidth;
@@ -80,21 +79,25 @@ public class GamePanel extends JPanel {
     }
 
     private void drawObstacle(final Graphics g, final MovingObstacles obstacle, final int x, final int y, final int cellWidth, final int cellHeight) {
+        if (!obstacle.isVisible()) {
+            return;
+        }
         ObstacleType type = obstacle.getType();
         int widthInCells = obstacle.getWidthInCells();
+        int ox = obstacle.getX();
 
-        // Calcola la parte visibile dell'ostacolo nella griglia
-        int startX = Math.max(0, obstacle.getX());
-        int endX = Math.min(cellsPerRow, obstacle.getX() + widthInCells);
-        int visibleCells = endX - startX;
+        // Calcola la parte effettivamente visibile nella griglia
+        int visibleStart = Math.max(0, ox);
+        int visibleEnd = Math.min(cellsPerRow, ox + widthInCells);
+        int visibleCells = visibleEnd - visibleStart;
 
         if (visibleCells <= 0) {
-            return; // Nulla da disegnare
+            return;
         }
 
-        int pixelX = startX * cellWidth;
+        int pixelX = visibleStart * cellWidth;
         int pixelWidth = visibleCells * cellWidth;
-
+        
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
             g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);

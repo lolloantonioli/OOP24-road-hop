@@ -61,10 +61,10 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         int spacing = Math.max(minDistance, totalRange / Math.max(count, 1));
         
         for (int i = 0; i < count; i++) {
-            int baseX = calculateBasePosition(i, spacing, CELLS_PER_CHUNK, leftToRight);
+            int obstacleWidth = getObstacleWidth(type);
+            int baseX = calculateBasePosition(i, spacing, leftToRight, obstacleWidth);
             int finalX = addRandomOffset(baseX, spacing, type);
 
-            int obstacleWidth = getObstacleWidth(type);
             if (finalX >= 0 && finalX <= CELLS_PER_CHUNK - obstacleWidth
                 && isValidPosition(finalX, obstacles, obstacleWidth, minDistance)) {
                 int speed = getRandomSpeed(type);
@@ -136,9 +136,14 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         throw new IllegalArgumentException("Unknown obstacle type: " + type);
     }
     
-    private int calculateBasePosition(int index, int spacing, int totalRange, boolean leftToRight) {
-        int baseX = index * spacing;
-        return leftToRight ? baseX : totalRange - baseX;
+    private int calculateBasePosition(int index, int spacing, boolean leftToRight, int obstacleWidth) {
+        if (leftToRight) {
+            // Da sinistra a destra: parte da 0
+            return index * spacing;
+        } else {
+            // Da destra a sinistra: parte dall'ultima posizione valida
+            return CELLS_PER_CHUNK - obstacleWidth - index * spacing;
+        }
     }
     
     private int addRandomOffset(int baseX, int spacing, ObstacleType type) {
@@ -146,7 +151,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         if (type == ObstacleType.CAR) {
             maxOffset = spacing / 6;
         } else if (type == ObstacleType.TRAIN || type == ObstacleType.LOG) {
-            maxOffset = 1;
+            maxOffset = 0;
         } else {
             maxOffset = 0;
         }
