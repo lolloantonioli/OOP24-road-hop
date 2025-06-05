@@ -23,7 +23,7 @@ public class CollisionIdentifierImpl implements CollisionIdentifier{
 
     @Override
     public boolean isCollectibleCollision(GameObject obj) {
-        return Collectible.class.isInstance(obj); //??
+        return Collectible.class.isInstance(obj);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CollisionIdentifierImpl implements CollisionIdentifier{
             .map(Obstacle.class::cast)
             .anyMatch(obstacle -> obstacle.getType().equals(ObstacleType.TREE))) {
 
-                //throw new Exception("not valid position"); mettere a posto
+                throw new IllegalStateException("not valid position");
 
             }
     }
