@@ -95,7 +95,8 @@ public class GamePanel extends JPanel {
             return;
         }
 
-        int pixelX = visibleStart * cellWidth;
+        // NON FUNZIONAAAAA, MA IL PROBLEMA E' QUI !!!
+        int pixelX = ox * cellWidth;  // Invece di: visibleStart * cellWidth
         int pixelWidth = visibleCells * cellWidth;
         
         if (type == ObstacleType.CAR) {
