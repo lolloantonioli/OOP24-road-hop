@@ -7,7 +7,7 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
-// i create singoli mi servono? sono utili? li aggiungo al controller?
+// i create singoli mi servono? sono utili? li aggiungo al controller?  createObstaclesForChunk posso toglierlo?
 // COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
 
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
@@ -16,17 +16,17 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
     // Costanti per i limiti di velocità
     public static final int MIN_CAR_SPEED = 1;
-    public static final int MAX_CAR_SPEED = 2;
+    public static final int MAX_CAR_SPEED = 1;
     public static final int MIN_TRAIN_SPEED = 1;
-    public static final int MAX_TRAIN_SPEED = 3;
+    public static final int MAX_TRAIN_SPEED = 1;
     public static final int MIN_LOG_SPEED = 1;
-    public static final int MAX_LOG_SPEED = 2;
+    public static final int MAX_LOG_SPEED = 1;
 
     // Costanti per il sistema a griglia
     public static final int CELLS_PER_CHUNK = 9;
 
     // Configurazione spacing
-    private static final int MIN_CAR_DISTANCE = 2;
+    private static final int MIN_CAR_DISTANCE = 3;
     private static final int MIN_TRAIN_DISTANCE = 6;
     private static final int MIN_LOG_DISTANCE = 4;
     
@@ -57,18 +57,19 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         List<MovingObstacles> obstacles = new ArrayList<>();
         
         int minDistance = getMinDistance(type);
-        int obstacleWidth = getObstacleWidth(type);
         int totalRange = CELLS_PER_CHUNK + (type == ObstacleType.TRAIN ? 20 : 15);
         int spacing = Math.max(minDistance, totalRange / Math.max(count, 1));
         
         for (int i = 0; i < count; i++) {
-            int baseX = calculateBasePosition(i, spacing, totalRange, leftToRight);
+            int baseX = calculateBasePosition(i, spacing, CELLS_PER_CHUNK, leftToRight);
             int finalX = addRandomOffset(baseX, spacing, type);
-            
-            if (isValidPosition(finalX, obstacles, obstacleWidth, minDistance)) {
+
+            int obstacleWidth = getObstacleWidth(type);
+            if (finalX >= 0 && finalX <= CELLS_PER_CHUNK - obstacleWidth
+                && isValidPosition(finalX, obstacles, obstacleWidth, minDistance)) {
                 int speed = getRandomSpeed(type);
                 if (!leftToRight) speed = -speed;
-                
+
                 MovingObstacles obstacle = createObstacleByType(type, finalX, y, speed);
                 obstacles.add(obstacle);
             }
@@ -77,7 +78,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         return obstacles.toArray(MovingObstacles[]::new);
     }
     
-    @Override
+    /*@Override
     public MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType) {
         return switch (chunkType.toUpperCase()) {
             case "ROAD" -> createObstacleSet(ObstacleType.CAR, chunkY, 2 + random.nextInt(3), random.nextBoolean());
@@ -85,7 +86,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             case "RIVER" -> createObstacleSet(ObstacleType.LOG, chunkY, 1 + random.nextInt(3), random.nextBoolean());
             default -> new MovingObstacles[0];
         };
-    }
+    }*/
 
     @Override
     public MovingObstacles createObstacleByType(ObstacleType type, int x, int y, int speed) {

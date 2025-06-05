@@ -55,8 +55,9 @@ public interface MovingObstacleFactory {
      * @param chunkY Position Y of the chunk
      * @param chunkType Type of chunk
      * @return Array of moving obstacles for the chunk
-     */
+    
     MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType);
+    */
 
     /**
      * Creates a moving obstacle based on its type and position.

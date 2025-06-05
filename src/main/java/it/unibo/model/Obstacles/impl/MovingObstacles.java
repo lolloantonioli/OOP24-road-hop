@@ -20,6 +20,8 @@ public class MovingObstacles implements Obstacle{
     private int initialCellX; // per far ricomparire l'ostacolo nella posizione iniziale
     private final int initialSpeed;
     private int updateCounter; // Per gestire movimento sub-cella
+    private static final int BASE_MOVEMENT_THRESHOLD = 50; // Prova 15, puoi aumentare
+
 
     // Costanti per le dimensioni in celle
     public static final int CAR_WIDTH_CELLS = 1;
@@ -63,22 +65,22 @@ public class MovingObstacles implements Obstacle{
         updateCounter++;
         
         // Movimento basato su velocità (ogni N update muove di una cella)
-        int movementThreshold = Math.max(1, 4 - Math.abs(speed)); // Più veloce = movimento più frequente
+        int movementThreshold = Math.max(1,  BASE_MOVEMENT_THRESHOLD - Math.abs(speed)); // Più veloce = movimento più frequente
         
         if (updateCounter >= movementThreshold) {
             updateCounter = 0;
             
             if (speed > 0) {
                 cellX++;
-                // Se esce dal lato destro, riappare a sinistra
+                // Se la testa esce dal lato destro, segna non visibile
                 if (cellX >= CELLS_PER_CHUNK) {
-                    cellX = -getWidthInCells();
+                    this.visible = false;
                 }
             } else if (speed < 0) {
                 cellX--;
-                // Se esce dal lato sinistro, riappare a destra
+                // Se la coda esce dal lato sinistro, segna non visibile
                 if (cellX + getWidthInCells() <= 0) {
-                    cellX = CELLS_PER_CHUNK;
+                    this.visible = false;
                 }
             }
         }
