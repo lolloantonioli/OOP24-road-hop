@@ -20,7 +20,7 @@ public class MainControllerImpl implements MainController {
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
     private final MapController mapController;
-    MovingObstacleController obstacleController = new MovingObstacleControllerImpl();
+    private final MovingObstacleController obstacleController;
 
     /**
      * Constructor for MainControllerImpl.
@@ -32,6 +32,9 @@ public class MainControllerImpl implements MainController {
         this.gameFrame.getGamePanel().setController(mapController);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
+        this.obstacleController = new MovingObstacleControllerImpl(this.mapController);
+        this.gameFrame.getGamePanel().setObstacleController(obstacleController);
+
     }
 
     @Override

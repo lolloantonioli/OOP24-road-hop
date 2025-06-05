@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
@@ -51,17 +52,28 @@ public class GamePanel extends JPanel {
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
         List<MovingObstacles> obstacles = obstacleController.getAllObstacles();
-        
+        List<Chunk> visibleChunks = controller.getVisibleChunks();
+
         for (MovingObstacles obstacle : obstacles) {
+            // Trova l'indice relativo del chunk visibile
+            int screenY = -1;
+            for (int i = 0; i < visibleChunks.size(); i++) {
+                if (visibleChunks.get(i).getPosition() == obstacle.getY()) {
+                    screenY = i;
+                    break;
+                }
+            }
+            if (screenY == -1) {
+                System.out.println("Ostacolo fuori schermo (chunk non visibile)");
+                continue;
+            }
+
             int screenX = (int) obstacle.getX();
-            int screenY = (int) obstacle.getY();
-            
-            // Converti coordinate del mondo in coordinate dello schermo
-            int pixelX = screenX * cellWidth; // Assumendo coordinate normalizzate
+            int pixelX = screenX * cellWidth;
             int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
-            
-            // Disegna solo se l'ostacolo è visibile sullo schermo
-            if (pixelY >= -cellHeight && pixelY < getHeight() + cellHeight) {
+
+            if (pixelY >= -cellHeight && pixelY < getHeight() + cellHeight &&
+                pixelX >= -cellWidth && pixelX < getWidth() + cellWidth) {
                 drawObstacle(g, obstacle, pixelX, pixelY, cellWidth, cellHeight);
             }
         }
@@ -69,16 +81,29 @@ public class GamePanel extends JPanel {
 
     private void drawObstacle(final Graphics g, final MovingObstacles obstacle, final int x, final int y, final int cellWidth, final int cellHeight) {
         ObstacleType type = obstacle.getType();
+        int widthInCells = obstacle.getWidthInCells();
+
+        // Calcola la parte visibile dell'ostacolo nella griglia
+        int startX = Math.max(0, obstacle.getX());
+        int endX = Math.min(cellsPerRow, obstacle.getX() + widthInCells);
+        int visibleCells = endX - startX;
+
+        if (visibleCells <= 0) {
+            return; // Nulla da disegnare
+        }
+
+        int pixelX = startX * cellWidth;
+        int pixelWidth = visibleCells * cellWidth;
 
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
-            g.fillRect(x, y + cellHeight / 4, cellWidth, cellHeight / 2); // una cella
+            g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);
         } else if (type == ObstacleType.TRAIN) {
             g.setColor(Color.DARK_GRAY);
-            g.fillRect(x, y + cellHeight / 6, cellWidth * 4, cellHeight * 2 / 3); // 4 celle
+            g.fillRect(pixelX, y + cellHeight / 6, pixelWidth, cellHeight * 2 / 3);
         } else if (type == ObstacleType.LOG) {
             g.setColor(Color.ORANGE);
-            g.fillRect(x, y + cellHeight / 3, cellWidth * 3, cellHeight / 3); // 3 celle
+            g.fillRect(pixelX, y + cellHeight / 3, pixelWidth, cellHeight / 3);
         }
     }
 
