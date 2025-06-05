@@ -17,6 +17,7 @@ public final class ObstacleType {
         this.name = name;
     }
 
+    @Override
     public String toString() {
         return name;
     }

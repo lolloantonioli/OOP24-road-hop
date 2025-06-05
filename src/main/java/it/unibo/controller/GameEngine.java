@@ -2,6 +2,7 @@ package it.unibo.controller;
 
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.view.GamePanel;
 
 public class GameEngine implements Runnable {
 
@@ -69,6 +70,11 @@ public class GameEngine implements Runnable {
 
     public void stop() {
         this.running = false;
+    }
+
+    public void setupView(GamePanel gamePanel) {
+    gamePanel.setController(this.mapController);
+    gamePanel.setObstacleController(this.obstacleController);
     }
 
 }
