@@ -15,10 +15,10 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private final Random random;
     
     // Costanti per i limiti di velocità
-    public static final int MIN_CAR_SPEED = 1;
-    public static final int MAX_CAR_SPEED = 1;
-    public static final int MIN_TRAIN_SPEED = 1;
-    public static final int MAX_TRAIN_SPEED = 1;
+    public static final int MIN_CAR_SPEED = 10;
+    public static final int MAX_CAR_SPEED = 15;
+    public static final int MIN_TRAIN_SPEED = 20;
+    public static final int MAX_TRAIN_SPEED = 25;
     public static final int MIN_LOG_SPEED = 1;
     public static final int MAX_LOG_SPEED = 1;
 
