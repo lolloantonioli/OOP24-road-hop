@@ -5,9 +5,6 @@ import java.util.List;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-// controllare checkcollision, se serve o meno
-// e se serve il dispose
-
 public interface MovingObstacleController {
 
     /**
