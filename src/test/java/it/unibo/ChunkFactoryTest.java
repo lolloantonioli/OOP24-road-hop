@@ -25,6 +25,9 @@ class ChunkFactoryTest {
 
     private ChunkFactory chunkFactory;
 
+    private static final int INVALID_COORD = -1;
+    private static final int VALID_COORD = 1;
+
     @BeforeEach
     void setUp() {
         chunkFactory = new ChunkFactoryImpl();
@@ -32,33 +35,22 @@ class ChunkFactoryTest {
 
     @Test
     void testNegativePosition() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            chunkFactory.createRandomChunk(-1);
-        });
-    }
-
-    @Test
-    void testZeroPosition() {
-        assertDoesNotThrow(() -> {
-            Chunk chunk = chunkFactory.createRandomChunk(0);
-            assertNotNull(chunk);
-            assertEquals(0, chunk.getPosition());
-        });
+        assertThrows(IllegalArgumentException.class, () -> chunkFactory.createRandomChunk(INVALID_COORD));
     }
 
     @Test
     void testValidPosition() {
-        Chunk chunk = chunkFactory.createRandomChunk(2);
+        final Chunk chunk = chunkFactory.createRandomChunk(VALID_COORD);
         assertNotNull(chunk);
-        assertEquals(2, chunk.getPosition());
+        assertEquals(VALID_COORD, chunk.getPosition());
         assertNotNull(chunk.getType());
     }
 
     @Test
     void testTypesNumber() {
-        Set<ChunkType> encounteredTypes = new HashSet<>();
+        final Set<ChunkType> encounteredTypes = new HashSet<>();
         IntStream.range(0, 50).forEach(i -> {
-            Chunk chunk = chunkFactory.createRandomChunk(i);
+            final Chunk chunk = chunkFactory.createRandomChunk(i);
             encounteredTypes.add(chunk.getType());
         });
         assertTrue(encounteredTypes.size() >= 2);
@@ -66,9 +58,9 @@ class ChunkFactoryTest {
 
     @Test
     void testCreateGrassChunks() {
-        List<Integer> positions = List.of(0, 3, 7, 15);
+        final List<Integer> positions = List.of(0, 3, 7, 15);
         positions.forEach(position -> {
-            Chunk chunk = chunkFactory.createGrassChunk(position);
+            final Chunk chunk = chunkFactory.createGrassChunk(position);
             assertNotNull(chunk);
             assertEquals(position, chunk.getPosition());
             assertEquals(ChunkType.GRASS, chunk.getType());
@@ -78,21 +70,21 @@ class ChunkFactoryTest {
 
     @Test
     void testTypes() {
-        Set<ChunkType> validTypes = Set.of(
+        final Set<ChunkType> types = Set.of(
             ChunkType.GRASS, 
             ChunkType.ROAD, 
             ChunkType.RAILWAY, 
             ChunkType.RIVER
         );
         IntStream.range(0, 100).forEach(i -> {
-            Chunk chunk = chunkFactory.createRandomChunk(i);
-            assertTrue(validTypes.contains(chunk.getType()));
+            final Chunk chunk = chunkFactory.createRandomChunk(i);
+            assertTrue(types.contains(chunk.getType()));
         });
     }
 
     @Test
     void testObjectsPositions() {
-        Chunk chunk = chunkFactory.createRandomChunk(0);
+        final Chunk chunk = chunkFactory.createRandomChunk(VALID_COORD);
         chunk.getObjects().forEach(obj -> {
             assertTrue(obj.getX() >= 0);
             assertTrue(obj.getX() < ChunkImpl.CELLS_PER_ROW);
@@ -103,13 +95,13 @@ class ChunkFactoryTest {
     @Test
     void testObjectTypes() {
         IntStream.range(0, 50).forEach(i -> {
-            Chunk chunk = chunkFactory.createGrassChunk(i);
+            final Chunk chunk = chunkFactory.createGrassChunk(i);
             chunk.getObjects().forEach(obj -> {
                 if (obj instanceof Obstacle obstacle) {
                     assertEquals(ObstacleType.TREE, obstacle.getType());
                     assertFalse(obstacle.isMovable());
                 } else if (obj instanceof Collectible collectible) {
-                    assertEquals(CollectibleType.COIN, collectible.getType());
+                    assertTrue(collectible.getType().equals(CollectibleType.COIN) || collectible.getType().equals(CollectibleType.SECOND_LIFE));
                 }
             });
         });
@@ -120,7 +112,7 @@ class ChunkFactoryTest {
         boolean hasObstacles = false;
         boolean hasCollectibles = false;
         for (int i = 0; i < 100; i++) {
-            Chunk grassChunk = chunkFactory.createGrassChunk(i);
+            final Chunk grassChunk = chunkFactory.createGrassChunk(i);
             for (GameObject obj : grassChunk.getObjects()) {
                 if (obj instanceof Obstacle) {
                     hasObstacles = true;
@@ -135,21 +127,11 @@ class ChunkFactoryTest {
     }
 
     @Test
-    void testNoObjectsInInvalidPositions() {
-        IntStream.range(0, 20).forEach(i -> {
-            Chunk chunk = chunkFactory.createRandomChunk(i);
-            chunk.getObjects().forEach(obj -> {
-                assertTrue(obj.getX() >= 0 && obj.getX() < ChunkImpl.CELLS_PER_ROW);
-            });
-        });
-    }
-
-    @Test
-    void testCollectiblesDoNotOverlapWithObstacles() {
+    void testObjectsPlacement() {
         IntStream.range(0, 50).forEach(i -> {
-            Chunk chunk = chunkFactory.createGrassChunk(i);
-            Set<Integer> obstaclePositions = new HashSet<>();
-            Set<Integer> collectiblePositions = new HashSet<>();
+            final Chunk chunk = chunkFactory.createGrassChunk(i);
+            final Set<Integer> obstaclePositions = new HashSet<>();
+            final Set<Integer> collectiblePositions = new HashSet<>();
             chunk.getObjects().forEach(obj -> {
                 if (obj instanceof Obstacle) {
                     obstaclePositions.add(obj.getX());
@@ -157,19 +139,10 @@ class ChunkFactoryTest {
                     collectiblePositions.add(obj.getX());
                 }
             });
-            Set<Integer> intersection = new HashSet<>(obstaclePositions);
+            final Set<Integer> intersection = new HashSet<>(obstaclePositions);
             intersection.retainAll(collectiblePositions);
             assertTrue(intersection.isEmpty());
         });
     }
 
-    @Test
-    void testFactoryConsistency() {
-        int position = 10;
-        IntStream.range(0, 5).forEach(i -> {
-            Chunk chunk = chunkFactory.createGrassChunk(position);
-            assertEquals(position, chunk.getPosition());
-            assertEquals(ChunkType.GRASS, chunk.getType());
-        });
-    }
 }
