@@ -6,8 +6,6 @@ import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Shop.api.Skin;
 
-import java.util.Optional;
-
 // può servire un getter della massima posizione raggiunta?
 
 public interface Player extends GameObject {
@@ -34,7 +32,7 @@ public interface Player extends GameObject {
      * 
      * @return an Optional containing the cell player is occuping if is valid, empty Optional otherwise
      */
-    Optional<Cell> getCurrentCell();
+    Cell getCurrentCell();
 
 
     /**

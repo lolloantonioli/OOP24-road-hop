@@ -9,6 +9,8 @@ import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 import it.unibo.model.Player.api.CollisionIdentifier;
 
+//ha senso che siano tutti controlli sul singolo objct o sarebbe meglio farlo sulla lista?
+
 public class CollisionIdentifierImpl implements CollisionIdentifier{
 
     @Override

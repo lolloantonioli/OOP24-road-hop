@@ -62,6 +62,8 @@ public interface MovingObstacleController {
      */
     List<MovingObstacles> getAllObstacles();
 
+    void resetObstacles();
+
     /**
      * Genera ostacoli in base al livello di difficoltà.
      * 

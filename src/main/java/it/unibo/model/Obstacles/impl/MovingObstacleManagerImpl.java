@@ -115,9 +115,9 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
         }
     }
 
-     /**
-     * Pulisce ostacoli che sono usciti completamente dalla griglia.
-     */
+    /**
+    * Pulisce ostacoli che sono usciti completamente dalla griglia.
+    */
     @Override
     public void cleanupOffscreenObstaclesHorizontal() {
         Iterator<MovingObstacles> iterator = obstacles.iterator();

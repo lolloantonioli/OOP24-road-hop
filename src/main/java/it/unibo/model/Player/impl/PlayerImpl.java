@@ -2,8 +2,6 @@ package it.unibo.model.Player.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Optional;
-
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.CellImpl;
@@ -69,8 +67,8 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     }
 
     @Override
-    public Optional<Cell> getCurrentCell() {
-        return Optional.of(new CellImpl(super.getX(), super.getY()));
+    public Cell getCurrentCell() {
+        return new CellImpl(super.getX(), super.getY());
     }
 
     @Override
