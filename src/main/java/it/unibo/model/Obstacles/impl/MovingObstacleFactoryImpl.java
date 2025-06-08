@@ -7,7 +7,7 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
-// i create singoli mi servono? sono utili? li aggiungo al controller?  createObstaclesForChunk posso toglierlo?
+// i create singoli mi servono? sono utili? li aggiungo al controller?
 // COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
 
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
@@ -28,7 +28,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     // Configurazione spacing
     private static final int MIN_CAR_DISTANCE = 3;
     private static final int MIN_TRAIN_DISTANCE = 6;
-    private static final int MIN_LOG_DISTANCE = 4;
+    private static final int MIN_LOG_DISTANCE = 1;
     
     public MovingObstacleFactoryImpl() {
         this.random = new Random();
@@ -49,44 +49,40 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         return new MovingObstacles(x, y, ObstacleType.LOG, speed);
     }
 
-    /**
-     * Crea un set di ostacoli del tipo specificato
-     */
     @Override
     public MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight) {
         List<MovingObstacles> obstacles = new ArrayList<>();
-        
         int minDistance = getMinDistance(type);
-        int totalRange = CELLS_PER_CHUNK + (type == ObstacleType.TRAIN ? 20 : 15);
-        int spacing = Math.max(minDistance, totalRange / Math.max(count, 1));
-        
-        for (int i = 0; i < count; i++) {
-            int obstacleWidth = getObstacleWidth(type);
-            int baseX = calculateBasePosition(i, spacing, leftToRight, obstacleWidth);
-            int finalX = addRandomOffset(baseX, spacing, type);
+        int obstacleWidth = getObstacleWidth(type);
+        int spacing = obstacleWidth + minDistance;
 
-            if (finalX >= 0 && finalX <= CELLS_PER_CHUNK - obstacleWidth
-                && isValidPosition(finalX, obstacles, obstacleWidth, minDistance)) {
-                int speed = getRandomSpeed(type);
-                if (!leftToRight) speed = -speed;
+        // Parti anche da fuori schermo
+        int start = -obstacleWidth + 1;
+        int end = CELLS_PER_CHUNK - 1  + obstacleWidth - 1;
 
-                MovingObstacles obstacle = createObstacleByType(type, finalX, y, speed);
-                obstacles.add(obstacle);
-            }
+        int minObstacles;
+        if (type == ObstacleType.CAR) {
+            minObstacles = Math.max(3, count);
+        } else if (type == ObstacleType.LOG) {
+            minObstacles = Math.max(2, count);
+        } else if (type == ObstacleType.TRAIN) {
+            minObstacles = Math.max(1, count);
+        } else {
+            throw new IllegalArgumentException("Unknown obstacle type: " + type);
         }
         
+        int placed = 0;
+        for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
+            int baseX = leftToRight ? pos : CELLS_PER_CHUNK - obstacleWidth - (pos - start);
+            int speed = getRandomSpeed(type);
+            if (!leftToRight) speed = -speed;
+            // Puoi aggiungere un controllo per evitare sovrapposizioni se vuoi
+            MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
+            obstacles.add(obstacle);
+            placed++;
+        }
         return obstacles.toArray(MovingObstacles[]::new);
     }
-    
-    /*@Override
-    public MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType) {
-        return switch (chunkType.toUpperCase()) {
-            case "ROAD" -> createObstacleSet(ObstacleType.CAR, chunkY, 2 + random.nextInt(3), random.nextBoolean());
-            case "RAILWAY" -> createObstacleSet(ObstacleType.TRAIN, chunkY, 1 + random.nextInt(2), random.nextBoolean());
-            case "RIVER" -> createObstacleSet(ObstacleType.LOG, chunkY, 1 + random.nextInt(3), random.nextBoolean());
-            default -> new MovingObstacles[0];
-        };
-    }*/
 
     @Override
     public MovingObstacles createObstacleByType(ObstacleType type, int x, int y, int speed) {
@@ -134,32 +130,5 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
             return MovingObstacles.LOG_WIDTH_CELLS;
         }
         throw new IllegalArgumentException("Unknown obstacle type: " + type);
-    }
-    
-    private int calculateBasePosition(int index, int spacing, boolean leftToRight, int obstacleWidth) {
-        if (leftToRight) {
-            // Da sinistra a destra: parte da 0
-            return index * spacing;
-        } else {
-            // Da destra a sinistra: parte dall'ultima posizione valida
-            return CELLS_PER_CHUNK - obstacleWidth - index * spacing;
-        }
-    }
-    
-    private int addRandomOffset(int baseX, int spacing, ObstacleType type) {
-        int maxOffset;
-        if (type == ObstacleType.CAR) {
-            maxOffset = spacing / 6;
-        } else if (type == ObstacleType.TRAIN || type == ObstacleType.LOG) {
-            maxOffset = 0;
-        } else {
-            maxOffset = 0;
-        }
-        return baseX + random.nextInt(maxOffset * 2 + 1) - maxOffset;
-    }
-    
-    private boolean isValidPosition(int x, List<MovingObstacles> existing, int width, int minDistance) {
-        return existing.stream()
-                .noneMatch(obstacle -> Math.abs(obstacle.getX() - x) < width + minDistance);
     }
 }
