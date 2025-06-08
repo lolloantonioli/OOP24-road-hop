@@ -10,9 +10,10 @@ public class GameEngine implements Runnable {
     private final GamePanel gamePanel;
     private final MovingObstacleController obstacleController;
     private boolean running = true;
+    private int frameCounter = 0;
 
     private static final long PERIOD = 16; // 60fps
-    private static final int ANIMATION_STEP = 1; // pixel per frame
+    private static final int SCROLL_TIME_MS = 1000;
 
     public GameEngine(final GameMap mapModel, final GamePanel gamePanel, final MovingObstacleController obstacleController) {
         this.mapModel = mapModel;
@@ -23,18 +24,10 @@ public class GameEngine implements Runnable {
     @Override
     public void run() {
         showStartCountdown();
-        int animationOffset = 0;
         while (running) {
             long frameStart = System.currentTimeMillis();
-
-            int cellHeight = gamePanel.getCellHeight();
-            int speed = mapModel.getScrollSpeed();
-            int step = Math.max(1, ANIMATION_STEP * speed);
-            animationOffset = animateStep(animationOffset, cellHeight, step);
-                
-            // Aggiorna gli ostacoli mobili ad ogni frame
+            animateStep();
             obstacleController.update();
-
             waitForNextFrame(frameStart);
         }
     }
@@ -59,24 +52,27 @@ public class GameEngine implements Runnable {
         gamePanel.hideCountdown();
     }
 
-    private int animateStep(int animationOffset, final int cellHeight, final int step) {
-        if (animationOffset < cellHeight) {
-            animationOffset = Math.min(animationOffset + step, cellHeight);
-            gamePanel.setAnimationOffset(animationOffset);
+    private int animateStep() {
+        final int cellHeight = gamePanel.getCellHeight();
+        final int speed = mapModel.getScrollSpeed();
+        final int scrollTime = SCROLL_TIME_MS / speed;
+        final double framesPerCell = scrollTime / (double) PERIOD;
+        frameCounter = frameCounter + 1;
+        final int offset = (int) ((cellHeight * frameCounter) / framesPerCell);
+
+        if (frameCounter < framesPerCell) {
+            gamePanel.setAnimationOffset(offset);
             gamePanel.refresh();
+            return offset;
         } else {
             mapModel.update();
-            animationOffset = 0;
+            frameCounter = 0;
             gamePanel.setAnimationOffset(0);
             gamePanel.refresh();
-        }
-
-        // Genera nuovi ostacoli quando la mappa viene aggiornata
-        // Puoi adattare il livello di difficoltà in base alla velocità o alla posizione
-        int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
-        obstacleController.generateObstacles(difficultyLevel);
-        
-        return animationOffset;
+            int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
+            obstacleController.generateObstacles(difficultyLevel);
+            return 0;
+        }        
     }
 
     private void waitForNextFrame(final long frameStart) {
