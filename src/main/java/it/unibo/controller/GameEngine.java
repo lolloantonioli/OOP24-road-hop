@@ -26,8 +26,9 @@ public class GameEngine implements Runnable {
         showStartCountdown();
         while (running) {
             long frameStart = System.currentTimeMillis();
-            animateStep();
-            obstacleController.update();
+            //processInput();
+            update();
+            render();
             waitForNextFrame(frameStart);
         }
     }
@@ -52,7 +53,7 @@ public class GameEngine implements Runnable {
         gamePanel.hideCountdown();
     }
 
-    private int animateStep() {
+    private void update() {
         final int cellHeight = gamePanel.getCellHeight();
         final int speed = mapModel.getScrollSpeed();
         final int scrollTime = SCROLL_TIME_MS / speed;
@@ -62,17 +63,18 @@ public class GameEngine implements Runnable {
 
         if (frameCounter < framesPerCell) {
             gamePanel.setAnimationOffset(offset);
-            gamePanel.refresh();
-            return offset;
         } else {
             mapModel.update();
             frameCounter = 0;
             gamePanel.setAnimationOffset(0);
-            gamePanel.refresh();
-            int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
+            final int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);
-            return 0;
-        }        
+        }
+        obstacleController.update();
+    }
+
+    private void render() {
+        gamePanel.refresh();
     }
 
     private void waitForNextFrame(final long frameStart) {
