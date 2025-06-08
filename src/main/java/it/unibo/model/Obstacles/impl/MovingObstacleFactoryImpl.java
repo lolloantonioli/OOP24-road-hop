@@ -49,15 +49,11 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     }
 
     @Override
-    public MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight) {
+    public MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed) {
         List<MovingObstacles> obstacles = new ArrayList<>();
         int minDistance = getMinDistance(type);
         int obstacleWidth = getObstacleWidth(type);
         int spacing = obstacleWidth + minDistance;
-
-        // Parti anche da fuori schermo
-        int start = -obstacleWidth + 1;
-        int end = CELLS_PER_CHUNK - 1  + obstacleWidth - 1;
 
         int minObstacles;
         if (type == ObstacleType.CAR) {
@@ -71,14 +67,24 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         }
         
         int placed = 0;
-        for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
-            int baseX = leftToRight ? pos : CELLS_PER_CHUNK - obstacleWidth - (pos - start);
-            int speed = getRandomSpeed(type);
-            if (!leftToRight) speed = -speed;
-            // Puoi aggiungere un controllo per evitare sovrapposizioni se vuoi
-            MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
-            obstacles.add(obstacle);
-            placed++;
+        if (leftToRight) {
+            int start = -obstacleWidth + 1;
+            int end = CELLS_PER_CHUNK - 1 + obstacleWidth - 1;
+            for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
+                int baseX = pos;
+                MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
+                obstacles.add(obstacle);
+                placed++;
+            }
+        } else {
+            int start = CELLS_PER_CHUNK + obstacleWidth - 1;
+            int end = -obstacleWidth + 1;
+            for (int pos = start; placed < minObstacles && pos >= end; pos -= spacing) {
+                int baseX = pos;
+                MovingObstacles obstacle = createObstacleByType(type, baseX, y, -speed);
+                obstacles.add(obstacle);
+                placed++;
+            }
         }
         return obstacles.toArray(MovingObstacles[]::new);
     }

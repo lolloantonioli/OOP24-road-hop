@@ -47,7 +47,7 @@ public interface MovingObstacleFactory {
      * @param leftToRight Direction of movement
      * @return Array of obstacles
      */
-    MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight);
+    MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed);
 
     /**
      * Creates a moving obstacle based on its type and position.

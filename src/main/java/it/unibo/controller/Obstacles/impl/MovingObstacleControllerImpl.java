@@ -22,6 +22,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     private final MovingObstacleManager manager;
     private final MapController mapController;
     private final Set<Integer> populatedChunks = new HashSet<>();
+    private final java.util.Map<String, Integer> chunkSpeeds = new java.util.HashMap<>();
 
     public MovingObstacleControllerImpl(MapController mapController) {
         this.mapController = mapController;
@@ -31,22 +32,22 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     }
 
     @Override
-    public MovingObstacles[] createCarSet(int y, int count, boolean leftToRight) {
-        MovingObstacles[] cars = factory.createObstacleSet(ObstacleType.CAR, y, count, leftToRight);
+    public MovingObstacles[] createCarSet(int y, int count, boolean leftToRight, int speed) {
+        MovingObstacles[] cars = factory.createObstacleSet(ObstacleType.CAR, y, count, leftToRight, speed);
         manager.addObstacles(cars);
         return cars;
     }
 
     @Override
-    public MovingObstacles[] createTrainSet(int y, int count, boolean leftToRight) {
-        MovingObstacles[] trains = factory.createObstacleSet(ObstacleType.TRAIN, y, count, leftToRight);
+    public MovingObstacles[] createTrainSet(int y, int count, boolean leftToRight, int speed) {
+        MovingObstacles[] trains = factory.createObstacleSet(ObstacleType.TRAIN, y, count, leftToRight, speed);
         manager.addObstacles(trains);
         return trains;
     }
 
     @Override
-    public MovingObstacles[] createLogSet(int y, int count, boolean leftToRight) {
-        MovingObstacles[] logs = factory.createObstacleSet(ObstacleType.LOG, y, count, leftToRight);
+    public MovingObstacles[] createLogSet(int y, int count, boolean leftToRight, int speed) {
+        MovingObstacles[] logs = factory.createObstacleSet(ObstacleType.LOG, y, count, leftToRight, speed);
         manager.addObstacles(logs);
         return logs;
     }
@@ -74,6 +75,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     @Override
     public void resetObstacles() {
         populatedChunks.clear();
+        chunkSpeeds.clear();
         manager.resetAll(); 
     }
 
@@ -91,13 +93,24 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
 
             String chunkType = chunk.getType().toString();
             boolean leftToRight = random.nextBoolean();
+            String chunkKey = chunkType + "_" + y;
+            int speed = chunkSpeeds.computeIfAbsent(chunkKey, k -> factory.getRandomSpeed(getObstacleTypeForChunk(chunkType)));
     
             switch (chunkType) {
-                case "ROAD" -> createCarSet(y, random.nextInt(3) + 1, leftToRight);
-                case "RAILWAY" -> createTrainSet(y, random.nextInt(2) + 1, leftToRight);
-                case "RIVER" -> createLogSet(y, random.nextInt(4) + 1, leftToRight);
+                case "ROAD" -> createCarSet(y, random.nextInt(3) + 1, leftToRight, speed);
+                case "RAILWAY" -> createTrainSet(y, random.nextInt(2) + 1, leftToRight, speed);
+                case "RIVER" -> createLogSet(y, random.nextInt(4) + 1, leftToRight, speed);
             }
         }
+    }
+
+    private ObstacleType getObstacleTypeForChunk(String chunkType) {
+        return switch (chunkType) {
+            case "ROAD" -> ObstacleType.CAR;
+            case "RAILWAY" -> ObstacleType.TRAIN;
+            case "RIVER" -> ObstacleType.LOG;
+            default -> ObstacleType.CAR;
+        };
     }
 
     @Override
