@@ -5,9 +5,6 @@ import java.util.List;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-// controllare checkcollision, se serve o meno
-// e se serve il dispose
-
 public interface MovingObstacleController {
 
     /**
@@ -73,5 +70,12 @@ public interface MovingObstacleController {
      * 3: Difficile - molti ostacoli
      */
     void generateObstacles(int difficultyLevel);
+
+    /**
+     * Aumenta i limiti di velocità per tutti gli ostacoli.
+     * 
+     * @param amount l'ammontare da aggiungere ai limiti di velocità
+     */
+    void increaseAllObstaclesSpeed(int i);
 
 }

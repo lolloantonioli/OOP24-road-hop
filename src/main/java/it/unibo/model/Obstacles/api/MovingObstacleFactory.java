@@ -50,16 +50,6 @@ public interface MovingObstacleFactory {
     MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight);
 
     /**
-     * Creates appropriate obstacles for a specific chunk type.
-     * 
-     * @param chunkY Position Y of the chunk
-     * @param chunkType Type of chunk
-     * @return Array of moving obstacles for the chunk
-    
-    MovingObstacles[] createObstaclesForChunk(int chunkY, String chunkType);
-    */
-
-    /**
      * Creates a moving obstacle based on its type and position.
      *
      * @param type Type of obstacle
@@ -77,6 +67,13 @@ public interface MovingObstacleFactory {
      * @return Random speed within the defined range for the obstacle type
      */
     int getRandomSpeed(ObstacleType type);
+
+    /**
+     * Increases the speed limits for all obstacles by a specified amount.
+     *
+     * @param amount Amount to increase the speed limits
+     */
+    void increaseSpeedLimits(int amount);
 
     /**
      * Gets the minimum distance between obstacles of the specified type.

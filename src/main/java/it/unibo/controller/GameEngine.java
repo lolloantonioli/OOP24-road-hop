@@ -2,6 +2,7 @@ package it.unibo.controller;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
 public class GameEngine implements Runnable {
@@ -11,11 +12,14 @@ public class GameEngine implements Runnable {
     private final MovingObstacleController obstacleController;
     private boolean running = true;
     private int frameCounter = 0;
+    private final MovingObstacleFactory obstacleFactory;
 
     private static final long PERIOD = 16; // 60fps
     private static final int SCROLL_TIME_MS = 1000;
 
-    public GameEngine(final GameMap mapModel, final GamePanel gamePanel, final MovingObstacleController obstacleController) {
+    public GameEngine(final GameMap mapModel, final GamePanel gamePanel, final MovingObstacleController obstacleController, 
+                      final MovingObstacleFactory obstacleFactory) {
+        this.obstacleFactory = obstacleFactory;
         this.mapModel = mapModel;
         this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
@@ -67,6 +71,13 @@ public class GameEngine implements Runnable {
             mapModel.update();
             frameCounter = 0;
             gamePanel.setAnimationOffset(0);
+
+            // Qui aumenta la velocità degli ostacoli se è aumentata quella della mapppa
+            int newSpeed = mapModel.getScrollSpeed();
+            if (newSpeed > speed) {
+                obstacleController.increaseAllObstaclesSpeed(10);
+                obstacleFactory.increaseSpeedLimits(10); 
+            }
             final int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);
         }

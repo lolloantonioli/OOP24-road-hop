@@ -73,7 +73,7 @@ public class GamePanel extends JPanel {
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
         List<MovingObstacles> obstacles = obstacleController.getAllObstacles();
-        List<Chunk> visibleChunks = controller.getVisibleChunks();
+        List<Chunk> visibleChunks = controller.getGameMap().getVisibleChunks();
 
         for (MovingObstacles obstacle : obstacles) {
             // Trova l'indice relativo del chunk visibile

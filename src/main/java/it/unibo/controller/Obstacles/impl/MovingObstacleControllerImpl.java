@@ -14,7 +14,7 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-// quando si resetta la mappa (giocatore perde) chiama resetObstacles)
+// quando si resetta la mappa (giocatore perde) chiama resetObstacles
 
 public class MovingObstacleControllerImpl implements MovingObstacleController {
 
@@ -74,13 +74,13 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     @Override
     public void resetObstacles() {
         populatedChunks.clear();
-        manager.resetAll(); // Assicurati che il manager abbia questo metodo!
+        manager.resetAll(); 
     }
 
     @Override
     public void generateObstacles(int difficultyLevel) {
         Random random = new Random();
-        var visibleChunks = mapController.getVisibleChunks();
+        var visibleChunks = mapController.getGameMap().getVisibleChunks();
     
         for (var chunk : visibleChunks) {
             int y = chunk.getPosition();
@@ -98,6 +98,11 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
                 case "RIVER" -> createLogSet(y, random.nextInt(4) + 1, leftToRight);
             }
         }
+    }
+
+    @Override
+    public void increaseAllObstaclesSpeed(int i) {
+        manager.increaseSpeed(i);
     }
 
 }

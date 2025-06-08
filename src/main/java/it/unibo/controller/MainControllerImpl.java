@@ -7,6 +7,8 @@ import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
+import it.unibo.model.Obstacles.api.MovingObstacleFactory;
+import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Shop.api.ShopModel;
 import it.unibo.model.Shop.impl.ShopModelImpl;
 import it.unibo.view.GameFrame;
@@ -21,6 +23,7 @@ public class MainControllerImpl implements MainController {
     private final ShopModel shopModel;
     private final MapController mapController;
     private final MovingObstacleController obstacleController;
+    private final MovingObstacleFactory obstacleFactory = new MovingObstacleFactoryImpl();
 
     /**
      * Constructor for MainControllerImpl.
@@ -43,7 +46,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public void goToGame() {
         gameFrame.show(CardName.GAME);
-        GameEngine engine = new GameEngine(mapController.getGameMap(), gameFrame.getGamePanel(), obstacleController);
+        GameEngine engine = new GameEngine(mapController.getGameMap(), gameFrame.getGamePanel(), obstacleController, obstacleFactory);
         new Thread(engine).start();
     }
 
