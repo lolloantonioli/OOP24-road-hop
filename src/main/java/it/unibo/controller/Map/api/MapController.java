@@ -11,10 +11,25 @@ import it.unibo.model.Map.api.GameMap;
  */
 public interface MapController {
 
+    /**
+     * Returns the underlying game map model managed by this controller.
+     *
+     * @return the GameMap instance
+     */
     GameMap getGameMap();
 
+    /**
+     * Returns the number of visible chunks managed by the map.
+     *
+     * @return the number of chunks displayed on the screen
+     */
     int getChunksNumber();
 
+    /**
+     * Returns the number of cells per row in each chunk.
+     *
+     * @return the number of cells in a single chunk row
+     */
     int getCellsPerRow();
     
     /**
