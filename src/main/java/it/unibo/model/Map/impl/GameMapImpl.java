@@ -1,6 +1,5 @@
 package it.unibo.model.Map.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
@@ -22,10 +21,10 @@ public class GameMapImpl implements GameMap {
     private int scrollSpeed;
 
     public static final int CHUNKS_NUMBER = 7;
+    
     private static final int BUFFER_CHUNKS = 5;
     private static final int MAX_SPEED = 10;
     private static final int CELLS_INCREASE_SPEED = 70;
-    private static final String MSG = "Speed must be between 0 and " + MAX_SPEED;
 
     /**
      * Constructs a new {@code GameMapImpl} with the specified scroll speed.
@@ -33,12 +32,11 @@ public class GameMapImpl implements GameMap {
      * @param speed the initial scroll speed of the map, must be between 0 and {@link #MAX_SPEED}.
      * @throws IllegalArgumentException if the speed is not in the valid range.
      */
-    public GameMapImpl(final int speed) {
-        checkArgument(speed >= 0 && speed <= MAX_SPEED, MSG);
+    public GameMapImpl() {
         this.chunks = new ArrayList<>();
         this.chunkFactory = new ChunkFactoryImpl();
         this.currentPosition = 0;
-        this.scrollSpeed = speed;
+        this.scrollSpeed = 1;
 
         this.initializeMap();
     }

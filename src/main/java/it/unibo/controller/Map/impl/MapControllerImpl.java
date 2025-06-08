@@ -20,15 +20,13 @@ public class MapControllerImpl implements MapController {
 
     private final GameMap mapModel;
 
-    private static final int INITIAL_SPEED = 1;
-
     /**
      * Constructor for MapControllerImpl.
      * Initializes the map model with a default speed and sets the view.
      * @param view the GamePanel view to be controlled by this controller
      */
     public MapControllerImpl(final GamePanel view) {
-        this.mapModel = new GameMapImpl(INITIAL_SPEED);
+        this.mapModel = new GameMapImpl();
     }
 
     @Override
