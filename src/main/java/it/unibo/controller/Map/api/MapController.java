@@ -1,9 +1,8 @@
 package it.unibo.controller.Map.api;
 
 import java.awt.Color;
-import java.util.List;
 
-import it.unibo.model.Map.api.Chunk;
+import it.unibo.model.Map.api.GameMap;
 
 /**
  * Interface which controls the game map and its visual representation.
@@ -12,68 +11,10 @@ import it.unibo.model.Map.api.Chunk;
  */
 public interface MapController {
 
-    /**
-     * Updates the state of the map, typically advancing the game logic.
-     */
-    void updateMap();
+    GameMap getGameMap();
 
-    /**
-     * Returns a list of currently visible chunks in the map.
-     *
-     * @return a list of visible chunks
-     */
-    List<Chunk> getVisibleChunks();
-
-    /**
-     * Increases the scroll speed of the map.
-     */
-    void increaseScrollSpeed();
-
-    /**
-     * Returns the current scroll position of the map.
-     *
-     * @return the current position
-     */
-    int getCurrentPosition();
-
-    /**
-     * Returns the current scroll speed of the map.
-     *
-     * @return the scroll speed
-     */
-    int getScrollSpeed();
-
-    /**
-     * Sets the animation offset for the map view.
-     *
-     * @param offset the animation offset to set
-     */
-    void setAnimationOffset(int offset);
-
-    /**
-     * Requests the view to refresh and update its display.
-     */
-    void updateView();
-
-    /**
-     * Returns the height of a single cell in the view.
-     *
-     * @return the cell height
-     */
-    int getCellHeight();
-
-    /**
-     * Returns the total number of chunks in the map.
-     *
-     * @return the number of chunks
-     */
     int getChunksNumber();
 
-    /**
-     * Returns the number of cells per row in a chunk.
-     *
-     * @return the number of cells per row
-     */
     int getCellsPerRow();
     
     /**

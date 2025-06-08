@@ -19,7 +19,6 @@ import it.unibo.view.GamePanel;
 public class MapControllerImpl implements MapController {
 
     private final GameMap mapModel;
-    private final GamePanel view;
 
     private static final int INITIAL_SPEED = 1;
 
@@ -29,48 +28,12 @@ public class MapControllerImpl implements MapController {
      * @param view the GamePanel view to be controlled by this controller
      */
     public MapControllerImpl(final GamePanel view) {
-        this.view = view;
         this.mapModel = new GameMapImpl(INITIAL_SPEED);
     }
 
     @Override
-    public void updateMap() {
-        mapModel.update();
-    }
-
-    @Override
-    public List<Chunk> getVisibleChunks() {
-        return mapModel.getVisibleChunks();
-    }
-
-    @Override
-    public void increaseScrollSpeed() {
-        mapModel.increaseScrollSpeed();
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return mapModel.getCurrentPosition();
-    }
-
-    @Override
-    public int getScrollSpeed() {
-        return mapModel.getScrollSpeed();
-    }
-
-    @Override
-    public void setAnimationOffset(final int offset) {
-        view.setAnimationOffset(offset);
-    }
-
-    @Override
-    public void updateView() {
-        view.refresh();
-    }
-
-    @Override
-    public int getCellHeight() {
-        return view.getCellHeight();
+    public GameMap getGameMap() {
+        return mapModel;
     }
 
     @Override
@@ -86,7 +49,7 @@ public class MapControllerImpl implements MapController {
     @Override
     public Color getChunkColor(final int chunkIndex) {
         //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
-        final List<Chunk> chunks = getVisibleChunks();
+        final List<Chunk> chunks = mapModel.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         final ChunkType type = chunk.getType();
         if (type == ChunkType.GRASS) {
@@ -104,7 +67,7 @@ public class MapControllerImpl implements MapController {
     public boolean hasCellObjects(final int chunkIndex, final int cellIndex) {
         //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
         //checkArgument(cellIndex >= 0 && cellIndex < getCellsPerRow(), "Cell index out of bounds: " + cellIndex);
-        final List<Chunk> chunks = getVisibleChunks();
+        final List<Chunk> chunks = mapModel.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         return chunk.getCellAt(cellIndex).hasObject();
     }
@@ -113,7 +76,7 @@ public class MapControllerImpl implements MapController {
     public Color getCellObjectColor(final int chunkIndex, final int cellIndex) {
         //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
         //"This method should called only after 'hasCellBobject' check");
-        final List<Chunk> chunks = getVisibleChunks();
+        final List<Chunk> chunks = mapModel.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         // Prendi il primo oggetto "visibile" per la view (ad esempio un Collectible, altrimenti il primo oggetto)
         return chunk.getCellAt(cellIndex).getContent().stream()
@@ -134,7 +97,7 @@ public class MapControllerImpl implements MapController {
     public boolean isCellObjectCircular(final int chunkIndex, final int cellIndex) {
         //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
         //"This method should called only after 'hasCellBobject' check");
-        final List<Chunk> chunks = getVisibleChunks();
+        final List<Chunk> chunks = mapModel.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
         // Se almeno un oggetto è un Collectible, la cella è circolare
         return chunk.getCellAt(cellIndex).getContent().stream()

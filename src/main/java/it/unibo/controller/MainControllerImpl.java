@@ -42,7 +42,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public void goToGame() {
         gameFrame.show(CardName.GAME);
-        GameEngine engine = new GameEngine(mapController, obstacleController);
+        GameEngine engine = new GameEngine(mapController.getGameMap(), gameFrame.getGamePanel(), obstacleController);
         new Thread(engine).start();
     }
 

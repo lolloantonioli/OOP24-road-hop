@@ -1,8 +1,10 @@
 package it.unibo.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JPanel;
 
@@ -18,6 +20,7 @@ public class GamePanel extends JPanel {
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;
+    private Optional<Integer> countdownValue = Optional.empty();
 
     public void setController(final MapController controller) {
         this.controller = controller;
@@ -27,6 +30,16 @@ public class GamePanel extends JPanel {
 
     public void setObstacleController(final MovingObstacleController obstacleController) {
         this.obstacleController = obstacleController;
+    }
+
+    public void showCountdown(final int value) {
+        this.countdownValue = Optional.of(value);
+        repaint();
+    }
+
+    public void hideCountdown() {
+        this.countdownValue = Optional.empty();
+        repaint();
     }
 
     @Override
@@ -46,6 +59,17 @@ public class GamePanel extends JPanel {
         // Disegna gli ostacoli mobili
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
+        }
+
+        if (countdownValue.isPresent()) {
+            g.setColor(new Color(0, 0, 0, 180));
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, getWidth() / 5));
+            String text = countdownValue.get() > 0 ? String.valueOf(countdownValue.get()) : "GO!";
+            int textWidth = g.getFontMetrics().stringWidth(text);
+            int textHeight = g.getFontMetrics().getAscent();
+            g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2);
         }
     }
 
