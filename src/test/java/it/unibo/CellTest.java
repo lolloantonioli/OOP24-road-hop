@@ -17,6 +17,9 @@ import it.unibo.model.Map.impl.ObstacleImpl;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 
+/**
+ * Test class for the {@link CellImpl} class.
+ */
 class CellTest {
 
     private Cell cell;
@@ -26,12 +29,18 @@ class CellTest {
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
     private static final int INVALID_COORD = -1;
 
+    /**
+     * Initializes a cell and a test object before each test.
+     */
     @BeforeEach
     void setUp() {
         cell = new CellImpl(X_COORD, Y_COORD);
         testObject = new CollectibleImpl(X_COORD, Y_COORD, CollectibleType.COIN);
     }
 
+    /**
+     * Tests that a cell is created with the correct coordinates and is empty.
+     */
     @Test
     void testCellCreation() {
         assertEquals(X_COORD, cell.getX());
@@ -40,6 +49,9 @@ class CellTest {
         assertTrue(cell.getContent().isEmpty());
     }
 
+    /**
+     * Tests that creating a cell with invalid coordinates throws an exception.
+     */
     @Test
     void testInvalidCreation() {
         assertThrows(IllegalArgumentException.class, () -> new CellImpl(INVALID_COORD, Y_COORD));
@@ -47,6 +59,10 @@ class CellTest {
         assertThrows(IllegalArgumentException.class, () -> new CellImpl(INVALID_COORD, INVALID_COORD));
     }
 
+    /**
+     * Tests adding an object to an empty cell.
+     * Verifies that the object is added and the cell reports it contains objects.
+     */
     @Test
     void testAddObjectToEmptyCell() {
         assertTrue(cell.addObject(testObject));
@@ -55,6 +71,9 @@ class CellTest {
         assertTrue(cell.getContent().contains(testObject));
     }
 
+    /**
+     * Tests that adding the same object twice does not duplicate it in the cell.
+     */
     @Test
     void testAddSameObjectTwice() {
         assertTrue(cell.addObject(testObject));
@@ -62,6 +81,9 @@ class CellTest {
         assertEquals(1, cell.getContent().size());
     }
 
+    /**
+     * Tests adding multiple different objects to the same cell.
+     */
     @Test
     void testAddMultipleObjects() {
         final GameObject obj2 = new ObstacleImpl(X_COORD, Y_COORD, ObstacleType.TREE, false);
@@ -72,6 +94,10 @@ class CellTest {
         assertTrue(cell.getContent().contains(obj2));
     }
 
+    /**
+     * Tests removing objects from the cell, both when present and when not present.
+     * Also verifies the cell's state after removals.
+     */
     @Test
     void testRemoveObject() {
         cell.addObject(testObject);
@@ -91,12 +117,18 @@ class CellTest {
         assertTrue(cell.getContent().contains(obj2));
     }
 
+    /**
+     * Tests that adding or removing a null object throws an IllegalArgumentException.
+     */
     @Test
     void testNullObject() {
         assertThrows(IllegalArgumentException.class, () -> cell.addObject(null));
         assertThrows(IllegalArgumentException.class, () -> cell.removeObject(null));
     }
 
+    /**
+     * Tests that the cell's position (x and y) remains correct.
+     */
     @Test
     void testCellPosition() {
         final int x = cell.getX();
@@ -105,6 +137,9 @@ class CellTest {
         assertEquals(y, cell.getY());
     }
 
+    /**
+     * Tests that the set returned by getContent() is unmodifiable.
+     */
     @Test
     void testGetContent() {
         cell.addObject(testObject);
