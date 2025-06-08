@@ -21,6 +21,9 @@ import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 
+/**
+ * Test class for the {@link ChunkFactoryImpl} class.
+ */
 class ChunkFactoryTest {
 
     private ChunkFactory chunkFactory;
@@ -28,16 +31,25 @@ class ChunkFactoryTest {
     private static final int INVALID_COORD = -1;
     private static final int VALID_COORD = 1;
 
+    /**
+     * Initializes a new ChunkFactory before each test.
+     */
     @BeforeEach
     void setUp() {
         chunkFactory = new ChunkFactoryImpl();
     }
 
+    /**
+     * Tests that creating a chunk with a negative position throws an exception.
+     */
     @Test
     void testNegativePosition() {
         assertThrows(IllegalArgumentException.class, () -> chunkFactory.createRandomChunk(INVALID_COORD));
     }
 
+    /**
+     * Tests that a chunk is correctly created with a valid position and type.
+     */
     @Test
     void testValidPosition() {
         final Chunk chunk = chunkFactory.createRandomChunk(VALID_COORD);
@@ -46,6 +58,9 @@ class ChunkFactoryTest {
         assertNotNull(chunk.getType());
     }
 
+    /**
+     * Tests that the factory can generate at least two different chunk types over multiple creations.
+     */
     @Test
     void testTypesNumber() {
         final Set<ChunkType> encounteredTypes = new HashSet<>();
@@ -56,6 +71,9 @@ class ChunkFactoryTest {
         assertTrue(encounteredTypes.size() >= 2);
     }
 
+    /**
+     * Tests that grass chunks are created with the correct position, type, and non-null objects.
+     */
     @Test
     void testCreateGrassChunks() {
         final List<Integer> positions = List.of(0, 3, 7, 15);
@@ -68,6 +86,9 @@ class ChunkFactoryTest {
         });
     }
 
+    /**
+     * Tests that all generated chunk types are among the expected set of types.
+     */
     @Test
     void testTypes() {
         final Set<ChunkType> types = Set.of(
@@ -82,6 +103,9 @@ class ChunkFactoryTest {
         });
     }
 
+    /**
+     * Tests that all objects in a chunk have valid positions within the chunk.
+     */
     @Test
     void testObjectsPositions() {
         final Chunk chunk = chunkFactory.createRandomChunk(VALID_COORD);
@@ -92,6 +116,9 @@ class ChunkFactoryTest {
         });
     }
 
+    /**
+     * Tests that objects in grass chunks are either static trees or valid collectibles.
+     */
     @Test
     void testObjectTypes() {
         IntStream.range(0, 50).forEach(i -> {
@@ -101,12 +128,18 @@ class ChunkFactoryTest {
                     assertEquals(ObstacleType.TREE, obstacle.getType());
                     assertFalse(obstacle.isMovable());
                 } else if (obj instanceof Collectible collectible) {
-                    assertTrue(collectible.getType().equals(CollectibleType.COIN) || collectible.getType().equals(CollectibleType.SECOND_LIFE));
+                    assertTrue(
+                        collectible.getType().equals(CollectibleType.COIN) 
+                        || collectible.getType().equals(CollectibleType.SECOND_LIFE)
+                    );
                 }
             });
         });
     }
 
+    /**
+     * Tests that grass chunks can contain both obstacles and collectibles.
+     */
     @Test
     void testGrassChunkObjectPlacement() {
         boolean hasObstacles = false;
@@ -126,6 +159,9 @@ class ChunkFactoryTest {
         assertTrue(hasCollectibles);
     }
 
+    /**
+     * Tests that obstacles and collectibles are never placed in the same cell in a grass chunk.
+     */
     @Test
     void testObjectsPlacement() {
         IntStream.range(0, 50).forEach(i -> {

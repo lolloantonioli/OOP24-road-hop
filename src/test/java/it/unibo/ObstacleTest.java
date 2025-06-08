@@ -11,6 +11,9 @@ import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.impl.ObstacleImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
+/**
+ * Test class for the {@link ObstacleImpl} class.
+ */
 class ObstacleTest {
 
     private Obstacle staticObstacle;
@@ -18,11 +21,18 @@ class ObstacleTest {
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
     private static final int INVALID_COORD = -1;
 
+    /**
+     * Initializes a valid static obstacle before each test.
+     */
     @BeforeEach
     void setUp() {
         staticObstacle = new ObstacleImpl(X_COORD, Y_COORD, ObstacleType.TREE, false);
     }
 
+    /**
+     * Tests the correct creation of a static {@link ObstacleImpl}
+     * and the correct setting of its properties.
+     */
     @Test
     void testObstacleCreation() {        
         assertEquals(X_COORD, staticObstacle.getX());
@@ -31,6 +41,10 @@ class ObstacleTest {
         assertFalse(staticObstacle.isMovable());
     }
 
+    /**
+     * Tests that creating an {@link ObstacleImpl} with invalid coordinates
+     * throws an {@link IllegalArgumentException}.
+     */
     @Test
     void testInvalidObstacleCreation() {
         assertThrows(IllegalArgumentException.class, () -> {
