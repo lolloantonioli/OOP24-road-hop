@@ -2,7 +2,7 @@ package it.unibo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,46 +51,64 @@ class CellTest {
     void testAddObjectToEmptyCell() {
         assertTrue(cell.addObject(testObject));
         assertTrue(cell.hasObject());
-        assertTrue(cell.getContent().isPresent());
-        assertEquals(testObject, cell.getContent().get());
+        assertEquals(1, cell.getContent().size());
+        assertTrue(cell.getContent().contains(testObject));
     }
 
     @Test
-    void testAddObjectToOccupiedCell() {
-        GameObject firstObject = new CollectibleImpl(X_COORD, Y_COORD, CollectibleType.COIN);
-        GameObject secondObject = new ObstacleImpl(X_COORD, Y_COORD, ObstacleType.TREE, false);
-        assertTrue(cell.addObject(firstObject));
-        assertFalse(cell.addObject(secondObject));
-        assertTrue(cell.hasObject());
-        assertEquals(firstObject, cell.getContent().get());
+    void testAddSameObjectTwice() {
+        assertTrue(cell.addObject(testObject));
+        assertFalse(cell.addObject(testObject)); // Set: non aggiunge duplicati
+        assertEquals(1, cell.getContent().size());
     }
 
     @Test
-    void testRemoveObjectFromOccupiedCell() {
+    void testAddMultipleObjects() {
+        final GameObject obj2 = new ObstacleImpl(X_COORD, Y_COORD, ObstacleType.TREE, false);
+        assertTrue(cell.addObject(testObject));
+        assertTrue(cell.addObject(obj2));
+        assertEquals(2, cell.getContent().size());
+        assertTrue(cell.getContent().contains(testObject));
+        assertTrue(cell.getContent().contains(obj2));
+    }
+
+    @Test
+    void testRemoveObject() {
         cell.addObject(testObject);
         assertTrue(cell.hasObject());
-        cell.removeObject();
+        assertTrue(cell.removeObject(testObject));
         assertFalse(cell.hasObject());
         assertTrue(cell.getContent().isEmpty());
+        assertFalse(cell.removeObject(testObject));
+
+        final GameObject obj2 = new ObstacleImpl(X_COORD, Y_COORD, ObstacleType.TREE, false);
+        cell.addObject(testObject);
+        cell.addObject(obj2);
+        assertTrue(cell.hasObject());
+        assertTrue(cell.removeObject(testObject));
+        assertTrue(cell.hasObject());
+        assertEquals(1, cell.getContent().size());
+        assertTrue(cell.getContent().contains(obj2));
     }
 
     @Test
-    void testRemoveObjectFromEmptyCell() {
-        assertFalse(cell.hasObject());
-        cell.removeObject();
-        assertFalse(cell.hasObject());
-        assertTrue(cell.getContent().isEmpty());
+    void testNullObject() {
+        assertThrows(IllegalArgumentException.class, () -> cell.addObject(null));
+        assertThrows(IllegalArgumentException.class, () -> cell.removeObject(null));
+    }
+
+    @Test
+    void testCellPosition() {
+        final int x = cell.getX();
+        final int y = cell.getY();
+        assertEquals(x, cell.getX());
+        assertEquals(y, cell.getY());
     }
 
     @Test
     void testGetContent() {
-        Optional<GameObject> content = cell.getContent();
-        assertTrue(content.isEmpty());
-        assertFalse(content.isPresent());
         cell.addObject(testObject);
-        content = cell.getContent();
-        assertTrue(content.isPresent());
-        assertEquals(testObject, content.get());
+        final Set<GameObject> content = cell.getContent();
+        assertThrows(UnsupportedOperationException.class, () -> content.add(new CollectibleImpl(X_COORD, Y_COORD, CollectibleType.COIN)));
     }
-
 }
