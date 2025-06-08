@@ -71,4 +71,11 @@ public interface MovingObstacleController {
      */
     void generateObstacles(int difficultyLevel);
 
+    /**
+     * Aumenta i limiti di velocità per tutti gli ostacoli.
+     * 
+     * @param amount l'ammontare da aggiungere ai limiti di velocità
+     */
+    void increaseAllObstaclesSpeed(int i);
+
 }

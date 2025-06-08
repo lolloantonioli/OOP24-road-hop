@@ -100,4 +100,9 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
         }
     }
 
+    @Override
+    public void increaseAllObstaclesSpeed(int i) {
+        manager.increaseSpeed(i);
+    }
+
 }

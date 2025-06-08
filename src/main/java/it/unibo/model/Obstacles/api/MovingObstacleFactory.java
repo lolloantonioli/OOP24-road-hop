@@ -69,6 +69,13 @@ public interface MovingObstacleFactory {
     int getRandomSpeed(ObstacleType type);
 
     /**
+     * Increases the speed limits for all obstacles by a specified amount.
+     *
+     * @param amount Amount to increase the speed limits
+     */
+    void increaseSpeedLimits(int amount);
+
+    /**
      * Gets the minimum distance between obstacles of the specified type.
      *
      * @param type Type of obstacle

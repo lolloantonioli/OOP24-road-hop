@@ -7,7 +7,6 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
-// i create singoli mi servono? sono utili? li aggiungo al controller?
 // COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
 
 public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
@@ -15,12 +14,12 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private final Random random;
     
     // Costanti per i limiti di velocità
-    public static final int MIN_CAR_SPEED = 10;
-    public static final int MAX_CAR_SPEED = 15;
-    public static final int MIN_TRAIN_SPEED = 20;
-    public static final int MAX_TRAIN_SPEED = 25;
-    public static final int MIN_LOG_SPEED = 1;
-    public static final int MAX_LOG_SPEED = 1;
+    private int minCarSpeed = 10;
+    private int maxCarSpeed = 15;
+    private int minTrainSpeed = 20;
+    private int maxTrainSpeed = 25;
+    private int minLogSpeed = 1;
+    private int maxLogSpeed = 1;
 
     // Costanti per il sistema a griglia
     public static final int CELLS_PER_CHUNK = 9;
@@ -99,13 +98,23 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     @Override
     public int getRandomSpeed(ObstacleType type) {
         if (type == ObstacleType.CAR) {
-            return MIN_CAR_SPEED + random.nextInt(MAX_CAR_SPEED - MIN_CAR_SPEED + 1);
+            return minCarSpeed + random.nextInt(maxCarSpeed - minCarSpeed + 1);
         } else if (type == ObstacleType.TRAIN) {
-            return MIN_TRAIN_SPEED + random.nextInt(MAX_TRAIN_SPEED - MIN_TRAIN_SPEED + 1);
+            return minTrainSpeed + random.nextInt(maxTrainSpeed - minTrainSpeed + 1);
         } else if (type == ObstacleType.LOG) {
-            return MIN_LOG_SPEED + random.nextInt(MAX_LOG_SPEED - MIN_LOG_SPEED + 1);
+            return minLogSpeed + random.nextInt(maxLogSpeed - minLogSpeed + 1);
         }
         throw new IllegalArgumentException("Unknown obstacle type: " + type);
+    }
+
+    @Override
+    public void increaseSpeedLimits(int amount) {
+        minCarSpeed += amount;
+        maxCarSpeed += amount;
+        minTrainSpeed += amount;
+        maxTrainSpeed += amount;
+        minLogSpeed += amount;
+        maxLogSpeed += amount;
     }
     
     @Override

@@ -173,7 +173,7 @@ public class MovingObstacles implements Obstacle{
         if (platform && type != ObstacleType.LOG) {
             throw new UnsupportedOperationException("Solo gli ostacoli di tipo LOG possono essere impostati come piattaforme");
         }
-        // Per i tronchi, isPlatform() ritorna sempre true, quindi non serve memorizzare lo stato
+
     }
 
      /**
