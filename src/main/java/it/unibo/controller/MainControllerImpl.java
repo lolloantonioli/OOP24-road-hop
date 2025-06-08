@@ -29,12 +29,10 @@ public class MainControllerImpl implements MainController {
     public MainControllerImpl() {
         this.gameFrame = new GameFrame(this);
         this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
-        this.gameFrame.getGamePanel().setController(mapController);
+        this.obstacleController = new MovingObstacleControllerImpl(mapController);
+        this.gameFrame.getGamePanel().setController(mapController, obstacleController);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
-        this.obstacleController = new MovingObstacleControllerImpl(this.mapController);
-        this.gameFrame.getGamePanel().setObstacleController(obstacleController);
-
     }
 
     @Override

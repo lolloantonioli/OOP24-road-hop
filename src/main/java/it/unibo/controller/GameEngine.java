@@ -93,8 +93,4 @@ public class GameEngine implements Runnable {
         this.running = false;
     }
 
-    public void setupView(GamePanel gamePanel) {
-        gamePanel.setObstacleController(this.obstacleController);
-    }
-
 }

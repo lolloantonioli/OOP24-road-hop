@@ -23,14 +23,11 @@ public class GamePanel extends JPanel {
     private int animationOffset = 0;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final MapController controller) {
+    public void setController(final MapController controller, final MovingObstacleController obstacleController) {
         this.controller = controller;
+        this.obstacleController = obstacleController;
         this.chunksNumber = controller.getChunksNumber();
         this.cellsPerRow = controller.getCellsPerRow();
-    }
-
-    public void setObstacleController(final MovingObstacleController obstacleController) {
-        this.obstacleController = obstacleController;
     }
 
     public void showCountdown(final int value) {
