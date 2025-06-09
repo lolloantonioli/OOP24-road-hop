@@ -102,38 +102,12 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     }
     
     @Override
-    public void cleanupOffscreenObstacles(int minY, int maxY) {
+    public void cleanupOffscreenObstacles() {
         Iterator<MovingObstacles> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
             MovingObstacles obstacle = iterator.next();
-            int y = obstacle.getY();
             
-            // Rimuovi ostacoli fuori dall'area visibile
-            if (y < minY || y > maxY) {
-                iterator.remove();
-            }
-        }
-    }
-
-    /**
-    * Pulisce ostacoli che sono usciti completamente dalla griglia.
-    */
-    @Override
-    public void cleanupOffscreenObstaclesHorizontal() {
-        Iterator<MovingObstacles> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            MovingObstacles obstacle = iterator.next();
-            int x = obstacle.getX();
-            int width = obstacle.getWidthInCells();
-            
-            // Per ostacoli che si muovono verso destra
-            if (obstacle.getSpeed() > 0 && x >= CELLS_PER_CHUNK + 5) {
-                iterator.remove();
-                continue;
-            }
-            
-            // Per ostacoli che si muovono verso sinistra
-            if (obstacle.getSpeed() < 0 && x + width <= -5) {
+            if (!obstacle.isVisible()) {
                 iterator.remove();
             }
         }

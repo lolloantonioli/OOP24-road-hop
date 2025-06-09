@@ -77,7 +77,8 @@ public class MovingObstacles implements Obstacle{
                 }
             } else if (speed < 0) {
                 cellX--;
-                //System.out.println("[" + type + "] Y=" + chunkY + " cellX=" + cellX + " (<-) speed=" + speed);
+                //int coda = cellX + getWidthInCells() - 1; 
+                //System.out.println("[" + type + "] Y=" + chunkY + " id=" + System.identityHashCode(this) + " cellX=" + cellX + " (<-) speed=" + speed + " coda=" + coda);
                 // Invisibile solo quando la testa (più a destra) ha superato il bordo sinistro
                 if (cellX + getWidthInCells() - 1 < 0) {
                     this.visible = false;
