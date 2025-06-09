@@ -90,6 +90,25 @@ public interface Player extends GameObject {
      */
     public void grantSecondLife();
 
-    
+    /**
+     * Check if the player is invincible
+     * 
+     * @return true if the player is invincible, false otherwise
+     */
+    public boolean isInvincible();
+
+    /**
+     * Set if the player's position is out of bounds
+     * 
+     * @param isOutOfBounds wheder the player is out of bound
+     */
+    public void setOutOfBounds(boolean isOutOfBounds);
+
+    /**
+     * Check if the player is out of bounds
+     * 
+     * @return true if the player is out of bounds, false otherwise
+     */
+    public boolean isOutOfBounds();
 
 }

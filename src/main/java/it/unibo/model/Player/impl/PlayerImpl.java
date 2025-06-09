@@ -19,8 +19,10 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     private int score;
     private int collectedCoins;
+    private boolean isOutOfBounds;
     private boolean isAlive;
     private boolean hasSecondLife;
+    private boolean isInvincible;
     private Skin currentSkin;
 
     //keep track of the starting coordinates for the reset
@@ -33,8 +35,10 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         this.initialX = x;
         this.initialY = y;
         this.score = 0;
+        this.isOutOfBounds = false;
         this.isAlive = true;
         this.hasSecondLife = false;
+        this.isInvincible = true;
         this.currentSkin = skin;
         setMovable(true);
     }
@@ -55,6 +59,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public boolean tryMove(Direction direction, GameMap map, MovementValidator movementValidator) {
         Cell newPos = new CellImpl(super.getX() + direction.getDeltaX(), super.getY() + direction.getDeltaY());
         if(movementValidator.canMoveTo(map, newPos)) {
+            isInvincible = false;
             move(newPos);
             return true;
         }
@@ -78,12 +83,14 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public void die() {
-        if (hasSecondLife) {
-            hasSecondLife = false;
-            // Il player "resuscita" e resta vivo
-        } else {
+        //se il player non è in una cella visibile muore a prescindere
+        if (isOutOfBounds || !isInvincible) {
             isAlive = false;
-        }
+        } else if (hasSecondLife) {
+            hasSecondLife = false;
+            isInvincible = true;
+            // Il player "resuscita" e resta vivo, non può morire fino a quando non si muoverà
+        }  
     }
 
     @Override
@@ -123,6 +130,20 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     public boolean hasSecondLife() {
         return hasSecondLife;
+    }
+
+    public boolean isInvincible() {
+        return isInvincible;
+    }
+
+    @Override
+    public void setOutOfBounds(boolean isOutOfBounds) {
+        this.isOutOfBounds = isOutOfBounds;
+    }
+
+    @Override
+    public boolean isOutOfBounds() {
+        return isOutOfBounds;
     }
 
 }
