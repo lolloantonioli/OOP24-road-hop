@@ -8,17 +8,17 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
-// metodi setter da mettere a posto ! + controlla getoccupiedcells in game object
+// metodi setter da mettere a posto ! + controlla getoccupiedcells in game object + initialcell utile?
 
 public class MovingObstacles implements Obstacle{
-    private int cellX; // Posizione X nella griglia (0-8 per chunk da 9 celle)
+    private int cellX; // Posizione X nella griglia 
     private final int chunkY;
     private final ObstacleType type;
     private int speed;
     private boolean movable;
     private boolean visible;
-    private int initialCellX; // per far ricomparire l'ostacolo nella posizione iniziale
-    private final int initialSpeed;
+    //private final int initialCellX; // Per il reset alla posizione iniziale
+    //private final int initialSpeed;
     private int updateCounter; // Per gestire movimento sub-cella
     private static final int BASE_MOVEMENT_THRESHOLD = 50; // Prova 15, puoi aumentare
 
@@ -31,11 +31,11 @@ public class MovingObstacles implements Obstacle{
 
     public MovingObstacles(int cellX, int chunkY, ObstacleType type, int speed) {
         this.cellX = cellX;
-        this.initialCellX = cellX;
+        //this.initialCellX = cellX;
         this.chunkY = chunkY;
         this.type = type;
         this.speed = speed;
-        this.initialSpeed = speed;
+        //this.initialSpeed = speed;
         this.movable = true;
         this.visible = true;
         this.updateCounter = 0;
@@ -72,13 +72,12 @@ public class MovingObstacles implements Obstacle{
             
             if (speed > 0) {
                 cellX++;
-                // Invisibile solo quando la coda (più a sinistra) ha superato il bordo destro
                 if (cellX >= CELLS_PER_CHUNK) {
                     this.visible = false;
                 }
             } else if (speed < 0) {
                 cellX--;
-                //System.out.println("cellX=" + cellX + " width=" + getWidthInCells() + " visible=" + visible + " speed=" + speed);
+                System.out.println("[" + type + "] Y=" + chunkY + " cellX=" + cellX + " (<-) speed=" + speed);
                 // Invisibile solo quando la testa (più a destra) ha superato il bordo sinistro
                 if (cellX + getWidthInCells() - 1 < 0) {
                     this.visible = false;
@@ -86,13 +85,10 @@ public class MovingObstacles implements Obstacle{
             }
         }
     }
-
-    /**
-     * Reimposta gli ostacoli alla posizione iniziale.
-     */
+     
     public void reset() {
-        this.cellX = initialCellX;
-        this.speed = initialSpeed;
+        //this.cellX = initialCellX;
+        //this.speed = initialSpeed;
         this.updateCounter = 0;
     }
 
@@ -100,11 +96,11 @@ public class MovingObstacles implements Obstacle{
      * Imposta una nuova posizione iniziale.
      * 
      * @param newCellX Nuova posizione X iniziale in celle
-     */
+     
     public void setInitialCellX(int newCellX) {
         this.initialCellX = newCellX;
         this.cellX = newCellX;
-    }
+    } */
 
     public boolean collidesWith(int px, int py) {
         if (!visible || py != chunkY) {
@@ -216,7 +212,7 @@ public class MovingObstacles implements Obstacle{
      * @param targetCellX Posizione X target
      * @param otherObstacles Lista di altri ostacoli da controllare
      * @return true se la posizione è valida
-     */
+     
     public boolean canBePlacedAt(int targetCellX, java.util.List<MovingObstacles> otherObstacles) {
         for (MovingObstacles other : otherObstacles) {
             if (other != this && other.getY() == this.chunkY) {
@@ -228,7 +224,7 @@ public class MovingObstacles implements Obstacle{
             }
         }
         return targetCellX >= 0 && targetCellX + getWidthInCells() <= CELLS_PER_CHUNK;
-    }
+    } */
 
     /**
      * Ottiene tutte le celle occupate dall'ostacolo.
@@ -270,10 +266,10 @@ public class MovingObstacles implements Obstacle{
      * 
      * @param playerCellX Posizione X del giocatore
      * @return true se il giocatore può stare sul tronco
-     */
+     
     public boolean canPlayerStandOn(int playerCellX) {
         return isPlatform() && occupiesCell(playerCellX);
-    }
+    } */
 
     @Override
     public List<Cell> getOccupiedCells2() {

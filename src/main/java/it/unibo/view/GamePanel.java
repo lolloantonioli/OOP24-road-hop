@@ -84,9 +84,6 @@ public class GamePanel extends JPanel {
                     break;
                 }
             }
-            /*System.out.println("Ostacolo fuori schermo (chunk non visibile)");
-                continue;
-            }*/
 
             int screenX = (int) obstacle.getX();
             int pixelX = screenX * cellWidth;
@@ -106,6 +103,10 @@ public class GamePanel extends JPanel {
         ObstacleType type = obstacle.getType();
         int widthInCells = obstacle.getWidthInCells();
         int ox = obstacle.getX();
+
+        /*USA LE COORDINATE GIA' CALCOLATE NEL METODO CHIAMANTE
+        int pixelX = x;  // Usa il parametro x passato da drawMovingObstacles
+        int pixelWidth = widthInCells * cellWidth; */
 
         // Calcola la parte effettivamente visibile nella griglia
         int visibleStart = Math.max(0, ox);

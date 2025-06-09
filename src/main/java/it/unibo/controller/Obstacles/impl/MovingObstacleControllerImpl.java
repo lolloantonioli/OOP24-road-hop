@@ -14,7 +14,7 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-// quando si resetta la mappa (giocatore perde) chiama resetObstacles
+// quando si resetta la mappa (giocatore perde) chiama resetObstacles + da sistemare uscita dal bordo destro + controlla aumento velocità ostacoli
 
 public class MovingObstacleControllerImpl implements MovingObstacleController {
 
