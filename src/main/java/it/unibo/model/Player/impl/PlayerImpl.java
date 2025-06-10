@@ -11,9 +11,6 @@ import it.unibo.model.Player.api.Player;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
-//si potrebbe cambiare move rendendolo un metodo boolean e passando il CollisionProMax in input così diventa meno stupido
-//la gestione dei tronchi totalmente da capire
-//se sono ferma e poi vengo investita come lo capisco?
 
 public class PlayerImpl extends GameObjectImpl implements Player{
 
@@ -38,6 +35,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         this.isOutOfBounds = false;
         this.isAlive = true;
         this.hasSecondLife = false;
+        //when the player spawns is invincible until he makes is first valid move
         this.isInvincible = true;
         this.currentSkin = skin;
         setMovable(true);
@@ -49,7 +47,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         }
     }
 
-    private void move(Cell newPos) {
+    public void move(Cell newPos) {
         super.setX(newPos.getX());
         super.setY(newPos.getY());
         this.updateScore();
@@ -99,8 +97,10 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         super.setY(initialY);
         score = 0;
         collectedCoins = 0;
+        isOutOfBounds = false;
         isAlive = true;
         hasSecondLife = false;
+        isInvincible = true;
     }
 
     @Override

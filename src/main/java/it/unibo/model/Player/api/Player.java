@@ -21,6 +21,13 @@ public interface Player extends GameObject {
     boolean tryMove(Direction direction, GameMap map, MovementValidator movementValidator);
 
     /**
+     * Forces the player to move in the given direction
+     * 
+     * @param newPos the cell the player moves in
+     */
+    void move(Cell newPos);
+
+    /**
      * Gets the score of the player
      * 
      * @return the player's score

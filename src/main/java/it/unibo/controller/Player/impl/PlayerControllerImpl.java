@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.List;
 
 import it.unibo.model.Player.api.CollisionHandler;
+import it.unibo.controller.Player.api.OnPlatform;
 import it.unibo.controller.Player.api.PlayerController;
 import it.unibo.model.Collision.api.CollisionDetector;
 import it.unibo.model.Collision.impl.CollisionDetectorImpl;
@@ -12,6 +13,7 @@ import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Player.api.CollisionIdentifier;
 import it.unibo.model.Player.api.MovementValidator;
@@ -21,6 +23,7 @@ import it.unibo.model.Player.impl.CollisionIdentifierImpl;
 import it.unibo.model.Player.impl.MovementValidatorImpl;
 import it.unibo.model.Player.impl.PlayerImpl;
 import it.unibo.model.Player.util.Direction;
+import it.unibo.model.Player.util.Pair;
 import it.unibo.model.Shop.api.Skin;
 
 public class PlayerControllerImpl implements PlayerController {
@@ -31,9 +34,9 @@ public class PlayerControllerImpl implements PlayerController {
     private final CollisionIdentifier collisionIdentifier;
     private final MovementValidator movementValidator;
     private final CollisionHandler collisionHandler;
+    private final OnPlatform platformHandler;
     
-    private GameObject currentPlatform;
-
+    //da aggiungere current platform all'input?
     public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY) {
         checkNotNull(gameMap, "GameMap cannot be null");
         checkNotNull(initialSkin, "Initial skin cannot be null");
@@ -44,7 +47,7 @@ public class PlayerControllerImpl implements PlayerController {
         this.collisionIdentifier = new CollisionIdentifierImpl();
         this.movementValidator = new MovementValidatorImpl();
         this.collisionHandler = new CollisionHandlerImpl();
-        this.currentPlatform = null;
+        this.platformHandler = new OnPlatformImpl();
     }
 
     @Override
@@ -108,7 +111,7 @@ public class PlayerControllerImpl implements PlayerController {
             }
         }
 
-        currentPlatform = newPlatform;
+        platformHandler.setCurrentPlatform(newPlatform);
     }
 
     @Override
@@ -124,13 +127,12 @@ public class PlayerControllerImpl implements PlayerController {
     @Override
     public void resetPlayer() {
         player.reset();
-        currentPlatform = null;
+        platformHandler.setCurrentPlatform(null);
     }
 
     @Override
     public void updatePlayerSkin(Skin skin) {
-        player.reset();
-        currentPlatform = null;
+        player.setSkin(skin);
     }
 
     @Override
@@ -157,12 +159,11 @@ public class PlayerControllerImpl implements PlayerController {
                 processCollisions();
             }
 
-            /*
-             * if(isOnPlatform) {
-             *  sposta il player
-             * }
-             */
-            //da capire come controllare se si è mosso con platform
+            //ha senso?
+            if(platformHandler.isOnPlatform()) {
+                Pair<Integer,Integer> movement = platformHandler.hasMoved();
+                player.move(new CellImpl(player.getX()+movement.e1(),player.getY()+movement.e2()));
+            }
 
             //controlla se il player è ancora in una posizione valida
             player.setOutOfBounds(movementValidator.isOutOfBounds(player.getCurrentCell(), gameMap));
@@ -174,7 +175,7 @@ public class PlayerControllerImpl implements PlayerController {
 
     @Override
     public boolean isPlayerOnPlatform() {
-        return currentPlatform != null;    
+        return platformHandler.isOnPlatform();    
     }
 
 }
