@@ -77,16 +77,9 @@ public interface MovingObstacleManager {
     
     /**
      * Removes obstacles that are outside the visible area.
-     * 
-     * @param minY Minimum Y coordinate to keep obstacles
-     * @param maxY Maximum Y coordinate to keep obstacles
+    
      */
-    void cleanupOffscreenObstacles(int minY, int maxY);
-
-    /**
-     * Cleans up obstacles that have moved completely off the horizontal grid.
-     */
-    void cleanupOffscreenObstaclesHorizontal();
+    void cleanupOffscreenObstacles();
     
     /**
      * Gets the total number of managed obstacles.

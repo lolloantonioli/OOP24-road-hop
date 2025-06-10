@@ -89,8 +89,8 @@ public class GamePanel extends JPanel {
             int pixelX = screenX * cellWidth;
             int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
 
-            if (pixelY >= -cellHeight && pixelY < getHeight() + cellHeight &&
-                pixelX >= -cellWidth && pixelX < getWidth() + cellWidth) {
+            int pixelWidth = obstacle.getWidthInCells() * cellWidth;
+            if (pixelX + pixelWidth > 0 && pixelX < getWidth()) {
                 drawObstacle(g, obstacle, pixelX, pixelY, cellWidth, cellHeight);
             }
         }
@@ -104,10 +104,6 @@ public class GamePanel extends JPanel {
         int widthInCells = obstacle.getWidthInCells();
         int ox = obstacle.getX();
 
-        /*USA LE COORDINATE GIA' CALCOLATE NEL METODO CHIAMANTE
-        int pixelX = x;  // Usa il parametro x passato da drawMovingObstacles
-        int pixelWidth = widthInCells * cellWidth; */
-
         // Calcola la parte effettivamente visibile nella griglia
         int visibleStart = Math.max(0, ox);
         int visibleEnd = Math.min(cellsPerRow, ox + widthInCells);
@@ -118,7 +114,7 @@ public class GamePanel extends JPanel {
         }
 
         // NON FUNZIONAAAAA, MA IL PROBLEMA E' QUI !!!
-        int pixelX = ox * cellWidth;  // Invece di: visibleStart * cellWidth
+        int pixelX = x; 
         int pixelWidth = visibleCells * cellWidth;
         
         if (type == ObstacleType.CAR) {

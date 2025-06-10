@@ -56,7 +56,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     public void update() {
         try {
             manager.updateAll();
-            manager.cleanupOffscreenObstaclesHorizontal();
+            manager.cleanupOffscreenObstacles();
         } catch (Exception e) {
             System.err.println("Errore durante l'aggiornamento degli ostacoli: " + e.getMessage());
         }
