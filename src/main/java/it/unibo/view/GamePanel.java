@@ -85,38 +85,58 @@ public class GamePanel extends JPanel {
                 }
             }
 
-            int screenX = (int) obstacle.getX();
-            int pixelX = screenX * cellWidth;
-            int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
+            if (screenY == -1) continue; // Chunk non visibile
 
-            int pixelWidth = obstacle.getWidthInCells() * cellWidth;
-            if (pixelX + pixelWidth > 0 && pixelX < getWidth()) {
-                drawObstacle(g, obstacle, pixelX, pixelY, cellWidth, cellHeight);
+            int obstacleX = (int) obstacle.getX();
+            int obstacleWidth = obstacle.getWidthInCells();
+            
+            // Calcola i limiti di visibilità corretti
+            int leftBound = Math.max(0, obstacleX);
+            int rightBound = Math.min(cellsPerRow, obstacleX + obstacleWidth);
+            
+            // Se l'ostacolo è completamente fuori dai bounds, non disegnarlo
+            if (leftBound >= rightBound || rightBound <= 0 || leftBound >= cellsPerRow) {
+                continue;
             }
+            
+            int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
+            
+            drawObstacle(g, obstacle, obstacleX, pixelY, cellWidth, cellHeight, leftBound, rightBound);
         }
     }
 
-    private void drawObstacle(final Graphics g, final MovingObstacles obstacle, final int x, final int y, final int cellWidth, final int cellHeight) {
+    private void drawObstacle(final Graphics g, final MovingObstacles obstacle, final int obstacleX, 
+        final int y, final int cellWidth, final int cellHeight, 
+        final int leftBound, final int rightBound) {
         if (!obstacle.isVisible()) {
             return;
         }
+        
         ObstacleType type = obstacle.getType();
-        int widthInCells = obstacle.getWidthInCells();
-        int ox = obstacle.getX();
-
-        // Calcola la parte effettivamente visibile nella griglia
-        int visibleStart = Math.max(0, ox);
-        int visibleEnd = Math.min(cellsPerRow, ox + widthInCells);
-        int visibleCells = visibleEnd - visibleStart;
-
-        if (visibleCells <= 0) {
-            return;
-        }
-
-        // NON FUNZIONAAAAA, MA IL PROBLEMA E' QUI !!!
-        int pixelX = x; 
+        
+        // Calcola la posizione e dimensione in pixel
+        int pixelX = leftBound * cellWidth;
+        int visibleCells = rightBound - leftBound;
         int pixelWidth = visibleCells * cellWidth;
         
+        // Se l'ostacolo inizia prima del bordo sinistro, dobbiamo adjustare il rendering
+        if (obstacleX < 0) {
+            // L'ostacolo si estende oltre il bordo sinistro
+            int offsetCells = -obstacleX; // Quante celle sono fuori dal bordo
+            pixelX = 0; // Inizia dal bordo sinistro dello schermo
+            pixelWidth = Math.min(obstacle.getWidthInCells() - offsetCells, cellsPerRow) * cellWidth;
+        }
+        
+        // Assicurati che non disegniamo oltre i bordi dello schermo
+        if (pixelX + pixelWidth > getWidth()) {
+            pixelWidth = getWidth() - pixelX;
+        }
+        
+        if (pixelWidth <= 0) {
+            return;
+        }
+        
+        // Disegna l'ostacolo con il colore appropriato
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
             g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);
