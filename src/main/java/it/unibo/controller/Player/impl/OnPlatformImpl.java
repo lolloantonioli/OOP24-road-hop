@@ -1,6 +1,6 @@
 package it.unibo.controller.Player.impl;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Optional;
 
 import it.unibo.controller.Player.api.OnPlatform;
 import it.unibo.model.Map.api.Cell;
@@ -10,12 +10,12 @@ import it.unibo.model.Player.util.Pair;
 
 public class OnPlatformImpl implements OnPlatform{
 
-    private GameObject currentPlatform;
+    private Optional<GameObject> currentPlatform;
     private Cell previousPosition;
 
     public OnPlatformImpl(GameObject platform) {
-        this.currentPlatform = platform;
-        this.previousPosition = new CellImpl(platform.getX(), platform.getY());
+        this.currentPlatform = Optional.of(platform);
+        UpdatePreviousPosition();
     }
 
     public OnPlatformImpl(){
@@ -24,19 +24,35 @@ public class OnPlatformImpl implements OnPlatform{
 
     @Override
     public boolean isOnPlatform() {
-        return currentPlatform != null;
+        return currentPlatform.isPresent();
     }
 
     @Override
-    public void setCurrentPlatform(GameObject platform) {
-        checkNotNull(platform, "platform cannot be null");
+    public void setCurrentPlatform(Optional<GameObject> platform) {
         currentPlatform = platform;
-        previousPosition = new CellImpl(platform.getX(), platform.getY());
+        UpdatePreviousPosition();
+        
     }
 
     @Override
     public Pair<Integer, Integer> hasMoved() {
-        return new Pair(currentPlatform.getX()-previousPosition.getX(), currentPlatform.getY()-previousPosition.getY());
+        Pair<Integer, Integer> movement;
+        if(isOnPlatform()) {
+            movement = new Pair(currentPlatform.get().getX()-previousPosition.getX(), currentPlatform.get().getY()-previousPosition.getY());
+        }
+        else {
+            movement = new Pair(0,0);
+        }
+        UpdatePreviousPosition();
+        return movement;
     }
 
+    private void UpdatePreviousPosition() {
+        if(currentPlatform.isPresent()) {
+            previousPosition = new CellImpl(currentPlatform.get().getX(), currentPlatform.get().getY());
+        }
+        else {
+            previousPosition = null;
+        }
+    }
 }

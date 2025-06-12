@@ -3,6 +3,7 @@ package it.unibo.controller.Player.impl;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.model.Player.api.CollisionHandler;
 import it.unibo.controller.Player.api.OnPlatform;
@@ -90,12 +91,12 @@ public class PlayerControllerImpl implements PlayerController {
 
         List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
 
-        GameObject newPlatform = null;
+        Optional<GameObject> newPlatform = Optional.empty();
 
         for (GameObject obj : collidedObjects) {
             try {
                 if (collisionIdentifier.isOnPlatform(obj)) {
-                    newPlatform = obj;
+                    newPlatform = Optional.of(obj);
                 }
                 
                 if (collisionIdentifier.isFatalCollision(obj)) {
@@ -155,7 +156,7 @@ public class PlayerControllerImpl implements PlayerController {
         if (player.isAlive()){
 
             //controlla se è avvenuta una collisione, se il player invincibile non subisce collisioni
-            if (player.isInvincible()){
+            if (!player.isInvincible()){
                 processCollisions();
             }
 
