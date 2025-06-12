@@ -3,6 +3,8 @@ package it.unibo.controller;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import it.unibo.controller.Map.api.MapAdapter;
+import it.unibo.controller.Map.impl.MapAdapterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.ChunkImpl;
@@ -18,12 +20,14 @@ public class GameController extends KeyAdapter {
     private final GameEngine gameEngine;
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
+    private final MapAdapter mapAdapter;
 
     public GameController(GameEngine gameEngine, GameMap gameMap, 
                          MovingObstacleController obstacleController) {
         this.gameEngine = gameEngine;
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
+        this.mapAdapter = new MapAdapterImpl(gameMap);
     }
 
     @Override
@@ -108,6 +112,10 @@ public class GameController extends KeyAdapter {
      */
     public MovingObstacleController getObstacleController() {
         return obstacleController;
+    }
+
+    public MapAdapter getMapAdapter() {
+        return mapAdapter;
     }
 
     public int getMapWidth() {
