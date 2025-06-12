@@ -2,35 +2,12 @@ package it.unibo.controller.Map.api;
 
 import java.awt.Color;
 
-import it.unibo.model.Map.api.GameMap;
-
 /**
  * Interface which controls the game map and its visual representation.
  * It provides methods to update the map state, retrieve visible chunks, manage scrolling,
  * and query cell and chunk properties for rendering purposes.
  */
-public interface MapController {
-
-    /**
-     * Returns the underlying game map model managed by this controller.
-     *
-     * @return the GameMap instance
-     */
-    GameMap getGameMap();
-
-    /**
-     * Returns the number of visible chunks managed by the map.
-     *
-     * @return the number of chunks displayed on the screen
-     */
-    int getChunksNumber();
-
-    /**
-     * Returns the number of cells per row in each chunk.
-     *
-     * @return the number of cells in a single chunk row
-     */
-    int getCellsPerRow();
+public interface MapFormatter {
     
     /**
      * Returns the color associated with the specified chunk.

@@ -8,7 +8,8 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
-import it.unibo.controller.Map.api.MapController;
+import it.unibo.controller.GameController;
+import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.util.ObstacleType;
@@ -16,18 +17,23 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
 
 public class GamePanel extends JPanel {
 
-    private MapController controller;
     private MovingObstacleController obstacleController;
+    private GameController gameController;
+    private MapFormatter mapAdapter;
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final MapController controller, final MovingObstacleController obstacleController) {
-        this.controller = controller;
-        this.obstacleController = obstacleController;
-        this.chunksNumber = controller.getChunksNumber();
-        this.cellsPerRow = controller.getCellsPerRow();
+    public void setController(final GameController gameController) {
+        this.gameController = gameController;
+        this.obstacleController = gameController.getObstacleController();
+        this.mapAdapter = gameController.getMapAdapter();
+        this.chunksNumber = gameController.getMapHeight();
+        this.cellsPerRow = gameController.getMapWidth();
+        addKeyListener(gameController);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void showCountdown(final int value) {
@@ -43,6 +49,7 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
+
         final int cellWidth = getWidth() / cellsPerRow;
         final int cellHeight = getHeight() / chunksNumber;
 
@@ -73,7 +80,7 @@ public class GamePanel extends JPanel {
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
         List<MovingObstacles> obstacles = obstacleController.getAllObstacles();
-        List<Chunk> visibleChunks = controller.getGameMap().getVisibleChunks();
+        List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
 
         for (MovingObstacles obstacle : obstacles) {
             // Trova l'indice relativo del chunk visibile
@@ -150,11 +157,11 @@ public class GamePanel extends JPanel {
     }
 
     private void drawCell(final Graphics g, final int x, final int y, final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(controller.getChunkColor(chunkIndex));
+        g.setColor(mapAdapter.getChunkColor(chunkIndex));
         g.fillRect(x, y, cellWidth, cellHeight);
-        if (controller.hasCellObjects(chunkIndex, cellIndex)) {
-            g.setColor(controller.getCellObjectColor(chunkIndex, cellIndex));
-            if (controller.isCellObjectCircular(chunkIndex, cellIndex)) {
+        if (mapAdapter.hasCellObjects(chunkIndex, cellIndex)) {
+            g.setColor(mapAdapter.getCellObjectColor(chunkIndex, cellIndex));
+            if (mapAdapter.isCellObjectCircular(chunkIndex, cellIndex)) {
                 g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
             } else {
                 g.fillRect(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);

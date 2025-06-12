@@ -68,4 +68,14 @@ public class GameFrame extends JFrame {
         return this.gamePanel;
     }
 
+    public void showPausePanel(Runnable onContinue, Runnable onMenu) {
+        final PausePanel pausePanel = new PausePanel(onContinue, onMenu);
+        this.root.add(pausePanel, CardName.PAUSE.toString());
+        this.layout.show(this.root, CardName.PAUSE.toString());
+    }
+
+    public void hidePausePanel() {
+        this.layout.show(this.root, CardName.GAME.toString());
+    }
+
 }

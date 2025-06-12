@@ -1,6 +1,8 @@
 package it.unibo.controller;
 
-import it.unibo.controller.Map.api.MapController;
+import java.util.Optional;
+
+import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Shop.api.ShopModel;
 
 /**
@@ -30,16 +32,20 @@ public interface MainController {
      */
     void goToShop();
 
+    void showPausePanel(Runnable onContinue, Runnable onMenu);
+
+    void hidePausePanel();
+
     /**
      * Getter for the ShopModel.
      * @return the ShopModel instance
      */
     ShopModel getShopModel();
 
-    /**
-     * Getter for the MapController.
-     * @return the MapController instance
-     */
-    MapController getMapController();
+    GameMap getGameMap();
+
+    Optional<GameController> getGameController();
+
+    Optional<GameEngine> getGameEngine();
 
 }
