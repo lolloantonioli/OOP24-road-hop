@@ -27,16 +27,17 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
     }
     
     @Override
-    public void addObstacles(MovingObstacles[] newObstacles) {
+    public void addObstacles(List<MovingObstacles> newObstacles) {
         for (MovingObstacles obstacle : newObstacles) {
             addObstacle(obstacle);
         }
     }
     
+    /* 
     @Override
     public void removeObstacle(MovingObstacles obstacle) {
         obstacles.remove(obstacle);
-    }
+    }*/
     
     @Override
     public void updateAll() {
@@ -81,7 +82,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
         return result;
     }
     
-    @Override
+    /*@Override
     public boolean checkCollision(int cellX, int chunkY) {
         for (MovingObstacles obstacle : obstacles) {
             if (obstacle.getY() == chunkY && obstacle.isVisible()) {
@@ -92,7 +93,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
             }
         }
         return false;
-    }
+    }*/
     
     @Override
     public void increaseSpeed(int factor) {
@@ -113,10 +114,11 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
         }
     }
     
+    /* 
     @Override
     public int getObstacleCount() {
         return obstacles.size();
-    }
+    }*/
     
     @Override
     public void resetAll() {
@@ -127,7 +129,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
 
     /**
      * Controlla collisione con un'area specifica (utile per ostacoli multi-cella).
-     */
+     
     @Override
     public boolean checkCollisionInArea(int startCellX, int endCellX, int chunkY) {
         for (MovingObstacles obstacle : obstacles) {
@@ -144,7 +146,7 @@ public class MovingObstacleManagerImpl implements MovingObstacleManager {
             }
         }
         return false;
-    }
+    }*/
 
     /**
      * Controlla se una posizione è sicura per posizionare un nuovo ostacolo.

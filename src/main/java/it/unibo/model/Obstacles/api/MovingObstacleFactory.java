@@ -1,5 +1,7 @@
 package it.unibo.model.Obstacles.api;
 
+import java.util.List;
+
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
@@ -47,7 +49,7 @@ public interface MovingObstacleFactory {
      * @param leftToRight Direction of movement
      * @return Array of obstacles
      */
-    MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed);
+    List<MovingObstacles> createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed);
 
     /**
      * Creates a moving obstacle based on its type and position.

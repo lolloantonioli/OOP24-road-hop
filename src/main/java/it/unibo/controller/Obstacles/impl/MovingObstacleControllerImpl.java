@@ -34,22 +34,22 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     }
 
     @Override
-    public MovingObstacles[] createCarSet(int y, int count, boolean leftToRight, int speed) {
-        MovingObstacles[] cars = factory.createObstacleSet(ObstacleType.CAR, y, count, leftToRight, speed);
+    public List<MovingObstacles> createCarSet(int y, int count, boolean leftToRight, int speed) {
+        List<MovingObstacles> cars = factory.createObstacleSet(ObstacleType.CAR, y, count, leftToRight, speed);
         manager.addObstacles(cars);
         return cars;
     }
 
     @Override
-    public MovingObstacles[] createTrainSet(int y, int count, boolean leftToRight, int speed) {
-        MovingObstacles[] trains = factory.createObstacleSet(ObstacleType.TRAIN, y, count, leftToRight, speed);
+    public List<MovingObstacles> createTrainSet(int y, int count, boolean leftToRight, int speed) {
+        List<MovingObstacles> trains = factory.createObstacleSet(ObstacleType.TRAIN, y, count, leftToRight, speed);
         manager.addObstacles(trains);
         return trains;
     }
 
     @Override
-    public MovingObstacles[] createLogSet(int y, int count, boolean leftToRight, int speed) {
-        MovingObstacles[] logs = factory.createObstacleSet(ObstacleType.LOG, y, count, leftToRight, speed);
+    public List<MovingObstacles> createLogSet(int y, int count, boolean leftToRight, int speed) {
+        List<MovingObstacles> logs = factory.createObstacleSet(ObstacleType.LOG, y, count, leftToRight, speed);
         manager.addObstacles(logs);
         return logs;
     }

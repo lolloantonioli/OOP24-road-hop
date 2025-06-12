@@ -21,14 +21,14 @@ public interface MovingObstacleManager {
      * 
      * @param obstacles Array of obstacles to add
      */
-    void addObstacles(MovingObstacles[] obstacles);
+    void addObstacles(List<MovingObstacles> obstacles);
     
     /**
      * Removes an obstacle from management.
      * 
      * @param obstacle The obstacle to remove
-     */
-    void removeObstacle(MovingObstacles obstacle);
+     
+    void removeObstacle(MovingObstacles obstacle);*/
     
     /**
      * Updates the state of all managed obstacles.
@@ -64,8 +64,8 @@ public interface MovingObstacleManager {
      * @param x X-coordinate
      * @param y Y-coordinate
      * @return True if there is a collision
-     */
-    boolean checkCollision(int cellX, int chunkY);
+     
+    boolean checkCollision(int cellX, int chunkY);*/
     
     /**
      * Increases the speed of all obstacles by a factor.
@@ -85,8 +85,8 @@ public interface MovingObstacleManager {
      * Gets the total number of managed obstacles.
      * 
      * @return Count of obstacles
-     */
-    int getObstacleCount();
+     
+    int getObstacleCount();*/
 
     /**
     * Resets all obstacles to their initial position and state.
@@ -100,8 +100,8 @@ public interface MovingObstacleManager {
      * @param endCellX Ending X cell position
      * @param chunkY Y coordinate in chunks
      * @return True if there is a collision in the area
-     */
-    boolean checkCollisionInArea(int startCellX, int endCellX, int chunkY);
+     
+    boolean checkCollisionInArea(int startCellX, int endCellX, int chunkY);*/
 
     /**
      * Checks if a position is safe for placing a new obstacle.

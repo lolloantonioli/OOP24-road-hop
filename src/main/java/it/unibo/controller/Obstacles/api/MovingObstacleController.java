@@ -15,7 +15,7 @@ public interface MovingObstacleController {
      * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
      * @return array degli ostacoli macchina creati
      */
-    MovingObstacles[] createCarSet(int y, int count, boolean leftToRight, int speed);
+    List<MovingObstacles> createCarSet(int y, int count, boolean leftToRight, int speed);
 
     /**
      * Crea un set di treni sulla stessa riga.
@@ -25,7 +25,7 @@ public interface MovingObstacleController {
      * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
      * @return array degli ostacoli treno creati
      */
-    MovingObstacles[] createTrainSet(int y, int count, boolean leftToRight, int speed);
+    List<MovingObstacles> createTrainSet(int y, int count, boolean leftToRight, int speed);
 
     /**
      * Crea un set di tronchi sulla stessa riga.
@@ -36,7 +36,7 @@ public interface MovingObstacleController {
      * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
      * @return array degli ostacoli tronco creati
      */
-    MovingObstacles[] createLogSet(int y, int count, boolean leftToRight, int speed);
+    List<MovingObstacles> createLogSet(int y, int count, boolean leftToRight, int speed);
 
     /**
      * Aggiorna tutti gli ostacoli mobili.

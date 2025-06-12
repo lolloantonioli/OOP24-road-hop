@@ -49,7 +49,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     }
 
     @Override
-    public MovingObstacles[] createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed) {
+    public List<MovingObstacles> createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed) {
         List<MovingObstacles> obstacles = new ArrayList<>();
         int minDistance = getMinDistance(type);
         int obstacleWidth = getObstacleWidth(type);
@@ -86,7 +86,7 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
                 placed++;
             }
         }
-        return obstacles.toArray(MovingObstacles[]::new);
+        return obstacles;
     }
 
     @Override
