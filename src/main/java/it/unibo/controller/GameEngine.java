@@ -75,8 +75,8 @@ public class GameEngine implements Runnable {
             // Qui aumenta la velocità degli ostacoli se è aumentata quella della mapppa
             int newSpeed = mapModel.getScrollSpeed();
             if (newSpeed > speed) {
-                obstacleController.increaseAllObstaclesSpeed(10);
-                obstacleFactory.increaseSpeedLimits(10); 
+                obstacleController.increaseAllObstaclesSpeed(15);
+                obstacleFactory.increaseSpeedLimits(15); 
             }
             final int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);
