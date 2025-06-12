@@ -9,7 +9,7 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import it.unibo.controller.GameController;
-import it.unibo.controller.Map.api.MapAdapter;
+import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.util.ObstacleType;
@@ -19,7 +19,7 @@ public class GamePanel extends JPanel {
 
     private MovingObstacleController obstacleController;
     private GameController gameController;
-    private MapAdapter mapAdapter;
+    private MapFormatter mapAdapter;
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;

@@ -7,7 +7,7 @@ import java.awt.Color;
  * It provides methods to update the map state, retrieve visible chunks, manage scrolling,
  * and query cell and chunk properties for rendering purposes.
  */
-public interface MapAdapter {
+public interface MapFormatter {
     
     /**
      * Returns the color associated with the specified chunk.

@@ -3,7 +3,7 @@ package it.unibo.controller.Map.impl;
 import java.awt.Color;
 import java.util.List;
 
-import it.unibo.controller.Map.api.MapAdapter;
+import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
@@ -13,11 +13,11 @@ import it.unibo.model.Map.util.CollectibleType;
 /**
  * Implementation of the MapController interface.
  */
-public class MapAdapterImpl implements MapAdapter {
+public class MapFormatterImpl implements MapFormatter {
 
     private final GameMap gameMap;
 
-    public MapAdapterImpl(final GameMap gameMap) {
+    public MapFormatterImpl(final GameMap gameMap) {
         this.gameMap = gameMap;
     }
 

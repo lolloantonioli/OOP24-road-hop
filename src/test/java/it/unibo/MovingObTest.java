@@ -4,18 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.controller.Map.impl.MapAdapterImpl;
+import it.unibo.controller.Map.impl.MapFormatterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
 
 class MovingObTest {
 
     private MovingObstacleController obstacleController;
-    private MapAdapterImpl mapController;
+    private MapFormatterImpl mapController;
 
     @BeforeEach
     void setUp() {
-        mapController = new MapAdapterImpl(null);
+        mapController = new MapFormatterImpl(null);
         obstacleController = new MovingObstacleControllerImpl(mapController);
     }
 
