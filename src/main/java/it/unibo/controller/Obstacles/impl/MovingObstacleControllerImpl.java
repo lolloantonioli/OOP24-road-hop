@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
@@ -18,7 +18,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
 
     private final MovingObstacleFactory factory;
     private final MovingObstacleManager manager;
-    private final MapController mapController;
+    private final GameMap gameMap;
     private final Map<Integer, Integer> chunkSpeeds = new HashMap<>();
     private final Map<Integer, Boolean> chunkDirections = new HashMap<>();
     private final Random random = new Random();
@@ -27,8 +27,8 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     private static final int CAR_SPAWN_DISTANCE = 3;
     private static final int LOG_SPAWN_DISTANCE = 1;
 
-    public MovingObstacleControllerImpl(MapController mapController) {
-        this.mapController = mapController;
+    public MovingObstacleControllerImpl(GameMap gameMap) {
+        this.gameMap = gameMap;
         this.factory = new MovingObstacleFactoryImpl();
         this.manager = new MovingObstacleManagerImpl();
     }
@@ -60,7 +60,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
         manager.cleanupOffscreenObstacles();
         
         // Genera continuamente nuovi ostacoli
-        for (var chunk : mapController.getGameMap().getVisibleChunks()) {
+        for (var chunk : gameMap.getVisibleChunks()) {
             int y = chunk.getPosition();
             String chunkType = chunk.getType().toString();
             
@@ -142,7 +142,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     @Override
     public void generateObstacles(int difficultyLevel) {
         // Inizializza le direzioni e velocità dei chunk
-        for (var chunk : mapController.getGameMap().getVisibleChunks()) {
+        for (var chunk : gameMap.getVisibleChunks()) {
             int y = chunk.getPosition();
             String chunkType = chunk.getType().toString();
             if (chunkType.equals("ROAD") || chunkType.equals("RAILWAY") || chunkType.equals("RIVER")) {

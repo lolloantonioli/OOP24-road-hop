@@ -7,11 +7,12 @@ import it.unibo.view.GamePanel;
 
 public class GameEngine implements Runnable {
 
-    private final GameMap mapModel;
+    private final GameMap gameMap;
     private final GamePanel gamePanel;
     private final MovingObstacleController obstacleController;
     private final MovingObstacleFactory obstacleFactory;
     private final MainController mainController;
+    private final GameController gameController;
 
     private boolean running = true;
     private int frameCounter = 0;
@@ -21,16 +22,18 @@ public class GameEngine implements Runnable {
 
     private GameState currentState;
 
-    public GameEngine(final GameMap mapModel,
+    public GameEngine(final GameMap gameMap,
                       final GamePanel gamePanel,
                       final MovingObstacleController obstacleController,
                       final MovingObstacleFactory obstacleFactory,
-                      final MainController mainController) {
-        this.mapModel = mapModel;
+                      final MainController mainController,
+                      final GameController gameController) {
+        this.gameMap = gameMap;
         this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
         this.obstacleFactory = obstacleFactory;
         this.mainController = mainController;
+        this.gameController = gameController;
         this.currentState = new OnGameState();
     }
 
@@ -92,6 +95,10 @@ public class GameEngine implements Runnable {
         return this.mainController;
     }
 
+    public GameController gameController() {
+        return this.gameController;
+    }
+
     public void showStartCountdown() {
         for (int i = 3; i > 0; i--) {
             gamePanel.showCountdown(i);
@@ -115,7 +122,7 @@ public class GameEngine implements Runnable {
     // Metodi di supporto per OnGameState
     public void doGameUpdate() {
         final int cellHeight = gamePanel.getCellHeight();
-        final int speed = mapModel.getScrollSpeed();
+        final int speed = gameMap.getScrollSpeed();
         final int scrollTime = SCROLL_TIME_MS / speed;
         final double framesPerCell = scrollTime / (double) PERIOD;
         frameCounter = frameCounter + 1;
@@ -124,19 +131,19 @@ public class GameEngine implements Runnable {
         if (frameCounter < framesPerCell) {
             gamePanel.setAnimationOffset(offset);
         } else {
-            mapModel.update();
+            gameController.updateMap();
             frameCounter = 0;
             gamePanel.setAnimationOffset(0);
 
-            int newSpeed = mapModel.getScrollSpeed();
+            int newSpeed = gameMap.getScrollSpeed();
             if (newSpeed > speed) {
                 obstacleController.increaseAllObstaclesSpeed(15);
                 obstacleFactory.increaseSpeedLimits(15); 
             }
-            final int difficultyLevel = Math.min(3, mapModel.getScrollSpeed());
+            final int difficultyLevel = Math.min(3, gameMap.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);
         }
-        obstacleController.update();
+        gameController.updateObstacles();
     }
 
     public void doGameRender() {

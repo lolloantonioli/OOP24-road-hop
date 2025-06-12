@@ -12,23 +12,26 @@ import it.unibo.controller.GameController;
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.Chunk;
+import it.unibo.model.Map.api.Collectible;
+import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
 public class GamePanel extends JPanel {
 
-    private MapController controller;
     private MovingObstacleController obstacleController;
+    private GameController gameController;
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final MapController controller, final MovingObstacleController obstacleController, final GameController gameController) {
-        this.controller = controller;
-        this.obstacleController = obstacleController;
-        this.chunksNumber = controller.getChunksNumber();
-        this.cellsPerRow = controller.getCellsPerRow();
+    public void setController(final GameController gameController) {
+        this.gameController = gameController;
+        this.obstacleController = gameController.getObstacleController();
+        this.chunksNumber = gameController.getMapHeight();
+        this.cellsPerRow = gameController.getMapWidth();
         addKeyListener(gameController);
         setFocusable(true);
         requestFocusInWindow();
@@ -47,6 +50,7 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
+
         final int cellWidth = getWidth() / cellsPerRow;
         final int cellHeight = getHeight() / chunksNumber;
 
@@ -77,7 +81,7 @@ public class GamePanel extends JPanel {
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
         List<MovingObstacles> obstacles = obstacleController.getAllObstacles();
-        List<Chunk> visibleChunks = controller.getGameMap().getVisibleChunks();
+        List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
 
         for (MovingObstacles obstacle : obstacles) {
             // Trova l'indice relativo del chunk visibile
@@ -154,11 +158,11 @@ public class GamePanel extends JPanel {
     }
 
     private void drawCell(final Graphics g, final int x, final int y, final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(controller.getChunkColor(chunkIndex));
+        g.setColor(getChunkColor(chunkIndex));
         g.fillRect(x, y, cellWidth, cellHeight);
-        if (controller.hasCellObjects(chunkIndex, cellIndex)) {
-            g.setColor(controller.getCellObjectColor(chunkIndex, cellIndex));
-            if (controller.isCellObjectCircular(chunkIndex, cellIndex)) {
+        if (hasCellObjects(chunkIndex, cellIndex)) {
+            g.setColor(getCellObjectColor(chunkIndex, cellIndex));
+            if (isCellObjectCircular(chunkIndex, cellIndex)) {
                 g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
             } else {
                 g.fillRect(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
@@ -178,6 +182,60 @@ public class GamePanel extends JPanel {
 
     public int getCellHeight() {
         return getHeight() / chunksNumber;
+    }
+
+    public Color getChunkColor(final int chunkIndex) {
+        //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
+        final List<Chunk> chunks = gameController.getGameMap().getVisibleChunks();
+        final Chunk chunk = chunks.get(chunkIndex);
+        final ChunkType type = chunk.getType();
+        if (type == ChunkType.GRASS) {
+            return Color.GREEN;
+        } else if (type == ChunkType.RIVER) {
+            return Color.BLUE;
+        } else if (type == ChunkType.ROAD) {
+            return Color.BLACK;
+        } else {
+            return Color.GRAY;
+        }
+    }
+
+    public boolean hasCellObjects(final int chunkIndex, final int cellIndex) {
+        //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
+        //checkArgument(cellIndex >= 0 && cellIndex < getCellsPerRow(), "Cell index out of bounds: " + cellIndex);
+        final List<Chunk> chunks = gameController.getGameMap().getVisibleChunks();
+        final Chunk chunk = chunks.get(chunkIndex);
+        return chunk.getCellAt(cellIndex).hasObject();
+    }
+
+    public Color getCellObjectColor(final int chunkIndex, final int cellIndex) {
+        //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
+        //"This method should called only after 'hasCellBobject' check");
+        final List<Chunk> chunks = gameController.getGameMap().getVisibleChunks();
+        final Chunk chunk = chunks.get(chunkIndex);
+        // Prendi il primo oggetto "visibile" per la view (ad esempio un Collectible, altrimenti il primo oggetto)
+        return chunk.getCellAt(cellIndex).getContent().stream()
+            .filter(obj -> obj instanceof Collectible)
+            .findFirst()
+            .map(obj -> {
+                Collectible collectible = (Collectible) obj;
+                if (collectible.getType() == CollectibleType.SECOND_LIFE) {
+                    return Color.MAGENTA;
+                } else {
+                    return Color.YELLOW;
+                }
+            })
+            .orElse(Color.BLACK);
+    }
+
+    public boolean isCellObjectCircular(final int chunkIndex, final int cellIndex) {
+        //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
+        //"This method should called only after 'hasCellBobject' check");
+        final List<Chunk> chunks = gameController.getGameMap().getVisibleChunks();
+        final Chunk chunk = chunks.get(chunkIndex);
+        // Se almeno un oggetto è un Collectible, la cella è circolare
+        return chunk.getCellAt(cellIndex).getContent().stream()
+            .anyMatch(obj -> obj instanceof Collectible);
     }
     
 }

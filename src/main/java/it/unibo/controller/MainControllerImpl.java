@@ -2,13 +2,13 @@ package it.unibo.controller;
 
 import java.util.Optional;
 
-import it.unibo.controller.Map.api.MapController;
-import it.unibo.controller.Map.impl.MapControllerImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
+import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Shop.api.ShopModel;
@@ -17,66 +17,91 @@ import it.unibo.view.GameFrame;
 
 /**
  * MainController implementation.
+ * Centralized controller that manages all game components and their lifecycle.
  */
 public class MainControllerImpl implements MainController {
 
     private final GameFrame gameFrame;
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
-    private MapController mapController;
-    private MovingObstacleController obstacleController;
-    private final MovingObstacleFactory obstacleFactory = new MovingObstacleFactoryImpl();
+    private final MovingObstacleFactory obstacleFactory;
     private Optional<GameEngine> gameEngine;
+    private Optional<GameController> gameController;
+    
+    // Game components - recreated for each new game
+    private GameMap gameMap;
+    private MovingObstacleController obstacleController;
 
     /**
      * Constructor for MainControllerImpl.
-     * Initializes the game frame, map controller, shop model, and shop observer.
+     * Initializes the game frame, shop components, and obstacle factory.
      */
     public MainControllerImpl() {
         this.gameFrame = new GameFrame(this);
-        this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
-        this.obstacleController = new MovingObstacleControllerImpl(mapController);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
+        this.obstacleFactory = new MovingObstacleFactoryImpl();
         this.gameEngine = Optional.empty();
+        this.gameController = Optional.empty();
+        
+        // Initialize game components
+        initializeGameComponents();
+    }
+
+    /**
+     * Initializes or reinitializes all game components for a new game.
+     */
+    private void initializeGameComponents() {
+        this.gameMap = new GameMapImpl();
+        this.obstacleController = new MovingObstacleControllerImpl(gameMap);
     }
 
     @Override
     public void goToMenu() {
-        if (gameEngine.isPresent()) {
-            gameEngine.get().stop(); // Ferma il thread della partita attuale
-            gameEngine = Optional.empty(); // Rimuovi il riferimento
-            this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
-            this.obstacleController = new MovingObstacleControllerImpl(mapController);
-        }
+        stopCurrentGame();
         gameFrame.show(CardName.MENU);
     }
     
     @Override
     public void goToGame() {
-        // Ferma la partita precedente se esiste
-        if (gameEngine.isPresent()) {
-            gameEngine.get().stop();
-            gameEngine = Optional.empty();
-        }
-        // Mostra il pannello di gioco
+        // Stop any existing game
+        stopCurrentGame();
+        
+        // Initialize new game components
+        initializeGameComponents();
+        
+        // Show the game panel
         gameFrame.show(CardName.GAME);
-        // Crea una nuova partita (nuovo GameEngine)
+        
+        // Create new game controller
+        gameController = Optional.of(new GameController(
+            gameEngine.orElse(null), // Will be set below
+            gameMap,
+            obstacleController
+        ));
+        
+        // Create new game engine
         gameEngine = Optional.of(new GameEngine(
-            mapController.getGameMap(),
+            gameMap,
             gameFrame.getGamePanel(),
             obstacleController,
             obstacleFactory,
-            this
+            this,
+            gameController.get()
         ));
-        // Avvia il nuovo thread di gioco
+        
+        // Update game controller with the new engine
+        gameController = Optional.of(new GameController(
+            gameEngine.get(),
+            gameMap,
+            obstacleController
+        ));
+        
+        // Start the new game thread
         new Thread(gameEngine.get()).start();
-        // Collega il controller della tastiera
-        gameFrame.getGamePanel().setController(
-            mapController,
-            obstacleController,
-            new GameController(gameEngine.get())
-        );
+        
+        // Set up the game panel with the new controller
+        gameFrame.getGamePanel().setController(gameController.get());
     }
 
     @Override
@@ -95,9 +120,31 @@ public class MainControllerImpl implements MainController {
         return shopModel;
     }
 
-    @Override
-    public MapController getMapController() {
-        return mapController;
+    /**
+     * Gets the current game map.
+     * @return the current GameMap instance, or null if no game is active
+     */
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+
+    /**
+     * Gets the current game controller.
+     * @return the current GameController instance
+     */
+    public Optional<GameController> getGameController() {
+        return gameController;
+    }
+
+    /**
+     * Stops the current game and cleans up resources.
+     */
+    private void stopCurrentGame() {
+        if (gameEngine.isPresent()) {
+            gameEngine.get().stop();
+            gameEngine = Optional.empty();
+        }
+        gameController = Optional.empty();
     }
 
     public void goToPause() {
@@ -112,6 +159,14 @@ public class MainControllerImpl implements MainController {
     @Override
     public void hidePausePanel() {
         gameFrame.hidePausePanel();
+    }
+
+    /**
+     * Gets the current game engine.
+     * @return the current GameEngine instance
+     */
+    public Optional<GameEngine> getGameEngine() {
+        return gameEngine;
     }
 
 }
