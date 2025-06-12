@@ -30,6 +30,12 @@ public interface MainController {
      */
     void goToShop();
 
+    void goToPause();
+
+    void showPausePanel(Runnable onContinue, Runnable onMenu);
+
+    void hidePausePanel();
+
     /**
      * Getter for the ShopModel.
      * @return the ShopModel instance

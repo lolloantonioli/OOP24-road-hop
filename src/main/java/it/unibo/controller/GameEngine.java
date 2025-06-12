@@ -10,19 +10,28 @@ public class GameEngine implements Runnable {
     private final GameMap mapModel;
     private final GamePanel gamePanel;
     private final MovingObstacleController obstacleController;
+    private final MovingObstacleFactory obstacleFactory;
+    private final MainController mainController;
+
     private boolean running = true;
     private int frameCounter = 0;
-    private final MovingObstacleFactory obstacleFactory;
 
     private static final long PERIOD = 16; // 60fps
     private static final int SCROLL_TIME_MS = 1000;
 
-    public GameEngine(final GameMap mapModel, final GamePanel gamePanel, final MovingObstacleController obstacleController, 
-                      final MovingObstacleFactory obstacleFactory) {
-        this.obstacleFactory = obstacleFactory;
+    private GameState currentState;
+
+    public GameEngine(final GameMap mapModel,
+                      final GamePanel gamePanel,
+                      final MovingObstacleController obstacleController,
+                      final MovingObstacleFactory obstacleFactory,
+                      final MainController mainController) {
         this.mapModel = mapModel;
         this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
+        this.obstacleFactory = obstacleFactory;
+        this.mainController = mainController;
+        this.currentState = new OnGameState();
     }
 
     @Override
@@ -30,14 +39,60 @@ public class GameEngine implements Runnable {
         showStartCountdown();
         while (running) {
             long frameStart = System.currentTimeMillis();
-            //processInput();
+            processInput();
             update();
             render();
             waitForNextFrame(frameStart);
         }
     }
 
-    private void showStartCountdown() {
+    public void setState(GameState state) {
+        this.currentState = state;
+    }
+
+    public GameState getState() {
+        return this.currentState;
+    }
+
+    private void processInput() {
+        // Il GameController (KeyListener) chiama metodi su GameEngine per cambiare stato
+        // Qui puoi aggiungere eventuali input asincroni (es. da pulsanti)
+        // In questa architettura, il GameEngine non gestisce direttamente l'input
+    }
+
+    private void update() {
+        currentState.update(this);
+    }
+
+    private void render() {
+        currentState.render(this);
+    }
+
+    private void waitForNextFrame(final long frameStart) {
+        final long elapsed = System.currentTimeMillis() - frameStart;
+        if (elapsed < PERIOD) {
+            try {
+                Thread.sleep(PERIOD - elapsed);
+            } catch (InterruptedException e) {
+                this.stop();
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    public void stop() {
+        this.running = false;
+    }
+
+    public GamePanel getGamePanel() {
+        return this.gamePanel;
+    }
+
+    public MainController getMainController() {
+        return this.mainController;
+    }
+
+    public void showStartCountdown() {
         for (int i = 3; i > 0; i--) {
             gamePanel.showCountdown(i);
             try {
@@ -57,7 +112,8 @@ public class GameEngine implements Runnable {
         gamePanel.hideCountdown();
     }
 
-    private void update() {
+    // Metodi di supporto per OnGameState
+    public void doGameUpdate() {
         final int cellHeight = gamePanel.getCellHeight();
         final int speed = mapModel.getScrollSpeed();
         final int scrollTime = SCROLL_TIME_MS / speed;
@@ -72,7 +128,6 @@ public class GameEngine implements Runnable {
             frameCounter = 0;
             gamePanel.setAnimationOffset(0);
 
-            // Qui aumenta la velocità degli ostacoli se è aumentata quella della mapppa
             int newSpeed = mapModel.getScrollSpeed();
             if (newSpeed > speed) {
                 obstacleController.increaseAllObstaclesSpeed(15);
@@ -84,24 +139,7 @@ public class GameEngine implements Runnable {
         obstacleController.update();
     }
 
-    private void render() {
+    public void doGameRender() {
         gamePanel.refresh();
     }
-
-    private void waitForNextFrame(final long frameStart) {
-        final long elapsed = System.currentTimeMillis() - frameStart;
-        if (elapsed < PERIOD) {
-            try {
-                Thread.sleep(PERIOD - elapsed);
-            } catch (InterruptedException e) {
-                this.stop();
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-
-    public void stop() {
-        this.running = false;
-    }
-
 }

@@ -1,5 +1,7 @@
 package it.unibo.controller;
 
+import java.util.Optional;
+
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Map.impl.MapControllerImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
@@ -21,9 +23,10 @@ public class MainControllerImpl implements MainController {
     private final GameFrame gameFrame;
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
-    private final MapController mapController;
-    private final MovingObstacleController obstacleController;
+    private MapController mapController;
+    private MovingObstacleController obstacleController;
     private final MovingObstacleFactory obstacleFactory = new MovingObstacleFactoryImpl();
+    private Optional<GameEngine> gameEngine;
 
     /**
      * Constructor for MainControllerImpl.
@@ -33,21 +36,47 @@ public class MainControllerImpl implements MainController {
         this.gameFrame = new GameFrame(this);
         this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
         this.obstacleController = new MovingObstacleControllerImpl(mapController);
-        this.gameFrame.getGamePanel().setController(mapController, obstacleController);
         this.shopModel = new ShopModelImpl();
         this.shopObserver = new ShopObserverImpl(this, gameFrame.getShopPanel(), shopModel);
+        this.gameEngine = Optional.empty();
     }
 
     @Override
     public void goToMenu() {
+        if (gameEngine.isPresent()) {
+            gameEngine.get().stop(); // Ferma il thread della partita attuale
+            gameEngine = Optional.empty(); // Rimuovi il riferimento
+            this.mapController = new MapControllerImpl(gameFrame.getGamePanel());
+            this.obstacleController = new MovingObstacleControllerImpl(mapController);
+        }
         gameFrame.show(CardName.MENU);
     }
     
     @Override
     public void goToGame() {
+        // Ferma la partita precedente se esiste
+        if (gameEngine.isPresent()) {
+            gameEngine.get().stop();
+            gameEngine = Optional.empty();
+        }
+        // Mostra il pannello di gioco
         gameFrame.show(CardName.GAME);
-        GameEngine engine = new GameEngine(mapController.getGameMap(), gameFrame.getGamePanel(), obstacleController, obstacleFactory);
-        new Thread(engine).start();
+        // Crea una nuova partita (nuovo GameEngine)
+        gameEngine = Optional.of(new GameEngine(
+            mapController.getGameMap(),
+            gameFrame.getGamePanel(),
+            obstacleController,
+            obstacleFactory,
+            this
+        ));
+        // Avvia il nuovo thread di gioco
+        new Thread(gameEngine.get()).start();
+        // Collega il controller della tastiera
+        gameFrame.getGamePanel().setController(
+            mapController,
+            obstacleController,
+            new GameController(gameEngine.get())
+        );
     }
 
     @Override
@@ -69,6 +98,20 @@ public class MainControllerImpl implements MainController {
     @Override
     public MapController getMapController() {
         return mapController;
+    }
+
+    public void goToPause() {
+        gameFrame.show(CardName.PAUSE);
+    }
+    
+    @Override
+    public void showPausePanel(Runnable onContinue, Runnable onMenu) {
+        gameFrame.showPausePanel(onContinue, onMenu);
+    }
+
+    @Override
+    public void hidePausePanel() {
+        gameFrame.hidePausePanel();
     }
 
 }

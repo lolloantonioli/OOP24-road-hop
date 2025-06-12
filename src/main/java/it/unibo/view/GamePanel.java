@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
+import it.unibo.controller.GameController;
 import it.unibo.controller.Map.api.MapController;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.Chunk;
@@ -23,11 +24,14 @@ public class GamePanel extends JPanel {
     private int animationOffset = 0;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final MapController controller, final MovingObstacleController obstacleController) {
+    public void setController(final MapController controller, final MovingObstacleController obstacleController, final GameController gameController) {
         this.controller = controller;
         this.obstacleController = obstacleController;
         this.chunksNumber = controller.getChunksNumber();
         this.cellsPerRow = controller.getCellsPerRow();
+        addKeyListener(gameController);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void showCountdown(final int value) {
