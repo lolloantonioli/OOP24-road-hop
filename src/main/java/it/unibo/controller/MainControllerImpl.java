@@ -143,6 +143,7 @@ public class MainControllerImpl implements MainController {
         if (gameEngine.isPresent()) {
             gameEngine.get().stop();
             gameEngine = Optional.empty();
+            gameFrame.getGamePanel().setAnimationOffset(0);
         }
         gameController = Optional.empty();
     }
