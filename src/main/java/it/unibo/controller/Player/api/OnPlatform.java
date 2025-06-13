@@ -11,6 +11,6 @@ public interface OnPlatform {
 
     void setCurrentPlatform(Optional<GameObject> platform);
 
-    Pair<Integer, Integer> hasMoved();
+    Pair hasMoved();
 
 }

@@ -29,6 +29,8 @@ import it.unibo.model.Shop.api.Skin;
 
 public class PlayerControllerImpl implements PlayerController {
 
+    //aggiungere il fatto che posse avere un observer che controlla quando muore per terminare il gioco?
+
     private final Player player;
     private final GameMap gameMap;
     private final CollisionDetector collisionDetector;
@@ -162,8 +164,8 @@ public class PlayerControllerImpl implements PlayerController {
 
             //ha senso?
             if(platformHandler.isOnPlatform()) {
-                Pair<Integer,Integer> movement = platformHandler.hasMoved();
-                player.move(new CellImpl(player.getX()+movement.e1(),player.getY()+movement.e2()));
+                Pair movement = platformHandler.hasMoved();
+                player.move(new CellImpl(player.getX()+movement.x(),player.getY()+movement.y()));
             }
 
             //controlla se il player è ancora in una posizione valida

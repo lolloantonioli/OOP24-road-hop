@@ -6,12 +6,14 @@ import java.awt.event.KeyEvent;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Map.impl.MapFormatterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.controller.Player.api.PlayerController;
+import it.unibo.controller.Player.impl.PlayerControllerImpl;
 import it.unibo.controller.State.impl.PauseState;
 import it.unibo.controller.Util.StateName;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Player.api.Player;
+import it.unibo.model.Player.util.Direction;
 
 /**
  * Main game controller that handles all game logic and input.
@@ -23,6 +25,7 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
+    private final PlayerController playerController;
 
     public GameControllerImpl(final GameEngine gameEngine,
                               final GameMap gameMap,
@@ -31,10 +34,13 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
         this.mapAdapter = new MapFormatterImpl(gameMap);
+        //da cambiare i magic number
+        this.playerController = new PlayerControllerImpl(gameMap, /*ShopModel.getSelectedskin() */null, /*da dove iniziare */getMapWidth()/2, 2);
     }
 
     @Override
     public void keyPressed(final KeyEvent e) {
+        Direction movementDirection = null;
         if (gameEngine.getState().getName() == StateName.ON_GAME) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_P:
@@ -42,51 +48,26 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
                     break;
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
-                    movePlayerLeft();
+                    movementDirection = Direction.LEFT;
                     break;
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_D:
-                    movePlayerRight();
+                    movementDirection = Direction.LEFT;
                     break;
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
-                    movePlayerUp();
+                    movementDirection = Direction.LEFT;
                     break;
                 case KeyEvent.VK_DOWN:
                 case KeyEvent.VK_S:
-                    movePlayerDown();
+                    movementDirection = Direction.LEFT;
                     break;
                 default:
                     break;
             }
-        }
-    }
-
-    private void movePlayerLeft() {
-        int newX = player.getX() - 1;
-        if (newX >= 0) {
-            player.setPosition(newX, player.getY());
-        }
-    }
-
-    private void movePlayerRight() {
-        int newX = player.getX() + 1;
-        if (newX < getMapWidth()) {
-            player.setPosition(newX, player.getY());
-        }
-    }
-
-    private void movePlayerUp() {
-        int newY = player.getY() - 1;
-        if (newY >= 0) {
-            player.setPosition(player.getX(), newY);
-        }
-    }
-
-    private void movePlayerDown() {
-        int newY = player.getY() + 1;
-        if (newY < getMapHeight()) {
-            player.setPosition(player.getX(), newY);
+            if (movementDirection != null) {
+                playerController.movePlayer(movementDirection);
+            }
         }
     }
 

@@ -81,14 +81,22 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public void die() {
-        //se il player non è in una cella visibile muore a prescindere
-        if (isOutOfBounds || !isInvincible) {
+        if (isOutOfBounds) {
             isAlive = false;
-        } else if (hasSecondLife) {
+            return;
+        }
+        
+        if (isInvincible) {
+            return; // Non può morire se invincibile
+        }
+        
+        if (hasSecondLife) {
             hasSecondLife = false;
             isInvincible = true;
-            // Il player "resuscita" e resta vivo, non può morire fino a quando non si muoverà
-        }  
+            //quando viene usata la seconda vita il player diventa invincibile fino a quando non si sarà mosso
+        } else {
+            isAlive = false;
+        }
     }
 
     @Override
