@@ -20,31 +20,30 @@ import it.unibo.model.Player.util.Direction;
  */
 public class GameControllerImpl extends KeyAdapter implements GameController {
     
-    private final GameEngine gameEngine;
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
+    private final MainController mainController;
     private final PlayerController playerController;
 
-    public GameControllerImpl(final GameEngine gameEngine,
-                              final GameMap gameMap,
+    public GameControllerImpl(final GameMap gameMap,
                               final MovingObstacleController obstacleController,
+                              final MainController mainController,
                               final PlayerController playerController) {
-        this.gameEngine = gameEngine;
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
         this.playerController = playerController;
         this.mapAdapter = new MapFormatterImpl(gameMap);
-    
+        this.mainController = mainController;
     }
 
     @Override
     public void keyPressed(final KeyEvent e) {
         Direction movementDirection = null;
-        if (gameEngine.getState().getName() == StateName.ON_GAME) {
+        if (mainController.getGameEngine().get().getState().getName() == StateName.ON_GAME) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_P:
-                    gameEngine.setState(new PauseState());
+                    mainController.getGameEngine().get().setState(new PauseState());
                     break;
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
