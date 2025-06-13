@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
-import it.unibo.controller.GameController;
+import it.unibo.controller.GameControllerImpl;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.Chunk;
@@ -18,17 +18,17 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
 public class GamePanel extends JPanel {
 
     private MovingObstacleController obstacleController;
-    private GameController gameController;
+    private GameControllerImpl gameController;
     private MapFormatter mapAdapter;
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final GameController gameController) {
+    public void setController(final GameControllerImpl gameController) {
         this.gameController = gameController;
         this.obstacleController = gameController.getObstacleController();
-        this.mapAdapter = gameController.getMapAdapter();
+        this.mapAdapter = gameController.getMapFormatter();
         this.chunksNumber = gameController.getMapHeight();
         this.cellsPerRow = gameController.getMapWidth();
         addKeyListener(gameController);

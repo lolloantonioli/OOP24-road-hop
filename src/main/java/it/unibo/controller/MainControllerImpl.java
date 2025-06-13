@@ -26,7 +26,7 @@ public class MainControllerImpl implements MainController {
     private final ShopModel shopModel;
     private final MovingObstacleFactory obstacleFactory;
     private Optional<GameEngine> gameEngine;
-    private Optional<GameController> gameController;
+    private Optional<GameControllerImpl> gameController;
     
     // Game components - recreated for each new game
     private GameMap gameMap;
@@ -74,7 +74,7 @@ public class MainControllerImpl implements MainController {
         gameFrame.show(CardName.GAME);
         
         // Create new game controller
-        gameController = Optional.of(new GameController(
+        gameController = Optional.of(new GameControllerImpl(
             gameEngine.orElse(null), // Will be set below
             gameMap,
             obstacleController
@@ -91,7 +91,7 @@ public class MainControllerImpl implements MainController {
         ));
         
         // Update game controller with the new engine
-        gameController = Optional.of(new GameController(
+        gameController = Optional.of(new GameControllerImpl(
             gameEngine.get(),
             gameMap,
             obstacleController
@@ -132,7 +132,7 @@ public class MainControllerImpl implements MainController {
      * Gets the current game controller.
      * @return the current GameController instance
      */
-    public Optional<GameController> getGameController() {
+    public Optional<GameControllerImpl> getGameController() {
         return gameController;
     }
 

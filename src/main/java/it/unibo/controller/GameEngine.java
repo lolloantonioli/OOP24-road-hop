@@ -14,7 +14,7 @@ public class GameEngine implements Runnable {
     private final MovingObstacleController obstacleController;
     private final MovingObstacleFactory obstacleFactory;
     private final MainController mainController;
-    private final GameController gameController;
+    private final GameControllerImpl gameController;
 
     private boolean running = true;
     private int frameCounter = 0;
@@ -29,7 +29,7 @@ public class GameEngine implements Runnable {
                       final MovingObstacleController obstacleController,
                       final MovingObstacleFactory obstacleFactory,
                       final MainController mainController,
-                      final GameController gameController) {
+                      final GameControllerImpl gameController) {
         this.gameMap = gameMap;
         this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
@@ -97,7 +97,7 @@ public class GameEngine implements Runnable {
         return this.mainController;
     }
 
-    public GameController gameController() {
+    public GameControllerImpl gameController() {
         return this.gameController;
     }
 

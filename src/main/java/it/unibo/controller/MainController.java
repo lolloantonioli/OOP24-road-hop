@@ -44,7 +44,7 @@ public interface MainController {
 
     GameMap getGameMap();
 
-    Optional<GameController> getGameController();
+    Optional<GameControllerImpl> getGameController();
 
     Optional<GameEngine> getGameEngine();
 
