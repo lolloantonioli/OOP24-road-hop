@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Map.impl.MapFormatterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.controller.State.impl.PauseState;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;

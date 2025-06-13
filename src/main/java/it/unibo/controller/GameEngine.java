@@ -1,6 +1,8 @@
 package it.unibo.controller;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.controller.State.api.GameState;
+import it.unibo.controller.State.impl.OnGameState;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;

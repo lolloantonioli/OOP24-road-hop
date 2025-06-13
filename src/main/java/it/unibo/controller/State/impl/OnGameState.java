@@ -1,4 +1,7 @@
-package it.unibo.controller;
+package it.unibo.controller.State.impl;
+
+import it.unibo.controller.GameEngine;
+import it.unibo.controller.State.api.GameState;
 
 public class OnGameState implements GameState {
 
