@@ -54,4 +54,6 @@ public interface Cell {
      */
     int getY();
 
+    boolean equals(Object obj);
+
 }
