@@ -48,4 +48,30 @@ public class PausePanel extends JPanel {
         menuButton.addActionListener(e -> onMenu.run());
     }
 
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        int minDim = Math.min(width, height);
+        int baseFontSize = Math.max(12, minDim / 15);
+        // Aggiorna il font dei bottoni
+        continueButton.setFont(continueButton.getFont().deriveFont((float) baseFontSize));
+        menuButton.setFont(menuButton.getFont().deriveFont((float) baseFontSize));
+        // Calcola larghezza minima necessaria
+        int minButtonWidth = Math.max(
+            getFontMetrics(continueButton.getFont()).stringWidth(CONTINUE_BUTTON_TEXT),
+            getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT)
+        ) + 40;
+        int buttonWidth = Math.max(minButtonWidth, width / 3);
+        int buttonHeight = Math.max(40, height / 10);
+        continueButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        menuButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        continueButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
+        menuButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
+        continueButton.setPreferredSize(null);
+        menuButton.setPreferredSize(null);
+        continueButton.setHorizontalTextPosition(JButton.CENTER);
+        menuButton.setHorizontalTextPosition(JButton.CENTER);
+        continueButton.setText(CONTINUE_BUTTON_TEXT);
+        menuButton.setText(MENU_BUTTON_TEXT);
+    }
 }
