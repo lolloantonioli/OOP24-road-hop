@@ -62,9 +62,9 @@ public class MainControllerImpl implements MainController {
         initializeGameComponents();
         gameFrame.show(CardName.GAME);
         gameController = Optional.of(new GameControllerImpl(
-            gameEngine.orElse(null),
             gameMap,
-            obstacleController
+            obstacleController,
+            this
         ));
         gameEngine = Optional.of(new GameEngine(
             gameMap,
@@ -73,11 +73,6 @@ public class MainControllerImpl implements MainController {
             obstacleFactory,
             this,
             gameController.get()
-        ));
-        gameController = Optional.of(new GameControllerImpl(
-            gameEngine.get(),
-            gameMap,
-            obstacleController
         ));
         
         new Thread(gameEngine.get()).start();

@@ -19,26 +19,26 @@ import it.unibo.model.Player.api.Player;
  */
 public class GameControllerImpl extends KeyAdapter implements GameController {
     
-    private final GameEngine gameEngine;
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
+    private final MainController mainController;
 
-    public GameControllerImpl(final GameEngine gameEngine,
-                              final GameMap gameMap,
-                              final MovingObstacleController obstacleController) {
-        this.gameEngine = gameEngine;
+    public GameControllerImpl(final GameMap gameMap,
+                              final MovingObstacleController obstacleController,
+                              final MainController mainController) {
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
         this.mapAdapter = new MapFormatterImpl(gameMap);
+        this.mainController = mainController;
     }
 
     @Override
     public void keyPressed(final KeyEvent e) {
-        if (gameEngine.getState().getName() == StateName.ON_GAME) {
+        if (mainController.getGameEngine().get().getState().getName() == StateName.ON_GAME) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_P:
-                    gameEngine.setState(new PauseState());
+                    mainController.getGameEngine().get().setState(new PauseState());
                     break;
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
