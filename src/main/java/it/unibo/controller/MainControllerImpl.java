@@ -124,6 +124,7 @@ public class MainControllerImpl implements MainController {
      * Gets the current game map.
      * @return the current GameMap instance, or null if no game is active
      */
+    @Override
     public GameMap getGameMap() {
         return gameMap;
     }
@@ -132,6 +133,7 @@ public class MainControllerImpl implements MainController {
      * Gets the current game controller.
      * @return the current GameController instance
      */
+    @Override
     public Optional<GameController> getGameController() {
         return gameController;
     }
@@ -166,6 +168,7 @@ public class MainControllerImpl implements MainController {
      * Gets the current game engine.
      * @return the current GameEngine instance
      */
+    @Override
     public Optional<GameEngine> getGameEngine() {
         return gameEngine;
     }

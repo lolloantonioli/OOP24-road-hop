@@ -118,7 +118,6 @@ public class GamePanel extends JPanel {
         if (!obstacle.isVisible()) {
             return;
         }
-        
         ObstacleType type = obstacle.getType();
         
         // Calcola la posizione e dimensione in pixel
