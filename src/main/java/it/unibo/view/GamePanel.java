@@ -61,21 +61,24 @@ public class GamePanel extends JPanel {
             }
         }
 
-        // Disegna gli ostacoli mobili
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
         }
 
         if (countdownValue.isPresent()) {
-            g.setColor(new Color(0, 0, 0, 180));
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(Color.WHITE);
-            g.setFont(new Font("Arial", Font.BOLD, getWidth() / 5));
-            String text = countdownValue.get() > 0 ? String.valueOf(countdownValue.get()) : "GO!";
-            int textWidth = g.getFontMetrics().stringWidth(text);
-            int textHeight = g.getFontMetrics().getAscent();
-            g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2);
+            drawCountdown(g);
         }
+    }
+
+    private void drawCountdown(final Graphics g) {
+        g.setColor(new Color(0, 0, 0, 180));
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, getWidth() / 5));
+        final String text = countdownValue.get() > 0 ? String.valueOf(countdownValue.get()) : "GO!";
+        final int textWidth = g.getFontMetrics().stringWidth(text);
+        final int textHeight = g.getFontMetrics().getAscent();
+        g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2);
     }
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
@@ -83,7 +86,6 @@ public class GamePanel extends JPanel {
         List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
 
         for (MovingObstacles obstacle : obstacles) {
-            // Trova l'indice relativo del chunk visibile
             int screenY = -1;
             for (int i = 0; i < visibleChunks.size(); i++) {
                 if (visibleChunks.get(i).getPosition() == obstacle.getY()) {
@@ -92,16 +94,14 @@ public class GamePanel extends JPanel {
                 }
             }
 
-            if (screenY == -1) continue; // Chunk non visibile
+            if (screenY == -1) continue;
 
             int obstacleX = (int) obstacle.getX();
             int obstacleWidth = obstacle.getWidthInCells();
             
-            // Calcola i limiti di visibilità corretti
             int leftBound = Math.max(0, obstacleX);
             int rightBound = Math.min(cellsPerRow, obstacleX + obstacleWidth);
             
-            // Se l'ostacolo è completamente fuori dai bounds, non disegnarlo
             if (leftBound >= rightBound || rightBound <= 0 || leftBound >= cellsPerRow) {
                 continue;
             }
@@ -121,20 +121,16 @@ public class GamePanel extends JPanel {
         
         ObstacleType type = obstacle.getType();
         
-        // Calcola la posizione e dimensione in pixel
         int pixelX = leftBound * cellWidth;
         int visibleCells = rightBound - leftBound;
         int pixelWidth = visibleCells * cellWidth;
         
-        // Se l'ostacolo inizia prima del bordo sinistro, dobbiamo adjustare il rendering
         if (obstacleX < 0) {
-            // L'ostacolo si estende oltre il bordo sinistro
-            int offsetCells = -obstacleX; // Quante celle sono fuori dal bordo
-            pixelX = 0; // Inizia dal bordo sinistro dello schermo
+            int offsetCells = -obstacleX;
+            pixelX = 0;
             pixelWidth = Math.min(obstacle.getWidthInCells() - offsetCells, cellsPerRow) * cellWidth;
         }
         
-        // Assicurati che non disegniamo oltre i bordi dello schermo
         if (pixelX + pixelWidth > getWidth()) {
             pixelWidth = getWidth() - pixelX;
         }
@@ -143,7 +139,6 @@ public class GamePanel extends JPanel {
             return;
         }
         
-        // Disegna l'ostacolo con il colore appropriato
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
             g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);
