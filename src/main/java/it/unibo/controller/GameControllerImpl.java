@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Map.impl.MapFormatterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
-import it.unibo.controller.Player.api.PlayerController;
-import it.unibo.controller.Player.impl.PlayerControllerImpl;
 import it.unibo.controller.State.impl.PauseState;
 import it.unibo.controller.Util.StateName;
 import it.unibo.model.Map.api.GameMap;
@@ -25,7 +23,6 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
-    private final PlayerController playerController;
 
     public GameControllerImpl(final GameEngine gameEngine,
                               final GameMap gameMap,
@@ -34,8 +31,7 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
         this.mapAdapter = new MapFormatterImpl(gameMap);
-        //da cambiare i magic number
-        this.playerController = new PlayerControllerImpl(gameMap, /*ShopModel.getSelectedskin() */null, /*da dove iniziare */getMapWidth()/2, 2);
+    
     }
 
     @Override
@@ -66,7 +62,7 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
                     break;
             }
             if (movementDirection != null) {
-                playerController.movePlayer(movementDirection);
+                //avverte l'observer che devo ancora fare
             }
         }
     }
