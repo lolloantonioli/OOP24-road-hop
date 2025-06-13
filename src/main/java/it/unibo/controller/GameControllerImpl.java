@@ -7,6 +7,7 @@ import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Map.impl.MapFormatterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.State.impl.PauseState;
+import it.unibo.controller.Util.StateName;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
@@ -23,8 +24,9 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
 
-    public GameControllerImpl(GameEngine gameEngine, GameMap gameMap, 
-                         MovingObstacleController obstacleController) {
+    public GameControllerImpl(final GameEngine gameEngine,
+                              final GameMap gameMap,
+                              final MovingObstacleController obstacleController) {
         this.gameEngine = gameEngine;
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
@@ -32,8 +34,8 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        if (gameEngine.getState().getName().equals("ON_GAME")) {
+    public void keyPressed(final KeyEvent e) {
+        if (gameEngine.getState().getName() == StateName.ON_GAME) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_P:
                     gameEngine.setState(new PauseState());

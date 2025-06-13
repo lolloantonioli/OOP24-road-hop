@@ -2,21 +2,22 @@ package it.unibo.controller.State.impl;
 
 import it.unibo.controller.GameEngine;
 import it.unibo.controller.State.api.GameState;
+import it.unibo.controller.Util.StateName;
 
 public class PauseState implements GameState {
 
     private boolean panelShown = false;
 
     @Override
-    public void update(GameEngine context) {
+    public void update(final GameEngine context) {
         
     }
 
     @Override
-    public void render(GameEngine context) {
+    public void render(final GameEngine context) {
         if (!panelShown) {
             context.getMainController().showPausePanel(
-                () -> { // Riprendi
+                () -> {
                     context.getMainController().hidePausePanel();
                     context.getGamePanel().requestFocusInWindow();
                     new Thread(() -> {
@@ -24,9 +25,9 @@ public class PauseState implements GameState {
                         context.setState(new OnGameState());
                     }).start();
                 },
-                () -> { // Torna al menu
+                () -> {
                     context.getMainController().hidePausePanel();
-                    context.stop(); // Ferma il game loop
+                    context.stop();
                     context.getMainController().goToMenu();
                 }
             );
@@ -35,9 +36,8 @@ public class PauseState implements GameState {
     }
 
     @Override
-    public String getName() {
-        return "PAUSE";
+    public StateName getName() {
+        return StateName.PAUSE;
     }
-
 
 }

@@ -1,6 +1,7 @@
 package it.unibo.controller.State.api;
 
 import it.unibo.controller.GameEngine;
+import it.unibo.controller.Util.StateName;
 
 public interface GameState {
 
@@ -8,6 +9,6 @@ public interface GameState {
 
     void render(GameEngine context);
 
-    String getName();
+    StateName getName();
 
 }

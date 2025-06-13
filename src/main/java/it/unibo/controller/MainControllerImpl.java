@@ -27,8 +27,6 @@ public class MainControllerImpl implements MainController {
     private final MovingObstacleFactory obstacleFactory;
     private Optional<GameEngine> gameEngine;
     private Optional<GameControllerImpl> gameController;
-    
-    // Game components - recreated for each new game
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
 
@@ -44,13 +42,9 @@ public class MainControllerImpl implements MainController {
         this.gameEngine = Optional.empty();
         this.gameController = Optional.empty();
         
-        // Initialize game components
         initializeGameComponents();
     }
 
-    /**
-     * Initializes or reinitializes all game components for a new game.
-     */
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
@@ -64,23 +58,14 @@ public class MainControllerImpl implements MainController {
     
     @Override
     public void goToGame() {
-        // Stop any existing game
         stopCurrentGame();
-        
-        // Initialize new game components
         initializeGameComponents();
-        
-        // Show the game panel
         gameFrame.show(CardName.GAME);
-        
-        // Create new game controller
         gameController = Optional.of(new GameControllerImpl(
-            gameEngine.orElse(null), // Will be set below
+            gameEngine.orElse(null),
             gameMap,
             obstacleController
         ));
-        
-        // Create new game engine
         gameEngine = Optional.of(new GameEngine(
             gameMap,
             gameFrame.getGamePanel(),
@@ -89,18 +74,13 @@ public class MainControllerImpl implements MainController {
             this,
             gameController.get()
         ));
-        
-        // Update game controller with the new engine
         gameController = Optional.of(new GameControllerImpl(
             gameEngine.get(),
             gameMap,
             obstacleController
         ));
         
-        // Start the new game thread
         new Thread(gameEngine.get()).start();
-        
-        // Set up the game panel with the new controller
         gameFrame.getGamePanel().setController(gameController.get());
     }
 
@@ -153,7 +133,7 @@ public class MainControllerImpl implements MainController {
     }
     
     @Override
-    public void showPausePanel(Runnable onContinue, Runnable onMenu) {
+    public void showPausePanel(final Runnable onContinue, final Runnable onMenu) {
         gameFrame.showPausePanel(onContinue, onMenu);
     }
 
