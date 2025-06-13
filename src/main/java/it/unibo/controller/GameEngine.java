@@ -7,6 +7,8 @@ import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
+//aggiungere il playerController
+
 public class GameEngine implements Runnable {
 
     private final GameMap gameMap;
@@ -141,6 +143,7 @@ public class GameEngine implements Runnable {
             obstacleController.generateObstacles(difficultyLevel);
         }
         gameController.updateObstacles();
+        gameController.updatePlayer();
     }
 
 }

@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Map.impl.MapFormatterImpl;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.controller.Player.api.PlayerController;
 import it.unibo.controller.State.impl.PauseState;
 import it.unibo.controller.Util.StateName;
 import it.unibo.model.Map.api.GameMap;
@@ -23,13 +24,16 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
+    private final PlayerController playerController;
 
     public GameControllerImpl(final GameEngine gameEngine,
                               final GameMap gameMap,
-                              final MovingObstacleController obstacleController) {
+                              final MovingObstacleController obstacleController,
+                              final PlayerController playerController) {
         this.gameEngine = gameEngine;
         this.gameMap = gameMap;
         this.obstacleController = obstacleController;
+        this.playerController = playerController;
         this.mapAdapter = new MapFormatterImpl(gameMap);
     
     }
@@ -48,21 +52,21 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
                     break;
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_D:
-                    movementDirection = Direction.LEFT;
+                    movementDirection = Direction.RIGHT;
                     break;
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
-                    movementDirection = Direction.LEFT;
+                    movementDirection = Direction.UP;
                     break;
                 case KeyEvent.VK_DOWN:
                 case KeyEvent.VK_S:
-                    movementDirection = Direction.LEFT;
+                    movementDirection = Direction.DOWN;
                     break;
                 default:
                     break;
             }
             if (movementDirection != null) {
-                //avverte l'observer che devo ancora fare
+                playerController.movePlayer(movementDirection);
             }
         }
     }
@@ -78,6 +82,11 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         obstacleController.update();
     }
 
+    @Override
+    public void updatePlayer() {
+        playerController.update();
+    }
+
     /**
      * Gets the game map.
      */
@@ -90,6 +99,11 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
      */
     public MovingObstacleController getObstacleController() {
         return obstacleController;
+    }
+
+    @Override
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 
     public MapFormatter getMapFormatter() {

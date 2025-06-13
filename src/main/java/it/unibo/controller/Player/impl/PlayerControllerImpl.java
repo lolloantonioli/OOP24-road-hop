@@ -67,6 +67,7 @@ public class PlayerControllerImpl implements PlayerController {
             processCollisions();
             if (isPlayerDrowned()) {
                 killPlayer();
+                System.out.println("annegato da move player");
             }
         }
         
@@ -93,6 +94,7 @@ public class PlayerControllerImpl implements PlayerController {
 
         List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
 
+        System.out.println(collidedObjects);
         Optional<GameObject> newPlatform = Optional.empty();
 
         for (GameObject obj : collidedObjects) {

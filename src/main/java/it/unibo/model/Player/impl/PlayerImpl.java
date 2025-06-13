@@ -81,10 +81,10 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public void die() {
-        if (isOutOfBounds) {
+        /*if (isOutOfBounds) {
             isAlive = false;
             return;
-        }
+        }*/
         
         if (isInvincible) {
             return; // Non può morire se invincibile

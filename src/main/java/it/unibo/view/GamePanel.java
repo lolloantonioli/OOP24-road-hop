@@ -11,9 +11,11 @@ import javax.swing.JPanel;
 import it.unibo.controller.GameControllerImpl;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
+import it.unibo.model.Player.api.Player;
 
 public class GamePanel extends JPanel {
 
@@ -68,6 +70,8 @@ public class GamePanel extends JPanel {
         if (countdownValue.isPresent()) {
             drawCountdown(g);
         }
+
+        drawPlayer(g, cellWidth, cellHeight);
     }
 
     private void drawCountdown(final Graphics g) {
@@ -165,6 +169,67 @@ public class GamePanel extends JPanel {
         g.setColor(Color.WHITE);
         g.drawRect(x, y, cellWidth, cellHeight);
     }
+
+    private void drawPlayer(final Graphics g, final int cellWidth, final int cellHeight) {
+    if (gameController == null) {
+        return;
+    }
+    
+    // Ottieni la posizione del player dal controller
+    Cell playerPosition = gameController.getPlayerController().getPlayerPosition();
+    Player player = gameController.getPlayerController().getPlayer();
+    
+    if (playerPosition == null || player == null || !gameController.getPlayerController().isPlayerAlive()) {
+        return;
+    }
+    
+    // Calcola le coordinate del player sullo schermo
+    int playerCol = playerPosition.getX();
+    int playerChunkY = playerPosition.getY();
+    
+    // Trova la riga visibile corrispondente alla posizione Y del player
+    List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
+    int screenRow = -1;
+    
+    for (int i = 0; i < visibleChunks.size(); i++) {
+        if (visibleChunks.get(i).getPosition() == playerChunkY) {
+            screenRow = i;
+            break;
+        }
+    }
+    
+    // Se il player non è visibile, non disegnarlo
+    if (screenRow == -1 || playerCol < 0 || playerCol >= cellsPerRow) {
+        return;
+    }
+    
+    // Calcola le coordinate pixel
+    int pixelX = playerCol * cellWidth;
+    int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
+    
+    // Disegna il player
+    drawPlayerSprite(g, pixelX, pixelY, cellWidth, cellHeight, player);
+}
+
+private void drawPlayerSprite(final Graphics g, final int x, final int y, 
+                             final int cellWidth, final int cellHeight, final Player player) {
+    
+    // Ottieni il colore della skin del player (se disponibile)
+    Color playerColor = Color.PINK;
+    
+    // Disegna il corpo del player (rettangolo principale)
+    g.setColor(playerColor);
+    int bodyWidth = cellWidth * 3 / 4;
+    int bodyHeight = cellHeight * 3 / 4;
+    int bodyX = x + (cellWidth - bodyWidth) / 2;
+    int bodyY = y + (cellHeight - bodyHeight) / 2;
+    
+    g.fillOval(bodyX, bodyY, bodyWidth, bodyHeight);
+    
+    // Disegna il bordo del player
+    g.setColor(Color.BLACK);
+    g.drawOval(bodyX, bodyY, bodyWidth, bodyHeight);
+}
 
     public void refresh() {
         repaint();

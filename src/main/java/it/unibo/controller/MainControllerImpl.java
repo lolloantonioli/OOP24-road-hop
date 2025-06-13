@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
+import it.unibo.controller.Player.api.PlayerController;
+import it.unibo.controller.Player.impl.PlayerControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
@@ -29,6 +31,7 @@ public class MainControllerImpl implements MainController {
     private Optional<GameControllerImpl> gameController;
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
+    private PlayerController playerController;
 
     /**
      * Constructor for MainControllerImpl.
@@ -48,6 +51,7 @@ public class MainControllerImpl implements MainController {
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
+        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2);
     }
 
     @Override
@@ -64,7 +68,8 @@ public class MainControllerImpl implements MainController {
         gameController = Optional.of(new GameControllerImpl(
             gameEngine.orElse(null),
             gameMap,
-            obstacleController
+            obstacleController,
+            playerController
         ));
         gameEngine = Optional.of(new GameEngine(
             gameMap,
@@ -77,7 +82,8 @@ public class MainControllerImpl implements MainController {
         gameController = Optional.of(new GameControllerImpl(
             gameEngine.get(),
             gameMap,
-            obstacleController
+            obstacleController,
+            playerController
         ));
         
         new Thread(gameEngine.get()).start();
