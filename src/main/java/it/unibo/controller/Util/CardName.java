@@ -7,6 +7,7 @@ public final class CardName {
     public static final CardName INSTRUCTIONS = new CardName("INSTRUCTIONS");
     public static final CardName SHOP = new CardName("SHOP");
     public static final CardName PAUSE = new CardName("PAUSE");
+    public static final CardName GAME_OVER = new CardName("GAME_OVER");
 
     private final String name;
 

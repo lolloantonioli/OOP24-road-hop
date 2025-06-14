@@ -35,6 +35,8 @@ public interface MainController {
     void showPausePanel(Runnable onContinue, Runnable onMenu);
 
     void hidePausePanel();
+    
+    void showGameOverPanel();
 
     /**
      * Getter for the ShopModel.

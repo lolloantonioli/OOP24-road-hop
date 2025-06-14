@@ -51,7 +51,7 @@ public class MainControllerImpl implements MainController {
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
-        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2);
+        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2, this);
     }
 
     @Override
@@ -149,6 +149,11 @@ public class MainControllerImpl implements MainController {
      */
     public Optional<GameEngine> getGameEngine() {
         return gameEngine;
+    }
+
+    @Override
+    public void showGameOverPanel() {
+        gameFrame.showGameOverPanel();
     }
 
 }

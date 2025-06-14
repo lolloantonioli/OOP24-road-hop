@@ -24,6 +24,7 @@ import it.unibo.model.Player.impl.MovementValidatorImpl;
 import it.unibo.model.Player.impl.PlayerImpl;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
+import it.unibo.controller.MainController;
 
 public class PlayerControllerImpl implements PlayerController {
 
@@ -36,14 +37,15 @@ public class PlayerControllerImpl implements PlayerController {
     private final MovementValidator movementValidator;
     private final CollisionHandler collisionHandler;
     private final PlatformMovementObserver platformObserver;
+    private final MainController mainController;
 
     private MovingObstacles currentPlatform = null;
     
     //da aggiungere current platform all'input?
-    public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY) {
+    public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY, final MainController mainController) {
         checkNotNull(gameMap, "GameMap cannot be null");
         checkNotNull(initialSkin, "Initial skin cannot be null");
-        
+        checkNotNull(mainController, "MainController cannot be null");
         this.gameMap = gameMap;
         this.player = new PlayerImpl(startX, startY, initialSkin);
         this.collisionDetector = new CollisionDetectorImpl();
@@ -51,6 +53,7 @@ public class PlayerControllerImpl implements PlayerController {
         this.movementValidator = new MovementValidatorImpl();
         this.collisionHandler = new CollisionHandlerImpl();
         this.platformObserver = new PlatformMovementObserverImpl(player);
+        this.mainController = mainController;
     }
 
     @Override
@@ -85,6 +88,9 @@ public class PlayerControllerImpl implements PlayerController {
 
     private void killPlayer() {
         player.die();
+        if (mainController != null) {
+            mainController.showGameOverPanel();
+        }
     }
 
     @Override

@@ -20,6 +20,7 @@ public class GameFrame extends JFrame {
     private final ShopView shopView;
     private final InstructionsPanel instructionsPanel;
     private final GamePanel gamePanel;
+    private final GameOverPanel gameOverPanel;
 
     private static final String FRAME_NAME = "Road Hop";
     private static final String MSG = "CardName cannot be null";
@@ -33,6 +34,7 @@ public class GameFrame extends JFrame {
         this.shopView = new ShopView();
         this.instructionsPanel = new InstructionsPanel(controller);
         this.gamePanel = new GamePanel();
+        this.gameOverPanel = new GameOverPanel(() -> controller.goToMenu());
 
         this.setTitle(FRAME_NAME);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,6 +43,7 @@ public class GameFrame extends JFrame {
         root.add((Component) shopView, CardName.SHOP.toString());
         root.add((Component) instructionsPanel, CardName.INSTRUCTIONS.toString());
         root.add((Component) gamePanel, CardName.GAME.toString());
+        root.add((Component) gameOverPanel, CardName.GAME_OVER.toString());
         this.add(root);
         this.pack();
         this.setLocationRelativeTo(null);
@@ -76,6 +79,10 @@ public class GameFrame extends JFrame {
 
     public void hidePausePanel() {
         this.layout.show(this.root, CardName.GAME.toString());
+    }
+
+    public void showGameOverPanel() {
+        this.show(CardName.GAME_OVER);
     }
 
 }
