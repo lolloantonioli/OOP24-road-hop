@@ -82,10 +82,4 @@ public interface PlayerController {
      */
     boolean isPlayerOnPlatform();
 
-    //DA CAPIRE COME GESTIRE IL MOVIMENTO DEI TRONCHI, COSA PRENDERE IN INPUT?
-    /**
-     * Moves the player along with a platform (e.g., log movement on water).
-     * This method is called when the player is on a moving platform.
-     */
-    //void moveWithPlatform();
 }

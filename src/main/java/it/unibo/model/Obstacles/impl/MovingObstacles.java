@@ -3,6 +3,7 @@ package it.unibo.model.Obstacles.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unibo.controller.Player.api.PlatformMovementObserver;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.CellImpl;
@@ -19,6 +20,7 @@ public class MovingObstacles implements Obstacle{
     private boolean visible;
     private int updateCounter; // Per gestire movimento sub-cella
     private static final int BASE_MOVEMENT_THRESHOLD = 50; 
+    private static final List<PlatformMovementObserver> observers = new ArrayList<>();
 
     // Costanti per le dimensioni in celle
     public static final int CAR_WIDTH_CELLS = 1;
@@ -64,18 +66,24 @@ public class MovingObstacles implements Obstacle{
         
         if (updateCounter >= movementThreshold) {
             updateCounter = 0;
+
+            int deltaX = 0;
             
             if (speed > 0) {
                 cellX++;
                 if (cellX >= CELLS_PER_CHUNK) {
                     this.visible = false;
                 }
+                deltaX = 1;
             } else if (speed < 0) {
                 cellX--;
                 if (cellX + getWidthInCells() - 1 < 0) {
                     this.visible = false;
                 }
+                deltaX = -1;
             }
+
+            notifyObservers(deltaX);
         }
     }
      
@@ -225,6 +233,20 @@ public class MovingObstacles implements Obstacle{
         List<Cell> list = new ArrayList<>();
         getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));
         return list;
+    }
+
+    public void addObserver(PlatformMovementObserver obs) {
+        if(isPlatform()) {
+            observers.add(obs);
+        }
+    }
+
+    public void removeObserver(PlatformMovementObserver obs) {
+        observers.remove(obs);
+    }
+
+    private void notifyObservers(int deltaX) {
+        observers.forEach(o -> o.moveWithPlatform(deltaX));
     }
 
 }

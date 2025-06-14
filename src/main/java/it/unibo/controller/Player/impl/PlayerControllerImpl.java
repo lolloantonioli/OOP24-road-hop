@@ -3,10 +3,9 @@ package it.unibo.controller.Player.impl;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
-import java.util.Optional;
 
 import it.unibo.model.Player.api.CollisionHandler;
-import it.unibo.controller.Player.api.OnPlatform;
+import it.unibo.controller.Player.api.PlatformMovementObserver;
 import it.unibo.controller.Player.api.PlayerController;
 import it.unibo.model.Collision.api.CollisionDetector;
 import it.unibo.model.Collision.impl.CollisionDetectorImpl;
@@ -14,8 +13,8 @@ import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.impl.CellImpl;
 import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.Obstacles.impl.MovingObstacles;
 import it.unibo.model.Player.api.CollisionIdentifier;
 import it.unibo.model.Player.api.MovementValidator;
 import it.unibo.model.Player.api.Player;
@@ -24,7 +23,6 @@ import it.unibo.model.Player.impl.CollisionIdentifierImpl;
 import it.unibo.model.Player.impl.MovementValidatorImpl;
 import it.unibo.model.Player.impl.PlayerImpl;
 import it.unibo.model.Player.util.Direction;
-import it.unibo.model.Player.util.Pair;
 import it.unibo.model.Shop.api.Skin;
 
 public class PlayerControllerImpl implements PlayerController {
@@ -37,7 +35,9 @@ public class PlayerControllerImpl implements PlayerController {
     private final CollisionIdentifier collisionIdentifier;
     private final MovementValidator movementValidator;
     private final CollisionHandler collisionHandler;
-    private final OnPlatform platformHandler;
+    private final PlatformMovementObserver platformObserver;
+
+    private MovingObstacles currentPlatform = null;
     
     //da aggiungere current platform all'input?
     public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY) {
@@ -50,7 +50,8 @@ public class PlayerControllerImpl implements PlayerController {
         this.collisionIdentifier = new CollisionIdentifierImpl();
         this.movementValidator = new MovementValidatorImpl();
         this.collisionHandler = new CollisionHandlerImpl();
-        this.platformHandler = new OnPlatformImpl();
+        this.platformObserver = new PlatformMovementObserverImpl(player);
+        
     }
 
     @Override
@@ -95,12 +96,12 @@ public class PlayerControllerImpl implements PlayerController {
         List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
 
         System.out.println(collidedObjects);
-        Optional<GameObject> newPlatform = Optional.empty();
+        MovingObstacles newPlatform = null;
 
         for (GameObject obj : collidedObjects) {
             try {
                 if (collisionIdentifier.isOnPlatform(obj)) {
-                    newPlatform = Optional.of(obj);
+                    newPlatform = (MovingObstacles) obj;
                 }
                 
                 if (collisionIdentifier.isFatalCollision(obj)) {
@@ -116,7 +117,7 @@ public class PlayerControllerImpl implements PlayerController {
             }
         }
 
-        platformHandler.setCurrentPlatform(newPlatform);
+        setNewPlatform(newPlatform);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class PlayerControllerImpl implements PlayerController {
     @Override
     public void resetPlayer() {
         player.reset();
-        platformHandler.setCurrentPlatform(null);
+        setNewPlatform(null);
     }
 
     @Override
@@ -164,12 +165,6 @@ public class PlayerControllerImpl implements PlayerController {
                 processCollisions();
             }
 
-            //ha senso?
-            if(platformHandler.isOnPlatform()) {
-                Pair movement = platformHandler.hasMoved();
-                player.move(new CellImpl(player.getX()+movement.x(),player.getY()+movement.y()));
-            }
-
             //controlla se il player è ancora in una posizione valida
             player.setOutOfBounds(movementValidator.isOutOfBounds(player.getCurrentCell(), gameMap));
             if(player.isOutOfBounds()) {
@@ -180,7 +175,19 @@ public class PlayerControllerImpl implements PlayerController {
 
     @Override
     public boolean isPlayerOnPlatform() {
-        return platformHandler.isOnPlatform();    
+        return currentPlatform != null;    
+    }
+
+    private void setNewPlatform(MovingObstacles newPlatform) {
+        if (currentPlatform != null) {
+            currentPlatform.removeObserver(platformObserver);
+        }
+
+        if (newPlatform != null) {
+            newPlatform.addObserver(platformObserver);
+        }
+
+        currentPlatform = newPlatform;
     }
 
 }
