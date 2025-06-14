@@ -4,19 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.controller.Player.api.PlatformMovementObserver;
-import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.CellImpl;
+import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
 // metodi setter da mettere a posto ! 
 
-public class MovingObstacles implements Obstacle{
-    private int cellX; 
-    private final int chunkY;
+public class MovingObstacles extends GameObjectImpl implements Obstacle{
     private final ObstacleType type;
-    private int speed;
-    private boolean movable;
     private boolean visible;
     private int updateCounter; // Per gestire movimento sub-cella
     private static final int BASE_MOVEMENT_THRESHOLD = 50; 
@@ -29,23 +24,29 @@ public class MovingObstacles implements Obstacle{
     public static final int CELLS_PER_CHUNK = 9;
 
     public MovingObstacles(int cellX, int chunkY, ObstacleType type, int speed) {
-        this.cellX = cellX;
-        this.chunkY = chunkY;
+        super(cellX, chunkY, getWidthForType(type));
         this.type = type;
-        this.speed = speed;
-        this.movable = true;
+        super.setSpeed(speed);
+        super.setMovable(true);
         this.visible = true;
         this.updateCounter = 0;
+        addToAllCells();
     }
-    
-    @Override
-    public int getX() {
-        return cellX;
+
+    private void addToAllCells() {
+        getOccupiedCells2().forEach(c -> c.addObject(this));
     }
-    
-    @Override
-    public int getY() {
-        return chunkY;
+
+    private void removeFromAllCells() {
+        getOccupiedCells2().forEach(c -> c.removeObject(this));
+    }
+
+    private static int getWidthForType(ObstacleType type) {
+        return switch (type.toString()) {
+            case "TRAIN" -> TRAIN_WIDTH_CELLS;
+            case "LOG" -> LOG_WIDTH_CELLS;
+            default -> CAR_WIDTH_CELLS;
+        };
     }
     
     @Override
@@ -55,34 +56,36 @@ public class MovingObstacles implements Obstacle{
 
     @Override
     public void update() {
-        if (!movable) {
+        if (!isMovable()) {
             return;
         }
 
         updateCounter++;
         
         // Movimento basato su velocità (ogni N update muove di una cella)
-        int movementThreshold = Math.max(1,  BASE_MOVEMENT_THRESHOLD - Math.abs(speed)); // Più veloce = movimento più frequente
+        int movementThreshold = Math.max(1,  BASE_MOVEMENT_THRESHOLD - Math.abs(getSpeed())); // Più veloce = movimento più frequente
         
         if (updateCounter >= movementThreshold) {
+            removeFromAllCells();
             updateCounter = 0;
 
             int deltaX = 0;
             
-            if (speed > 0) {
-                cellX++;
-                if (cellX >= CELLS_PER_CHUNK) {
+            if (getSpeed() > 0) {
+                setX(getX() + 1);
+                if (getX() >= CELLS_PER_CHUNK) {
                     this.visible = false;
                 }
                 deltaX = 1;
-            } else if (speed < 0) {
-                cellX--;
-                if (cellX + getWidthInCells() - 1 < 0) {
+            } else if (getSpeed() < 0) {
+                setX(getX() - 1);;
+                if (getX() + getWidthInCells() - 1 < 0) {
                     this.visible = false;
                 }
                 deltaX = -1;
             }
 
+            addToAllCells();
             notifyObservers(deltaX);
         }
     }
@@ -92,12 +95,12 @@ public class MovingObstacles implements Obstacle{
     }
 
     public boolean collidesWith(int px, int py) {
-        if (!visible || py != chunkY) {
+        if (!visible || py != getY()) {
             return false;
         }
         
         // Controlla se il punto è nell'area occupata dall'ostacolo
-        return px >= cellX && px < cellX + getWidthInCells();
+        return px >= getX() && px < getX() + getWidthInCells();
     }
     
     /**
@@ -105,34 +108,14 @@ public class MovingObstacles implements Obstacle{
      * 
      * @return Larghezza in celle
      */
-    @Override
+    /*@Override
     public int getWidthInCells() {
         return switch (type.toString()) {
             case "TRAIN" -> TRAIN_WIDTH_CELLS;
             case "LOG" -> LOG_WIDTH_CELLS;
             default -> CAR_WIDTH_CELLS; // CAR e altri ostacoli di dimensione 1
         };
-    }
-
-    @Override
-    public boolean isMovable() {
-        return movable;
-    }
-
-    @Override
-    public void setMovable(boolean movable) {
-        this.movable = movable;
-    }
-
-    @Override
-    public int getSpeed() {
-        return speed;
-    }
-
-    @Override
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
+    }*/
 
     /**
      * Aumenta la velocità dell'ostacolo mantenendo la direzione.
@@ -140,10 +123,10 @@ public class MovingObstacles implements Obstacle{
      * @param amount Quantità da aggiungere
      */
     public void increaseSpeed(int amount) {
-        if (this.speed > 0) {
-            setSpeed(this.speed + amount);
-        } else if (this.speed < 0) {
-            setSpeed(this.speed - amount);
+        if (getSpeed() > 0) {
+            setSpeed(getSpeed() + amount);
+        } else if (getSpeed() < 0) {
+            setSpeed(getSpeed() - amount);
         }
     }
 
@@ -191,7 +174,7 @@ public class MovingObstacles implements Obstacle{
             case "LOG" -> 2; // I tronchi hanno difficoltà media
             default -> 1; // CAR e altri
         };
-        return baseLevel + Math.abs(speed);
+        return baseLevel + Math.abs(getSpeed());
     }
 
     /**
@@ -199,26 +182,14 @@ public class MovingObstacles implements Obstacle{
      * 
      * @return Array delle posizioni X delle celle occupate
      */
-    @Override
+    /*@Override
     public List<Integer> getOccupiedCells() {
         int width = getWidthInCells();
         List<Integer> cells = new ArrayList<>();
         for (int i = 0; i < width; i++) {
-            cells.add(cellX + i);
+            cells.add(getX() + i);
         }
         return cells;
-    }
-
-    @Override
-    public void setX(int x) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setX'");
-    }
-
-    @Override
-    public void setY(int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setY'");
     }
 
     @Override
@@ -233,7 +204,7 @@ public class MovingObstacles implements Obstacle{
         List<Cell> list = new ArrayList<>();
         getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));
         return list;
-    }
+    }*/
 
     public void addObserver(PlatformMovementObserver obs) {
         if(isPlatform()) {

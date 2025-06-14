@@ -119,6 +119,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
         int x = leftToRight ? -factory.getObstacleWidth(type) : 9;
         
         MovingObstacles obstacle = factory.createObstacleByType(type, x, y, leftToRight ? speed : -speed);
+        gameMap.getAllChunks().get(obstacle.getY()).addObjectAt(obstacle, 0);
         manager.addObstacle(obstacle);
     }
 

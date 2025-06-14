@@ -14,6 +14,7 @@ public class PlatformMovementObserverImpl implements PlatformMovementObserver{
 
     @Override
     public void moveWithPlatform(int deltaX) {
+        System.out.println(deltaX);
         player.move(new CellImpl(player.getX() + deltaX, player.getY()));
     }
 

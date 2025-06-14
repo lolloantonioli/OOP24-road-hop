@@ -51,7 +51,6 @@ public class PlayerControllerImpl implements PlayerController {
         this.movementValidator = new MovementValidatorImpl();
         this.collisionHandler = new CollisionHandlerImpl();
         this.platformObserver = new PlatformMovementObserverImpl(player);
-        
     }
 
     @Override
@@ -61,6 +60,7 @@ public class PlayerControllerImpl implements PlayerController {
         if (!player.isAlive()) {
             return false;
         }
+
 
         boolean moveSuccessful = player.tryMove(direction, gameMap, movementValidator);
         
@@ -95,7 +95,6 @@ public class PlayerControllerImpl implements PlayerController {
 
         List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
 
-        System.out.println(collidedObjects);
         MovingObstacles newPlatform = null;
 
         for (GameObject obj : collidedObjects) {

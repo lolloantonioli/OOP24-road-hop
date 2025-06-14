@@ -50,6 +50,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public void move(Cell newPos) {
         super.setX(newPos.getX());
         super.setY(newPos.getY());
+        System.out.println(newPos.getX() + " " + newPos.getY());
         this.updateScore();
     }
 
