@@ -24,7 +24,7 @@ import it.unibo.model.Player.impl.MovementValidatorImpl;
 import it.unibo.model.Player.impl.PlayerImpl;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
-import it.unibo.controller.MainController;
+//import it.unibo.controller.MainController;
 
 public class PlayerControllerImpl implements PlayerController {
 
@@ -37,15 +37,13 @@ public class PlayerControllerImpl implements PlayerController {
     private final MovementValidator movementValidator;
     private final CollisionHandler collisionHandler;
     private final PlatformMovementObserver platformObserver;
-    private final MainController mainController;
 
     private MovingObstacles currentPlatform = null;
     
     //da aggiungere current platform all'input?
-    public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY, final MainController mainController) {
+    public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY) {
         checkNotNull(gameMap, "GameMap cannot be null");
         checkNotNull(initialSkin, "Initial skin cannot be null");
-        checkNotNull(mainController, "MainController cannot be null");
         this.gameMap = gameMap;
         this.player = new PlayerImpl(startX, startY, initialSkin);
         this.collisionDetector = new CollisionDetectorImpl();
@@ -53,7 +51,6 @@ public class PlayerControllerImpl implements PlayerController {
         this.movementValidator = new MovementValidatorImpl();
         this.collisionHandler = new CollisionHandlerImpl();
         this.platformObserver = new PlatformMovementObserverImpl(player);
-        this.mainController = mainController;
     }
 
     @Override
@@ -71,7 +68,6 @@ public class PlayerControllerImpl implements PlayerController {
             processCollisions();
             if (isPlayerDrowned()) {
                 killPlayer();
-                System.out.println("annegato da move player");
             }
         }
         
@@ -88,9 +84,6 @@ public class PlayerControllerImpl implements PlayerController {
 
     private void killPlayer() {
         player.die();
-        if (mainController != null) {
-            mainController.showGameOverPanel();
-        }
     }
 
     @Override
@@ -165,14 +158,13 @@ public class PlayerControllerImpl implements PlayerController {
     public void update() {
         if (player.isAlive()){
 
-            //controlla se è avvenuta una collisione, se il player invincibile non subisce collisioni
-            if (!player.isInvincible()){
-                processCollisions();
-            }
+            if (!player.isInvincible())
+            processCollisions();
 
             //controlla se il player è ancora in una posizione valida
             player.setOutOfBounds(movementValidator.isOutOfBounds(player.getCurrentCell(), gameMap));
             if(player.isOutOfBounds()) {
+                System.out.println("is out of bound");
                 killPlayer();
             }
         }

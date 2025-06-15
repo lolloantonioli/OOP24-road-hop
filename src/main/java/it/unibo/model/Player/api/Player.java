@@ -2,6 +2,7 @@ package it.unibo.model.Player.api;
 
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Player.util.Direction;
+import it.unibo.controller.Player.api.DeathObserver;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Shop.api.Skin;
@@ -117,5 +118,9 @@ public interface Player extends GameObject {
      * @return true if the player is out of bounds, false otherwise
      */
     public boolean isOutOfBounds();
+
+    public void addObserver(DeathObserver observer);
+
+    public void removeObserver(DeathObserver observer);
 
 }

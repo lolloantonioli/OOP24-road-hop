@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
+import it.unibo.controller.Player.api.DeathObserver;
 import it.unibo.controller.Player.api.PlayerController;
+import it.unibo.controller.Player.impl.DeathObserverImpl;
 import it.unibo.controller.Player.impl.PlayerControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
@@ -32,6 +34,7 @@ public class MainControllerImpl implements MainController {
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
     private PlayerController playerController;
+    private DeathObserver deathObserver;
 
     /**
      * Constructor for MainControllerImpl.
@@ -51,7 +54,9 @@ public class MainControllerImpl implements MainController {
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
-        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2, this);
+        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2);
+        this.deathObserver = new DeathObserverImpl(this);
+        playerController.getPlayer().addObserver(deathObserver);
     }
 
     @Override
