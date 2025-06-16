@@ -4,6 +4,10 @@ import java.util.Optional;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
+import it.unibo.controller.Player.api.DeathObserver;
+import it.unibo.controller.Player.api.PlayerController;
+import it.unibo.controller.Player.impl.DeathObserverImpl;
+import it.unibo.controller.Player.impl.PlayerControllerImpl;
 import it.unibo.controller.Shop.api.ShopObserver;
 import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
@@ -26,11 +30,11 @@ public class MainControllerImpl implements MainController {
     private final ShopModel shopModel;
     private final MovingObstacleFactory obstacleFactory;
     private Optional<GameEngine> gameEngine;
-    private Optional<GameController> gameController;
-    
-    // Game components - recreated for each new game
+    private Optional<GameControllerImpl> gameController;
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
+    private PlayerController playerController;
+    private DeathObserver deathObserver;
 
     /**
      * Constructor for MainControllerImpl.
@@ -44,16 +48,16 @@ public class MainControllerImpl implements MainController {
         this.gameEngine = Optional.empty();
         this.gameController = Optional.empty();
         
-        // Initialize game components
         initializeGameComponents();
     }
 
-    /**
-     * Initializes or reinitializes all game components for a new game.
-     */
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
+        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2);
+        this.deathObserver = new DeathObserverImpl(this);
+        // Assicura che ogni nuovo player abbia sempre il DeathObserver
+        playerController.getPlayer().addObserver(deathObserver);
     }
 
     @Override
@@ -64,23 +68,15 @@ public class MainControllerImpl implements MainController {
     
     @Override
     public void goToGame() {
-        // Stop any existing game
         stopCurrentGame();
-        
-        // Initialize new game components
         initializeGameComponents();
-        
-        // Show the game panel
         gameFrame.show(CardName.GAME);
-        
-        // Create new game controller
-        gameController = Optional.of(new GameController(
-            gameEngine.orElse(null), // Will be set below
+        gameController = Optional.of(new GameControllerImpl(
             gameMap,
-            obstacleController
+            obstacleController,
+            this,
+            playerController
         ));
-        
-        // Create new game engine
         gameEngine = Optional.of(new GameEngine(
             gameMap,
             gameFrame.getGamePanel(),
@@ -89,18 +85,9 @@ public class MainControllerImpl implements MainController {
             this,
             gameController.get()
         ));
+
         
-        // Update game controller with the new engine
-        gameController = Optional.of(new GameController(
-            gameEngine.get(),
-            gameMap,
-            obstacleController
-        ));
-        
-        // Start the new game thread
         new Thread(gameEngine.get()).start();
-        
-        // Set up the game panel with the new controller
         gameFrame.getGamePanel().setController(gameController.get());
     }
 
@@ -155,7 +142,7 @@ public class MainControllerImpl implements MainController {
     }
     
     @Override
-    public void showPausePanel(Runnable onContinue, Runnable onMenu) {
+    public void showPausePanel(final Runnable onContinue, final Runnable onMenu) {
         gameFrame.showPausePanel(onContinue, onMenu);
     }
 
@@ -171,6 +158,11 @@ public class MainControllerImpl implements MainController {
     @Override
     public Optional<GameEngine> getGameEngine() {
         return gameEngine;
+    }
+
+    @Override
+    public void showGameOverPanel() {
+        gameFrame.showGameOverPanel();
     }
 
 }

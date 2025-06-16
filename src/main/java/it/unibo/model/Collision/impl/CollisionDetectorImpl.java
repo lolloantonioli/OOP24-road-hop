@@ -14,6 +14,7 @@ public class CollisionDetectorImpl implements CollisionDetector{
     public boolean checkCollision(GameObject obj1, GameObject obj2) {
         checkNotNull(obj1, "not valid object");
         checkNotNull(obj2, "not valid object");
+
         return obj1.getOccupiedCells2().stream()
             .anyMatch(c -> obj2.getOccupiedCells2().contains(c));
     }
@@ -23,8 +24,10 @@ public class CollisionDetectorImpl implements CollisionDetector{
         checkNotNull(obj, "not valid object");
         checkNotNull(map, "not valid map");
         
-        return map.getVisibleChunks().stream()
-            .flatMap(chunk -> chunk.getObjects().stream())
+        return map.getAllChunks()
+            .get(obj.getY())
+            .getObjects()
+            .stream()
             .filter(object -> checkCollision(obj, object))
             .filter(o -> !o.equals(obj))
             .toList();

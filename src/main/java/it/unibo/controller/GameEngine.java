@@ -1,9 +1,13 @@
 package it.unibo.controller;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.controller.State.api.GameState;
+import it.unibo.controller.State.impl.OnGameState;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
+
+//aggiungere il playerController
 
 public class GameEngine implements Runnable {
 
@@ -12,22 +16,20 @@ public class GameEngine implements Runnable {
     private final MovingObstacleController obstacleController;
     private final MovingObstacleFactory obstacleFactory;
     private final MainController mainController;
-    private final GameController gameController;
-
+    private final GameControllerImpl gameController;
+    private GameState currentState;
     private boolean running = true;
     private int frameCounter = 0;
 
     private static final long PERIOD = 16; // 60fps
     private static final int SCROLL_TIME_MS = 1000;
 
-    private GameState currentState;
-
     public GameEngine(final GameMap gameMap,
                       final GamePanel gamePanel,
                       final MovingObstacleController obstacleController,
                       final MovingObstacleFactory obstacleFactory,
                       final MainController mainController,
-                      final GameController gameController) {
+                      final GameControllerImpl gameController) {
         this.gameMap = gameMap;
         this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
@@ -59,8 +61,6 @@ public class GameEngine implements Runnable {
 
     private void processInput() {
         // Il GameController (KeyListener) chiama metodi su GameEngine per cambiare stato
-        // Qui puoi aggiungere eventuali input asincroni (es. da pulsanti)
-        // In questa architettura, il GameEngine non gestisce direttamente l'input
     }
 
     private void update() {
@@ -95,7 +95,7 @@ public class GameEngine implements Runnable {
         return this.mainController;
     }
 
-    public GameController gameController() {
+    public GameControllerImpl gameController() {
         return this.gameController;
     }
 
@@ -109,7 +109,7 @@ public class GameEngine implements Runnable {
                 return;
             }
         }
-        gamePanel.showCountdown(0); // "GO!"
+        gamePanel.showCountdown(0);
         try {
             Thread.sleep(700);
         } catch (InterruptedException e) {
@@ -119,7 +119,6 @@ public class GameEngine implements Runnable {
         gamePanel.hideCountdown();
     }
 
-    // Metodi di supporto per OnGameState
     public void doGameUpdate() {
         final int cellHeight = gamePanel.getCellHeight();
         final int speed = gameMap.getScrollSpeed();
@@ -144,9 +143,7 @@ public class GameEngine implements Runnable {
             obstacleController.generateObstacles(difficultyLevel);
         }
         gameController.updateObstacles();
+        gameController.updatePlayer();
     }
 
-    public void doGameRender() {
-        gamePanel.refresh();
-    }
 }

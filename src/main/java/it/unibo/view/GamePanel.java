@@ -8,27 +8,29 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
-import it.unibo.controller.GameController;
+import it.unibo.controller.GameControllerImpl;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
+import it.unibo.model.Player.api.Player;
 
 public class GamePanel extends JPanel {
 
     private MovingObstacleController obstacleController;
-    private GameController gameController;
-    private MapFormatter mapAdapter;
+    private GameControllerImpl gameController;
+    private MapFormatter mapFormatter;
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final GameController gameController) {
+    public void setController(final GameControllerImpl gameController) {
         this.gameController = gameController;
         this.obstacleController = gameController.getObstacleController();
-        this.mapAdapter = gameController.getMapAdapter();
+        this.mapFormatter = gameController.getMapFormatter();
         this.chunksNumber = gameController.getMapHeight();
         this.cellsPerRow = gameController.getMapWidth();
         addKeyListener(gameController);
@@ -60,22 +62,28 @@ public class GamePanel extends JPanel {
                 drawCell(g, x, y, cellWidth, cellHeight, row, col);
             }
         }
+        
+        drawPlayer(g, cellWidth, cellHeight);
 
-        // Disegna gli ostacoli mobili
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
         }
 
         if (countdownValue.isPresent()) {
-            g.setColor(new Color(0, 0, 0, 180));
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(Color.WHITE);
-            g.setFont(new Font("Arial", Font.BOLD, getWidth() / 5));
-            String text = countdownValue.get() > 0 ? String.valueOf(countdownValue.get()) : "GO!";
-            int textWidth = g.getFontMetrics().stringWidth(text);
-            int textHeight = g.getFontMetrics().getAscent();
-            g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2);
+            drawCountdown(g);
         }
+
+    }
+
+    private void drawCountdown(final Graphics g) {
+        g.setColor(new Color(0, 0, 0, 180));
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, getWidth() / 5));
+        final String text = countdownValue.get() > 0 ? String.valueOf(countdownValue.get()) : "GO!";
+        final int textWidth = g.getFontMetrics().stringWidth(text);
+        final int textHeight = g.getFontMetrics().getAscent();
+        g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2);
     }
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
@@ -83,7 +91,6 @@ public class GamePanel extends JPanel {
         List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
 
         for (MovingObstacles obstacle : obstacles) {
-            // Trova l'indice relativo del chunk visibile
             int screenY = -1;
             for (int i = 0; i < visibleChunks.size(); i++) {
                 if (visibleChunks.get(i).getPosition() == obstacle.getY()) {
@@ -92,16 +99,14 @@ public class GamePanel extends JPanel {
                 }
             }
 
-            if (screenY == -1) continue; // Chunk non visibile
+            if (screenY == -1) continue;
 
             int obstacleX = (int) obstacle.getX();
             int obstacleWidth = obstacle.getWidthInCells();
             
-            // Calcola i limiti di visibilità corretti
             int leftBound = Math.max(0, obstacleX);
             int rightBound = Math.min(cellsPerRow, obstacleX + obstacleWidth);
             
-            // Se l'ostacolo è completamente fuori dai bounds, non disegnarlo
             if (leftBound >= rightBound || rightBound <= 0 || leftBound >= cellsPerRow) {
                 continue;
             }
@@ -120,20 +125,16 @@ public class GamePanel extends JPanel {
         }
         ObstacleType type = obstacle.getType();
         
-        // Calcola la posizione e dimensione in pixel
         int pixelX = leftBound * cellWidth;
         int visibleCells = rightBound - leftBound;
         int pixelWidth = visibleCells * cellWidth;
         
-        // Se l'ostacolo inizia prima del bordo sinistro, dobbiamo adjustare il rendering
         if (obstacleX < 0) {
-            // L'ostacolo si estende oltre il bordo sinistro
-            int offsetCells = -obstacleX; // Quante celle sono fuori dal bordo
-            pixelX = 0; // Inizia dal bordo sinistro dello schermo
+            int offsetCells = -obstacleX;
+            pixelX = 0;
             pixelWidth = Math.min(obstacle.getWidthInCells() - offsetCells, cellsPerRow) * cellWidth;
         }
         
-        // Assicurati che non disegniamo oltre i bordi dello schermo
         if (pixelX + pixelWidth > getWidth()) {
             pixelWidth = getWidth() - pixelX;
         }
@@ -142,7 +143,6 @@ public class GamePanel extends JPanel {
             return;
         }
         
-        // Disegna l'ostacolo con il colore appropriato
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
             g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);
@@ -156,11 +156,11 @@ public class GamePanel extends JPanel {
     }
 
     private void drawCell(final Graphics g, final int x, final int y, final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(mapAdapter.getChunkColor(chunkIndex));
+        g.setColor(mapFormatter.getChunkColor(chunkIndex));
         g.fillRect(x, y, cellWidth, cellHeight);
-        if (mapAdapter.hasCellObjects(chunkIndex, cellIndex)) {
-            g.setColor(mapAdapter.getCellObjectColor(chunkIndex, cellIndex));
-            if (mapAdapter.isCellObjectCircular(chunkIndex, cellIndex)) {
+        if (mapFormatter.hasCellObjects(chunkIndex, cellIndex)) {
+            g.setColor(mapFormatter.getCellObjectColor(chunkIndex, cellIndex));
+            if (mapFormatter.isCellObjectCircular(chunkIndex, cellIndex)) {
                 g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
             } else {
                 g.fillRect(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
@@ -168,6 +168,66 @@ public class GamePanel extends JPanel {
         }
         g.setColor(Color.WHITE);
         g.drawRect(x, y, cellWidth, cellHeight);
+    }
+
+    private void drawPlayer(final Graphics g, final int cellWidth, final int cellHeight) {
+        if (gameController == null) {
+            return;
+        }
+        
+        // Ottieni la posizione del player dal controller
+        Cell playerPosition = gameController.getPlayerController().getPlayerPosition();
+        Player player = gameController.getPlayerController().getPlayer();
+        
+        if (playerPosition == null || player == null || !gameController.getPlayerController().isPlayerAlive()) {
+            return;
+        }
+        
+        // Calcola le coordinate del player sullo schermo
+        int playerCol = playerPosition.getX();
+        int playerChunkY = playerPosition.getY();
+        
+        // Trova la riga visibile corrispondente alla posizione Y del player
+        List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
+        int screenRow = -1;
+        
+        for (int i = 0; i < visibleChunks.size(); i++) {
+            if (visibleChunks.get(i).getPosition() == playerChunkY) {
+                screenRow = i;
+                break;
+            }
+        }
+        
+        // Se il player non è visibile, non disegnarlo
+        if (screenRow == -1 || playerCol < 0 || playerCol >= cellsPerRow) {
+            return;
+        }
+        
+        // Calcola le coordinate pixel
+        int pixelX = playerCol * cellWidth;
+        int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
+        
+        // Disegna il player
+        drawPlayerSprite(g, pixelX, pixelY, cellWidth, cellHeight, player);
+    }
+
+    private void drawPlayerSprite(final Graphics g, final int x, final int y, 
+                                final int cellWidth, final int cellHeight, final Player player) {
+        // Ottieni il colore della skin del player (se disponibile)
+        Color playerColor = Color.PINK;
+        if (player != null && player.getCurrentSkin() != null && player.getCurrentSkin().getColor() != null) {
+            playerColor = player.getCurrentSkin().getColor();
+        }
+        // Disegna il corpo del player (rettangolo principale)
+        g.setColor(playerColor);
+        int bodyWidth = cellWidth * 3 / 4;
+        int bodyHeight = cellHeight * 3 / 4;
+        int bodyX = x + (cellWidth - bodyWidth) / 2;
+        int bodyY = y + (cellHeight - bodyHeight) / 2;
+        g.fillOval(bodyX, bodyY, bodyWidth, bodyHeight);
+        // Disegna il bordo del player
+        g.setColor(Color.BLACK);
+        g.drawOval(bodyX, bodyY, bodyWidth, bodyHeight);
     }
 
     public void refresh() {

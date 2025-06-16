@@ -2,6 +2,10 @@ package it.unibo.model.Player.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.unibo.controller.Player.api.DeathObserver;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.CellImpl;
@@ -21,6 +25,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     private boolean hasSecondLife;
     private boolean isInvincible;
     private Skin currentSkin;
+    private final List<DeathObserver> observers = new ArrayList<>();
 
     //keep track of the starting coordinates for the reset
     private final int initialX;
@@ -50,6 +55,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     public void move(Cell newPos) {
         super.setX(newPos.getX());
         super.setY(newPos.getY());
+        System.out.println(newPos.getX() + " " + newPos.getY());
         this.updateScore();
     }
 
@@ -81,14 +87,24 @@ public class PlayerImpl extends GameObjectImpl implements Player{
 
     @Override
     public void die() {
-        //se il player non è in una cella visibile muore a prescindere
-        if (isOutOfBounds || !isInvincible) {
+        if (isOutOfBounds) {
             isAlive = false;
-        } else if (hasSecondLife) {
+            notifyObservers();
+            return;
+        }
+        
+        if (isInvincible) {
+            return; // Non può morire se invincibile
+        }
+        
+        if (hasSecondLife) {
             hasSecondLife = false;
             isInvincible = true;
-            // Il player "resuscita" e resta vivo, non può morire fino a quando non si muoverà
-        }  
+            //quando viene usata la seconda vita il player diventa invincibile fino a quando non si sarà mosso
+        } else {
+            isAlive = false;
+            notifyObservers();
+        }
     }
 
     @Override
@@ -144,6 +160,20 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     @Override
     public boolean isOutOfBounds() {
         return isOutOfBounds;
+    }
+
+    @Override
+    public void addObserver(DeathObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(DeathObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        observers.forEach(o -> o.endGame());
     }
 
 }

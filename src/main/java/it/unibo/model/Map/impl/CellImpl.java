@@ -19,7 +19,7 @@ public class CellImpl implements Cell {
     private final Set<GameObject> content;
     private final Position position;
 
-    private static final String CONSTRUCTOR_MSG = "Coordinates must be non-negative";
+    //private static final String CONSTRUCTOR_MSG = "Coordinates must be non-negative";
     private static final String NULL_MSG = "GameObject cannot be null";
 
     /**
@@ -29,7 +29,7 @@ public class CellImpl implements Cell {
      * @throws IllegalArgumentException if x or y is negative.
      */
     public CellImpl(final int x, final int y) {
-        checkArgument(x >= 0 && y >= 0, CONSTRUCTOR_MSG);
+        //checkArgument(x >= 0 && y >= 0, CONSTRUCTOR_MSG);
         this.position = new Position(x, y);
         this.content = new HashSet<>();
     }
@@ -64,6 +64,15 @@ public class CellImpl implements Cell {
     @Override
     public int getY() {
         return this.position.y();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        CellImpl cell = (CellImpl) obj;
+        return getX() == cell.getX() && getY() == cell.getY();
     }
 
 }

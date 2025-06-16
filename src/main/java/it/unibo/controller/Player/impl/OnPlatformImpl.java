@@ -13,13 +13,13 @@ public class OnPlatformImpl implements OnPlatform{
     private Optional<GameObject> currentPlatform;
     private Cell previousPosition;
 
-    public OnPlatformImpl(GameObject platform) {
-        this.currentPlatform = Optional.of(platform);
-        UpdatePreviousPosition();
+    public OnPlatformImpl(Optional<GameObject> platform) {
+        this.currentPlatform = platform;
+        updatePreviousPosition();
     }
 
     public OnPlatformImpl(){
-        this(null);
+        this(Optional.empty());
     }
 
     @Override
@@ -30,24 +30,24 @@ public class OnPlatformImpl implements OnPlatform{
     @Override
     public void setCurrentPlatform(Optional<GameObject> platform) {
         currentPlatform = platform;
-        UpdatePreviousPosition();
+        updatePreviousPosition();
         
     }
 
     @Override
-    public Pair<Integer, Integer> hasMoved() {
-        Pair<Integer, Integer> movement;
+    public Pair hasMoved() {
+        Pair movement;
         if(isOnPlatform()) {
             movement = new Pair(currentPlatform.get().getX()-previousPosition.getX(), currentPlatform.get().getY()-previousPosition.getY());
         }
         else {
             movement = new Pair(0,0);
         }
-        UpdatePreviousPosition();
+        updatePreviousPosition();
         return movement;
     }
 
-    private void UpdatePreviousPosition() {
+    private void updatePreviousPosition() {
         if(currentPlatform.isPresent()) {
             previousPosition = new CellImpl(currentPlatform.get().getX(), currentPlatform.get().getY());
         }

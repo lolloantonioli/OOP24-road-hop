@@ -3,8 +3,6 @@ package it.unibo.model.Map.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
 
@@ -22,7 +20,7 @@ public class GameObjectImpl implements GameObject {
     }
 
     public GameObjectImpl(final int x, final int y, final int widthInCells) {
-        checkArgument(x >= 0 && y >= 0, "Coordinates must be non-negative");
+        //checkArgument(x >= 0 && y >= 0, "Coordinates must be non-negative");
         this.x = x;
         this.y = y;
         this.movable = false;
@@ -64,7 +62,7 @@ public class GameObjectImpl implements GameObject {
 
     @Override
     public void setSpeed(final int speed) {
-        checkArgument(speed >= 0, "Speed must be non-negative");
+        //checkArgument(speed >= 0, "Speed must be non-negative");
         this.speed = speed;
     }
 
@@ -86,6 +84,10 @@ public class GameObjectImpl implements GameObject {
     @Override
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setWidthInCells(int widthInCells) {
+        this.widthInCells = widthInCells;
     }
 
     // larghezza dell'oggetto

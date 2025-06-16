@@ -1,6 +1,7 @@
 package it.unibo.model.Shop.impl;
 
 import it.unibo.model.Shop.api.Skin;
+import java.awt.Color;
 
 public class SkinImpl implements Skin{
     
@@ -9,13 +10,15 @@ public class SkinImpl implements Skin{
     private final int price;
     private boolean unlocked;
     private boolean selected;
+    private final Color color;
 
-    public SkinImpl(String id, String name, int price, boolean unlocked) {
+    public SkinImpl(String id, String name, int price, boolean unlocked, Color color) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.unlocked = unlocked;
         this.selected = false;
+        this.color = color;
     }
 
     @Override
@@ -57,5 +60,10 @@ public class SkinImpl implements Skin{
     @Override
     public void deselect() {
         this.selected = false;
+    }
+    
+    @Override
+    public Color getColor() {
+        return color;
     }
 }

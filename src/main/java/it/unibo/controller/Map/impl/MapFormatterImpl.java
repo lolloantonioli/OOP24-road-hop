@@ -7,6 +7,7 @@ import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.CollectibleType;
 
@@ -40,41 +41,52 @@ public class MapFormatterImpl implements MapFormatter {
 
     @Override
     public boolean hasCellObjects(final int chunkIndex, final int cellIndex) {
-        //checkArgument(chunkIndex >= 0 && chunkIndex < getChunksNumber(), "Chunk index out of bounds: " + chunkIndex);
-        //checkArgument(cellIndex >= 0 && cellIndex < getCellsPerRow(), "Cell index out of bounds: " + cellIndex);
         final List<Chunk> chunks = gameMap.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
-        return chunk.getCellAt(cellIndex).hasObject();
+
+        boolean hasCollectible = chunk.getCellAt(cellIndex).getContent().stream()
+            .anyMatch(obj -> obj instanceof Collectible);
+        boolean hasTree = chunk.getType() == ChunkType.GRASS &&
+            chunk.getCellAt(cellIndex).getContent().stream()
+                .anyMatch(obj -> obj instanceof Obstacle);
+
+        return hasCollectible || hasTree;
     }
 
     @Override
     public Color getCellObjectColor(final int chunkIndex, final int cellIndex) {
-        //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
-        //"This method should called only after 'hasCellBobject' check");
         final List<Chunk> chunks = gameMap.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
-        // Prendi il primo oggetto "visibile" per la view (ad esempio un Collectible, altrimenti il primo oggetto)
-        return chunk.getCellAt(cellIndex).getContent().stream()
+
+        var collectible = chunk.getCellAt(cellIndex).getContent().stream()
             .filter(obj -> obj instanceof Collectible)
-            .findFirst()
-            .map(obj -> {
-                Collectible collectible = (Collectible) obj;
-                if (collectible.getType() == CollectibleType.SECOND_LIFE) {
-                    return Color.MAGENTA;
-                } else {
-                    return Color.YELLOW;
-                }
-            })
-            .orElse(Color.BLACK);
+            .map(obj -> (Collectible) obj)
+            .findFirst();
+
+        if (collectible.isPresent()) {
+            if (collectible.get().getType() == CollectibleType.SECOND_LIFE) {
+                return Color.MAGENTA;
+            } else {
+                return Color.YELLOW;
+            }
+        }
+
+        if (chunk.getType() == ChunkType.GRASS) {
+            boolean hasTree = chunk.getCellAt(cellIndex).getContent().stream()
+                .anyMatch(obj -> obj instanceof Obstacle);
+            if (hasTree) {
+                return Color.BLACK;
+            }
+        }
+
+        throw new IllegalStateException("getCellObjectColor chiamato su cella senza oggetto da disegnare");
     }
 
     @Override
     public boolean isCellObjectCircular(final int chunkIndex, final int cellIndex) {
-        //checkState((chunkIndex >= 0 && chunkIndex < getChunksNumber()) || (cellIndex >= 0 && cellIndex < getCellsPerRow()),
-        //"This method should called only after 'hasCellBobject' check");
         final List<Chunk> chunks = gameMap.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
-        // Se almeno un oggetto è un Collectible, la cella è circolare
+
         return chunk.getCellAt(cellIndex).getContent().stream()
             .anyMatch(obj -> obj instanceof Collectible);
     }
