@@ -209,8 +209,29 @@ public final class GamePanel extends JPanel {
 
     private void drawCell(final Graphics g, final int x, final int y,
                           final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(mapFormatter.getChunkColor(chunkIndex));
-        g.fillRect(x, y, cellWidth, cellHeight);
+        if (mapFormatter.isRailwayCell(chunkIndex)) {
+            // Sfondo grigio chiaro
+            g.setColor(new Color(200, 200, 200));
+            g.fillRect(x, y, cellWidth, cellHeight);
+
+            // Due rettangoli marroni verticali (traverse)
+            g.setColor(new Color(139, 69, 19)); // Marrone
+            int railWidth = cellWidth / 5;
+            g.fillRect(x + cellWidth / 6, y, railWidth, cellHeight);
+            g.fillRect(x + cellWidth * 4 / 6, y, railWidth, cellHeight);
+
+            // Rettangoli orizzontali grigio scuro (traverse)
+            g.setColor(new Color(120, 120, 120));
+            int numTraverses = 3;
+            int traverseHeight = cellHeight / 8;
+            for (int t = 1; t <= numTraverses; t++) {
+                int traverseY = y + t * cellHeight / (numTraverses + 1) - traverseHeight / 2;
+                g.fillRect(x, traverseY, cellWidth, traverseHeight);
+            }
+        } else {
+            g.setColor(mapFormatter.getChunkColor(chunkIndex));
+            g.fillRect(x, y, cellWidth, cellHeight);
+        }
         if (mapFormatter.hasCellObjects(chunkIndex, cellIndex)) {
             g.setColor(mapFormatter.getCellObjectColor(chunkIndex, cellIndex));
             if (mapFormatter.isCellObjectCircular(chunkIndex, cellIndex)) {

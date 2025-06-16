@@ -40,4 +40,11 @@ public interface MapFormatter {
      */
     boolean isCellObjectCircular(int chunkIndex, int cellIndex);
 
+    /**
+     * Checks if the specified chunk is a railway cell.
+     * @param chunkIndex the index of the cell within the chunk
+     * @return true if the chunk is a railway cell, false otherwise
+     */
+    boolean isRailwayCell(final int chunkIndex);
+
 }
