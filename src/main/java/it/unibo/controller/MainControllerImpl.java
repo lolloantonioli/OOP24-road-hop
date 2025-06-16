@@ -142,7 +142,8 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void showGameOverPanel() {
-        gameFrame.showGameOverPanel();
+        // TODO Auto-generated method stub
+        throw 
+        new UnsupportedOperationException("Unimplemented method 'showGameOverPanel'");
     }
-
 }

@@ -8,8 +8,6 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
-// metodi setter da mettere a posto ! 
-
 public class MovingObstacles extends GameObjectImpl implements Obstacle{
     private final ObstacleType type;
     private boolean visible;
@@ -17,7 +15,6 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
     private static final int BASE_MOVEMENT_THRESHOLD = 50; 
     private final List<PlatformMovementObserver> observers = new ArrayList<>();
 
-    // Costanti per le dimensioni in celle
     public static final int CAR_WIDTH_CELLS = 1;
     public static final int TRAIN_WIDTH_CELLS = 4;
     public static final int LOG_WIDTH_CELLS = 3;
@@ -30,15 +27,6 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
         super.setMovable(true);
         this.visible = true;
         this.updateCounter = 0;
-        addToAllCells();
-    }
-
-    private void addToAllCells() {
-        getOccupiedCells2().forEach(c -> c.addObject(this));
-    }
-
-    private void removeFromAllCells() {
-        getOccupiedCells2().forEach(c -> c.removeObject(this));
     }
 
     private static int getWidthForType(ObstacleType type) {
@@ -63,10 +51,9 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
         updateCounter++;
         
         // Movimento basato su velocità (ogni N update muove di una cella)
-        int movementThreshold = Math.max(1,  BASE_MOVEMENT_THRESHOLD - Math.abs(getSpeed())); // Più veloce = movimento più frequente
+        int movementThreshold = Math.max(1,  BASE_MOVEMENT_THRESHOLD - Math.abs(getSpeed())); 
         
         if (updateCounter >= movementThreshold) {
-            removeFromAllCells();
             updateCounter = 0;
 
             int deltaX = 0;
@@ -85,7 +72,6 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
                 deltaX = -1;
             }
 
-            addToAllCells();
             notifyObservers(deltaX);
         }
     }
@@ -93,30 +79,7 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
     public void reset() {
         this.updateCounter = 0;
     }
-
-    public boolean collidesWith(int px, int py) {
-        if (!visible || py != getY()) {
-            return false;
-        }
-        
-        // Controlla se il punto è nell'area occupata dall'ostacolo
-        return px >= getX() && px < getX() + getWidthInCells();
-    }
     
-    /**
-     * Ottiene la larghezza dell'ostacolo in celle.
-     * 
-     * @return Larghezza in celle
-     */
-    /*@Override
-    public int getWidthInCells() {
-        return switch (type.toString()) {
-            case "TRAIN" -> TRAIN_WIDTH_CELLS;
-            case "LOG" -> LOG_WIDTH_CELLS;
-            default -> CAR_WIDTH_CELLS; // CAR e altri ostacoli di dimensione 1
-        };
-    }*/
-
     /**
      * Aumenta la velocità dell'ostacolo mantenendo la direzione.
      * 
@@ -161,50 +124,6 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-
-    /**
-     * Ottiene il livello di difficoltà dell'ostacolo in base al tipo e alla velocità.
-     * Utilizzato per il punteggio o per regolare la difficoltà.
-     * 
-     * @return Valore difficoltà
-     */
-    public int getDifficultyLevel() {
-        int baseLevel = switch (type.toString()) {
-            case "TRAIN" -> 3;
-            case "LOG" -> 2; // I tronchi hanno difficoltà media
-            default -> 1; // CAR e altri
-        };
-        return baseLevel + Math.abs(getSpeed());
-    }
-
-    /**
-     * Ottiene tutte le celle occupate dall'ostacolo.
-     * 
-     * @return Array delle posizioni X delle celle occupate
-     */
-    /*@Override
-    public List<Integer> getOccupiedCells() {
-        int width = getWidthInCells();
-        List<Integer> cells = new ArrayList<>();
-        for (int i = 0; i < width; i++) {
-            cells.add(getX() + i);
-        }
-        return cells;
-    }
-
-    @Override
-    public boolean occupiesCell(int cellX) {
-        int startX = getX();
-        int endX = startX + getWidthInCells();
-        return cellX >= startX && cellX < endX;
-    }
-
-    @Override
-    public List<Cell> getOccupiedCells2() {
-        List<Cell> list = new ArrayList<>();
-        getOccupiedCells().forEach(x -> list.add(new CellImpl(x, getY())));
-        return list;
-    }*/
 
     public void addObserver(PlatformMovementObserver obs) {
         if(isPlatform()) {

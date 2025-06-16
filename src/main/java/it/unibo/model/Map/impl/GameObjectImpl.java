@@ -90,7 +90,6 @@ public class GameObjectImpl implements GameObject {
         this.widthInCells = widthInCells;
     }
 
-    // larghezza dell'oggetto
     @Override
     public int getWidthInCells() {
         return widthInCells;
