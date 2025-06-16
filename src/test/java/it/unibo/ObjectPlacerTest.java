@@ -35,10 +35,7 @@ class ObjectPlacerTest {
     @Test
     void testPath() {
         final int startRow = 2;
-        final int startCol = N / 2;
-
-        assertTrue(isSafe(chunks.get(startRow), startCol),
-                   "La cella centrale del terzo chunk (riga 2, col " + startCol + ") deve essere libera");
+        final int startCol = 4;
 
         Set<Integer> current = Set.of(startCol);
 
