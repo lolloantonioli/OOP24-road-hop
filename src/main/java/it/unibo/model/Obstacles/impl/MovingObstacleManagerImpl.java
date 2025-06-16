@@ -102,14 +102,14 @@ public final class MovingObstacleManagerImpl implements MovingObstacleManager {
     public int getObstacleCount() {
         return obstacles.size();
     }
-
+    
     @Override
     public void resetAll() {
         for (final MovingObstacles obstacle : obstacles) {
             removeObstacle(obstacle);
         }
     }
-    
+
     @Override
     public boolean isSafePosition(final int cellX, final int chunkY, final int widthInCells) {
         for (final MovingObstacles obstacle : obstacles) {

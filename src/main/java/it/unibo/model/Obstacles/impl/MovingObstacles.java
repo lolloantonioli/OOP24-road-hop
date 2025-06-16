@@ -59,7 +59,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
     public ObstacleType getType() {
         return type;
     }
-
+    
     @Override
     public void update() {
         if (!isMovable()) {
@@ -87,7 +87,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
             notifyObservers(deltaX);
         }
     }
-    
+
     /**
      * Aumenta la velocità dell'ostacolo mantenendo la direzione.
      * 
