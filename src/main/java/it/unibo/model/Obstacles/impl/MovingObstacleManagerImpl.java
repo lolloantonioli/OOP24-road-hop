@@ -16,7 +16,7 @@ import it.unibo.model.Obstacles.api.MovingObstacleManager;
 public final class MovingObstacleManagerImpl implements MovingObstacleManager {
 
     private final List<MovingObstacles> obstacles;
-    
+
     /**
      * Constructs a new MovingObstacleManagerImpl with an empty list of obstacles.
      */

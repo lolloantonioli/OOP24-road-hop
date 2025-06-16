@@ -10,7 +10,7 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.Util.GameConstants;
+import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
@@ -26,7 +26,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     private final static int TRAIN_SPAWN_DISTANCE = 6;
     private final static int CAR_SPAWN_DISTANCE = 3;
     private final static int LOG_SPAWN_DISTANCE = 1;
-    private final int cells = GameConstants.CELLS_PER_CHUNK;
+    private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final MovingObstacleFactory factory;
     private final MovingObstacleManager manager;
     private final GameMap gameMap;

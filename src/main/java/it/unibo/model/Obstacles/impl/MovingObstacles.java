@@ -7,7 +7,7 @@ import it.unibo.controller.Player.api.PlatformMovementObserver;
 import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.Util.GameConstants;
+import it.unibo.model.Obstacles.Util.GameConstant;
 
 /**
  * Represent a moving obstacle in the game.
@@ -16,15 +16,19 @@ import it.unibo.model.Obstacles.Util.GameConstants;
  */
 public final class MovingObstacles extends GameObjectImpl implements Obstacle {
 
+    /**
+     * Width of the obstacles in cells.
+     */
     public static final int CAR_WIDTH_CELLS = 1;
     public static final int TRAIN_WIDTH_CELLS = 4;
     public static final int LOG_WIDTH_CELLS = 3;
+
     private static final int BASE_MOVEMENT_THRESHOLD = 50; 
-    private final int cells = GameConstants.CELLS_PER_CHUNK;
+    private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final ObstacleType type;
+    private final List<PlatformMovementObserver> observers = new ArrayList<>();
     private boolean visible;
     private int updateCounter; // Per gestire movimento sub-cella
-    private final List<PlatformMovementObserver> observers = new ArrayList<>();
 
     /**
      * Constructs a new MovingObstacles instance.

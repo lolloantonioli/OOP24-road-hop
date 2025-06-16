@@ -68,7 +68,6 @@ public interface MovingObstacleManager {
 
     /**
      * Removes obstacles that are outside the visible area.
-    
      */
     void cleanupOffscreenObstacles();
 

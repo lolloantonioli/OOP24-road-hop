@@ -6,6 +6,9 @@ import java.util.List;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
 
+/**
+ * Implementation of the GameObject interface.
+ */
 public class GameObjectImpl implements GameObject {
 
     private int x;
@@ -15,6 +18,12 @@ public class GameObjectImpl implements GameObject {
     private boolean platform;
     private int widthInCells = 1; // Default width in cells
 
+    /**
+     * Constructs a new GameObjectImpl at the specified coordinates with default width of 1 cell.
+     *
+     * @param x the x-coordinate of the game object
+     * @param y the y-coordinate of the game object
+     */
     public GameObjectImpl(final int x, final int y) {
         this(x, y, 1);
     }
@@ -86,6 +95,7 @@ public class GameObjectImpl implements GameObject {
         this.y = y;
     }
 
+    @Override
     public void setWidthInCells(final int widthInCells) {
         this.widthInCells = widthInCells;
     }
@@ -95,7 +105,6 @@ public class GameObjectImpl implements GameObject {
         return widthInCells;
     }
 
-    // tutte le posizioni x occupate da un oggetto
     @Override
     public List<Integer> getOccupiedCells() {
         final int width = getWidthInCells();
@@ -106,7 +115,6 @@ public class GameObjectImpl implements GameObject {
         return cells;
     }
 
-    // controlla se un oggetto occupa una specifica cella
     @Override
     public boolean occupiesCell(final int cellX) {
         final int startX = getX();

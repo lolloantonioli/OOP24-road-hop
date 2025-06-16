@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.Util.GameConstants;
+import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
 // COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
@@ -25,7 +25,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private static int maxTrainSpeed = 30;
     private static int minLogSpeed = 10;
     private static int maxLogSpeed = 15;
-    private final int cells = GameConstants.CELLS_PER_CHUNK;
+    private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final Random random;
 
     /**

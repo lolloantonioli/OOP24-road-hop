@@ -1,9 +1,9 @@
 package it.unibo.model.Obstacles.Util;
 
 
-public final class GameConstants {
+public final class GameConstant {
 
-    private GameConstants() {
+    private GameConstant() {
        // costruttore privato per evitare instanziazioni
     }
 
