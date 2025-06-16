@@ -58,7 +58,7 @@ public final class ChunkFactoryImpl implements ChunkFactory {
     }
 
     @Override
-    public Chunk createFirstChunk(final int position) {
+    public Chunk createFirstsChunk(final int position) {
         return createChunk(position, ChunkType.GRASS, false, false);
     }
 
