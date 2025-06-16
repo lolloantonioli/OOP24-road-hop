@@ -1,70 +1,70 @@
 package it.unibo;
 
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.ChunkFactory;
-import it.unibo.model.Map.api.ObjectPlacer;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.ChunkFactoryImpl;
-import it.unibo.model.Map.impl.ChunkImpl;
-import it.unibo.model.Map.impl.ObjectPlacerImpl;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.*;
+import it.unibo.model.Map.api.Chunk;
+import it.unibo.model.Map.api.ChunkFactory;
+import it.unibo.model.Map.impl.ChunkFactoryImpl;
+import it.unibo.model.Map.impl.ChunkImpl;
+import it.unibo.model.Map.api.Obstacle;
 
 class ObjectPlacerTest {
 
-    private ObjectPlacer placer;
-    private ChunkFactory factory;
-    private List<Chunk> chunks;
+    private static final int NUM_CHUNKS = 1_000;
+    private static final int N = ChunkImpl.CELLS_PER_ROW;
 
-    private static final int CELLS_PER_ROW = ChunkImpl.CELLS_PER_ROW;
-    private static final int NUM_CHUNKS = 1000;
+    private List<Chunk> chunks;
 
     @BeforeEach
     void setUp() {
-        this.placer = new ObjectPlacerImpl();
-        this.factory = new ChunkFactoryImpl();
-        this.chunks = new ArrayList<>();
+        ChunkFactory factory = new ChunkFactoryImpl();
+        chunks = IntStream.range(0, NUM_CHUNKS)
+                          .mapToObj(factory::createGrassChunk)
+                          .collect(Collectors.toList());
     }
 
     @Test
-    void testSafePathExistsInManyGrassChunks() {
-        // Genera tanti chunk GRASS con ostacoli piazzati
-        for (int i = 0; i < NUM_CHUNKS; i++) {
-            chunks.add(factory.createGrassChunk(i));
-        }
+    void pathFromCenterOfThirdChunk() {
+        final int startRow = 2;
+        final int startCol = N / 2;
 
-        // Trova la posizione sicura nella prima riga (dove non c'è ostacolo)
-        Set<Integer> safeStarts = new HashSet<>();
-        for (int col = 0; col < CELLS_PER_ROW; col++) {
-            if (chunks.get(0).getCellAt(col).getContent().stream().noneMatch(obj -> obj instanceof Obstacle)) {
-                safeStarts.add(col);
-            }
-        }
-        assertFalse(safeStarts.isEmpty(), "Deve esserci almeno una cella sicura nella prima riga");
+        assertTrue(isSafe(chunks.get(startRow), startCol),
+                   "La cella centrale del terzo chunk (riga 2, col " + startCol + ") deve essere libera");
 
-        // BFS per verificare che almeno una colonna sicura arrivi fino in fondo
-        Set<Integer> currentSafe = new HashSet<>(safeStarts);
-        for (int row = 1; row < NUM_CHUNKS; row++) {
-            Set<Integer> nextSafe = new HashSet<>();
-            for (int col : currentSafe) {
-                for (int d = -1; d <= 1; d++) { // muovi a sinistra, centro, destra
-                    int nextCol = col + d;
-                    if (nextCol >= 0 && nextCol < CELLS_PER_ROW) {
-                        boolean blocked = chunks.get(row).getCellAt(nextCol).getContent()
-                            .stream().anyMatch(obj -> obj instanceof Obstacle);
-                        if (!blocked) {
-                            nextSafe.add(nextCol);
-                        }
+        Set<Integer> current = Set.of(startCol);
+
+        for (int row = startRow + 1; row < NUM_CHUNKS; row++) {
+            final Set<Integer> next = new HashSet<>();
+            final Chunk chunk = chunks.get(row);
+
+            for (final int col : current) {
+                for (int d = -1; d <= 1; d++) {
+                    final int nc = col + d;
+                    if (nc >= 0 && nc < N && isSafe(chunk, nc)) {
+                        next.add(nc);
                     }
                 }
             }
-            assertFalse(nextSafe.isEmpty(), "Deve esserci almeno una cella sicura alla riga " + row);
-            currentSafe = nextSafe;
+
+            assertFalse(next.isEmpty(), "Blocco completo alla riga " + row);
+            current = next;
         }
-        assertFalse(currentSafe.isEmpty(), "Deve esserci almeno un percorso sicuro fino all'ultima riga");
+
+        assertFalse(current.isEmpty(), "Non esiste un percorso dalla cella di partenza all'ultima riga");
+    }
+
+    private boolean isSafe(final Chunk chunk, final int col) {
+        return chunk.getCellAt(col).getContent()
+                    .stream()
+                    .noneMatch(o -> o instanceof Obstacle);
     }
 }
