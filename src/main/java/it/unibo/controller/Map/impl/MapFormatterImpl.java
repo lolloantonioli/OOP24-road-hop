@@ -14,10 +14,15 @@ import it.unibo.model.Map.util.CollectibleType;
 /**
  * Implementation of the MapController interface.
  */
-public class MapFormatterImpl implements MapFormatter {
+public final class MapFormatterImpl implements MapFormatter {
 
     private final GameMap gameMap;
 
+    /**
+     * Constructs a MapFormatterImpl with the specified GameMap.
+     *
+     * @param gameMap the GameMap to be used by this formatter
+     */
     public MapFormatterImpl(final GameMap gameMap) {
         this.gameMap = gameMap;
     }
@@ -44,10 +49,10 @@ public class MapFormatterImpl implements MapFormatter {
         final List<Chunk> chunks = gameMap.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
 
-        boolean hasCollectible = chunk.getCellAt(cellIndex).getContent().stream()
+        final boolean hasCollectible = chunk.getCellAt(cellIndex).getContent().stream()
             .anyMatch(obj -> obj instanceof Collectible);
-        boolean hasTree = chunk.getType() == ChunkType.GRASS &&
-            chunk.getCellAt(cellIndex).getContent().stream()
+        final boolean hasTree = chunk.getType() == ChunkType.GRASS
+        && chunk.getCellAt(cellIndex).getContent().stream()
                 .anyMatch(obj -> obj instanceof Obstacle);
 
         return hasCollectible || hasTree;
@@ -58,7 +63,7 @@ public class MapFormatterImpl implements MapFormatter {
         final List<Chunk> chunks = gameMap.getVisibleChunks();
         final Chunk chunk = chunks.get(chunkIndex);
 
-        var collectible = chunk.getCellAt(cellIndex).getContent().stream()
+        final var collectible = chunk.getCellAt(cellIndex).getContent().stream()
             .filter(obj -> obj instanceof Collectible)
             .map(obj -> (Collectible) obj)
             .findFirst();
@@ -72,7 +77,7 @@ public class MapFormatterImpl implements MapFormatter {
         }
 
         if (chunk.getType() == ChunkType.GRASS) {
-            boolean hasTree = chunk.getCellAt(cellIndex).getContent().stream()
+            final boolean hasTree = chunk.getCellAt(cellIndex).getContent().stream()
                 .anyMatch(obj -> obj instanceof Obstacle);
             if (hasTree) {
                 return Color.BLACK;

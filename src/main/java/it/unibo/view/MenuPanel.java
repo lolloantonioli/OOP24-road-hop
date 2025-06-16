@@ -15,25 +15,34 @@ import javax.swing.JPanel;
 
 import it.unibo.controller.MainController;
 
-public class MenuPanel extends JPanel {
+/**
+ * MenuPanel class that represents the main menu of the game.
+ * It contains buttons for playing the game, viewing instructions, and accessing the shop.
+ * The panel is designed to be responsive and adjusts its layout based on the size of the window.
+ */
+public final class MenuPanel extends JPanel {
 
     private final JButton playButton;
     private final JButton instructionsButton;
     private final JButton shopButton;
     private final JLabel titleLabel;
     private final MainController controller;
-    
-    private static final String PLAY_TEXT = "Play";
-    private static final String INSTRUCTIONS_TEXT = "Instructions";
-    private static final String SHOP_TEXT = "Shop";
-    private static final int BETWEEN_LOGO = 20;
-    private static final int BETWEEN_BUTTONS = 10;
 
+    private final static String PLAY_TEXT = "Play";
+    private final static String INSTRUCTIONS_TEXT = "Instructions";
+    private final static String SHOP_TEXT = "Shop";
+    private final static int BETWEEN_LOGO = 20;
+    private final static int BETWEEN_BUTTONS = 10;
 
-    public static final String SEP = File.separator;
-    public static final String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
-    
+    public final static String SEP = File.separator;
+    public final static String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
 
+    /**
+     * Constructor for the MenuPanel.
+     * Initializes the layout, buttons, and title label.
+     *
+     * @param controller the MainController to handle actions when buttons are clicked
+     */
     public MenuPanel(final MainController controller) {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
@@ -44,7 +53,6 @@ public class MenuPanel extends JPanel {
         this.setInstructionsAction();
         shopButton = new JButton(SHOP_TEXT);
         this.setShopAction();
-        // Titolo del gioco
         titleLabel = new JLabel("Road Hop");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -66,18 +74,25 @@ public class MenuPanel extends JPanel {
         this.add(centerPanel);
     }
 
+    /**
+     * Sets the bounds of the panel and adjusts the size of the buttons and title label based on the panel's dimensions.
+     *
+     * @param x      the x-coordinate of the panel
+     * @param y      the y-coordinate of the panel
+     * @param width  the width of the panel
+     * @param height the height of the panel
+     */
     @Override
-    public void setBounds(int x, int y, int width, int height) {
+    public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
-        int minDim = Math.min(width, height);
-        int baseFontSize = Math.max(12, minDim / 15);
+        final int minDim = Math.min(width, height);
+        final int baseFontSize = Math.max(12, minDim / 15);
         playButton.setFont(playButton.getFont().deriveFont((float) baseFontSize));
         instructionsButton.setFont(instructionsButton.getFont().deriveFont((float) baseFontSize));
         shopButton.setFont(shopButton.getFont().deriveFont((float) baseFontSize));
-        // Calcola la larghezza minima necessaria per il testo più lungo
-        int minButtonWidth = getFontMetrics(instructionsButton.getFont()).stringWidth(INSTRUCTIONS_TEXT) + 40;
-        int buttonWidth = Math.max(minButtonWidth, width / 3);
-        int buttonHeight = Math.max(40, height / 10);
+        final int minButtonWidth = getFontMetrics(instructionsButton.getFont()).stringWidth(INSTRUCTIONS_TEXT) + 40;
+        final int buttonWidth = Math.max(minButtonWidth, width / 3);
+        final int buttonHeight = Math.max(40, height / 10);
         playButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         instructionsButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         shopButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
@@ -93,19 +108,27 @@ public class MenuPanel extends JPanel {
         playButton.setText(PLAY_TEXT);
         instructionsButton.setText(INSTRUCTIONS_TEXT);
         shopButton.setText(SHOP_TEXT);
-        // Ridimensiona anche il titolo in modo adattivo
-        int titleFontSize = Math.max(32, minDim / 6);
+        final int titleFontSize = Math.max(32, minDim / 6);
         titleLabel.setFont(titleLabel.getFont().deriveFont((float) titleFontSize));
     }
 
+    /**
+     * Sets the action for the play button to navigate to the game.
+     */
     public void setPlayAction() {
         playButton.addActionListener(e -> controller.goToGame());
     }
 
+    /**
+     * Sets the action for the instructions button to navigate to the instructions screen.
+     */
     public void setInstructionsAction() {
         instructionsButton.addActionListener(e -> controller.goToInstructions());
     }
 
+    /**
+     * Sets the action for the shop button to navigate to the shop.
+     */
     public void setShopAction() {
         shopButton.addActionListener(e -> controller.goToShop());
     }

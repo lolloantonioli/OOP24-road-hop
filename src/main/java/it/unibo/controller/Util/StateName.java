@@ -1,5 +1,8 @@
 package it.unibo.controller.Util;
 
+/**
+ * Represents the names of different game states.
+ */
 public class StateName {
 
     public static final StateName ON_GAME = new StateName("ON_GAME");

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
-import it.unibo.controller.GameControllerImpl;
+import it.unibo.controller.GameController;
 import it.unibo.controller.Map.api.MapFormatter;
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.model.Map.api.Cell;
@@ -17,17 +17,27 @@ import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 import it.unibo.model.Player.api.Player;
 
-public class GamePanel extends JPanel {
+/**
+ * GamePanel is a custom JPanel that renders the game map, player, and moving obstacles.
+ * It handles the drawing of cells, player sprite, and countdown timer.
+ */
+public final class GamePanel extends JPanel {
 
     private MovingObstacleController obstacleController;
-    private GameControllerImpl gameController;
+    private GameController gameController;
     private MapFormatter mapFormatter;
     private int chunksNumber;
     private int cellsPerRow;
-    private int animationOffset = 0;
+    private int animationOffset;
     private Optional<Integer> countdownValue = Optional.empty();
 
-    public void setController(final GameControllerImpl gameController) {
+    private final static int DIV_FACTOR_FONT = 5;
+
+    /**
+     * Sets the controllers and initializes the panel.
+     * @param gameController the game controller to set
+     */
+    public void setController(final GameController gameController) {
         this.gameController = gameController;
         this.obstacleController = gameController.getObstacleController();
         this.mapFormatter = gameController.getMapFormatter();
@@ -38,11 +48,18 @@ public class GamePanel extends JPanel {
         requestFocusInWindow();
     }
 
+    /**
+     * Shows the countdown timer on the panel.
+     * @param value the countdown value to display
+     */
     public void showCountdown(final int value) {
         this.countdownValue = Optional.of(value);
         repaint();
     }
 
+    /**
+     * Hides the countdown timer from the panel.
+     */
     public void hideCountdown() {
         this.countdownValue = Optional.empty();
         repaint();
@@ -62,7 +79,7 @@ public class GamePanel extends JPanel {
                 drawCell(g, x, y, cellWidth, cellHeight, row, col);
             }
         }
-        
+
         drawPlayer(g, cellWidth, cellHeight);
 
         if (obstacleController != null) {
@@ -79,7 +96,7 @@ public class GamePanel extends JPanel {
         g.setColor(new Color(0, 0, 0, 180));
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, getWidth() / 5));
+        g.setFont(new Font("Arial", Font.BOLD, getWidth() / DIV_FACTOR_FONT));
         final String text = countdownValue.get() > 0 ? String.valueOf(countdownValue.get()) : "GO!";
         final int textWidth = g.getFontMetrics().stringWidth(text);
         final int textHeight = g.getFontMetrics().getAscent();
@@ -87,10 +104,10 @@ public class GamePanel extends JPanel {
     }
 
     private void drawMovingObstacles(final Graphics g, final int cellWidth, final int cellHeight) {
-        List<MovingObstacles> obstacles = obstacleController.getAllObstacles();
-        List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
+        final List<MovingObstacles> obstacles = obstacleController.getAllObstacles();
+        final List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
 
-        for (MovingObstacles obstacle : obstacles) {
+        for (final MovingObstacles obstacle : obstacles) {
             int screenY = -1;
             for (int i = 0; i < visibleChunks.size(); i++) {
                 if (visibleChunks.get(i).getPosition() == obstacle.getY()) {
@@ -99,20 +116,22 @@ public class GamePanel extends JPanel {
                 }
             }
 
-            if (screenY == -1) continue;
+            if (screenY == -1) {
+                continue;
+            }
 
-            int obstacleX = (int) obstacle.getX();
-            int obstacleWidth = obstacle.getWidthInCells();
-            
-            int leftBound = Math.max(0, obstacleX);
-            int rightBound = Math.min(cellsPerRow, obstacleX + obstacleWidth);
-            
+            final int obstacleX = (int) obstacle.getX();
+            final int obstacleWidth = obstacle.getWidthInCells();
+
+            final int leftBound = Math.max(0, obstacleX);
+            final int rightBound = Math.min(cellsPerRow, obstacleX + obstacleWidth);
+
             if (leftBound >= rightBound || rightBound <= 0 || leftBound >= cellsPerRow) {
                 continue;
             }
-            
-            int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
-            
+
+            final int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
+
             drawObstacle(g, obstacle, obstacleX, pixelY, cellWidth, cellHeight, leftBound, rightBound);
         }
     }
@@ -123,27 +142,27 @@ public class GamePanel extends JPanel {
         if (!obstacle.isVisible()) {
             return;
         }
-        
-        ObstacleType type = obstacle.getType();
-        
+
+        final ObstacleType type = obstacle.getType();
+
         int pixelX = leftBound * cellWidth;
-        int visibleCells = rightBound - leftBound;
+        final int visibleCells = rightBound - leftBound;
         int pixelWidth = visibleCells * cellWidth;
-        
+
         if (obstacleX < 0) {
-            int offsetCells = -obstacleX;
+            final int offsetCells = -obstacleX;
             pixelX = 0;
             pixelWidth = Math.min(obstacle.getWidthInCells() - offsetCells, cellsPerRow) * cellWidth;
         }
-        
+
         if (pixelX + pixelWidth > getWidth()) {
             pixelWidth = getWidth() - pixelX;
         }
-        
+
         if (pixelWidth <= 0) {
             return;
         }
-        
+
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
             g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);
@@ -175,7 +194,7 @@ public class GamePanel extends JPanel {
         if (gameController == null) {
             return;
         }
-        
+
         // Ottieni la posizione del player dal controller
         Cell playerPosition = gameController.getPlayerController().getPlayerPosition();
         Player player = gameController.getPlayerController().getPlayer();
@@ -183,31 +202,31 @@ public class GamePanel extends JPanel {
         if (playerPosition == null || player == null || !gameController.getPlayerController().isPlayerAlive()) {
             return;
         }
-        
+
         // Calcola le coordinate del player sullo schermo
         int playerCol = playerPosition.getX();
         int playerChunkY = playerPosition.getY();
-        
+
         // Trova la riga visibile corrispondente alla posizione Y del player
         List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
         int screenRow = -1;
-        
+
         for (int i = 0; i < visibleChunks.size(); i++) {
             if (visibleChunks.get(i).getPosition() == playerChunkY) {
                 screenRow = i;
                 break;
             }
         }
-        
+
         // Se il player non è visibile, non disegnarlo
         if (screenRow == -1 || playerCol < 0 || playerCol >= cellsPerRow) {
             return;
         }
-        
+
         // Calcola le coordinate pixel
         int pixelX = playerCol * cellWidth;
         int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
-        
+
         // Disegna il player
         drawPlayerSprite(g, pixelX, pixelY, cellWidth, cellHeight, player);
     }
@@ -231,14 +250,26 @@ public class GamePanel extends JPanel {
         g.drawOval(bodyX, bodyY, bodyWidth, bodyHeight);
     }
 
+    /**
+     * Refreshes the panel to reflect any changes in the game state.
+     */
     public void refresh() {
         repaint();
     }
 
+    /**
+     * Sets the animation offset for the panel.
+     * This is used to create a scrolling effect for the game map.
+     * @param offset the new animation offset
+     */
     public void setAnimationOffset(final int offset) {
         this.animationOffset = offset;
     }
 
+    /**
+     * Gets the width of a cell in pixels.
+     * @return the width of a cell in pixels
+     */
     public int getCellHeight() {
         return getHeight() / chunksNumber;
     }

@@ -5,7 +5,7 @@ package it.unibo.model.Map.util;
  * Collectibles are objects that can be collected by the player to gain points or other benefits.
  */
 public final class CollectibleType {
-    
+
     public static final CollectibleType COIN = new CollectibleType("COIN");
     public static final CollectibleType SECOND_LIFE = new CollectibleType("SECOND_LIFE");
 

@@ -1,5 +1,9 @@
 package it.unibo.controller.Util;
 
+/**
+ * Represents the names of different .
+ * Each card name is a constant that can be used to identify specific game states or screens.
+ */
 public final class CardName {
 
     public static final CardName MENU = new CardName("MENU");

@@ -9,27 +9,33 @@ import it.unibo.view.GamePanel;
 
 //aggiungere il playerController
 
-public class GameEngine implements Runnable {
+/**
+ * GameEngine is the main game loop that handles the game state, updates, and rendering.
+ * It runs in a separate thread and manages the game flow.
+ */
+public final class GameEngine implements Runnable {
 
     private final GameMap gameMap;
     private final GamePanel gamePanel;
     private final MovingObstacleController obstacleController;
     private final MovingObstacleFactory obstacleFactory;
     private final MainController mainController;
-    private final GameControllerImpl gameController;
+    private final GameController gameController;
     private GameState currentState;
     private boolean running = true;
-    private int frameCounter = 0;
+    private int frameCounter;
 
-    private static final long PERIOD = 16; // 60fps
-    private static final int SCROLL_TIME_MS = 1000;
+    private final static long PERIOD = 16; // 60fps
+    private final static int SCROLL_TIME_MS = 1000;
+    private final static int WAIT_TIME = 700; // 700ms for countdown
+    private final static int INCREASE_SPEED = 15; // Speed increase for obstacles
 
     public GameEngine(final GameMap gameMap,
                       final GamePanel gamePanel,
                       final MovingObstacleController obstacleController,
                       final MovingObstacleFactory obstacleFactory,
                       final MainController mainController,
-                      final GameControllerImpl gameController) {
+                      final GameController gameController) {
         this.gameMap = gameMap;
         this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
@@ -43,7 +49,7 @@ public class GameEngine implements Runnable {
     public void run() {
         showStartCountdown();
         while (running) {
-            long frameStart = System.currentTimeMillis();
+            final long frameStart = System.currentTimeMillis();
             processInput();
             update();
             render();
@@ -51,10 +57,18 @@ public class GameEngine implements Runnable {
         }
     }
 
-    public void setState(GameState state) {
+    /**
+     * Sets the current game state.
+     * @param state the new game state to set.
+     */
+    public void setState(final GameState state) {
         this.currentState = state;
     }
 
+    /**
+     * Gets the current game state.
+     * @return the current game state.
+     */
     public GameState getState() {
         return this.currentState;
     }
@@ -76,49 +90,70 @@ public class GameEngine implements Runnable {
         if (elapsed < PERIOD) {
             try {
                 Thread.sleep(PERIOD - elapsed);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 this.stop();
                 Thread.currentThread().interrupt();
             }
         }
     }
 
+    /**
+     * Stops the game engine.
+     */
     public void stop() {
         this.running = false;
     }
 
+    /**
+     * Returns the GamePanel associated with this game engine.
+     * @return the GamePanel instance.
+     */
     public GamePanel getGamePanel() {
         return this.gamePanel;
     }
 
+    /**
+     * Returns the MainController associated with this game engine.
+     * @return the MainController instance.
+     */
     public MainController getMainController() {
         return this.mainController;
     }
 
-    public GameControllerImpl gameController() {
+    /**
+     * Returns the GameController associated with this game engine.
+     * @return the GameController instance.
+     */
+    public GameController gameController() {
         return this.gameController;
     }
 
+    /**
+     * Shows a countdown from 3 to 0 before starting or resuming the game.
+     */
     public void showStartCountdown() {
         for (int i = 3; i > 0; i--) {
             gamePanel.showCountdown(i);
             try {
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return;
             }
         }
         gamePanel.showCountdown(0);
         try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
+            Thread.sleep(WAIT_TIME);
+        } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
             return;
         }
         gamePanel.hideCountdown();
     }
 
+    /**
+     * Performs a game update, scrolling the map and updating obstacles and player state.
+     */
     public void doGameUpdate() {
         final int cellHeight = gamePanel.getCellHeight();
         final int speed = gameMap.getScrollSpeed();
@@ -134,10 +169,10 @@ public class GameEngine implements Runnable {
             frameCounter = 0;
             gamePanel.setAnimationOffset(0);
 
-            int newSpeed = gameMap.getScrollSpeed();
+            final int newSpeed = gameMap.getScrollSpeed();
             if (newSpeed > speed) {
-                obstacleController.increaseAllObstaclesSpeed(15);
-                obstacleFactory.increaseSpeedLimits(15); 
+                obstacleController.increaseAllObstaclesSpeed(INCREASE_SPEED);
+                obstacleFactory.increaseSpeedLimits(INCREASE_SPEED); 
             }
             final int difficultyLevel = Math.min(3, gameMap.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);

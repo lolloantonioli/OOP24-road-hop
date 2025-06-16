@@ -12,7 +12,11 @@ import java.awt.Dimension;
 import it.unibo.controller.MainController;
 import it.unibo.controller.Util.CardName;
 
-public class GameFrame extends JFrame {
+/**
+ * The main game frame that contains all the panels for the game.
+ * It uses a CardLayout to switch between different views such as menu, shop, instructions, game, and game over.
+ */
+public final class GameFrame extends JFrame {
 
     private final CardLayout layout;
     private final JPanel root;
@@ -22,11 +26,16 @@ public class GameFrame extends JFrame {
     private final GamePanel gamePanel;
     private final GameOverPanel gameOverPanel;
 
-    private static final String FRAME_NAME = "Road Hop";
-    private static final String MSG = "CardName cannot be null";
-    private static final int FRAME_WIDTH = 800;
-    private static final int FRAME_HEIGHT = 600;
+    private final static String FRAME_NAME = "Road Hop";
+    private final static String MSG = "CardName cannot be null";
+    private final static int FRAME_WIDTH = 800;
+    private final static int FRAME_HEIGHT = 600;
 
+    /**
+     * Constructs a new GameFrame with the specified MainController.
+     *
+     * @param controller the MainController to handle navigation and actions
+     */
     public GameFrame(final MainController controller) {
         this.layout = new CardLayout();
         this.root = new JPanel(this.layout);
@@ -50,37 +59,69 @@ public class GameFrame extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Shows the specified CardName panel.
+     *
+     * @param name the CardName of the panel to show
+     */
     public void show(final CardName name) {
         checkNotNull(name, MSG);
         this.layout.show(this.root, name.toString());
     }
 
+    /**
+     * Returns the MenuPanel of this GameFrame.
+     * @return the MenuPanel instance
+     */
     public MenuPanel getMenuPanel() {
         return this.menuPanel;
     }
 
+    /**
+     * Returns the ShopView of this GameFrame.
+     * @return the ShopView instance
+     */
     public ShopView getShopPanel() {
         return this.shopView;
     }
 
+    /**
+     * Returns the InstructionsPanel of this GameFrame.
+     * @return the InstructionsPanel instance
+     */
     public InstructionsPanel getInstructionsPanel() {
         return this.instructionsPanel;
     }
 
+    /**
+     * Returns the GamePanel of this GameFrame.
+     * @return the GamePanel instance
+     */
     public GamePanel getGamePanel() {
         return this.gamePanel;
     }
 
-    public void showPausePanel(Runnable onContinue, Runnable onMenu) {
+    /**
+     * Shows the pause panel with options to continue or go to the menu.
+     * @param onContinue the action to perform when continuing the game
+     * @param onMenu the action to perform when going to the menu
+     */
+    public void showPausePanel(final Runnable onContinue, final Runnable onMenu) {
         final PausePanel pausePanel = new PausePanel(onContinue, onMenu);
         this.root.add(pausePanel, CardName.PAUSE.toString());
         this.layout.show(this.root, CardName.PAUSE.toString());
     }
 
+    /**
+     * Hides the pause panel and returns to the game view.
+     */
     public void hidePausePanel() {
         this.layout.show(this.root, CardName.GAME.toString());
     }
 
+    /**
+     * Shows the game over panel with option to return to the menu.
+     */
     public void showGameOverPanel() {
         this.show(CardName.GAME_OVER);
     }

@@ -23,18 +23,21 @@ import it.unibo.view.GameFrame;
  * MainController implementation.
  * Centralized controller that manages all game components and their lifecycle.
  */
-public class MainControllerImpl implements MainController {
+public final class MainControllerImpl implements MainController {
 
     private final GameFrame gameFrame;
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
     private final MovingObstacleFactory obstacleFactory;
     private Optional<GameEngine> gameEngine;
-    private Optional<GameControllerImpl> gameController;
+    private Optional<GameController> gameController;
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
     private PlayerController playerController;
     private DeathObserver deathObserver;
+
+    private final static int INITIAL_X = 5;
+    private final static int INITIAL_Y = 2;
 
     /**
      * Constructor for MainControllerImpl.
@@ -47,16 +50,14 @@ public class MainControllerImpl implements MainController {
         this.obstacleFactory = new MovingObstacleFactoryImpl();
         this.gameEngine = Optional.empty();
         this.gameController = Optional.empty();
-        
         initializeGameComponents();
     }
 
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
-        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2);
+        this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), INITIAL_X, INITIAL_Y);
         this.deathObserver = new DeathObserverImpl(this);
-        // Assicura che ogni nuovo player abbia sempre il DeathObserver
         playerController.getPlayer().addObserver(deathObserver);
     }
 
@@ -71,7 +72,7 @@ public class MainControllerImpl implements MainController {
         stopCurrentGame();
         initializeGameComponents();
         gameFrame.show(CardName.GAME);
-        gameController = Optional.of(new GameControllerImpl(
+        gameController = Optional.of(new GameController(
             gameMap,
             obstacleController,
             this,
@@ -85,8 +86,6 @@ public class MainControllerImpl implements MainController {
             this,
             gameController.get()
         ));
-
-        
         new Thread(gameEngine.get()).start();
         gameFrame.getGamePanel().setController(gameController.get());
     }
@@ -107,25 +106,16 @@ public class MainControllerImpl implements MainController {
         return shopModel;
     }
 
-    /**
-     * Gets the current game map.
-     * @return the current GameMap instance, or null if no game is active
-     */
+    @Override
     public GameMap getGameMap() {
         return gameMap;
     }
 
-    /**
-     * Gets the current game controller.
-     * @return the current GameController instance
-     */
-    public Optional<GameControllerImpl> getGameController() {
+    @Override
+    public Optional<GameController> getGameController() {
         return gameController;
     }
 
-    /**
-     * Stops the current game and cleans up resources.
-     */
     private void stopCurrentGame() {
         if (gameEngine.isPresent()) {
             gameEngine.get().stop();
@@ -133,10 +123,6 @@ public class MainControllerImpl implements MainController {
             gameFrame.getGamePanel().setAnimationOffset(0);
         }
         gameController = Optional.empty();
-    }
-
-    public void goToPause() {
-        gameFrame.show(CardName.PAUSE);
     }
     
     @Override
@@ -149,10 +135,7 @@ public class MainControllerImpl implements MainController {
         gameFrame.hidePausePanel();
     }
 
-    /**
-     * Gets the current game engine.
-     * @return the current GameEngine instance
-     */
+    @Override
     public Optional<GameEngine> getGameEngine() {
         return gameEngine;
     }
