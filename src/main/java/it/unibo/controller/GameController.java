@@ -49,27 +49,13 @@ public final class GameController extends KeyAdapter {
         Direction movementDirection = null;
         if (mainController.getGameEngine().get().getState().getName() == StateName.ON_GAME) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_P:
-                    mainController.getGameEngine().get().setState(new PauseState());
-                    break;
-                case KeyEvent.VK_LEFT:
-                case KeyEvent.VK_A:
-                    movementDirection = Direction.LEFT;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                case KeyEvent.VK_D:
-                    movementDirection = Direction.RIGHT;
-                    break;
-                case KeyEvent.VK_UP:
-                case KeyEvent.VK_W:
-                    movementDirection = Direction.UP;
-                    break;
-                case KeyEvent.VK_DOWN:
-                case KeyEvent.VK_S:
-                    movementDirection = Direction.DOWN;
-                    break;
-                default:
-                    break;
+                case KeyEvent.VK_P -> mainController.getGameEngine().get().setState(new PauseState());
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> movementDirection = Direction.LEFT;
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> movementDirection = Direction.RIGHT;
+                case KeyEvent.VK_UP, KeyEvent.VK_W -> movementDirection = Direction.UP;
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> movementDirection = Direction.DOWN;
+                default -> {
+                }
             }
             if (movementDirection != null) {
                 playerController.movePlayer(movementDirection);

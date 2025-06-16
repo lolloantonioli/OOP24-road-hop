@@ -3,6 +3,7 @@ package it.unibo.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -20,8 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import it.unibo.model.Shop.api.Skin;
-// LUCA QUESTO MESSAGGIO È PER TE, BISOGNEREBBE PASSARTI NEL COSTRUTTORE IL MAINCONTROLLER E CON QUELLO FARE
-// backButton.addActionListener(e -> mainController.goToMenu()); E TOGLIERE DALL'OBSERVER QUESTA OPERAZIONE OPPURE TOGLIERLO COMPLETAMENTE
+/**
+ * ShopView class that represents the shop interface in the game.
+ * It displays a list of skins available for purchase or selection,
+ * along with the player's current coin balance and a back button to return to the main menu.
+ */
 public class ShopView extends JPanel {
 
     private JLabel titleLabel;
@@ -37,12 +41,23 @@ public class ShopView extends JPanel {
     private BiConsumer<String, Integer> onSkinPurchase;
     private Consumer<String> onSkinSelected;
 
+    private static final float HEADER_FONT_SCALE = 1.5f;
+    private static final float NAME_LABEL_FONT_SCALE = 1.2f;
+    private static final int CARD_BORDER_PADDING = 5;
+    private static final int CARD_WIDTH = 120;
+    private static final int CARD_HEIGHT = 160;
 
+    /**
+     * Constructs a ShopView with a header, skins display area, and footer.
+     * The header contains the shop title and coin balance,
+     * the skins area displays available skins,
+     * and the footer contains a back button to return to the main menu.
+     */
     public ShopView() {
         setLayout(new BorderLayout());
         setBackground(Color.BLUE);
 
-        JPanel headerPanel = createHeaderPanel();
+        final JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
         skinsPanel = new JPanel();
@@ -57,25 +72,24 @@ public class ShopView extends JPanel {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane, BorderLayout.CENTER);
 
-        JPanel footerPanel = createFooterPanel();
+        final JPanel footerPanel = createFooterPanel();
         add(footerPanel, BorderLayout.SOUTH);
-        
-           
+
     }
-    
+
 
     private JPanel createHeaderPanel() {
-        JPanel headerPanel = new JPanel(new BorderLayout());
+        final JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.BLUE);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        titleLabel = new JLabel("Skin Shop",SwingConstants.CENTER);
+        titleLabel = new JLabel("Skin Shop", SwingConstants.CENTER);
         titleLabel.setForeground(Color.WHITE);
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * 1.5f));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * HEADER_FONT_SCALE));
 
         coinsLabel = new JLabel("Coins: 0", SwingConstants.RIGHT);
         coinsLabel.setForeground(Color.YELLOW);
-        coinsLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * 1.5f));
+        coinsLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * HEADER_FONT_SCALE));
 
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(coinsLabel, BorderLayout.EAST);
@@ -84,7 +98,7 @@ public class ShopView extends JPanel {
     }
 
     private JPanel createFooterPanel() {
-        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         footerPanel.setBackground(Color.BLUE);
 
         backButton = new JButton("Back");
@@ -94,7 +108,7 @@ public class ShopView extends JPanel {
         backButton.setBorder(BorderFactory.createEmptyBorder());
 
         backButton.setFont(backButton.getFont().deriveFont(Font.ROMAN_BASELINE));
-        
+
         backButton.addActionListener(e -> {
             if (onBackToMainMenu != null) {
                 onBackToMainMenu.run();
@@ -108,7 +122,7 @@ public class ShopView extends JPanel {
 
     private void refreshSkins() {
         skinsPanel.removeAll();
-        for (Skin skin : skins) {
+        for (final Skin skin : skins) {
             skinsPanel.add(createSkinCard(skin));
         }
         skinsPanel.revalidate();
@@ -117,12 +131,12 @@ public class ShopView extends JPanel {
 
 
 private Component createSkinCard(Skin skin) {
-        JPanel card = new JPanel();
+        final JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBackground(new Color(171, 205, 239));
-        
+        card.setBackground(Color.CYAN);
+
         // Different border colors based on skin status
-        Color borderColor;
+        final Color borderColor;
         if (skin.isSelected()) {
             borderColor = Color.CYAN; // Selected skin
         } else if (skin.isUnlocked()) {
@@ -130,33 +144,33 @@ private Component createSkinCard(Skin skin) {
         } else {
             borderColor = Color.GRAY; // Not owned
         }
-        
+
         card.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(borderColor, 2),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)
+            BorderFactory.createEmptyBorder(CARD_BORDER_PADDING, CARD_BORDER_PADDING, CARD_BORDER_PADDING, CARD_BORDER_PADDING)
         ));
 
         // Skin preview: colored square
-        JPanel colorPreview = new JPanel();
+        final JPanel colorPreview = new JPanel();
         colorPreview.setBackground(skin.getColor());
-        colorPreview.setMaximumSize(new java.awt.Dimension(48, 48));
-        colorPreview.setPreferredSize(new java.awt.Dimension(48, 48));
-        colorPreview.setMinimumSize(new java.awt.Dimension(48, 48));
+        colorPreview.setMaximumSize(new Dimension(48, 48));
+        colorPreview.setPreferredSize(new Dimension(48, 48));
+        colorPreview.setMinimumSize(new Dimension(48, 48));
         colorPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
         card.add(colorPreview);
         card.add(Box.createVerticalStrut(8));
 
         // Skin name
-        JLabel nameLabel = new JLabel(skin.getName(), SwingConstants.CENTER);
-        nameLabel.setFont(nameLabel.getFont().deriveFont(Font.BOLD, nameLabel.getFont().getSize() * 1.2f));
+        final JLabel nameLabel = new JLabel(skin.getName(), SwingConstants.CENTER);
+        nameLabel.setFont(nameLabel.getFont().deriveFont(Font.BOLD, nameLabel.getFont().getSize() * NAME_LABEL_FONT_SCALE));
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         card.add(nameLabel);
         card.add(Box.createVerticalStrut(8));
 
         // Bottone acquista/equip
-        JButton actionButton = new JButton();
+        final JButton actionButton = new JButton();
         actionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         if (skin.isSelected()) {
             actionButton.setText("EQUIPPED");
@@ -185,39 +199,61 @@ private Component createSkinCard(Skin skin) {
             });
         }
         card.add(actionButton);
-        card.setMaximumSize(new java.awt.Dimension(120, 160));
-        card.setPreferredSize(new java.awt.Dimension(120, 160));
-        card.setMinimumSize(new java.awt.Dimension(120, 160));
-        
+        card.setMaximumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+        card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+        card.setMinimumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+
         return card;
     }
 
-    public void setCoins(int coins) {
+    /**
+     * Sets the current coin balance and updates the coins label.
+     * Also refreshes the skins display to reflect any changes in skin ownership.
+     *
+     * @param coins the new coin balance
+     */
+    public final void setCoins(int coins) {
        this.coins = coins;
        coinsLabel.setText("Coins: " + coins);
        refreshSkins();
-    }    
+    }  
 
-    
-    public void setOnBackToMainMenu(Runnable onBackToMainMenu) {
+    /**
+     * Sets the action to be performed when the back button is clicked.
+     *
+     * @param onBackToMainMenu the action to perform when the back button is clicked
+     */
+    public final void setOnBackToMainMenu(final Runnable onBackToMainMenu) {
         this.onBackToMainMenu = onBackToMainMenu;
     }
 
-    
-    public void setSkins(List<Skin> skins) {
+    /**
+     * Sets the list of skins available in the shop and refreshes the display.
+     *
+     * @param skins the list of skins to display
+     */
+    public final void setSkins(final List<Skin> skins) {
         this.skins = new ArrayList<>(skins);
         refreshSkins();
     }
 
 
-    
-    public void setOnSkinPurchase(BiConsumer<String, Integer> skinPurchase) {
+    /**
+     * Sets the action to be performed when a skin is purchased.
+     *
+     * @param skinPurchase the action to perform when a skin is purchased, accepting skin ID and price
+     */
+    public final void setOnSkinPurchase(final BiConsumer<String, Integer> skinPurchase) {
         this.onSkinPurchase = skinPurchase;
     }
 
 
-    
-    public void setOnSkinSelected(Consumer<String> onSkinSelected) {
+    /**
+     * Sets the action to be performed when a skin is selected.
+     *
+     * @param onSkinSelected the action to perform when a skin is selected, accepting skin ID
+     */
+    public final void setOnSkinSelected(final Consumer<String> onSkinSelected) {
         this.onSkinSelected = onSkinSelected;
     }
    

@@ -8,14 +8,24 @@ import it.unibo.model.Shop.api.ShopModel;
 import it.unibo.model.Shop.api.Skin;
 import it.unibo.view.ShopView;
 
-public class ShopObserverImpl implements ShopObserver{
+/**
+ * Implementation of the ShopObserver interface.
+ * Observes shop-related events and updates the view and model accordingly.
+ */
+public class ShopObserverImpl implements ShopObserver {
 
 
     private final MainController mainController;
     private final ShopView shopPanel;
     private final ShopModel shopModel;
 
-
+    /**
+     * Constructor for ShopObserverImpl.
+     * Initializes the observer with the main controller, shop panel, and shop model.
+     * @param mainController
+     * @param shopPanel
+     * @param shopModel
+     */
     public ShopObserverImpl(final MainController mainController, final ShopView shopPanel, final ShopModel shopModel) {
         this.mainController = mainController;
         this.shopPanel = shopPanel;
@@ -24,7 +34,7 @@ public class ShopObserverImpl implements ShopObserver{
 
 
     @Override
-    public void activate() {
+    public final void activate() {
         shopPanel.setOnBackToMainMenu(() -> mainController.goToMenu());
 
         shopPanel.setOnSkinPurchase((skinId, price) -> {
@@ -43,10 +53,9 @@ public class ShopObserverImpl implements ShopObserver{
 
 
     private void updateView() {
-        shopPanel.setCoins(shopModel.getCoins());
-        
-        List<Skin> skins = shopModel.getAllSkins();
+        shopPanel.setCoins(shopModel.getCoins()); 
+        final List<Skin> skins = shopModel.getAllSkins();
         shopPanel.setSkins(skins);
     }
-    
+
 }

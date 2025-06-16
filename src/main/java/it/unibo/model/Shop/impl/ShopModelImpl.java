@@ -15,46 +15,53 @@ public class ShopModelImpl implements ShopModel {
     private Skin selectedSkin;
     private int coins;
 
+    private static final int RED_SKIN_PRICE = 50;
+    private static final int DEFAULT_SKIN_PRICE = 0;
+    private static final int BLUE_SKIN_PRICE = 75;
+    private static final int ORANGE_SKIN_PRICE = 100;
+    private static final int CYAN_SKIN_PRICE = 140;
+    private static final int WHITE_SKIN_PRICE = 160;
+
     public ShopModelImpl() {
         this.skins = new ArrayList<>();
         loadShopData();
     }
 
     private void loadShopData() {
-        ShopSaveData saveData = ShopDataManagerImpl.loadShopData();
+        final ShopSaveData saveData = ShopDataManagerImpl.loadShopData();
         this.coins = saveData.coins;
-        
+
         initializeSkins(saveData);
 
         selectedSkin(saveData.selectedSkin);
     }
 
-    private void selectedSkin(String selectedSkinId) {
+    private final void selectedSkin(final String selectedSkinId) {
         selectedSkin = skins.stream()
                 .filter(skin -> skin.getId().equals(selectedSkinId))
                 .findFirst()
                 .orElse(skins.get(0));
     }
 
-    private void initializeSkins(ShopSaveData saveData) {
-        createSkin("Default", "Default", 0, Color.GREEN, saveData);
-        createSkin("red", "Red", 50, new Color(220, 20, 60), saveData); // Rosso
-        createSkin("blue", "Blue", 75, new Color(30, 144, 255), saveData); // Blu
-        createSkin("orange", "Orange", 100, new Color(255, 140, 0), saveData); // Arancione
-        createSkin("cyan", "Cyan", 140, Color.CYAN, saveData); // Azzurro
-        createSkin("white", "White", 160, Color.WHITE, saveData); // Bianco
+    private void initializeSkins(final ShopSaveData saveData) {
+        createSkin("Default", "Default", DEFAULT_SKIN_PRICE, Color.GREEN, saveData);
+        createSkin("red", "Red", RED_SKIN_PRICE, Color.RED, saveData); // Rosso
+        createSkin("blue", "Blue", BLUE_SKIN_PRICE, Color.BLUE, saveData); // Blu
+        createSkin("orange", "Orange", ORANGE_SKIN_PRICE, Color.ORANGE, saveData); // Arancione
+        createSkin("cyan", "Cyan", CYAN_SKIN_PRICE, Color.CYAN, saveData); // Azzurro
+        createSkin("white", "White", WHITE_SKIN_PRICE, Color.WHITE, saveData); // Bianco        ./gradlew check
     }
 
-    private void createSkin(String id, String name, int price, Color color, ShopSaveData saveData) {
-        SkinSaveData skinData = saveData.skins.stream()
-                .filter(data -> data.id.equals(id))
+    private void createSkin(final String id, final String name, final int price, final Color color, final ShopSaveData saveData) {
+        final SkinSaveData skinData = saveData.getSkins().stream()
+                .filter(data -> data.getId().equals(id))
                 .findFirst()
                 .orElse(null);
-        
-        boolean unlocked = (skinData != null) ? skinData.unlocked : (id.equals("Default"));
-        boolean selected = (skinData != null) ? skinData.selected : false;
 
-        Skin skin = new SkinImpl(id, name, price, unlocked, color);
+        final boolean unlocked = (skinData != null) ? skinData.isUnlocked() : (id.equals("Default"));
+        final boolean selected = (skinData != null) ? skinData.isSelected() : false;
+
+        final Skin skin = new SkinImpl(id, name, price, unlocked, color);
         if (selected) {
             skin.select();
         } 
@@ -63,17 +70,17 @@ public class ShopModelImpl implements ShopModel {
 
 
     private void saveData() {
-        String selectedSkinId = (selectedSkin != null) ? selectedSkin.getId() : "Default";
+        final String selectedSkinId = (selectedSkin != null) ? selectedSkin.getId() : "Default";
         ShopDataManagerImpl.saveShopData(skins, selectedSkinId, coins);
     }
 
     @Override
-    public List<Skin> getAllSkins() {
-        return new ArrayList<>(skins);  
+    public final List<Skin> getAllSkins() {
+        return new ArrayList<>(skins);
     }
 
     @Override
-    public Skin getSkinById(String id) {
+    public final Skin getSkinById(final String id) {
        return skins.stream()
                 .filter(skin -> skin.getId().equals(id))
                 .findFirst()
@@ -81,29 +88,29 @@ public class ShopModelImpl implements ShopModel {
     }
 
     @Override
-    public boolean canPurchaseSkin(String id) {
+    public final boolean canPurchaseSkin(final String id) {
        Skin skin = getSkinById(id);
         return skin != null && !skin.isUnlocked() && coins >= skin.getPrice();
     }
 
     @Override
-    public void purchaseSkin(String id) {
+    public final void purchaseSkin(final String id) {
         if (canPurchaseSkin(id)) {
-            Skin skin = getSkinById(id);
+            final Skin skin = getSkinById(id);
             spendCoins(skin.getPrice());
             skin.unlock();
             saveData(); // Salva dopo l'acquisto
         } 
     }
 
-    private void spendCoins(int price) {
-        if ( price > 0 && coins >= price) {
+    private void spendCoins(final int price) {
+        if (price > 0 && coins >= price) {
             this.coins -= price;
         }
     }
 
     @Override
-    public void selectSkin(String id) {
+    public final void selectSkin(final String id) {
         Skin skin = getSkinById(id);
         if (skin != null && skin.isUnlocked()) {
             if (selectedSkin != null) {
@@ -117,23 +124,23 @@ public class ShopModelImpl implements ShopModel {
     }
 
     @Override
-    public Skin getSelectedSkin() {
+    public final Skin getSelectedSkin() {
         return selectedSkin;
     }
 
     @Override
-    public int getCoins() {
+    public final int getCoins() {
         return coins;
     }
 
-    public void addCoins(int amount) {
+    public final void addCoins(final int amount) {
         if (amount > 0) {
             this.coins += amount;
             saveData();
         }
     }
-    
-    public void saveDataToFile(){
+
+    public final void saveDataToFile() {
         saveData();
     }
 }

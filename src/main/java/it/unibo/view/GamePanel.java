@@ -80,9 +80,17 @@ public final class GamePanel extends JPanel {
             }
         }
 
-        
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
+        }
+
+        drawScore(g);
+
+        if (gameController.getPlayerController().hasPlayerSecondLife()) {
+            g.setColor(new Color(255, 105, 180)); // rosa
+            int radius = getHeight() / 20;
+            int padding = radius / 2;
+            g.fillOval(padding, padding, radius, radius);
         }
         
         drawPlayer(g, cellWidth, cellHeight);
@@ -91,6 +99,29 @@ public final class GamePanel extends JPanel {
             drawCountdown(g);
         }
 
+    }
+
+    private void drawScore(final Graphics g) {
+        if (gameController == null || gameController.getPlayerController() == null) {
+            return;
+        }
+
+        int score = gameController.getPlayerController().getPlayerScore();
+        int coins = gameController.getPlayerController().getCollectedCoins();
+
+        String scoreText = String.valueOf(score);
+        String coinText = String.valueOf(coins);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, getHeight() / 10));
+        int textWidth = g.getFontMetrics().stringWidth(scoreText);
+        int padding = 10;
+        g.drawString(scoreText, getWidth() - textWidth - padding, g.getFont().getSize() + padding);
+
+        g.setColor(Color.YELLOW);
+        g.setFont(new Font("Arial", Font.BOLD, getHeight() / 15));
+        textWidth = g.getFontMetrics().stringWidth(coinText);
+        g.drawString(coinText, getWidth() - textWidth - padding, g.getFont().getSize() * 3 + padding + 5);
     }
 
     private void drawCountdown(final Graphics g) {
@@ -178,8 +209,29 @@ public final class GamePanel extends JPanel {
 
     private void drawCell(final Graphics g, final int x, final int y,
                           final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(mapFormatter.getChunkColor(chunkIndex));
-        g.fillRect(x, y, cellWidth, cellHeight);
+        if (mapFormatter.isRailwayCell(chunkIndex)) {
+            // Sfondo grigio chiaro
+            g.setColor(new Color(200, 200, 200));
+            g.fillRect(x, y, cellWidth, cellHeight);
+
+            // Due rettangoli marroni verticali (traverse)
+            g.setColor(new Color(139, 69, 19)); // Marrone
+            int railWidth = cellWidth / 5;
+            g.fillRect(x + cellWidth / 6, y, railWidth, cellHeight);
+            g.fillRect(x + cellWidth * 4 / 6, y, railWidth, cellHeight);
+
+            // Rettangoli orizzontali grigio scuro (traverse)
+            g.setColor(new Color(120, 120, 120));
+            int numTraverses = 3;
+            int traverseHeight = cellHeight / 8;
+            for (int t = 1; t <= numTraverses; t++) {
+                int traverseY = y + t * cellHeight / (numTraverses + 1) - traverseHeight / 2;
+                g.fillRect(x, traverseY, cellWidth, traverseHeight);
+            }
+        } else {
+            g.setColor(mapFormatter.getChunkColor(chunkIndex));
+            g.fillRect(x, y, cellWidth, cellHeight);
+        }
         if (mapFormatter.hasCellObjects(chunkIndex, cellIndex)) {
             g.setColor(mapFormatter.getCellObjectColor(chunkIndex, cellIndex));
             if (mapFormatter.isCellObjectCircular(chunkIndex, cellIndex)) {

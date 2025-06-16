@@ -96,4 +96,10 @@ public final class MapFormatterImpl implements MapFormatter {
             .anyMatch(obj -> obj instanceof Collectible && !((Collectible)obj).isCollected());
     }
 
+    @Override
+    public boolean isRailwayCell(final int chunkIndex) {
+        final List<Chunk> chunks = gameMap.getVisibleChunks();
+        return chunks.get(chunkIndex).getType() == ChunkType.RAILWAY;
+    }
+
 }
