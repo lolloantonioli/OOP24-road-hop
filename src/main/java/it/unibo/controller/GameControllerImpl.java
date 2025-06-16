@@ -18,14 +18,21 @@ import it.unibo.model.Player.util.Direction;
  * Main game controller that handles all game logic and input.
  * This is the central controller for the game state management.
  */
-public class GameControllerImpl extends KeyAdapter implements GameController {
-    
+public final class GameControllerImpl extends KeyAdapter implements GameController {
     private final GameMap gameMap;
     private final MovingObstacleController obstacleController;
     private final MapFormatter mapAdapter;
     private final MainController mainController;
     private final PlayerController playerController;
 
+    /**
+     * Constructor for GameControllerImpl.
+     *
+     * @param gameMap the game map instance
+     * @param obstacleController the controller for moving obstacles
+     * @param mainController the main controller for game state management
+     * @param playerController the controller for player actions and state
+     */
     public GameControllerImpl(final GameMap gameMap,
                               final MovingObstacleController obstacleController,
                               final MainController mainController,
@@ -70,13 +77,12 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         }
     }
 
-    /**
-     * Updates the game logic. Called by GameEngine.
-     */
+    @Override
     public void updateMap() {
         gameMap.update();
     }
 
+    @Override
     public void updateObstacles() {
         obstacleController.update();
     }
@@ -86,16 +92,12 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         playerController.update();
     }
 
-    /**
-     * Gets the game map.
-     */
+    @Override
     public GameMap getGameMap() {
         return gameMap;
     }
 
-    /**
-     * Gets the obstacle controller.
-     */
+    @Override
     public MovingObstacleController getObstacleController() {
         return obstacleController;
     }
@@ -105,15 +107,18 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         return playerController;
     }
 
+    @Override
     public MapFormatter getMapFormatter() {
         return mapAdapter;
     }
 
+    @Override
     public int getMapWidth() {
-        return ChunkImpl.CELLS_PER_ROW; // Placeholder
+        return ChunkImpl.CELLS_PER_ROW;
     }
 
+    @Override
     public int getMapHeight() {
-        return GameMapImpl.CHUNKS_NUMBER; // Placeholder
+        return GameMapImpl.CHUNKS_NUMBER;
     }
 }
