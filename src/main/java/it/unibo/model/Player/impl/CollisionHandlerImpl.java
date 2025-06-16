@@ -15,6 +15,10 @@ public class CollisionHandlerImpl implements CollisionHandler{
     @Override
     public void handleCollectibleCollision(Player player, Collectible collectible) {
 
+        if (collectible.isCollected()) {
+            return;
+        }
+
         try {
 
             if (collectible.getType().equals(CollectibleType.COIN)) {
@@ -24,12 +28,11 @@ public class CollisionHandlerImpl implements CollisionHandler{
             if (collectible.getType().equals(CollectibleType.SECOND_LIFE)) {
                 player.grantSecondLife();
             }
+            
+            collectible.collect();
         } catch (Exception e) {
                 System.err.println("Error processing collectible collision with: " + collectible.getClass().getSimpleName() + " - " + e.getMessage());
         }
-
-        collectible.collect();
-        
     }
 
 }

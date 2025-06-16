@@ -82,4 +82,11 @@ public interface PlayerController {
      */
     boolean isPlayerOnPlatform();
 
+    /**
+     * Checks if the players has the second life.
+     * 
+     * @return true if the player has the second life, false otherwise.
+     */
+    boolean hasPlayerSecondLife();
+
 }
