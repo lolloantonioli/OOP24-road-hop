@@ -8,7 +8,6 @@ import java.awt.Color;
  * and query cell and chunk properties for rendering purposes.
  */
 public interface MapFormatter {
-    
     /**
      * Returns the color associated with the specified chunk.
      *
@@ -16,7 +15,6 @@ public interface MapFormatter {
      * @return the color of the chunk
      */
     Color getChunkColor(int chunkIndex);
-    
     /**
      * Checks if the specified cell contains any objects.
      *
@@ -25,7 +23,6 @@ public interface MapFormatter {
      * @return true if the cell contains objects, false otherwise
      */
     boolean hasCellObjects(int chunkIndex, int cellIndex);
-    
     /**
      * Returns the color representing the object(s) in the specified cell.
      *
@@ -34,7 +31,6 @@ public interface MapFormatter {
      * @return the color of the cell's object(s)
      */
     Color getCellObjectColor(int chunkIndex, int cellIndex);
-    
     /**
      * Checks if the object(s) in the specified cell should be rendered as circular.
      *

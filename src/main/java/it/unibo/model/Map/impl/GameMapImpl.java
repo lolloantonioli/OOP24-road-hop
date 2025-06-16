@@ -13,24 +13,25 @@ import it.unibo.model.Map.api.GameMap;
 /**
  * Implementation of the {@code GameMap} interface.
  */
-public class GameMapImpl implements GameMap {
+public final class GameMapImpl implements GameMap {
+
+    /**
+     * The number of chunks that are always visible on the screen.
+     */
+    public final static int CHUNKS_NUMBER = 7;
+
+    private final static int BUFFER_CHUNKS = 5;
+    private final static int MAX_SPEED = 10;
+    private final static int CELLS_INCREASE_SPEED = 70;
+    private final static int FIRSTS_CHUNKS = 3;
 
     private final List<Chunk> chunks;
     private final ChunkFactory chunkFactory;
     private int currentPosition;
     private int scrollSpeed;
 
-    public static final int CHUNKS_NUMBER = 7;
-    
-    private static final int BUFFER_CHUNKS = 5;
-    private static final int MAX_SPEED = 10;
-    private static final int CELLS_INCREASE_SPEED = 70;
-
     /**
      * Constructs a new {@code GameMapImpl} with the specified scroll speed.
-     *
-     * @param speed the initial scroll speed of the map, must be between 0 and {@link #MAX_SPEED}.
-     * @throws IllegalArgumentException if the speed is not in the valid range.
      */
     public GameMapImpl() {
         this.chunks = new ArrayList<>();
@@ -42,8 +43,9 @@ public class GameMapImpl implements GameMap {
     }
 
     private void initializeMap() {
-        chunks.add(chunkFactory.createFirstChunk(0));
-        IntStream.range(1, CHUNKS_NUMBER + 1)
+        IntStream.range(0, FIRSTS_CHUNKS)
+            .forEach(i -> chunks.add(chunkFactory.createFirstsChunk(i)));
+        IntStream.range(3, CHUNKS_NUMBER + 1)
             .forEach(i -> chunks.add(chunkFactory.createGrassChunk(i)));
     }
 
@@ -64,7 +66,7 @@ public class GameMapImpl implements GameMap {
     private void ensureBufferChunks() {
         int farthestPosition = getFarthestChunkPosition();
         final int targetPosition = currentPosition + BUFFER_CHUNKS + CHUNKS_NUMBER;
-        
+
         while (farthestPosition < targetPosition) {
             generateNewChunk();
             farthestPosition = getFarthestChunkPosition();

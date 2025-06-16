@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Random;
 
 import it.unibo.controller.Obstacles.api.MovingObstacleController;
+import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
@@ -74,7 +76,7 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
             
             // Se non ci sono ostacoli o l'ultimo si è allontanato abbastanza, genera nuovo
             if (obstacles.isEmpty() || shouldSpawnNew(obstacles, y, chunkType)) {
-                spawnObstacle(y, chunkType);
+                spawnObstacle(y, chunk);
             }
         }
     }
@@ -102,8 +104,9 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
         };
     }
 
-    private void spawnObstacle(int y, String chunkType) {
-        ObstacleType type = switch (chunkType) {
+    private void spawnObstacle(int y, Chunk chunk) {
+        ChunkType chunkType = chunk.getType();
+        ObstacleType type = switch (chunkType.toString()) {
             case "ROAD" -> ObstacleType.CAR;
             case "RAILWAY" -> ObstacleType.TRAIN;
             case "RIVER" -> ObstacleType.LOG;
@@ -115,8 +118,8 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
         int x = leftToRight ? -factory.getObstacleWidth(type) : 9;
         
         MovingObstacles obstacle = factory.createObstacleByType(type, x, y, leftToRight ? speed : -speed);
-        gameMap.getAllChunks().get(obstacle.getY()).addObjectAt(obstacle, 0);
         manager.addObstacle(obstacle);
+        chunk.addObjectAt(obstacle, 0);
     }
 
     @Override

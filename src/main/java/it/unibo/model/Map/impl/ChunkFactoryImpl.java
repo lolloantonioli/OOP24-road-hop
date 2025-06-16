@@ -13,12 +13,12 @@ import it.unibo.model.Map.util.ChunkType;
  * Implementation of the {@code ChunkFactory} interface.
  * This factory is responsible for creating different types of chunks at specified positions.
  */
-public class ChunkFactoryImpl implements ChunkFactory {
+public final class ChunkFactoryImpl implements ChunkFactory {
+
+    private static final String MSG = "Position must be non-negative";
 
     private final Random random;
     private final ObjectPlacer objectPlacer;
-
-    private final static String MSG = "Position must be non-negative";
 
     /**
      * Constructs a new {@code ChunkFactoryImpl} with a random number generator and an {@code ObjectPlacer}.
@@ -40,7 +40,8 @@ public class ChunkFactoryImpl implements ChunkFactory {
         };
     }
 
-    private Chunk createChunk(final int position, final ChunkType type, final boolean placeObstacles, final boolean placeCollectibles) {
+    private Chunk createChunk(final int position, final ChunkType type,
+                              final boolean placeObstacles, final boolean placeCollectibles) {
         final Chunk chunk = new ChunkImpl(position, type);
         if (placeObstacles) {
             objectPlacer.placeObstacles(chunk);
@@ -57,7 +58,7 @@ public class ChunkFactoryImpl implements ChunkFactory {
     }
 
     @Override
-    public Chunk createFirstChunk(final int position) {
+    public Chunk createFirstsChunk(final int position) {
         return createChunk(position, ChunkType.GRASS, false, false);
     }
 

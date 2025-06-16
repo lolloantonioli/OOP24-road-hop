@@ -13,7 +13,7 @@ public class MovingObstacles extends GameObjectImpl implements Obstacle{
     private boolean visible;
     private int updateCounter; // Per gestire movimento sub-cella
     private static final int BASE_MOVEMENT_THRESHOLD = 50; 
-    private static final List<PlatformMovementObserver> observers = new ArrayList<>();
+    private final List<PlatformMovementObserver> observers = new ArrayList<>();
 
     public static final int CAR_WIDTH_CELLS = 1;
     public static final int TRAIN_WIDTH_CELLS = 4;

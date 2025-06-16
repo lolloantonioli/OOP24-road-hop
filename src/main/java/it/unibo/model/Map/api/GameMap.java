@@ -51,5 +51,5 @@ public interface GameMap {
      * @return the scroll speed
      */
     int getScrollSpeed();
-    
+
 }

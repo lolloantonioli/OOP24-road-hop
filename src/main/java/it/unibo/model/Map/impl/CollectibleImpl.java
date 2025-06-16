@@ -7,7 +7,7 @@ import it.unibo.model.Map.util.CollectibleType;
  * Implementation of the Collectible interface, representing a collectible item in the game.
  * Collectibles can be collected by the player, and their type can be determined.
  */
-public class CollectibleImpl extends GameObjectImpl implements Collectible {
+public final class CollectibleImpl extends GameObjectImpl implements Collectible {
 
     private final CollectibleType type;
     private boolean collected;

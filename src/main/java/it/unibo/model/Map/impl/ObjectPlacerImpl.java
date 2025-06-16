@@ -14,12 +14,23 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 
-public class ObjectPlacerImpl implements ObjectPlacer {
+/**
+ * Implementation of the {@code ObjectPlacer} interface.
+ * This class is responsible for placing static obstacles and collectibles in a game map chunk.
+ */
+public final class ObjectPlacerImpl implements ObjectPlacer {
+
+    private static final double SAFE_CELL_PROBABILITY = 0.4;
+    private static final double SECOND_LIFE_PROBABILITY = 0.1;
 
     private final List<List<Integer>> patterns;
     private final Random random;
     private int lastSafeCell = -1;
 
+    /**
+     * Creates a new {@code ObjectPlacerImpl} instance.
+     * Initializes the patterns for placing obstacles.
+     */
     public ObjectPlacerImpl() {
         this.patterns = new ArrayList<>();
         this.random = new Random();
@@ -36,12 +47,12 @@ public class ObjectPlacerImpl implements ObjectPlacer {
 
     @Override
     public void placeObstacles(final Chunk chunk) {
-        int safeCell;
+        final int safeCell;
         if (lastSafeCell == -1) {
             safeCell = random.nextInt(ChunkImpl.CELLS_PER_ROW);
         } else {
-            int min = Math.max(0, lastSafeCell - 1);
-            int max = Math.min(ChunkImpl.CELLS_PER_ROW - 1, lastSafeCell + 1);
+            final int min = Math.max(0, lastSafeCell - 1);
+            final int max = Math.min(ChunkImpl.CELLS_PER_ROW - 1, lastSafeCell + 1);
             safeCell = min + random.nextInt(max - min + 1);
         }
         lastSafeCell = safeCell;
@@ -57,7 +68,7 @@ public class ObjectPlacerImpl implements ObjectPlacer {
 
     @Override
     public void placeCollectibles(final Chunk chunk) {
-        if (random.nextDouble() < 0.4) {
+        if (random.nextDouble() < SAFE_CELL_PROBABILITY) {
             final Set<Integer> occupiedPositions = new HashSet<>();
             chunk.getObjects().stream()
                 .filter(obj -> obj instanceof Obstacle)
@@ -69,7 +80,8 @@ public class ObjectPlacerImpl implements ObjectPlacer {
             if (!availablePositions.isEmpty()) {
                 final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
                 // 80% coin, 20% seconda vita
-                CollectibleType type = random.nextDouble() < 0.1 ? CollectibleType.SECOND_LIFE : CollectibleType.COIN;
+                final CollectibleType type = random.nextDouble() < SECOND_LIFE_PROBABILITY ? 
+                CollectibleType.SECOND_LIFE : CollectibleType.COIN;
                 final Collectible collectible = new CollectibleImpl(collectiblePos, chunk.getPosition(), type);
                 chunk.addObjectAt(collectible, collectiblePos);
             }

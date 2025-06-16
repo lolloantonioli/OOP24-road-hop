@@ -16,7 +16,7 @@ public interface Cell {
      * @return true if the object was added successfully, false otherwise.
      */
     boolean addObject(GameObject obj);
-    
+
     /**
      * Removes a {@code GameObject} from the cell.
      *
@@ -46,7 +46,7 @@ public interface Cell {
      * @return the x-coordinate of the cell.
      */
     int getX();
-    
+
     /**
      * Gets the y-coordinate of the cell.
      *

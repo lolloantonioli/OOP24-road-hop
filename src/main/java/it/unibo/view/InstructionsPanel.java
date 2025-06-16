@@ -15,20 +15,28 @@ import javax.swing.JTextArea;
 
 import it.unibo.controller.MainController;
 
-public class InstructionsPanel extends JPanel {
+/**
+ * InstructionsPanel class that displays the game instructions and a back button.
+ * It allows users to read the instructions and return to the main menu.
+ */
+public final class InstructionsPanel extends JPanel {
+
+    private final static int HEIGHT = 20;
+    private final static String BACK_BUTTON_TEXT = "Back";
+    private final static String INSTRUCTIONS_TEXT = "Instructions:\n"
+            + "1. Use WASD to move your character.\n"
+            + "2. Collect coins.\n"
+            + "3. Avoid obstacles to stay alive.\n"
+            + "4. Reach the maximum score.";
 
     private final JTextArea instructions;
     private final JButton backButton;
     private final MainController controller;
 
-    private static final int HEIGHT = 20;
-    private static final String BACK_BUTTON_TEXT = "Back";
-    private static final String INSTRUCTIONS_TEXT = "Instructions:\n"
-            + "1. Use WASD to move your character.\n"
-            + "2. Collect coins.\n"
-            + "3. Avoid obstacles to stay alive.\n"
-            + "4. Reach the maximum score.";
-    
+    /**
+     * Constructor for InstructionsPanel.
+     * @param controller the MainController to handle navigation actions
+     */
     public InstructionsPanel(final MainController controller) {
         this.controller = controller;
         instructions = new JTextArea(INSTRUCTIONS_TEXT);
@@ -44,7 +52,7 @@ public class InstructionsPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
 
-        JPanel centerPanel = new JPanel();
+        final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);
 
@@ -54,41 +62,42 @@ public class InstructionsPanel extends JPanel {
         centerPanel.add(instructions);
         centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT)));
         centerPanel.add(backButton);
-        
+
         this.add(centerPanel);
     }
 
-    public void setBackAction() {
+    private void setBackAction() {
         backButton.addActionListener(e -> controller.goToMenu());
     }
 
+    /**
+     * Sets the bounds of the panel and adjusts the layout and components accordingly.
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param width the width of the panel
+     * @param height the height of the panel
+     */
     @Override
-    public void setBounds(int x, int y, int width, int height) {
+    public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
-    
-        // Imposta il layout per occupare tutto lo spazio disponibile
+
         setLayout(new BorderLayout());
-    
-        // Aggiorna il font e le dimensioni del JTextArea
-        int fontSize = Math.max(16, Math.min(width / 35, height / 18));
+
+        final int fontSize = Math.max(16, Math.min(width / 35, height / 18));
         instructions.setFont(new Font("Arial", Font.PLAIN, fontSize));
         instructions.setPreferredSize(new Dimension(width, height - 100));
-    
-        // Aggiorna il font del JButton
+
         backButton.setFont(backButton.getFont().deriveFont((float) fontSize));
-    
-        // Crea un pannello per il pulsante "Back"
-        JPanel buttonPanel = new JPanel(); // Usa il costruttore senza argomenti
-        buttonPanel.setBackground(Color.BLUE); // Imposta il colore di sfondo
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Imposta il layout manualmente
+
+        final JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.BLUE);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(backButton);
-    
-        // Aggiungi i componenti al layout
-        removeAll(); // Rimuovi eventuali componenti precedenti
+
+        removeAll();
         add(instructions, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH); // Posiziona il pannello del pulsante in basso
-    
-        // Forza il ridimensionamento e il ridisegno dei componenti
+        add(buttonPanel, BorderLayout.SOUTH);
+
         revalidate();
         repaint();
     }
