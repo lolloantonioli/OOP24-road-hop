@@ -80,8 +80,6 @@ public final class GamePanel extends JPanel {
             }
         }
 
-        drawPlayer(g, cellWidth, cellHeight);
-
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
         }
@@ -89,7 +87,7 @@ public final class GamePanel extends JPanel {
         drawScore(g);
 
         if (gameController.getPlayerController().hasPlayerSecondLife()) {
-            g.setColor(new java.awt.Color(255, 105, 180)); // rosa
+            g.setColor(new Color(255, 105, 180)); // rosa
             int radius = getHeight() / 20;
             int padding = radius / 2;
             g.fillOval(padding, padding, radius, radius);
