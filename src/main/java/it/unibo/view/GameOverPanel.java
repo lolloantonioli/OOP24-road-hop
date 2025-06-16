@@ -12,42 +12,49 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameOverPanel extends JPanel {
+
     private static final String GAME_OVER_TEXT = "Game Over";
     private static final String MENU_BUTTON_TEXT = "Menu";
     private final JButton menuButton;
     private final JLabel gameOverLabel;
 
-    public GameOverPanel(Runnable onMenu) {
+    private final static int LABEL_SIZE = 48;
+    private final static int LABEL_BTN_SIZE = 32;
+    private final static int HEIGHT_AREA = 40;
+    private final static int DIV_FACTOR_TITLE = 6;
+    private final static int DIV_FACTOR_BUTTON = 15;
+
+    public GameOverPanel(final Runnable onMenu) {
         setLayout(new GridBagLayout());
         setBackground(Color.BLUE);
         gameOverLabel = new JLabel(GAME_OVER_TEXT);
         gameOverLabel.setForeground(Color.WHITE);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 48));
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, LABEL_SIZE));
         menuButton = new JButton(MENU_BUTTON_TEXT);
-        menuButton.setFont(new Font("Arial", Font.BOLD, 32));
+        menuButton.setFont(new Font("Arial", Font.BOLD, LABEL_BTN_SIZE));
         menuButton.addActionListener(e -> onMenu.run());
-        JPanel centerPanel = new JPanel();
+        final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);
         gameOverLabel.setAlignmentX(CENTER_ALIGNMENT);
         menuButton.setAlignmentX(CENTER_ALIGNMENT);
         centerPanel.add(gameOverLabel);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT_AREA)));
         centerPanel.add(menuButton);
         add(centerPanel);
     }
 
     @Override
-    public void setBounds(int x, int y, int width, int height) {
+    public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
-        int minDim = Math.min(width, height);
-        int titleFontSize = Math.max(32, minDim / 6);
-        int buttonFontSize = Math.max(12, minDim / 15);
+        final int minDim = Math.min(width, height);
+        final int titleFontSize = Math.max(32, minDim / DIV_FACTOR_TITLE);
+        final int buttonFontSize = Math.max(12, minDim / DIV_FACTOR_BUTTON);
         gameOverLabel.setFont(gameOverLabel.getFont().deriveFont((float) titleFontSize));
         menuButton.setFont(menuButton.getFont().deriveFont((float) buttonFontSize));
-        int minButtonWidth = getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT) + 40;
-        int buttonWidth = Math.max(minButtonWidth, width / 3);
-        int buttonHeight = Math.max(40, height / 10);
+        final int minButtonWidth = getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT) + 40;
+        final int buttonWidth = Math.max(minButtonWidth, width / 3);
+        final int buttonHeight = Math.max(40, height / 10);
         menuButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         menuButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
         menuButton.setPreferredSize(null);

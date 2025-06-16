@@ -9,15 +9,25 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PausePanel extends JPanel {
+/**
+ * PausePanel class that represents the pause menu of the game.
+ * It contains buttons to continue the game or return to the main menu.
+ * The panel is designed to be responsive and adjusts its layout based on the size of the window.
+ */
+public final class PausePanel extends JPanel {
 
     private final JButton continueButton;;
     private final JButton menuButton;
 
-    private static final String MENU_BUTTON_TEXT = "Menu";
-    private static final String CONTINUE_BUTTON_TEXT = "Continue";
-    
-    public PausePanel(Runnable onContinue, Runnable onMenu) {
+    private final static String MENU_BUTTON_TEXT = "Menu";
+    private final static String CONTINUE_BUTTON_TEXT = "Continue";
+
+    /**
+     * Constructor for the PausePanel.
+     * @param onContinue the action to perform when the continue button is clicked
+     * @param onMenu the action to perform when the menu button is clicked
+     */
+    public PausePanel(final Runnable onContinue, final Runnable onMenu) {
         menuButton = new JButton(MENU_BUTTON_TEXT);
         continueButton = new JButton(CONTINUE_BUTTON_TEXT);
         this.setMenuAction(onMenu);
@@ -26,7 +36,7 @@ public class PausePanel extends JPanel {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
 
-        JPanel centerPanel = new JPanel();
+        final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);
 
@@ -36,33 +46,34 @@ public class PausePanel extends JPanel {
         centerPanel.add(menuButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT)));
         centerPanel.add(continueButton);
-        
+
         this.add(centerPanel);
     }
 
-    private void setContinueAction(Runnable onContinue) {
+    private void setContinueAction(final Runnable onContinue) {
         continueButton.addActionListener(e -> onContinue.run());
     }
 
-    private void setMenuAction(Runnable onMenu) {
+    private void setMenuAction(final Runnable onMenu) {
         menuButton.addActionListener(e -> onMenu.run());
     }
 
+    /**
+     * Sets the bounds of the panel and adjusts the size of the buttons based on the panel's dimensions.
+     */
     @Override
-    public void setBounds(int x, int y, int width, int height) {
+    public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
-        int minDim = Math.min(width, height);
-        int baseFontSize = Math.max(12, minDim / 15);
-        // Aggiorna il font dei bottoni
+        final int minDim = Math.min(width, height);
+        final int baseFontSize = Math.max(12, minDim / 15);
         continueButton.setFont(continueButton.getFont().deriveFont((float) baseFontSize));
         menuButton.setFont(menuButton.getFont().deriveFont((float) baseFontSize));
-        // Calcola larghezza minima necessaria
-        int minButtonWidth = Math.max(
+        final int minButtonWidth = Math.max(
             getFontMetrics(continueButton.getFont()).stringWidth(CONTINUE_BUTTON_TEXT),
             getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT)
         ) + 40;
-        int buttonWidth = Math.max(minButtonWidth, width / 3);
-        int buttonHeight = Math.max(40, height / 10);
+        final int buttonWidth = Math.max(minButtonWidth, width / 3);
+        final int buttonHeight = Math.max(40, height / 10);
         continueButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         menuButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         continueButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
