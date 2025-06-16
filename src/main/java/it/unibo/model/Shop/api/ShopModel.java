@@ -1,9 +1,12 @@
 package it.unibo.model.Shop.api;
 
 import java.util.List;
-
+/**
+ * ShopModel interface that defines the methods for managing a shop in a game.
+ * It includes methods to retrieve skins, purchase skins, select skins, and manage coins.
+ */
 public interface ShopModel {
-    
+
     /**
      * Returns the list of all available skins.
      * @return a list of all skins in the shop

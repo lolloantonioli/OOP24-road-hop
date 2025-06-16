@@ -1,53 +1,56 @@
 package it.unibo.model.Shop.api;
 
 import java.awt.Color;
-
+/**
+ * Skin interface that defines the methods for a skin in the shop.
+ * It includes methods to get skin properties, manage unlocked and equipped status,
+ * and retrieve the skin's color.
+ */
 public interface Skin {
     /**
      * Get the id of the skin.
      * @return the id of the skin
      */
-    public String getId();
+    String getId();
 
     /**
      * Get the name of the skin.
      * @return the name of the skin
      */
-    public String getName();
+    String getName();
 
     /**
      * Get the price of the skin.
      * @return the price of the skin
      */
-    public int getPrice();
+    int getPrice();
 
     /**
      * Check if the skin is unlocked.
      * @return true if the skin is unlocked, false otherwise
      */
-    public boolean isUnlocked();
+    boolean isUnlocked();
 
     /**
      * Set the unlocked status of the skin.
      */
-    public void unlock();
+    void unlock();
 
     /**
      * Check if the skin is equipped.
      * @return true if the skin is equipped, false otherwise
      */
-    public boolean isSelected();
+    boolean isSelected();
 
     /**
      * Set the equipped status of the skin.
-     * @param selected true if the skin is equipped, false otherwise
      */
-    public void select();
+    void select();
 
     /**
      * Deselect the skin.
      */
-    public void deselect();
+    void deselect();
 
     /**
      * Get the color of the skin.
