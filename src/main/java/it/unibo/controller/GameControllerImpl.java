@@ -42,27 +42,13 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         Direction movementDirection = null;
         if (mainController.getGameEngine().get().getState().getName() == StateName.ON_GAME) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_P:
-                    mainController.getGameEngine().get().setState(new PauseState());
-                    break;
-                case KeyEvent.VK_LEFT:
-                case KeyEvent.VK_A:
-                    movementDirection = Direction.LEFT;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                case KeyEvent.VK_D:
-                    movementDirection = Direction.RIGHT;
-                    break;
-                case KeyEvent.VK_UP:
-                case KeyEvent.VK_W:
-                    movementDirection = Direction.UP;
-                    break;
-                case KeyEvent.VK_DOWN:
-                case KeyEvent.VK_S:
-                    movementDirection = Direction.DOWN;
-                    break;
-                default:
-                    break;
+                case KeyEvent.VK_P -> mainController.getGameEngine().get().setState(new PauseState());
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> movementDirection = Direction.LEFT;
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> movementDirection = Direction.RIGHT;
+                case KeyEvent.VK_UP, KeyEvent.VK_W -> movementDirection = Direction.UP;
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> movementDirection = Direction.DOWN;
+                default -> {
+                }
             }
             if (movementDirection != null) {
                 playerController.movePlayer(movementDirection);
@@ -70,13 +56,12 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         }
     }
 
-    /**
-     * Updates the game logic. Called by GameEngine.
-     */
+    @Override
     public void updateMap() {
         gameMap.update();
     }
 
+    @Override
     public void updateObstacles() {
         obstacleController.update();
     }
@@ -86,16 +71,12 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         playerController.update();
     }
 
-    /**
-     * Gets the game map.
-     */
+    @Override
     public GameMap getGameMap() {
         return gameMap;
     }
 
-    /**
-     * Gets the obstacle controller.
-     */
+    @Override
     public MovingObstacleController getObstacleController() {
         return obstacleController;
     }
@@ -105,15 +86,18 @@ public class GameControllerImpl extends KeyAdapter implements GameController {
         return playerController;
     }
 
+    @Override
     public MapFormatter getMapFormatter() {
         return mapAdapter;
     }
 
+    @Override
     public int getMapWidth() {
-        return ChunkImpl.CELLS_PER_ROW; // Placeholder
+        return ChunkImpl.CELLS_PER_ROW; 
     }
 
+    @Override
     public int getMapHeight() {
-        return GameMapImpl.CHUNKS_NUMBER; // Placeholder
+        return GameMapImpl.CHUNKS_NUMBER; 
     }
 }

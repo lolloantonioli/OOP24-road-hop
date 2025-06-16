@@ -121,7 +121,7 @@ public class MainControllerImpl implements MainController {
      * @return the current GameController instance
      */
     @Override
-    public Optional<GameController> getGameController() {
+    public Optional<GameControllerImpl> getGameController() {
         return gameController;
     }
 

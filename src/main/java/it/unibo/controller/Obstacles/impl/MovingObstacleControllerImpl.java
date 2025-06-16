@@ -14,6 +14,8 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
+// aggiungi reset all a inizio gioco
+
 public class MovingObstacleControllerImpl implements MovingObstacleController {
 
     private final MovingObstacleFactory factory;
@@ -80,23 +82,17 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
     private boolean shouldSpawnNew(List<MovingObstacles> obstacles, int y, String chunkType) {
         boolean leftToRight = chunkDirections.getOrDefault(y, true);
         
-        // Determina la distanza di spawn in base al tipo di chunk
         int spawnDistance = getSpawnDistanceForChunkType(chunkType);
         
         if (leftToRight) {
-            // Movimento da sinistra a destra: controlla quanto si è allontanato dal bordo sinistro
             int leftmost = obstacles.stream().mapToInt(MovingObstacles::getX).min().orElse(10);
             return leftmost >= spawnDistance;
         } else {
-            // Movimento da destra a sinistra: controlla quanto si è allontanato dal bordo destro
             int rightmost = obstacles.stream().mapToInt(obs -> obs.getX() + obs.getWidthInCells() - 1).max().orElse(10);
             return rightmost <= (8 - spawnDistance); // 8 è l'ultima cella valida
         }
     }
 
-    /**
-     * Ottiene la distanza di spawn appropriata per il tipo di chunk.
-     */
     private int getSpawnDistanceForChunkType(String chunkType) {
         return switch (chunkType) {
             case "ROAD" -> CAR_SPAWN_DISTANCE;
@@ -142,12 +138,10 @@ public class MovingObstacleControllerImpl implements MovingObstacleController {
 
     @Override
     public void generateObstacles(int difficultyLevel) {
-        // Inizializza le direzioni e velocità dei chunk
         for (var chunk : gameMap.getVisibleChunks()) {
             int y = chunk.getPosition();
             String chunkType = chunk.getType().toString();
             if (chunkType.equals("ROAD") || chunkType.equals("RAILWAY") || chunkType.equals("RIVER")) {
-                // Determina il tipo di ostacolo per calcolare la velocità
                 ObstacleType type = switch (chunkType) {
                     case "ROAD" -> ObstacleType.CAR;
                     case "RAILWAY" -> ObstacleType.TRAIN;
