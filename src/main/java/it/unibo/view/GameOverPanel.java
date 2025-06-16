@@ -11,12 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GameOverPanel extends JPanel {
-
-    private static final String GAME_OVER_TEXT = "Game Over";
-    private static final String MENU_BUTTON_TEXT = "Menu";
-    private final JButton menuButton;
-    private final JLabel gameOverLabel;
+/**
+ * Represents a panel displayed when the game is over.
+ * It contains a label indicating "Game Over" and a button to return to the menu.
+ */
+public final class GameOverPanel extends JPanel {
 
     private final static int LABEL_SIZE = 48;
     private final static int LABEL_BTN_SIZE = 32;
@@ -24,6 +23,16 @@ public class GameOverPanel extends JPanel {
     private final static int DIV_FACTOR_TITLE = 6;
     private final static int DIV_FACTOR_BUTTON = 15;
 
+    private static final String GAME_OVER_TEXT = "Game Over";
+    private static final String MENU_BUTTON_TEXT = "Menu";
+    private final JButton menuButton;
+    private final JLabel gameOverLabel;
+
+    /**
+     * Constructs a GameOverPanel with a button to return to the menu.
+     *
+     * @param onMenu the action to perform when the menu button is clicked
+     */
     public GameOverPanel(final Runnable onMenu) {
         setLayout(new GridBagLayout());
         setBackground(Color.BLUE);

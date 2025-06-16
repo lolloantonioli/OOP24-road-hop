@@ -15,10 +15,10 @@ import it.unibo.model.Map.util.ChunkType;
  */
 public final class ChunkFactoryImpl implements ChunkFactory {
 
+    private static final String MSG = "Position must be non-negative";
+
     private final Random random;
     private final ObjectPlacer objectPlacer;
-
-    private static final String MSG = "Position must be non-negative";
 
     /**
      * Constructs a new {@code ChunkFactoryImpl} with a random number generator and an {@code ObjectPlacer}.

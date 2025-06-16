@@ -6,8 +6,11 @@ package it.unibo.model.Map.util;
  */
 public final class CollectibleType {
 
+    // CHECKSTYLE: CostantNameCheck OFF
+    // Chunk type names are esplictly
     public static final CollectibleType COIN = new CollectibleType("COIN");
     public static final CollectibleType SECOND_LIFE = new CollectibleType("SECOND_LIFE");
+    // CHECKSTYLE: CostantNameCheck ON
 
     private final String name;
 

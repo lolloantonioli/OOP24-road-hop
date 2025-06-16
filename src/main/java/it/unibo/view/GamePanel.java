@@ -23,6 +23,8 @@ import it.unibo.model.Player.api.Player;
  */
 public final class GamePanel extends JPanel {
 
+    private final static int DIV_FACTOR_FONT = 5;
+
     private MovingObstacleController obstacleController;
     private GameController gameController;
     private MapFormatter mapFormatter;
@@ -30,8 +32,6 @@ public final class GamePanel extends JPanel {
     private int cellsPerRow;
     private int animationOffset;
     private Optional<Integer> countdownValue = Optional.empty();
-
-    private final static int DIV_FACTOR_FONT = 5;
 
     /**
      * Sets the controllers and initializes the panel.
@@ -175,7 +175,8 @@ public final class GamePanel extends JPanel {
         }
     }
 
-    private void drawCell(final Graphics g, final int x, final int y, final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
+    private void drawCell(final Graphics g, final int x, final int y,
+                          final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
         g.setColor(mapFormatter.getChunkColor(chunkIndex));
         g.fillRect(x, y, cellWidth, cellHeight);
         if (mapFormatter.hasCellObjects(chunkIndex, cellIndex)) {
@@ -273,5 +274,5 @@ public final class GamePanel extends JPanel {
     public int getCellHeight() {
         return getHeight() / chunksNumber;
     }
-    
+
 }

@@ -15,16 +15,19 @@ import it.unibo.model.Map.api.GameMap;
  */
 public final class GameMapImpl implements GameMap {
 
+    /**
+     * The number of chunks that are always visible on the screen.
+     */
+    public final static int CHUNKS_NUMBER = 7;
+
+    private final static int BUFFER_CHUNKS = 5;
+    private final static int MAX_SPEED = 10;
+    private final static int CELLS_INCREASE_SPEED = 70;
+
     private final List<Chunk> chunks;
     private final ChunkFactory chunkFactory;
     private int currentPosition;
     private int scrollSpeed;
-
-    public final static int CHUNKS_NUMBER = 7;
-    
-    private final static int BUFFER_CHUNKS = 5;
-    private final static int MAX_SPEED = 10;
-    private final static int CELLS_INCREASE_SPEED = 70;
 
     /**
      * Constructs a new {@code GameMapImpl} with the specified scroll speed.

@@ -25,6 +25,9 @@ import it.unibo.view.GameFrame;
  */
 public final class MainControllerImpl implements MainController {
 
+    private final static int INITIAL_X = 5;
+    private final static int INITIAL_Y = 2;
+
     private final GameFrame gameFrame;
     private final ShopObserver shopObserver;
     private final ShopModel shopModel;
@@ -35,9 +38,6 @@ public final class MainControllerImpl implements MainController {
     private MovingObstacleController obstacleController;
     private PlayerController playerController;
     private DeathObserver deathObserver;
-
-    private final static int INITIAL_X = 5;
-    private final static int INITIAL_Y = 2;
 
     /**
      * Constructor for MainControllerImpl.
@@ -66,7 +66,7 @@ public final class MainControllerImpl implements MainController {
         stopCurrentGame();
         gameFrame.show(CardName.MENU);
     }
-    
+
     @Override
     public void goToGame() {
         stopCurrentGame();
@@ -124,7 +124,7 @@ public final class MainControllerImpl implements MainController {
         }
         gameController = Optional.empty();
     }
-    
+
     @Override
     public void showPausePanel(final Runnable onContinue, final Runnable onMenu) {
         gameFrame.showPausePanel(onContinue, onMenu);

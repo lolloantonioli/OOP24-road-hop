@@ -3,6 +3,10 @@ package it.unibo.controller.State.api;
 import it.unibo.controller.GameEngine;
 import it.unibo.controller.Util.StateName;
 
+/**
+ * Represents a game state in the game engine.
+ * Each game state can update and render itself based on the game engine context.
+ */
 public interface GameState {
 
     /**

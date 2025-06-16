@@ -16,11 +16,11 @@ import javax.swing.JPanel;
  */
 public final class PausePanel extends JPanel {
 
-    private final JButton continueButton;;
-    private final JButton menuButton;
-
     private final static String MENU_BUTTON_TEXT = "Menu";
     private final static String CONTINUE_BUTTON_TEXT = "Continue";
+
+    private final JButton continueButton;;
+    private final JButton menuButton;
 
     /**
      * Constructor for the PausePanel.
