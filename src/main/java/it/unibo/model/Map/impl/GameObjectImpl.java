@@ -77,16 +77,16 @@ public class GameObjectImpl implements GameObject {
     }
 
     @Override
-    public void setX(int x) {
+    public void setX(final int x) {
         this.x = x;
     }
 
     @Override
-    public void setY(int y) {
+    public void setY(final int y) {
         this.y = y;
     }
 
-    public void setWidthInCells(int widthInCells) {
+    public void setWidthInCells(final int widthInCells) {
         this.widthInCells = widthInCells;
     }
 
@@ -99,8 +99,8 @@ public class GameObjectImpl implements GameObject {
     // tutte le posizioni x occupate da un oggetto
     @Override
     public List<Integer> getOccupiedCells() {
-        int width = getWidthInCells();
-        List<Integer> cells = new ArrayList<>();
+        final int width = getWidthInCells();
+        final List<Integer> cells = new ArrayList<>();
         for (int i = 0; i < width; i++) {
             cells.add( getX() + i);
         }
@@ -109,18 +109,17 @@ public class GameObjectImpl implements GameObject {
 
     // controlla se un oggetto occupa una specifica cella
     @Override
-    public boolean occupiesCell(int cellX) {
-        int startX = getX();
-        int endX = startX + getWidthInCells();
+    public boolean occupiesCell(final int cellX) {
+        final int startX = getX();
+        final int endX = startX + getWidthInCells();
         return cellX >= startX && cellX < endX;
     }
 
     @Override
-    public List<Cell> getOccupiedCells2(){
-        List<Cell> list = new ArrayList<>();
+    public List<Cell> getOccupiedCells2() {
+        final List<Cell> list = new ArrayList<>();
         getOccupiedCells().forEach(cellX -> list.add(new CellImpl(cellX, getY())));
         return list;
     }
-
 
 }

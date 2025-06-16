@@ -17,13 +17,16 @@ import it.unibo.model.Map.util.ChunkType;
  * Implementation of the {@code Chunk} interface.
  * Represents a chunk of the game map, which is a row that can contain multiple {@code Cell} and {@code GameObject}.
  */
-public class ChunkImpl implements Chunk {
+public final class ChunkImpl implements Chunk {
 
     private final List<Cell> cells;
     private final ChunkType type;
     private final int position;
 
-    public static final int CELLS_PER_ROW = 9;
+    /**
+     * The number of cells in a chunk row.
+     */
+    public final static int CELLS_PER_ROW = 9;
 
     /**
      * Constructs a new {@code ChunkImpl} with the specified position and type.

@@ -13,24 +13,21 @@ import it.unibo.model.Map.api.GameMap;
 /**
  * Implementation of the {@code GameMap} interface.
  */
-public class GameMapImpl implements GameMap {
+public final class GameMapImpl implements GameMap {
 
     private final List<Chunk> chunks;
     private final ChunkFactory chunkFactory;
     private int currentPosition;
     private int scrollSpeed;
 
-    public static final int CHUNKS_NUMBER = 7;
+    public final static int CHUNKS_NUMBER = 7;
     
-    private static final int BUFFER_CHUNKS = 5;
-    private static final int MAX_SPEED = 10;
-    private static final int CELLS_INCREASE_SPEED = 70;
+    private final static int BUFFER_CHUNKS = 5;
+    private final static int MAX_SPEED = 10;
+    private final static int CELLS_INCREASE_SPEED = 70;
 
     /**
      * Constructs a new {@code GameMapImpl} with the specified scroll speed.
-     *
-     * @param speed the initial scroll speed of the map, must be between 0 and {@link #MAX_SPEED}.
-     * @throws IllegalArgumentException if the speed is not in the valid range.
      */
     public GameMapImpl() {
         this.chunks = new ArrayList<>();
@@ -64,7 +61,7 @@ public class GameMapImpl implements GameMap {
     private void ensureBufferChunks() {
         int farthestPosition = getFarthestChunkPosition();
         final int targetPosition = currentPosition + BUFFER_CHUNKS + CHUNKS_NUMBER;
-        
+
         while (farthestPosition < targetPosition) {
             generateNewChunk();
             farthestPosition = getFarthestChunkPosition();
