@@ -25,12 +25,14 @@ public class CollisionDetectorImpl implements CollisionDetector{
         checkNotNull(map, "not valid map");
         
         return map.getAllChunks()
-            .get(obj.getY())
-            .getObjects()
             .stream()
-            .filter(object -> checkCollision(obj, object))
-            .filter(o -> !o.equals(obj))
-            .toList();
+            .filter(ch -> ch.getCellAt(0).getY() == obj.getY())
+            .findFirst()
+            .map(ch -> ch.getObjects()
+                         .stream()
+                         .filter(o -> checkCollision(obj, o))
+                         .toList())
+            .orElse(List.of());
     }
 
 }
