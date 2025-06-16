@@ -30,7 +30,7 @@ public class MainControllerImpl implements MainController {
     private final ShopModel shopModel;
     private final MovingObstacleFactory obstacleFactory;
     private Optional<GameEngine> gameEngine;
-    private Optional<GameControllerImpl> gameController;
+    private Optional<GameController> gameController;
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
     private PlayerController playerController;
@@ -71,7 +71,7 @@ public class MainControllerImpl implements MainController {
         stopCurrentGame();
         initializeGameComponents();
         gameFrame.show(CardName.GAME);
-        gameController = Optional.of(new GameControllerImpl(
+        gameController = Optional.of(new GameController(
             gameMap,
             obstacleController,
             this,
@@ -119,7 +119,7 @@ public class MainControllerImpl implements MainController {
      * Gets the current game controller.
      * @return the current GameController instance
      */
-    public Optional<GameControllerImpl> getGameController() {
+    public Optional<GameController> getGameController() {
         return gameController;
     }
 
@@ -163,3 +163,4 @@ public class MainControllerImpl implements MainController {
     }
 
 }
+

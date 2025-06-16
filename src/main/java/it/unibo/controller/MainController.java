@@ -32,10 +32,21 @@ public interface MainController {
      */
     void goToShop();
 
+    /**
+     * Shows the pause panel with options to continue or return to the menu.
+     * @param onContinue the action to perform when continuing the game
+     * @param onMenu the action to perform when returning to the menu
+     */
     void showPausePanel(Runnable onContinue, Runnable onMenu);
 
+    /**
+     * Hides the pause panel.
+     */
     void hidePausePanel();
     
+    /**
+     * Shows the game over panel.
+     */
     void showGameOverPanel();
 
     /**
@@ -44,10 +55,22 @@ public interface MainController {
      */
     ShopModel getShopModel();
 
+    /**
+     * Getter for the GameMap.
+     * @return the GameMap instance
+     */
     GameMap getGameMap();
 
-    Optional<GameControllerImpl> getGameController();
+    /**
+     * Getter for the GameController if is present.
+     * @return an Optional containing the GameControllerImpl if it exists, otherwise an empty Optional
+     */
+    Optional<GameController> getGameController();
 
+    /**
+     * Getter for the GameEngine if is present.
+     * @return an Optional containing the GameEngine if it exists, otherwise an empty Optional
+     */
     Optional<GameEngine> getGameEngine();
 
 }
