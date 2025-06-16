@@ -25,7 +25,7 @@ import it.unibo.view.GameFrame;
  */
 public final class MainControllerImpl implements MainController {
 
-    private final static int INITIAL_X = 5;
+    private final static int INITIAL_X = 4;
     private final static int INITIAL_Y = 2;
 
     private final GameFrame gameFrame;
