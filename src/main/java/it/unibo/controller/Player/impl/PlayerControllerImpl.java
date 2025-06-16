@@ -186,4 +186,9 @@ public class PlayerControllerImpl implements PlayerController {
         currentPlatform = newPlatform;
     }
 
+    @Override
+    public boolean hasPlayerSecondLife() {
+        return player.hasSecondLife();
+    }
+
 }

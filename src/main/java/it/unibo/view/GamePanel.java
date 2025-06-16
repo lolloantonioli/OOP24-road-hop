@@ -87,6 +87,13 @@ public final class GamePanel extends JPanel {
         }
 
         drawScore(g);
+
+        if (gameController.getPlayerController().hasPlayerSecondLife()) {
+            g.setColor(new java.awt.Color(255, 105, 180)); // rosa
+            int radius = getHeight() / 20;
+            int padding = radius / 2;
+            g.fillOval(padding, padding, radius, radius);
+        }
         
         drawPlayer(g, cellWidth, cellHeight);
 
