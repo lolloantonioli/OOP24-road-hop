@@ -5,6 +5,10 @@ import java.util.List;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
+/**
+ * Interface for managing moving obstacles in the game.
+ * This interface defines methods for creating, updating, and retrieving moving obstacles
+ */
 public interface MovingObstacleController {
 
     /**
@@ -13,6 +17,7 @@ public interface MovingObstacleController {
      * @param y la posizione Y (riga) dove creare le macchine
      * @param count il numero di macchine da creare
      * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
+     * @param speed la velocità di movimento delle macchine
      * @return array degli ostacoli macchina creati
      */
     List<MovingObstacles> createCarSet(int y, int count, boolean leftToRight, int speed);
@@ -23,6 +28,7 @@ public interface MovingObstacleController {
      * @param y la posizione Y (riga) dove creare i treni
      * @param count il numero di treni da creare
      * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
+     * @param speed la velocità di movimento dei treni
      * @return array degli ostacoli treno creati
      */
     List<MovingObstacles> createTrainSet(int y, int count, boolean leftToRight, int speed);
@@ -34,6 +40,7 @@ public interface MovingObstacleController {
      * @param y la posizione Y (riga) dove creare i tronchi
      * @param count il numero di tronchi da creare
      * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
+     * @param speed la velocità di movimento dei tronchi
      * @return array degli ostacoli tronco creati
      */
     List<MovingObstacles> createLogSet(int y, int count, boolean leftToRight, int speed);
@@ -59,6 +66,10 @@ public interface MovingObstacleController {
      */
     List<MovingObstacles> getAllObstacles();
 
+    /**
+     * Resetta tutti gli ostacoli, rimuovendoli dalla mappa e liberando le risorse.
+     * Deve essere chiamato all'inizio di una nuova partita o quando si vogliono rimuovere tutti gli ostacoli.
+     */
     void resetObstacles();
 
     /**
@@ -74,7 +85,7 @@ public interface MovingObstacleController {
     /**
      * Aumenta i limiti di velocità per tutti gli ostacoli.
      * 
-     * @param amount l'ammontare da aggiungere ai limiti di velocità
+     * @param i l'ammontare da aggiungere ai limiti di velocità
      */
     void increaseAllObstaclesSpeed(int i);
 
