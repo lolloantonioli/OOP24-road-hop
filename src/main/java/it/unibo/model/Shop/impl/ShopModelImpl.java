@@ -15,38 +15,45 @@ public class ShopModelImpl implements ShopModel {
     private Skin selectedSkin;
     private int coins;
 
+    private static final int RED_SKIN_PRICE = 50;
+    private static final int DEFAULT_SKIN_PRICE = 0;
+    private static final int BLUE_SKIN_PRICE = 75;
+    private static final int ORANGE_SKIN_PRICE = 100;
+    private static final int CYAN_SKIN_PRICE = 140;
+    private static final int WHITE_SKIN_PRICE = 160;
+
     public ShopModelImpl() {
         this.skins = new ArrayList<>();
         loadShopData();
     }
 
     private void loadShopData() {
-        ShopSaveData saveData = ShopDataManagerImpl.loadShopData();
+        final ShopSaveData saveData = ShopDataManagerImpl.loadShopData();
         this.coins = saveData.coins;
-        
+
         initializeSkins(saveData);
 
         selectedSkin(saveData.selectedSkin);
     }
 
-    private void selectedSkin(String selectedSkinId) {
+    private final void selectedSkin(final String selectedSkinId) {
         selectedSkin = skins.stream()
                 .filter(skin -> skin.getId().equals(selectedSkinId))
                 .findFirst()
                 .orElse(skins.get(0));
     }
 
-    private void initializeSkins(ShopSaveData saveData) {
-        createSkin("Default", "Default", 0, Color.GREEN, saveData);
-        createSkin("red", "Red", 50, new Color(220, 20, 60), saveData); // Rosso
-        createSkin("blue", "Blue", 75, new Color(30, 144, 255), saveData); // Blu
-        createSkin("orange", "Orange", 100, new Color(255, 140, 0), saveData); // Arancione
-        createSkin("cyan", "Cyan", 140, Color.CYAN, saveData); // Azzurro
-        createSkin("white", "White", 160, Color.WHITE, saveData); // Bianco
+    private void initializeSkins(final ShopSaveData saveData) {
+        createSkin("Default", "Default", DEFAULT_SKIN_PRICE, Color.GREEN, saveData);
+        createSkin("red", "Red", RED_SKIN_PRICE, Color.RED, saveData); // Rosso
+        createSkin("blue", "Blue", BLUE_SKIN_PRICE, Color.BLUE, saveData); // Blu
+        createSkin("orange", "Orange", ORANGE_SKIN_PRICE, Color.ORANGE, saveData); // Arancione
+        createSkin("cyan", "Cyan", CYAN_SKIN_PRICE, Color.CYAN, saveData); // Azzurro
+        createSkin("white", "White", WHITE_SKIN_PRICE, Color.WHITE, saveData); // Bianco
     }
 
     private void createSkin(String id, String name, int price, Color color, ShopSaveData saveData) {
-        SkinSaveData skinData = saveData.skins.stream()
+        final SkinSaveData skinData = saveData.skins.stream()
                 .filter(data -> data.id.equals(id))
                 .findFirst()
                 .orElse(null);
