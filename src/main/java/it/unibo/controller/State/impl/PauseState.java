@@ -4,13 +4,16 @@ import it.unibo.controller.GameEngine;
 import it.unibo.controller.State.api.GameState;
 import it.unibo.controller.Util.StateName;
 
-public class PauseState implements GameState {
+/**
+ * PauseState represents the state of the game when it is paused.
+ * It shows a pause panel and allows the player to resume or exit the game.
+ */
+public final class PauseState implements GameState {
 
-    private boolean panelShown = false;
+    private boolean panelShown;
 
     @Override
     public void update(final GameEngine context) {
-        
     }
 
     @Override
