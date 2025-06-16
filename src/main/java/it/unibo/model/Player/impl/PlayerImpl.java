@@ -35,6 +35,12 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
     private final int initialX;
     private final int initialY;
 
+    /**
+     * Constructor for PlayerImpl.
+     * @param x the initial x-coordinate of the player
+     * @param y the initial y-coordinate of the player
+     * @param skin the initial skin of the player
+     */
     public PlayerImpl(final int x, final int y, final Skin skin) {
         super(x, y);
         checkNotNull(skin, "skin cannot be null");
@@ -63,6 +69,7 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
 
     /**
      * Forces the player to move to a new position and updates the score.
+     * @param newPos the new position to move the player to
      */
     public void move(final Cell newPos) {
         checkNotNull(newPos, "new position cannot be null");
@@ -171,7 +178,7 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
     }
 
     @Override
-    public void setOutOfBounds(boolean isOutOfBounds) {
+    public void setOutOfBounds(final boolean isOutOfBounds) {
         this.isOutOfBounds = isOutOfBounds;
     }
 

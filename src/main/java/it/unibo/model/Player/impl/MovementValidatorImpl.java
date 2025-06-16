@@ -8,10 +8,15 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Player.api.MovementValidator;
 
-public class MovementValidatorImpl implements MovementValidator{
+/**
+ * Implementation of the MovementValidator interface.
+ * This class provides methods to validate player movements in the game,
+ * checking if a player can move to a specified position and if the position is out of bounds.
+ */
+public final class MovementValidatorImpl implements MovementValidator {
 
     @Override
-    public boolean canMoveTo(GameMap map, Cell newPosition) {
+    public boolean canMoveTo(final GameMap map, final Cell newPosition) {
         checkNotNull(newPosition, "not valid position");
         checkNotNull(map, "not valid map");
 
@@ -25,7 +30,7 @@ public class MovementValidatorImpl implements MovementValidator{
     }
 
     @Override
-    public boolean isOutOfBounds(Cell position, GameMap map) {
+    public boolean isOutOfBounds(final Cell position, final GameMap map) {
         checkNotNull(position, "not valid position");
         checkNotNull(map, "not valid map");
 
