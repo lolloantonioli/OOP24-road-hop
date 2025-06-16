@@ -62,6 +62,8 @@ public class GamePanel extends JPanel {
                 drawCell(g, x, y, cellWidth, cellHeight, row, col);
             }
         }
+        
+        drawPlayer(g, cellWidth, cellHeight);
 
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
@@ -71,7 +73,6 @@ public class GamePanel extends JPanel {
             drawCountdown(g);
         }
 
-        drawPlayer(g, cellWidth, cellHeight);
     }
 
     private void drawCountdown(final Graphics g) {
