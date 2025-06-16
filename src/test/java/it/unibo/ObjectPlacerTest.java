@@ -33,7 +33,7 @@ class ObjectPlacerTest {
     }
 
     @Test
-    void pathFromCenterOfThirdChunk() {
+    void testPath() {
         final int startRow = 2;
         final int startCol = N / 2;
 
