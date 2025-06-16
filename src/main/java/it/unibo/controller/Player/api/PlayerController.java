@@ -5,6 +5,11 @@ import it.unibo.model.Player.api.Player;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
+/**
+ * Interface for controlling player actions and state in the game.
+ * This interface defines methods for moving the player, processing collisions,
+ * managing player state, and updating the player's appearance.
+ */
 public interface PlayerController {
 
     /**

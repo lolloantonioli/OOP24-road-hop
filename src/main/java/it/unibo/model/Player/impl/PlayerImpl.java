@@ -15,8 +15,12 @@ import it.unibo.model.Player.api.Player;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
 
-
-public class PlayerImpl extends GameObjectImpl implements Player{
+/**
+ * Implementation of the Player interface.
+ * Represents a player in the game with attributes such as score, collected coins,
+ * and methods to move, die, reset, and manage skins.
+ */
+public final class PlayerImpl extends GameObjectImpl implements Player  {
 
     private int score;
     private int collectedCoins;
@@ -31,7 +35,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     private final int initialX;
     private final int initialY;
 
-    public PlayerImpl (final int x, final int y, final Skin skin){
+    public PlayerImpl(final int x, final int y, final Skin skin) {
         super(x, y);
         checkNotNull(skin, "skin cannot be null");
         this.initialX = x;
@@ -46,22 +50,34 @@ public class PlayerImpl extends GameObjectImpl implements Player{
         setMovable(true);
     }
 
+    /**
+     * Updates the player's score based on their current Y position.
+     * The score is calculated as the difference between the current Y position
+     * and the initial Y position when the player was created.
+     */
     private void updateScore() {
         if (super.getY() > score + initialY) {
             score = super.getY() - initialY;
         }
     }
 
-    public void move(Cell newPos) {
+    /**
+     * Forces the player to move to a new position and updates the score.
+     */
+    public void move(final Cell newPos) {
+        checkNotNull(newPos, "new position cannot be null");
         super.setX(newPos.getX());
         super.setY(newPos.getY());
         this.updateScore();
     }
 
     @Override
-    public boolean tryMove(Direction direction, GameMap map, MovementValidator movementValidator) {
-        Cell newPos = new CellImpl(super.getX() + direction.getDeltaX(), super.getY() + direction.getDeltaY());
-        if(movementValidator.canMoveTo(map, newPos)) {
+    public boolean tryMove(final Direction direction, final GameMap map, final MovementValidator movementValidator) {
+        checkNotNull(direction, "direction cannot be null");
+        checkNotNull(map, "map cannot be null");
+        checkNotNull(movementValidator, "movementValidator cannot be null");
+        final Cell newPos = new CellImpl(super.getX() + direction.getDeltaX(), super.getY() + direction.getDeltaY());
+        if (movementValidator.canMoveTo(map, newPos)) {
             isInvincible = false;
             move(newPos);
             return true;
@@ -82,7 +98,7 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     @Override
     public boolean isAlive() {
         return isAlive;
-     }
+    }
 
     @Override
     public void die() {
@@ -91,11 +107,11 @@ public class PlayerImpl extends GameObjectImpl implements Player{
             notifyObservers();
             return;
         }
-        
+
         if (isInvincible) {
             return; // Non può morire se invincibile
         }
-        
+
         if (hasSecondLife) {
             hasSecondLife = false;
             isInvincible = true;
@@ -134,19 +150,22 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     }
 
     @Override
-    public void setSkin(Skin skin) {
+    public void setSkin(final Skin skin) {
         checkNotNull(skin, "skin cannot be null");
         currentSkin = skin;
     }
 
+    @Override
     public void grantSecondLife() {
         hasSecondLife = true;
     }
 
+    @Override
     public boolean hasSecondLife() {
         return hasSecondLife;
     }
 
+    @Override
     public boolean isInvincible() {
         return isInvincible;
     }
@@ -162,12 +181,14 @@ public class PlayerImpl extends GameObjectImpl implements Player{
     }
 
     @Override
-    public void addObserver(DeathObserver observer) {
+    public void addObserver(final DeathObserver observer) {
+        checkNotNull(observer, "observer cannot be null");
         observers.add(observer);
     }
 
     @Override
-    public void removeObserver(DeathObserver observer) {
+    public void removeObserver(final DeathObserver observer) {
+        checkNotNull(observer, "observer cannot be null");
         observers.remove(observer);
     }
 
