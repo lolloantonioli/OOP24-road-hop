@@ -80,11 +80,12 @@ public final class GamePanel extends JPanel {
             }
         }
 
-        drawPlayer(g, cellWidth, cellHeight);
-
+        
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
         }
+        
+        drawPlayer(g, cellWidth, cellHeight);
 
         if (countdownValue.isPresent()) {
             drawCountdown(g);
