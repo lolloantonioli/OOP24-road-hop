@@ -4,7 +4,11 @@ import it.unibo.controller.GameEngine;
 import it.unibo.controller.State.api.GameState;
 import it.unibo.controller.Util.StateName;
 
-public class OnGameState implements GameState {
+/**
+ * OnGameState represents the state of the game when it is actively being played.
+ * It handles the game updates and rendering during gameplay.
+ */
+public final class OnGameState implements GameState {
 
     @Override
     public void update(final GameEngine context) {
