@@ -80,16 +80,41 @@ public final class GamePanel extends JPanel {
             }
         }
 
-        drawPlayer(g, cellWidth, cellHeight);
-
         if (obstacleController != null) {
             drawMovingObstacles(g, cellWidth, cellHeight);
         }
+
+        drawScore(g);
+        
+        drawPlayer(g, cellWidth, cellHeight);
 
         if (countdownValue.isPresent()) {
             drawCountdown(g);
         }
 
+    }
+
+    private void drawScore(final Graphics g) {
+        if (gameController == null || gameController.getPlayerController() == null) {
+            return;
+        }
+
+        int score = gameController.getPlayerController().getPlayerScore();
+        int coins = gameController.getPlayerController().getCollectedCoins();
+
+        String scoreText = String.valueOf(score);
+        String coinText = String.valueOf(coins);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, getHeight() / 10));
+        int textWidth = g.getFontMetrics().stringWidth(scoreText);
+        int padding = 10;
+        g.drawString(scoreText, getWidth() - textWidth - padding, g.getFont().getSize() + padding);
+
+        g.setColor(Color.YELLOW);
+        g.setFont(new Font("Arial", Font.BOLD, getHeight() / 15));
+        textWidth = g.getFontMetrics().stringWidth(coinText);
+        g.drawString(coinText, getWidth() - textWidth - padding, g.getFont().getSize() * 3 + padding + 5);
     }
 
     private void drawCountdown(final Graphics g) {

@@ -164,7 +164,6 @@ public class PlayerControllerImpl implements PlayerController {
             //controlla se il player è ancora in una posizione valida
             player.setOutOfBounds(movementValidator.isOutOfBounds(player.getCurrentCell(), gameMap));
             if(player.isOutOfBounds()) {
-                System.out.println("is out of bound");
                 killPlayer();
             }
         }
