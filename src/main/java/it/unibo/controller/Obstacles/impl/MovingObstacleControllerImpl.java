@@ -94,7 +94,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
             return leftmost >= spawnDistance;
         } else {
             final int rightmost = obstacles.stream().mapToInt(obs -> obs.getX() + obs.getWidthInCells() - 1).max().orElse(10);
-            return rightmost <= ((cells - 1) - spawnDistance); // 8 è l'ultima cella valida
+            return rightmost <= ((cells - 1) - spawnDistance);
         }
     }
 

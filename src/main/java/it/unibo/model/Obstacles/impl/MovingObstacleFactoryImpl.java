@@ -8,8 +8,6 @@ import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
-// COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
-
 /**
  * Implementation of MovingObstacleFactory.
  * This class provides methods to create and manage moving obstacles in the game.
