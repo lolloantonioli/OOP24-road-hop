@@ -56,6 +56,7 @@ public class MainControllerImpl implements MainController {
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
         this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), 5, 2);
         this.deathObserver = new DeathObserverImpl(this);
+        // Assicura che ogni nuovo player abbia sempre il DeathObserver
         playerController.getPlayer().addObserver(deathObserver);
     }
 

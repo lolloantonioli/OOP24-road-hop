@@ -1,5 +1,7 @@
 package it.unibo.model.Shop.api;
 
+import java.awt.Color;
+
 public interface Skin {
     /**
      * Get the id of the skin.
@@ -46,4 +48,10 @@ public interface Skin {
      * Deselect the skin.
      */
     public void deselect();
+
+    /**
+     * Get the color of the skin.
+     * @return the color of the skin
+     */
+    Color getColor();
 }

@@ -136,93 +136,62 @@ private Component createSkinCard(Skin skin) {
             BorderFactory.createEmptyBorder(5, 5, 5, 5)
         ));
 
-        // Skin image (using different frog emojis for variety)
-        String frogEmoji = getFrogEmojiForSkin(skin.getId());
-        JLabel imageLabel = new JLabel(frogEmoji, SwingConstants.CENTER);
-        // Use relative font size based on default font
-        imageLabel.setFont(imageLabel.getFont().deriveFont(imageLabel.getFont().getSize() * 4.0f));
-        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Skin preview: colored square
+        JPanel colorPreview = new JPanel();
+        colorPreview.setBackground(skin.getColor());
+        colorPreview.setMaximumSize(new java.awt.Dimension(48, 48));
+        colorPreview.setPreferredSize(new java.awt.Dimension(48, 48));
+        colorPreview.setMinimumSize(new java.awt.Dimension(48, 48));
+        colorPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
+        colorPreview.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+        card.add(colorPreview);
+        card.add(Box.createVerticalStrut(8));
 
         // Skin name
         JLabel nameLabel = new JLabel(skin.getName(), SwingConstants.CENTER);
         nameLabel.setFont(nameLabel.getFont().deriveFont(Font.BOLD, nameLabel.getFont().getSize() * 1.2f));
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        // Status/Price label
-        JLabel statusLabel;
+        card.add(nameLabel);
+        card.add(Box.createVerticalStrut(8));
+
+        // Bottone acquista/equip
+        JButton actionButton = new JButton();
+        actionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         if (skin.isSelected()) {
-            statusLabel = new JLabel("✓ EQUIPPED", SwingConstants.CENTER);
-            statusLabel.setForeground(Color.CYAN);
-            statusLabel.setFont(statusLabel.getFont().deriveFont(Font.BOLD));
-        } else if (skin.isUnlocked()) {
-            statusLabel = new JLabel("OWNED", SwingConstants.CENTER);
-            statusLabel.setForeground(Color.GREEN);
-            statusLabel.setFont(statusLabel.getFont().deriveFont(Font.BOLD));
-        } else {
-            statusLabel = new JLabel("💰 " + skin.getPrice() + " coins", SwingConstants.CENTER);
-            statusLabel.setForeground(Color.YELLOW);
-            statusLabel.setFont(statusLabel.getFont().deriveFont(Font.BOLD));
-        }
-        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        // Action button
-        JButton actionButton;
-        if (skin.isSelected()) {
-            actionButton = new JButton("EQUIPPED");
-            actionButton.setBackground(new Color(0, 150, 150));
+            actionButton.setText("EQUIPPED");
             actionButton.setEnabled(false);
+            actionButton.setBackground(Color.CYAN);
+            actionButton.setForeground(Color.BLACK);
         } else if (skin.isUnlocked()) {
-            actionButton = new JButton("EQUIP");
-            actionButton.setBackground(new Color(34, 139, 34));
+            actionButton.setText("EQUIP");
+            actionButton.setEnabled(true);
+            actionButton.setBackground(Color.GREEN);
+            actionButton.setForeground(Color.BLACK);
             actionButton.addActionListener(e -> {
                 if (onSkinSelected != null) {
                     onSkinSelected.accept(skin.getId());
                 }
             });
         } else {
-            actionButton = new JButton("BUY");
-            boolean canAfford = coins >= skin.getPrice();
-            actionButton.setBackground(canAfford ? new Color(255, 140, 0) : new Color(100, 100, 100));
-            actionButton.setEnabled(canAfford);
+            actionButton.setText("BUY: " + skin.getPrice());
+            actionButton.setEnabled(true);
+            actionButton.setBackground(Color.YELLOW);
+            actionButton.setForeground(Color.BLACK);
             actionButton.addActionListener(e -> {
-                if (onSkinPurchase != null && canAfford) {
+                if (onSkinPurchase != null) {
                     onSkinPurchase.accept(skin.getId(), skin.getPrice());
                 }
             });
         }
-        
-        actionButton.setForeground(Color.WHITE);
-        actionButton.setFocusPainted(false);
-        actionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        actionButton.setFont(actionButton.getFont().deriveFont(Font.BOLD));
-        actionButton.setBorder(BorderFactory.createRaisedBevelBorder());
-        
-        // Add components to card with flexible spacing
-        card.add(Box.createVerticalGlue());
-        card.add(imageLabel);
-        card.add(Box.createVerticalStrut(5)); // Small fixed strut for minimum spacing
-        card.add(nameLabel);
-        card.add(Box.createVerticalStrut(3));
-        card.add(statusLabel);
-        card.add(Box.createVerticalGlue());
         card.add(actionButton);
-        card.add(Box.createVerticalStrut(5));
+        card.setMaximumSize(new java.awt.Dimension(120, 160));
+        card.setPreferredSize(new java.awt.Dimension(120, 160));
+        card.setMinimumSize(new java.awt.Dimension(120, 160));
         
         return card;
     }
 
-    private String getFrogEmojiForSkin(String skinId) {
-        switch (skinId.toLowerCase()) {
-            case "default": return "🐸";
-            case "red": return "🔴🐸";
-            case "blue": return "🔵🐸";
-            case "gold": return "🟡🐸";
-            case "rainbow": return "🌈🐸";
-            default: return "🐸";
-        }
-    }
-    
     public void setCoins(int coins) {
        this.coins = coins;
        coinsLabel.setText("Coins: " + coins);

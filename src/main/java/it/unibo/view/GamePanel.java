@@ -213,19 +213,18 @@ public class GamePanel extends JPanel {
 
     private void drawPlayerSprite(final Graphics g, final int x, final int y, 
                                 final int cellWidth, final int cellHeight, final Player player) {
-        
         // Ottieni il colore della skin del player (se disponibile)
         Color playerColor = Color.PINK;
-        
+        if (player != null && player.getCurrentSkin() != null && player.getCurrentSkin().getColor() != null) {
+            playerColor = player.getCurrentSkin().getColor();
+        }
         // Disegna il corpo del player (rettangolo principale)
         g.setColor(playerColor);
         int bodyWidth = cellWidth * 3 / 4;
         int bodyHeight = cellHeight * 3 / 4;
         int bodyX = x + (cellWidth - bodyWidth) / 2;
         int bodyY = y + (cellHeight - bodyHeight) / 2;
-        
         g.fillOval(bodyX, bodyY, bodyWidth, bodyHeight);
-        
         // Disegna il bordo del player
         g.setColor(Color.BLACK);
         g.drawOval(bodyX, bodyY, bodyWidth, bodyHeight);

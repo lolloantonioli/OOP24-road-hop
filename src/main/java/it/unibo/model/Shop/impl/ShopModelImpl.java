@@ -1,5 +1,6 @@
 package it.unibo.model.Shop.impl;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,14 +37,15 @@ public class ShopModelImpl implements ShopModel {
     }
 
     private void initializeSkins(ShopSaveData saveData) {
-       createSkin("Default", "Frog", 0 ,saveData);
-        createSkin("red", "Red Frog", 50, saveData);
-        createSkin("blue", "Blue Frog", 75, saveData);
-        createSkin("gold", "Golden Frog", 150, saveData);
-        createSkin("rainbow", "Rainbow Frog", 200, saveData);
+        createSkin("Default", "Default", 0, Color.GREEN, saveData);
+        createSkin("red", "Red", 50, new Color(220, 20, 60), saveData); // Rosso
+        createSkin("blue", "Blue", 75, new Color(30, 144, 255), saveData); // Blu
+        createSkin("orange", "Orange", 100, new Color(255, 140, 0), saveData); // Arancione
+        createSkin("cyan", "Cyan", 140, Color.CYAN, saveData); // Azzurro
+        createSkin("white", "White", 160, Color.WHITE, saveData); // Bianco
     }
 
-    private void createSkin(String id, String name, int price, ShopSaveData saveData) {
+    private void createSkin(String id, String name, int price, Color color, ShopSaveData saveData) {
         SkinSaveData skinData = saveData.skins.stream()
                 .filter(data -> data.id.equals(id))
                 .findFirst()
@@ -52,7 +54,7 @@ public class ShopModelImpl implements ShopModel {
         boolean unlocked = (skinData != null) ? skinData.unlocked : (id.equals("Default"));
         boolean selected = (skinData != null) ? skinData.selected : false;
 
-        Skin skin = new SkinImpl(id, name, price, unlocked);
+        Skin skin = new SkinImpl(id, name, price, unlocked, color);
         if (selected) {
             skin.select();
         } 
