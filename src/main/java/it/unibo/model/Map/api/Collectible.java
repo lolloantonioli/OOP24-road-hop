@@ -7,7 +7,7 @@ import it.unibo.model.Map.util.CollectibleType;
  * Collectibles can be collected by the player, and their type can be determined.
  */
 public interface Collectible extends GameObject {
-    
+
     /**
      * Gets the type of the collectible.
      *

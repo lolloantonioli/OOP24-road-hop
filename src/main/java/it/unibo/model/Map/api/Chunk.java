@@ -19,7 +19,7 @@ public interface Chunk {
      * @throws IllegalArgumentException if the object is null or if the cell does not exist.
      * @return true if the object was added successfully, false otherwise.
      */
-    boolean addObjectAt(final GameObject obj, final int cellX);
+    boolean addObjectAt(GameObject obj, int cellX);
 
     /**
      * Returns the {@code GameObject}s contained in the chunk.
@@ -40,7 +40,7 @@ public interface Chunk {
      * @return the {@code Cell} at the specified x-coordinate.
      * @throws IllegalArgumentException if the cell does not exist.
      */
-    Cell getCellAt(final int cellX);
+    Cell getCellAt(int cellX);
 
     /**
      * Gets the type of the chunk.
