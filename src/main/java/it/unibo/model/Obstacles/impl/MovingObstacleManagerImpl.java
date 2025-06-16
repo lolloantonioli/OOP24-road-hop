@@ -16,8 +16,7 @@ import it.unibo.model.Obstacles.api.MovingObstacleManager;
 public final class MovingObstacleManagerImpl implements MovingObstacleManager {
 
     private final List<MovingObstacles> obstacles;
-    public static final int CELLS_PER_CHUNK = 9;
-
+    
     /**
      * Constructs a new MovingObstacleManagerImpl with an empty list of obstacles.
      */

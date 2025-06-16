@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.Obstacles.Util.GameConstants;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
 // COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
@@ -15,7 +16,6 @@ import it.unibo.model.Obstacles.api.MovingObstacleFactory;
  */
 public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
 
-    public static final int CELLS_PER_CHUNK = 9;
     private static final int MIN_CAR_DISTANCE = 3;
     private static final int MIN_TRAIN_DISTANCE = 6;
     private static final int MIN_LOG_DISTANCE = 1;
@@ -25,6 +25,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private static int maxTrainSpeed = 30;
     private static int minLogSpeed = 10;
     private static int maxLogSpeed = 15;
+    private final int cells = GameConstants.CELLS_PER_CHUNK;
     private final Random random;
 
     /**
@@ -70,7 +71,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         }
         if (leftToRight) {
             final int start = -obstacleWidth + 1;
-            final int end = CELLS_PER_CHUNK - 1 + obstacleWidth - 1;
+            final int end = cells - 1 + obstacleWidth - 1;
             for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
                 final int baseX = pos;
                 final MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
@@ -78,7 +79,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
                 placed++;
             }
         } else {
-            final int start = CELLS_PER_CHUNK + obstacleWidth - 1;
+            final int start = cells + obstacleWidth - 1;
             final int end = -obstacleWidth + 1;
             for (int pos = start; placed < minObstacles && pos >= end; pos -= spacing) {
                 final int baseX = pos;

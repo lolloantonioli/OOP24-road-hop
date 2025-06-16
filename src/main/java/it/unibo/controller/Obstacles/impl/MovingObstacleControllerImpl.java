@@ -10,6 +10,7 @@ import it.unibo.model.Map.api.Chunk;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.Obstacles.Util.GameConstants;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
@@ -25,6 +26,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     private final static int TRAIN_SPAWN_DISTANCE = 6;
     private final static int CAR_SPAWN_DISTANCE = 3;
     private final static int LOG_SPAWN_DISTANCE = 1;
+    private final int cells = GameConstants.CELLS_PER_CHUNK;
     private final MovingObstacleFactory factory;
     private final MovingObstacleManager manager;
     private final GameMap gameMap;
@@ -92,7 +94,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
             return leftmost >= spawnDistance;
         } else {
             final int rightmost = obstacles.stream().mapToInt(obs -> obs.getX() + obs.getWidthInCells() - 1).max().orElse(10);
-            return rightmost <= (8 - spawnDistance); // 8 è l'ultima cella valida
+            return rightmost <= ((cells - 1) - spawnDistance); // 8 è l'ultima cella valida
         }
     }
 
@@ -115,7 +117,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
         };
         final boolean leftToRight = chunkDirections.computeIfAbsent(y, k -> random.nextBoolean());
         final int speed = chunkSpeeds.computeIfAbsent(y, k -> factory.getRandomSpeed(type));
-        final int x = leftToRight ? -factory.getObstacleWidth(type) : 9;
+        final int x = leftToRight ? -factory.getObstacleWidth(type) : cells;
         final MovingObstacles obstacle = factory.createObstacleByType(type, x, y, leftToRight ? speed : -speed);
         manager.addObstacle(obstacle);
         chunk.addObjectAt(obstacle, 0);
