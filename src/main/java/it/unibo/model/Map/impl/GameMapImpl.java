@@ -23,7 +23,7 @@ public final class GameMapImpl implements GameMap {
     private final static int BUFFER_CHUNKS = 5;
     private final static int MAX_SPEED = 10;
     private final static int CELLS_INCREASE_SPEED = 70;
-    private final static int FIRSTS_CHUNKS = 3;
+    private final static int FIRST_CHUNKS = 3;
 
     private final List<Chunk> chunks;
     private final ChunkFactory chunkFactory;
@@ -43,9 +43,9 @@ public final class GameMapImpl implements GameMap {
     }
 
     private void initializeMap() {
-        IntStream.range(0, FIRSTS_CHUNKS)
+        IntStream.range(0, FIRST_CHUNKS)
             .forEach(i -> chunks.add(chunkFactory.createFirstsChunk(i)));
-        IntStream.range(3, CHUNKS_NUMBER + 1)
+        IntStream.range(FIRST_CHUNKS, CHUNKS_NUMBER + 1)
             .forEach(i -> chunks.add(chunkFactory.createGrassChunk(i)));
     }
 
