@@ -21,7 +21,7 @@ public class GamePanel extends JPanel {
 
     private MovingObstacleController obstacleController;
     private GameControllerImpl gameController;
-    private MapFormatter mapAdapter;
+    private MapFormatter mapFormatter;
     private int chunksNumber;
     private int cellsPerRow;
     private int animationOffset = 0;
@@ -30,7 +30,7 @@ public class GamePanel extends JPanel {
     public void setController(final GameControllerImpl gameController) {
         this.gameController = gameController;
         this.obstacleController = gameController.getObstacleController();
-        this.mapAdapter = gameController.getMapFormatter();
+        this.mapFormatter = gameController.getMapFormatter();
         this.chunksNumber = gameController.getMapHeight();
         this.cellsPerRow = gameController.getMapWidth();
         addKeyListener(gameController);
@@ -157,11 +157,11 @@ public class GamePanel extends JPanel {
     }
 
     private void drawCell(final Graphics g, final int x, final int y, final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
-        g.setColor(mapAdapter.getChunkColor(chunkIndex));
+        g.setColor(mapFormatter.getChunkColor(chunkIndex));
         g.fillRect(x, y, cellWidth, cellHeight);
-        if (mapAdapter.hasCellObjects(chunkIndex, cellIndex)) {
-            g.setColor(mapAdapter.getCellObjectColor(chunkIndex, cellIndex));
-            if (mapAdapter.isCellObjectCircular(chunkIndex, cellIndex)) {
+        if (mapFormatter.hasCellObjects(chunkIndex, cellIndex)) {
+            g.setColor(mapFormatter.getCellObjectColor(chunkIndex, cellIndex));
+            if (mapFormatter.isCellObjectCircular(chunkIndex, cellIndex)) {
                 g.fillOval(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
             } else {
                 g.fillRect(x + cellWidth / 4, y + cellHeight / 4, cellWidth / 2, cellHeight / 2);
