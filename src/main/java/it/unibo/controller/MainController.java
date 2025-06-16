@@ -26,9 +26,9 @@ public interface MainController {
      * Navigates to the instructions screen.
      */
     void goToInstructions();
-    
+
     /**
-     * Navigates to the shop where players can purchase skins
+     * Navigates to the shop where players can purchase skins.
      */
     void goToShop();
 
@@ -43,7 +43,7 @@ public interface MainController {
      * Hides the pause panel.
      */
     void hidePausePanel();
-    
+
     /**
      * Shows the game over panel.
      */

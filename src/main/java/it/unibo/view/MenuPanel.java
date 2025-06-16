@@ -1,11 +1,9 @@
 package it.unibo.view;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.io.File;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
@@ -22,20 +20,18 @@ import it.unibo.controller.MainController;
  */
 public final class MenuPanel extends JPanel {
 
-    private final JButton playButton;
-    private final JButton instructionsButton;
-    private final JButton shopButton;
-    private final JLabel titleLabel;
-    private final MainController controller;
-
     private final static String PLAY_TEXT = "Play";
     private final static String INSTRUCTIONS_TEXT = "Instructions";
     private final static String SHOP_TEXT = "Shop";
     private final static int BETWEEN_LOGO = 20;
     private final static int BETWEEN_BUTTONS = 10;
+    private final static int FONT_SIZE = 48;
 
-    public final static String SEP = File.separator;
-    public final static String LOGO_PATH = "src" + SEP + "main" + SEP + "resources" + SEP + "logo.png";
+    private final JButton playButton;
+    private final JButton instructionsButton;
+    private final JButton shopButton;
+    private final JLabel titleLabel;
+    private final MainController controller;
 
     /**
      * Constructor for the MenuPanel.
@@ -56,7 +52,7 @@ public final class MenuPanel extends JPanel {
         titleLabel = new JLabel("Road Hop");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 48));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);

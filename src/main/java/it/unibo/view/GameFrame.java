@@ -18,6 +18,11 @@ import it.unibo.controller.Util.CardName;
  */
 public final class GameFrame extends JFrame {
 
+    private final static String FRAME_NAME = "Road Hop";
+    private final static String MSG = "CardName cannot be null";
+    private final static int FRAME_WIDTH = 800;
+    private final static int FRAME_HEIGHT = 600;
+
     private final CardLayout layout;
     private final JPanel root;
     private final MenuPanel menuPanel;
@@ -25,11 +30,6 @@ public final class GameFrame extends JFrame {
     private final InstructionsPanel instructionsPanel;
     private final GamePanel gamePanel;
     private final GameOverPanel gameOverPanel;
-
-    private final static String FRAME_NAME = "Road Hop";
-    private final static String MSG = "CardName cannot be null";
-    private final static int FRAME_WIDTH = 800;
-    private final static int FRAME_HEIGHT = 600;
 
     /**
      * Constructs a new GameFrame with the specified MainController.

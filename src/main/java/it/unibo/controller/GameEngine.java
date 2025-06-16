@@ -15,6 +15,11 @@ import it.unibo.view.GamePanel;
  */
 public final class GameEngine implements Runnable {
 
+    private final static long PERIOD = 16; // 60fps
+    private final static int SCROLL_TIME_MS = 1000;
+    private final static int WAIT_TIME = 700; // 700ms for countdown
+    private final static int INCREASE_SPEED = 15; // Speed increase for obstacles
+
     private final GameMap gameMap;
     private final GamePanel gamePanel;
     private final MovingObstacleController obstacleController;
@@ -25,11 +30,18 @@ public final class GameEngine implements Runnable {
     private boolean running = true;
     private int frameCounter;
 
-    private final static long PERIOD = 16; // 60fps
-    private final static int SCROLL_TIME_MS = 1000;
-    private final static int WAIT_TIME = 700; // 700ms for countdown
-    private final static int INCREASE_SPEED = 15; // Speed increase for obstacles
-
+    /**
+     * Constructor for GameEngine.
+     * Initializes the game engine with the provided game map, game panel, obstacle controller,
+     * obstacle factory, main controller, and game controller.
+     *
+     * @param gameMap the game map instance
+     * @param gamePanel the game panel instance
+     * @param obstacleController the controller for moving obstacles
+     * @param obstacleFactory the factory for creating moving obstacles
+     * @param mainController the main controller for managing game states
+     * @param gameController the controller for handling game logic and input
+     */
     public GameEngine(final GameMap gameMap,
                       final GamePanel gamePanel,
                       final MovingObstacleController obstacleController,

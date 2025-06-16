@@ -14,15 +14,19 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Map.util.ObstacleType;
 
+/**
+ * Implementation of the {@code ObjectPlacer} interface.
+ * This class is responsible for placing static obstacles and collectibles in a game map chunk.
+ */
 public final class ObjectPlacerImpl implements ObjectPlacer {
+
+    private static final double SAFE_CELL_PROBABILITY = 0.4;
+    private static final double SECOND_LIFE_PROBABILITY = 0.1;
 
     private final List<List<Integer>> patterns;
     private final Random random;
     private int lastSafeCell = -1;
 
-    private static final double SAFE_CELL_PROBABILITY = 0.4;
-    private static final double SECOND_LIFE_PROBABILITY = 0.1;
-    
     /**
      * Creates a new {@code ObjectPlacerImpl} instance.
      * Initializes the patterns for placing obstacles.
@@ -76,7 +80,8 @@ public final class ObjectPlacerImpl implements ObjectPlacer {
             if (!availablePositions.isEmpty()) {
                 final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
                 // 80% coin, 20% seconda vita
-                final CollectibleType type = random.nextDouble() < SECOND_LIFE_PROBABILITY ? CollectibleType.SECOND_LIFE : CollectibleType.COIN;
+                final CollectibleType type = random.nextDouble() < SECOND_LIFE_PROBABILITY ? 
+                CollectibleType.SECOND_LIFE : CollectibleType.COIN;
                 final Collectible collectible = new CollectibleImpl(collectiblePos, chunk.getPosition(), type);
                 chunk.addObjectAt(collectible, collectiblePos);
             }

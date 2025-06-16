@@ -13,7 +13,6 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     
     private final Random random;
     
-    // Costanti per i limiti di velocità
     private int minCarSpeed = 15;
     private int maxCarSpeed = 20;
     private int minTrainSpeed = 25;
@@ -21,7 +20,6 @@ public class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private int minLogSpeed = 10;
     private int maxLogSpeed = 15;
 
-    // Costanti per il sistema a griglia
     public static final int CELLS_PER_CHUNK = 9;
 
     // Configurazione spacing

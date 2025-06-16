@@ -31,6 +31,6 @@ public interface ChunkFactory {
      * @param position the x-coordinate of the chunk.
      * @return the first {@code Chunk} of the game map at the specified position.
      */
-    Chunk createFirstChunk(int position);
+    Chunk createFirstsChunk(int position);
 
 }
