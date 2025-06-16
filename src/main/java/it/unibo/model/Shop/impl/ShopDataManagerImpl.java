@@ -135,6 +135,10 @@ public class ShopDataManagerImpl {
         public int coins;
         public String selectedSkin;
         private List<SkinSaveData> skins = new ArrayList<>();
+
+        public List<SkinSaveData> getSkins() {
+            return skins;
+        }
     }
 
     /**
@@ -144,5 +148,17 @@ public class ShopDataManagerImpl {
         private String id;
         private boolean unlocked;
         private boolean selected;
+
+        public String getId() {
+            return id;
+        }
+
+        public boolean isUnlocked() {
+            return unlocked;
+        }
+
+        public boolean isSelected() {
+            return selected;
+        }
     }
 }
