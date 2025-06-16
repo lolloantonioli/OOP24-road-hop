@@ -10,125 +10,139 @@ import java.util.Properties;
 
 import it.unibo.model.Shop.api.Skin;
 
+/**
+ * Data Management for the Shop.
+ * This class handles saving and loading shop data using Properties.
+ * It provides methods to save the current state of the shop and load it from a file.
+ */
 public class ShopDataManagerImpl {
-    
-    private static final String SAVE_FILE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "ShopSave.properties";
-    
+
+    private static final String SAVE_FILE_PATH = "src" + File.separator + "main" + File.separator + "resources"
+                                                + File.separator + "ShopSave.properties";
+
     /**
-     * Salva i dati dello shop usando Properties
+     * Saves shop data to a file using Properties.
+     * @param skins list of the available skins.
+     * @param selectedSkinId the selected skin's ID.
+     * @param coins the number of coins available.
      */
-    public static void saveShopData(List<Skin> skins, String selectedSkinId, int coins) {
-        Properties props = new Properties();
-        
+    static void saveShopData(final List<Skin> skins, final String selectedSkinId, final int coins) {
+        final Properties props = new Properties();
+
         try {
             // Salva coins e selected skin
             props.setProperty("coins", String.valueOf(coins));
             props.setProperty("selectedSkin", selectedSkinId);
-            
+
             // Salva ogni skin
-            for (Skin skin : skins) {
+            for (final Skin skin : skins) {
                 props.setProperty("skin." + skin.getId() + ".unlocked", String.valueOf(skin.isUnlocked()));
                 props.setProperty("skin." + skin.getId() + ".selected", String.valueOf(skin.isSelected()));
             }
-            
+
             // Crea la directory se non esiste
-            File file = new File(SAVE_FILE_PATH);
+            final File file = new File(SAVE_FILE_PATH);
             file.getParentFile().mkdirs();
-            
+
             // Salva il file con try-with-resources
             try (FileOutputStream out = new FileOutputStream(file)) {
                 props.store(out, "Shop Save Data");
             }
-            
+
             System.out.println("Dati shop salvati con successo");
-            
-        } catch (IOException e) {
+
+        } catch (final IOException e) {
             System.err.println("Errore nel salvare i dati dello shop: " + e.getMessage());
         }
     }
-    
+
     /**
-     * Carica i dati dello shop usando Properties
+     * Loads shop data from a file.
+     * if the file does not exist, it returns default data.
+     * @return ShopSaveData containing the loaded data or default values if loading fails.
      */
     public static ShopSaveData loadShopData() {
-        Properties props = new Properties();
-        
+        final Properties props = new Properties();
+
         try {
-            File file = new File(SAVE_FILE_PATH);
+            final File file = new File(SAVE_FILE_PATH);
             if (!file.exists()) {
                 System.out.println("File di salvataggio non trovato, uso dati di default");
                 return getDefaultSaveData();
             }
-            
+
             // Carica il file
             try (FileInputStream in = new FileInputStream(file)) {
                 props.load(in);
             }
-            
-            ShopSaveData saveData = new ShopSaveData();
-            
+
+            final ShopSaveData saveData = new ShopSaveData();
+
             // Carica coins
             saveData.coins = Integer.parseInt(props.getProperty("coins", "100"));
-            
+
             // Carica selected skin
             saveData.selectedSkin = props.getProperty("selectedSkin", "Default");
-            
+
             // Carica le skin
-            String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
-            for (String id : skinIds) {
-                SkinSaveData skinData = new SkinSaveData();
+            final String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
+            for (final String id : skinIds) {
+                final SkinSaveData skinData = new SkinSaveData();
                 skinData.id = id;
-                skinData.unlocked = Boolean.parseBoolean(props.getProperty("skin." + id + ".unlocked", 
+                skinData.unlocked = Boolean.parseBoolean(props.getProperty("skin." + id + ".unlocked",
                                                         id.equals("Default") ? "true" : "false"));
                 skinData.selected = Boolean.parseBoolean(props.getProperty("skin." + id + ".selected", "false"));
                 saveData.skins.add(skinData);
             }
-            
+
             System.out.println("Dati shop caricati con successo!");
             return saveData;
-            
-        } catch (Exception e) {
+
+        } catch (final Exception e) {
             System.err.println("Errore nel caricare i dati dello shop: " + e.getMessage());
             return getDefaultSaveData();
         }
     }
-    
+
     /**
-     * Restituisce i dati di default
+     * Returns default shop save data.
+     * This method creates a default ShopSaveData object with initial values.
+     * It includes a default amount of coins and a set of predefined skins.
+     * @return ShopSaveData with default values.
      */
     private static ShopSaveData getDefaultSaveData() {
-        ShopSaveData defaultData = new ShopSaveData();
+        final ShopSaveData defaultData = new ShopSaveData();
         defaultData.coins = 1000;
         defaultData.selectedSkin = "Default";
-        
+
         // Skin di default
-        String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
-        for (String id : skinIds) {
-            SkinSaveData skinData = new SkinSaveData();
+        final String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
+        for (final String id : skinIds) {
+            final SkinSaveData skinData = new SkinSaveData();
             skinData.id = id;
             skinData.unlocked = id.equals("Default");
             skinData.selected = id.equals("Default");
             defaultData.skins.add(skinData);
         }
-        
+
         return defaultData;
     }
-    
+
     /**
-     * Classe per contenere i dati di salvataggio dello shop
+     * Class to hold the shop save data.
      */
     public static class ShopSaveData {
         public int coins;
         public String selectedSkin;
-        public List<SkinSaveData> skins = new ArrayList<>();
+        private List<SkinSaveData> skins = new ArrayList<>();
     }
-    
+
     /**
-     * Classe per contenere i dati di salvataggio di una singola skin
+     * Class to hold individual skin save data.
      */
     public static class SkinSaveData {
-        public String id;
-        public boolean unlocked;
-        public boolean selected;
+        private String id;
+        private boolean unlocked;
+        private boolean selected;
     }
 }
