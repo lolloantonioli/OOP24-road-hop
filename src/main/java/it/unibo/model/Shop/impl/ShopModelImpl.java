@@ -9,6 +9,11 @@ import it.unibo.model.Shop.api.Skin;
 import it.unibo.model.Shop.impl.ShopDataManagerImpl.ShopSaveData;
 import it.unibo.model.Shop.impl.ShopDataManagerImpl.SkinSaveData;
 
+/**
+ * Implementation of the ShopModel interface.
+ * This class manages the shop's skins, coins, and selected skin.
+ * It provides methods to load shop data, purchase skins, select skins, and manage coins.
+ */
 public class ShopModelImpl implements ShopModel {
 
     private final List<Skin> skins;
@@ -22,6 +27,10 @@ public class ShopModelImpl implements ShopModel {
     private static final int CYAN_SKIN_PRICE = 140;
     private static final int WHITE_SKIN_PRICE = 160;
 
+    /**
+     * Constructs a ShopModelImpl instance.
+     * Initializes the skins list and loads the shop data from the save file.
+     */
     public ShopModelImpl() {
         this.skins = new ArrayList<>();
         loadShopData();
@@ -29,14 +38,14 @@ public class ShopModelImpl implements ShopModel {
 
     private void loadShopData() {
         final ShopSaveData saveData = ShopDataManagerImpl.loadShopData();
-        this.coins = saveData.coins;
+        this.coins = saveData.getCoins();
 
         initializeSkins(saveData);
 
-        selectedSkin(saveData.selectedSkin);
+        selectedSkin(saveData.getSelectedSkin());
     }
 
-    private final void selectedSkin(final String selectedSkinId) {
+    private void selectedSkin(final String selectedSkinId) {
         selectedSkin = skins.stream()
                 .filter(skin -> skin.getId().equals(selectedSkinId))
                 .findFirst()
@@ -89,7 +98,7 @@ public class ShopModelImpl implements ShopModel {
 
     @Override
     public final boolean canPurchaseSkin(final String id) {
-       Skin skin = getSkinById(id);
+       final Skin skin = getSkinById(id);
         return skin != null && !skin.isUnlocked() && coins >= skin.getPrice();
     }
 
@@ -133,6 +142,11 @@ public class ShopModelImpl implements ShopModel {
         return coins;
     }
 
+
+    /**
+     * Adds coins to the shop's coin balance.
+     * @param amount the amount of coins to add
+     */
     public final void addCoins(final int amount) {
         if (amount > 0) {
             this.coins += amount;
@@ -140,6 +154,10 @@ public class ShopModelImpl implements ShopModel {
         }
     }
 
+    /**
+     * Saves the current shop data to the file.
+     * This method is called to persist the current state of the shop,
+     */
     public final void saveDataToFile() {
         saveData();
     }
