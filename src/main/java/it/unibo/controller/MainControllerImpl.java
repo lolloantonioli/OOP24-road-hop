@@ -146,6 +146,8 @@ public final class MainControllerImpl implements MainController {
         int score = playerController.getPlayerScore();
         int coins = playerController.getCollectedCoins();
         shopModel.addCoins(coins); // Aggiunge e salva i coins guadagnati
-        gameFrame.showGameOverPanel(score, coins);
+        shopModel.updateMaxScore(score); // Aggiorna e salva il maxScore se necessario
+        int maxScore = shopModel.getMaxScore(); // Recupera il maxScore aggiornato
+        gameFrame.showGameOverPanel(score, coins, maxScore);
     }
 }

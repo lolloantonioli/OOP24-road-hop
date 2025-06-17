@@ -30,9 +30,10 @@ public final class GameOverPanel extends JPanel {
     private final JLabel gameOverLabel;
     private final JLabel coinsLabel;
     private final JLabel scoreLabel;
+    private final JLabel maxScoreLabel;
 
     public GameOverPanel(final Runnable onMenu) {
-        this(onMenu, 0, 0);
+        this(onMenu, 0, 0, 0);
     }
 
     /**
@@ -40,7 +41,7 @@ public final class GameOverPanel extends JPanel {
      *
      * @param onMenu the action to perform when the menu button is clicked
      */
-    public GameOverPanel(final Runnable onMenu, int finalScore, int finalCoins) {
+    public GameOverPanel(final Runnable onMenu, int finalScore, int finalCoins, int maxScore) {
         setLayout(new GridBagLayout());
         setBackground(Color.BLUE);
         gameOverLabel = new JLabel(GAME_OVER_TEXT);
@@ -55,6 +56,9 @@ public final class GameOverPanel extends JPanel {
         coinsLabel = new JLabel("Coins: " + finalCoins);
         coinsLabel.setForeground(Color.WHITE);
         coinsLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+        maxScoreLabel = new JLabel("Max Score: " + maxScore);
+        maxScoreLabel.setForeground(Color.YELLOW);
+        maxScoreLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);
@@ -65,6 +69,7 @@ public final class GameOverPanel extends JPanel {
         centerPanel.add(menuButton);
         centerPanel.add(scoreLabel);
         centerPanel.add(coinsLabel);
+        centerPanel.add(maxScoreLabel);
         add(centerPanel);
     }
 
@@ -92,5 +97,9 @@ public final class GameOverPanel extends JPanel {
 
     public void setFinalScore(int finalScore) {
         scoreLabel.setText("Score: " + finalScore);
+    }
+
+    public void setMaxScore(int maxScore) {
+        maxScoreLabel.setText("Max Score: " + maxScore);
     }
 }

@@ -56,4 +56,16 @@ public interface ShopModel {
      * @param amount the amount of coins to add
      */
     void addCoins(int amount);
+
+    /**
+     * Returns the max score saved.
+     * @return the max score
+     */
+    int getMaxScore();
+
+    /**
+     * Updates the max score if the new score is higher and saves the data.
+     * @param score the new score to check
+     */
+    void updateMaxScore(int score);
 }

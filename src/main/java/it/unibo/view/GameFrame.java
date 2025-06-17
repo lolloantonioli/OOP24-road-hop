@@ -103,6 +103,14 @@ public final class GameFrame extends JFrame {
     }
 
     /**
+     * Returns the GameOverPanel of this GameFrame.
+     * @return the GameOverPanel instance
+     */
+    public GameOverPanel getGameOverPanel() {
+        return this.gameOverPanel;
+    }
+
+    /**
      * Shows the pause panel with options to continue or go to the menu.
      * @param onContinue the action to perform when continuing the game
      * @param onMenu the action to perform when going to the menu
@@ -123,9 +131,10 @@ public final class GameFrame extends JFrame {
     /**
      * Shows the game over panel with option to return to the menu.
      */
-    public void showGameOverPanel(final int finalScore, final int finalCoins) {
+    public void showGameOverPanel(final int finalScore, final int finalCoins, final int maxScore) {
         gameOverPanel.setFinalScore(finalScore);
         gameOverPanel.setFinalCoins(finalCoins);
+        gameOverPanel.setMaxScore(maxScore);
         this.show(CardName.GAME_OVER);
     }
 
