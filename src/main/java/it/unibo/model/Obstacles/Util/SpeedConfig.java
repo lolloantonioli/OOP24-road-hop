@@ -44,13 +44,6 @@ public final class SpeedConfig {
     private static int minLogSpeed = DEFAULT_MIN_LOG_SPEED;
     private static int maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
 
-    private SpeedConfig() {
-        // Private constructor to prevent instantiation
-    }
-
-    /**
-     * Resets the speed limits to their default values.
-     */
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
         maxCarSpeed = DEFAULT_MAX_CAR_SPEED;
@@ -59,7 +52,7 @@ public final class SpeedConfig {
         minLogSpeed = DEFAULT_MIN_LOG_SPEED;
         maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
     }
-
+    
     /**
      * Generates a random speed for a car within the defined limits.
      * @param rnd the Random instance to use for generating the speed
@@ -91,12 +84,12 @@ public final class SpeedConfig {
      * Increases all speed limits by a specified delta, ensuring they do not exceed their maximum caps.
      * @param delta the amount to increase the speeds by
      */
-    public static void increaseAllSpeeds(final int delta) {
-        minCarSpeed = Math.min(minCarSpeed + delta, CAP_CAR_SPEED);
-        maxCarSpeed = Math.min(maxCarSpeed + delta, CAP_CAR_SPEED);
-        minTrainSpeed = Math.min(minTrainSpeed + delta, CAP_TRAIN_SPEED);
-        maxTrainSpeed = Math.min(maxTrainSpeed + delta, CAP_TRAIN_SPEED);
-        minLogSpeed = Math.min(minLogSpeed + delta, CAP_LOG_SPEED);
-        maxLogSpeed = Math.min(maxLogSpeed + delta, CAP_LOG_SPEED);
+    public static void increaseAllSpeeds() {
+        minCarSpeed = Math.min(minCarSpeed + INCREASE_SPEED, CAP_CAR_SPEED);
+        maxCarSpeed = Math.min(maxCarSpeed + INCREASE_SPEED, CAP_CAR_SPEED);
+        minTrainSpeed = Math.min(minTrainSpeed + INCREASE_SPEED, CAP_TRAIN_SPEED);
+        maxTrainSpeed = Math.min(maxTrainSpeed + INCREASE_SPEED, CAP_TRAIN_SPEED);
+        minLogSpeed = Math.min(minLogSpeed + INCREASE_SPEED, CAP_LOG_SPEED);
+        maxLogSpeed = Math.min(maxLogSpeed + INCREASE_SPEED, CAP_LOG_SPEED);
     }
 }
