@@ -21,6 +21,7 @@ import it.unibo.controller.MainController;
  */
 public final class InstructionsPanel extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final int HEIGHT = 20;
     private static final String BACK_BUTTON_TEXT = "Back";
     private static final String INSTRUCTIONS_TEXT = "Instructions:\n"
