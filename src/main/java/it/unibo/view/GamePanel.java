@@ -176,7 +176,7 @@ public final class GamePanel extends JPanel {
             if (screenY == -1) {
                 continue;
             }
-            
+
             final int obstacleWidth = obstacle.getWidthInCells();
 
             final int leftBound = Math.max(0, obstacle.getX());

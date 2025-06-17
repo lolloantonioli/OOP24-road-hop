@@ -29,6 +29,7 @@ import it.unibo.model.shop.api.Skin;
  */
 public final class ShopView extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final float HEADER_FONT_SCALE      = 1.5f;
     private static final float NAME_LABEL_FONT_SCALE = 1.2f;
     private static final int   CARD_BORDER_PADDING   = 5;
@@ -59,7 +60,7 @@ public final class ShopView extends JPanel {
 
         add(createHeaderPanel(), BorderLayout.NORTH);
 
-        skinsPanel = new JPanel(new GridLayout(0,3));
+        skinsPanel = new JPanel(new GridLayout(0, 3));
         skinsPanel.setBackground(Color.BLUE);
 
         scrollPane = new JScrollPane(skinsPanel);
