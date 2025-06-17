@@ -202,27 +202,25 @@ public final class GamePanel extends JPanel {
             g.setColor(Color.DARK_GRAY);
             g.fillRect(pixelX, y + cellHeight / 6, pixelWidth, cellHeight * 2 / 3);
         } else if (type == ObstacleType.LOG) {
-            g.setColor(Color.ORANGE);
+            g.setColor(new Color(139, 69, 19));
             g.fillRect(pixelX, y + cellHeight / 3, pixelWidth, cellHeight / 3);
         }
     }
 
     private void drawCell(final Graphics g, final int x, final int y,
-                          final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
+                          final int cellWidth, final int cellHeight,
+                          final int chunkIndex, final int cellIndex) {
         if (mapFormatter.isRailwayCell(chunkIndex)) {
-            // Sfondo grigio chiaro
             g.setColor(new Color(200, 200, 200));
             g.fillRect(x, y, cellWidth, cellHeight);
 
-            // Due rettangoli marroni verticali (traverse)
-            g.setColor(new Color(139, 69, 19)); // Marrone
+            g.setColor(new Color(139, 69, 19));
             int railWidth = cellWidth / 5;
             g.fillRect(x + cellWidth / 6, y, railWidth, cellHeight);
             g.fillRect(x + cellWidth * 4 / 6, y, railWidth, cellHeight);
 
-            // Rettangoli orizzontali grigio scuro (traverse)
             g.setColor(new Color(120, 120, 120));
-            int numTraverses = 3;
+            int numTraverses = 2;
             int traverseHeight = cellHeight / 8;
             for (int t = 1; t <= numTraverses; t++) {
                 int traverseY = y + t * cellHeight / (numTraverses + 1) - traverseHeight / 2;

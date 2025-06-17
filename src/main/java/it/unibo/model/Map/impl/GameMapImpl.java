@@ -22,7 +22,7 @@ public final class GameMapImpl implements GameMap {
 
     private final static int BUFFER_CHUNKS = 5;
     private final static int MAX_SPEED = 10;
-    private final static int CELLS_INCREASE_SPEED = 70;
+    private final static int CELLS_INCREASE_SPEED = 20;
     private final static int FIRST_CHUNKS = 3;
 
     private final List<Chunk> chunks;
