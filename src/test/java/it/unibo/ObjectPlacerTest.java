@@ -64,4 +64,54 @@ class ObjectPlacerTest {
                     .stream()
                     .noneMatch(o -> o instanceof Obstacle);
     }
+
+    @Test
+    void testPlaceObstaclesLeavesSafeCell() {
+        var placer = new it.unibo.model.Map.impl.ObjectPlacerImpl();
+        var chunk = new it.unibo.model.Map.impl.ChunkImpl(0, it.unibo.model.Map.util.ChunkType.GRASS);
+        placer.placeObstacles(chunk);
+
+        // Deve esserci almeno una cella senza ostacolo
+        boolean atLeastOneSafe = IntStream.range(0, ChunkImpl.CELLS_PER_ROW)
+            .anyMatch(col -> chunk.getCellAt(col).getContent().stream()
+                .noneMatch(o -> o instanceof it.unibo.model.Map.api.Obstacle));
+        assertTrue(atLeastOneSafe, "Deve esserci almeno una cella senza ostacolo");
+    }
+
+    @Test
+    void testPlaceObstaclesDoesNotPlaceOnSafeCell() {
+        var placer = new it.unibo.model.Map.impl.ObjectPlacerImpl();
+        var chunk = new it.unibo.model.Map.impl.ChunkImpl(0, it.unibo.model.Map.util.ChunkType.GRASS);
+        placer.placeObstacles(chunk);
+
+        // Trova la safe cell (quella senza ostacolo)
+        int safeCell = IntStream.range(0, ChunkImpl.CELLS_PER_ROW)
+            .filter(col -> chunk.getCellAt(col).getContent().stream()
+                .noneMatch(o -> o instanceof it.unibo.model.Map.api.Obstacle))
+            .findFirst().orElse(-1);
+
+        assertNotEquals(-1, safeCell, "Safe cell non trovata");
+        // Verifica che non ci sia ostacolo nella safe cell
+        assertTrue(chunk.getCellAt(safeCell).getContent().stream()
+            .noneMatch(o -> o instanceof it.unibo.model.Map.api.Obstacle));
+    }
+
+    @Test
+    void testPlaceCollectiblesOnlyOnFreeCell() {
+        var placer = new it.unibo.model.Map.impl.ObjectPlacerImpl();
+        var chunk = new it.unibo.model.Map.impl.ChunkImpl(0, it.unibo.model.Map.util.ChunkType.GRASS);
+        placer.placeObstacles(chunk);
+        placer.placeCollectibles(chunk);
+
+        // Se c'è un collectible, deve essere in una cella senza ostacolo
+        IntStream.range(0, ChunkImpl.CELLS_PER_ROW).forEach(col -> {
+            boolean hasCollectible = chunk.getCellAt(col).getContent().stream()
+                .anyMatch(o -> o instanceof it.unibo.model.Map.api.Collectible);
+            boolean hasObstacle = chunk.getCellAt(col).getContent().stream()
+                .anyMatch(o -> o instanceof it.unibo.model.Map.api.Obstacle);
+            if (hasCollectible) {
+                assertFalse(hasObstacle, "Un collectible non può stare su una cella con ostacolo");
+            }
+        });
+    }
 }
