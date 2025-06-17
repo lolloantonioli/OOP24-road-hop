@@ -50,4 +50,10 @@ public interface ShopModel {
      * @return the number of coins
      */
     int getCoins();
+
+    /**
+     * Adds coins to the shop's coin balance and saves the value.
+     * @param amount the amount of coins to add
+     */
+    void addCoins(int amount);
 }

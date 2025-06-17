@@ -145,6 +145,7 @@ public final class MainControllerImpl implements MainController {
     public void showGameOverPanel() {
         int score = playerController.getPlayerScore();
         int coins = playerController.getCollectedCoins();
+        shopModel.addCoins(coins); // Aggiunge e salva i coins guadagnati
         gameFrame.showGameOverPanel(score, coins);
     }
 }
