@@ -61,7 +61,7 @@ public final class SpeedConfig {
         minLogSpeed = DEFAULT_MIN_LOG_SPEED;
         maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
     }
-   
+
     /**
      * Generates a random speed for a car within the defined limits.
      * @param rnd the Random instance to use for generating the speed
