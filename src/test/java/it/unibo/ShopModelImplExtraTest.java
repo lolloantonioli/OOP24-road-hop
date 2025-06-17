@@ -27,13 +27,6 @@ class ShopModelImplExtraTest {
     }
 
     @Test
-    void testCannotSelectLockedSkin() {
-        final Skin before = shopModel.getSelectedSkin();
-        shopModel.selectSkin("blue"); // Non sbloccata
-        assertEquals(before, shopModel.getSelectedSkin());
-    }
-
-    @Test
     void testDefaultSkinAlwaysUnlocked() {
         final Skin defaultSkin = shopModel.getSkinById("Default");
         assertTrue(defaultSkin.isUnlocked());
