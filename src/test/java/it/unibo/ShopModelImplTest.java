@@ -15,6 +15,7 @@ import java.util.List;
 
 class ShopModelImplTest {
     private static final int COINS_TO_ADD = 50;
+    private static final String COLOR_OF_SKIN = "red";
     private ShopModelImpl shopModel;
 
     @BeforeEach
@@ -25,17 +26,17 @@ class ShopModelImplTest {
 
     @Test
     void testPurchaseSkin() {
-        assertFalse(shopModel.getSkinById("red").isUnlocked());
-        shopModel.purchaseSkin("red");
-        assertTrue(shopModel.getSkinById("red").isUnlocked());
+        assertFalse(shopModel.getSkinById(COLOR_OF_SKIN).isUnlocked());
+        shopModel.purchaseSkin(COLOR_OF_SKIN);
+        assertTrue(shopModel.getSkinById(COLOR_OF_SKIN).isUnlocked());
     }
 
     @Test
     void testSelectSkin() {
-        shopModel.purchaseSkin("red");
-        shopModel.selectSkin("red");
+        shopModel.purchaseSkin(COLOR_OF_SKIN);
+        shopModel.selectSkin(COLOR_OF_SKIN);
         final Skin selected = shopModel.getSelectedSkin();
-        assertEquals("red", selected.getId());
+        assertEquals(COLOR_OF_SKIN, selected.getId());
         assertTrue(selected.isSelected());
     }
 
@@ -58,8 +59,8 @@ class ShopModelImplTest {
         final ShopModelImpl lowCoinsModel = new ShopModelImpl();
         lowCoinsModel.setCoinsForTest(0); // Imposta le monete a 0
         final int coinsBefore = lowCoinsModel.getCoins();
-        lowCoinsModel.purchaseSkin("red");
+        lowCoinsModel.purchaseSkin(COLOR_OF_SKIN);
         assertEquals(coinsBefore, lowCoinsModel.getCoins());
-        assertFalse(lowCoinsModel.getSkinById("red").isUnlocked());
+        assertFalse(lowCoinsModel.getSkinById(COLOR_OF_SKIN).isUnlocked());
     }
 }
