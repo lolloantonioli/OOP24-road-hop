@@ -4,7 +4,7 @@ import it.unibo.controller.obstacles.api.MovingObstacleController;
 import it.unibo.controller.state.api.GameState;
 import it.unibo.controller.state.impl.OnGameState;
 import it.unibo.model.map.api.GameMap;
-import it.unibo.model.obstacles.Util.SpeedConfig;
+import it.unibo.model.obstacles.util.SpeedConfig;
 import it.unibo.model.obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 

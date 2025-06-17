@@ -10,13 +10,13 @@ import it.unibo.model.map.api.Chunk;
 import it.unibo.model.map.api.GameMap;
 import it.unibo.model.map.util.ChunkType;
 import it.unibo.model.map.util.ObstacleType;
-import it.unibo.model.obstacles.util.GameConstant;
-import it.unibo.model.obstacles.util.SpeedConfig;
 import it.unibo.model.obstacles.api.MovingObstacleFactory;
 import it.unibo.model.obstacles.api.MovingObstacleManager;
 import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.obstacles.impl.MovingObstacles;
+import it.unibo.model.obstacles.util.GameConstant;
+import it.unibo.model.obstacles.util.SpeedConfig;
 
 /**
  * Implementation of MovingObstacleController.
@@ -24,6 +24,9 @@ import it.unibo.model.obstacles.impl.MovingObstacles;
  */
 public final class MovingObstacleControllerImpl implements MovingObstacleController {
 
+    private static final String TYPE_ROAD = "ROAD";
+    private static final String TYPE_RAILWAY = "RAILWAY";
+    private static final String TYPE_RIVER = "RIVER";
     private static final int CELLS = GameConstant.CELLS_PER_CHUNK;
     private static final int TRAIN_SPAWN_DISTANCE = 9;
     private static final int CAR_SPAWN_DISTANCE = 4;
@@ -75,15 +78,15 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
             return leftmost >= spawnDistance;
         } else {
             final int rightmost = obstacles.stream().mapToInt(obs -> obs.getX() + obs.getWidthInCells() - 1).max().orElse(10);
-            return rightmost <= ((CELLS - 1) - spawnDistance);
+            return rightmost <= CELLS - 1 - spawnDistance;
         }
     }
 
     private int getSpawnDistanceForChunkType(final String chunkType) {
         return switch (chunkType) {
-            case "ROAD" -> CAR_SPAWN_DISTANCE;
-            case "RAILWAY" -> TRAIN_SPAWN_DISTANCE;
-            case "RIVER" -> LOG_SPAWN_DISTANCE;
+            case TYPE_ROAD -> CAR_SPAWN_DISTANCE;
+            case TYPE_RAILWAY -> TRAIN_SPAWN_DISTANCE;
+            case TYPE_RIVER -> LOG_SPAWN_DISTANCE;
             default -> CAR_SPAWN_DISTANCE; 
         };
     }
@@ -91,9 +94,9 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     private void spawnObstacle(final int y, final Chunk chunk) {
         final ChunkType chunkType = chunk.getType();
         final ObstacleType type = switch (chunkType.toString()) {
-            case "ROAD" -> ObstacleType.CAR;
-            case "RAILWAY" -> ObstacleType.TRAIN;
-            case "RIVER" -> ObstacleType.LOG;
+            case TYPE_ROAD -> ObstacleType.CAR;
+            case TYPE_RAILWAY -> ObstacleType.TRAIN;
+            case TYPE_RIVER -> ObstacleType.LOG;
             default -> ObstacleType.CAR;
         };
         final boolean leftToRight = chunkDirections.computeIfAbsent(y, k -> random.nextBoolean());
@@ -127,11 +130,11 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
         for (final var chunk : gameMap.getVisibleChunks()) {
             final int y = chunk.getPosition();
             final String chunkType = chunk.getType().toString();
-            if ("ROAD".equals(chunkType) || "RAILWAY".equals(chunkType) || "RIVER".equals(chunkType)) {
+            if (TYPE_ROAD.equals(chunkType) || TYPE_RAILWAY.equals(chunkType) || TYPE_RIVER.equals(chunkType)) {
                 final ObstacleType type = switch (chunkType) {
-                    case "ROAD" -> ObstacleType.CAR;
-                    case "RAILWAY" -> ObstacleType.TRAIN;
-                    case "RIVER" -> ObstacleType.LOG;
+                    case TYPE_ROAD -> ObstacleType.CAR;
+                    case TYPE_RAILWAY -> ObstacleType.TRAIN;
+                    case TYPE_RIVER -> ObstacleType.LOG;
                     default -> ObstacleType.CAR;
                 };
                 chunkDirections.putIfAbsent(y, random.nextBoolean());
