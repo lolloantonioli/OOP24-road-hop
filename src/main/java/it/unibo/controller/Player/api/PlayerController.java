@@ -31,7 +31,7 @@ public interface PlayerController {
      * 
      * @return the current player
      */
-    Player getPlayer();
+    //Player getPlayer();
 
     /**
      * Gets the current position of the player as a Cell.
@@ -94,4 +94,21 @@ public interface PlayerController {
      */
     boolean hasPlayerSecondLife();
 
+    /**
+     * Links the player to a death observer.
+     * @param observer the observer to be notified on player death
+     */
+    void addDeathObserver(DeathObserver observer);
+
+    /**
+     * Unlinks the player from a death observer.
+     * @param observer the observer to be removed
+     */
+    void removeDeathObserver(DeathObserver observer);
+
+    /**
+     * Gets the current player instance.
+     * @return the current player
+     */
+    Player getPlayer();
 }
