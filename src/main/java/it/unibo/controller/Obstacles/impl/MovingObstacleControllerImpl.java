@@ -17,14 +17,16 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
+//CONTROLLA CHE è DIFFICULTYLEVEL + COSTANTI VELOCITà
+
 /**
  * Implementation of MovingObstacleController.
  * Manages the creation, updating, and retrieval of moving obstacles in the game.
  */
 public final class MovingObstacleControllerImpl implements MovingObstacleController {
 
-    private final static int TRAIN_SPAWN_DISTANCE = 6;
-    private final static int CAR_SPAWN_DISTANCE = 3;
+    private final static int TRAIN_SPAWN_DISTANCE = 7;
+    private final static int CAR_SPAWN_DISTANCE = 4;
     private final static int LOG_SPAWN_DISTANCE = 1;
     private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final MovingObstacleFactory factory;

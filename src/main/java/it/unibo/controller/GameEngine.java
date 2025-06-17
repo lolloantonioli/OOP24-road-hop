@@ -18,7 +18,7 @@ public final class GameEngine implements Runnable {
     private static final long PERIOD = 16; // 60fps
     private static final int SCROLL_TIME_MS = 1000;
     private static final int WAIT_TIME = 700; // 700ms for countdown
-    private static final int INCREASE_SPEED = 25; // Speed increase for obstacles
+    private static final int INCREASE_SPEED = 20; // Speed increase for obstacles
 
     private final GameMap gameMap;
     private final GamePanel gamePanel;

@@ -14,8 +14,8 @@ import it.unibo.model.Obstacles.api.MovingObstacleFactory;
  */
 public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
 
-    private static final int MIN_CAR_DISTANCE = 3;
-    private static final int MIN_TRAIN_DISTANCE = 6;
+    private static final int MIN_CAR_DISTANCE = 4;
+    private static final int MIN_TRAIN_DISTANCE = 7;
     private static final int MIN_LOG_DISTANCE = 1;
     private static int minCarSpeed = 15;
     private static int maxCarSpeed = 20;
@@ -59,9 +59,9 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         final int minObstacles;
         int placed = 0;
         if (type == ObstacleType.CAR) {
-            minObstacles = Math.max(3, count);
+            minObstacles = Math.max(1, count);
         } else if (type == ObstacleType.LOG) {
-            minObstacles = Math.max(2, count);
+            minObstacles = Math.max(1, count);
         } else if (type == ObstacleType.TRAIN) {
             minObstacles = Math.max(1, count);
         } else {
