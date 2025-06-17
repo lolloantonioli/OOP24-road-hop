@@ -58,11 +58,9 @@ public interface MovingObstacleFactory {
     int getRandomSpeed(ObstacleType type);
 
     /**
-     * Increases the speed limits for all obstacles by a specified amount.
-     *
-     * @param amount Amount to increase the speed limits
+     * Increases the speed limits for all obstacles.
      */
-    void increaseSpeedLimits(int amount);
+    void increaseSpeedLimits();
     
     /**
      * Gets the width of the obstacle in cells.
