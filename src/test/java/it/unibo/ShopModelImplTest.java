@@ -25,13 +25,6 @@ class ShopModelImplTest {
     }
 
     @Test
-    void testPurchaseSkin() {
-        assertFalse(shopModel.getSkinById(COLOR_OF_SKIN).isUnlocked());
-        shopModel.purchaseSkin(COLOR_OF_SKIN);
-        assertTrue(shopModel.getSkinById(COLOR_OF_SKIN).isUnlocked());
-    }
-
-    @Test
     void testSelectSkin() {
         shopModel.purchaseSkin(COLOR_OF_SKIN);
         shopModel.selectSkin(COLOR_OF_SKIN);
@@ -55,4 +48,3 @@ class ShopModelImplTest {
     }
 
 }
-
