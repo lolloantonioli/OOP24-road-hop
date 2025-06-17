@@ -87,7 +87,7 @@ public final class GamePanel extends JPanel {
         drawScore(g);
 
         if (gameController.getPlayerController().hasPlayerSecondLife()) {
-            g.setColor(new Color(255, 105, 180)); // rosa
+            g.setColor(Color.MAGENTA);
             final int radius = getHeight() / 20;
             final int padding = radius / 2;
             g.fillOval(padding, padding, radius, radius);
