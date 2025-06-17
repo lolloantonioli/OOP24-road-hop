@@ -4,7 +4,7 @@ import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.State.api.GameState;
 import it.unibo.controller.State.impl.OnGameState;
 import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Obstacles.Util.GameConstant;
+import it.unibo.model.Obstacles.Util.SpeedConfig;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
@@ -20,7 +20,7 @@ public final class GameEngine implements Runnable {
     private static final int SCROLL_TIME_MS = 1000;
     private static final int WAIT_TIME = 700; // 700ms for countdown
     private static final double SPEED_FACTOR = 0.5;
-    private final int increaseSpeed = GameConstant.INCREASE_SPEED; // Speed increase for obstacles
+    private final int increaseSpeed = SpeedConfig.INCREASE_SPEED; // Speed increase for obstacles
 
     private final GameMap gameMap;
     private final GamePanel gamePanel;

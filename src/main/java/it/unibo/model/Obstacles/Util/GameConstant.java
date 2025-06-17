@@ -6,10 +6,11 @@ package it.unibo.model.Obstacles.Util;
  */
 public final class GameConstant {
 
+    /**
+     * Number of cells per chunk in the game map.
+     */
+    public static final int CELLS_PER_CHUNK = 9;
+
     private GameConstant() {
     }
-
-    public static final int CELLS_PER_CHUNK = 9;
-    public static final int INCREASE_SPEED = 5;
-    
 }
