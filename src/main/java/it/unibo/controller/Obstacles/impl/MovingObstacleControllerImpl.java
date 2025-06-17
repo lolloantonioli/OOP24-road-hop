@@ -18,8 +18,6 @@ import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.obstacles.impl.MovingObstacles;
 
-// CONTROLLA CHE è DIFFICULTYLEVEL
-
 /**
  * Implementation of MovingObstacleController.
  * Manages the creation, updating, and retrieval of moving obstacles in the game.
