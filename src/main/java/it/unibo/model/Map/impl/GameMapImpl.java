@@ -18,12 +18,12 @@ public final class GameMapImpl implements GameMap {
     /**
      * The number of chunks that are always visible on the screen.
      */
-    public final static int CHUNKS_NUMBER = 7;
+    public static final int CHUNKS_NUMBER = 7;
 
-    private final static int BUFFER_CHUNKS = 5;
-    private final static int MAX_SPEED = 10;
-    private final static int CELLS_INCREASE_SPEED = 70;
-    private final static int FIRST_CHUNKS = 3;
+    private static final int BUFFER_CHUNKS = 5;
+    private static final int MAX_SPEED = 10;
+    private static final int CELLS_INCREASE_SPEED = 15;
+    private static final int FIRST_CHUNKS = 3;
 
     private final List<Chunk> chunks;
     private final ChunkFactory chunkFactory;

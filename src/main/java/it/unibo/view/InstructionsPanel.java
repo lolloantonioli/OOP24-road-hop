@@ -21,9 +21,9 @@ import it.unibo.controller.MainController;
  */
 public final class InstructionsPanel extends JPanel {
 
-    private final static int HEIGHT = 20;
-    private final static String BACK_BUTTON_TEXT = "Back";
-    private final static String INSTRUCTIONS_TEXT = "Instructions:\n"
+    private final int height = 20;
+    private final String backButtonText = "Back";
+    private final String instructionsText = "Instructions:\n"
             + "1. Use WASD to move your character.\n"
             + "2. Collect coins.\n"
             + "3. Avoid obstacles to stay alive.\n"
@@ -39,8 +39,8 @@ public final class InstructionsPanel extends JPanel {
      */
     public InstructionsPanel(final MainController controller) {
         this.controller = controller;
-        instructions = new JTextArea(INSTRUCTIONS_TEXT);
-        backButton = new JButton(BACK_BUTTON_TEXT);
+        instructions = new JTextArea(instructionsText);
+        backButton = new JButton(backButtonText);
         this.setBackAction();
 
         instructions.setEditable(false);
@@ -60,7 +60,7 @@ public final class InstructionsPanel extends JPanel {
         backButton.setAlignmentX(CENTER_ALIGNMENT);
 
         centerPanel.add(instructions);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, height)));
         centerPanel.add(backButton);
 
         this.add(centerPanel);

@@ -5,11 +5,14 @@ package it.unibo.controller.Util;
  */
 public final class StateName {
 
-    // CHECKSTYLE: CostantNameCheck OFF
-    // State names are esplictly
+    /**
+     * STate name which represents the game state.
+     */
     public static final StateName ON_GAME = new StateName("ON_GAME");
+    /**
+     * State name which represents the pause state.
+     */
     public static final StateName PAUSE = new StateName("PAUSE");
-    // CHECKSTYLE: CostantNameCheck ON
 
     private final String name;
 

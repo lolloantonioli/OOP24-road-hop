@@ -35,17 +35,16 @@ public class ShopView extends JPanel {
     private final JScrollPane scrollPane;
 
     private List<Skin> skins = new ArrayList<>();
-    private int coins = 0;
-
     private Runnable onBackToMainMenu;
     private BiConsumer<String, Integer> onSkinPurchase;
     private Consumer<String> onSkinSelected;
 
-    private static final float HEADER_FONT_SCALE = 1.5f;
-    private static final float NAME_LABEL_FONT_SCALE = 1.2f;
-    private static final int CARD_BORDER_PADDING = 5;
-    private static final int CARD_WIDTH = 120;
-    private static final int CARD_HEIGHT = 160;
+    private final static float HEADER_FONT_SCALE = 1.5f;
+    private final static float NAME_LABEL_FONT_SCALE = 1.2f;
+    private final static int CARD_BORDER_PADDING = 5;
+    private final static int CARD_WIDTH = 120;
+    private final static int CARD_HEIGHT = 160;
+    private final static int SQUARE_DIMENSION = 48;
 
     /**
      * Constructs a ShopView with a header, skins display area, and footer.
@@ -130,7 +129,7 @@ public class ShopView extends JPanel {
     }
 
 
-private Component createSkinCard(Skin skin) {
+private Component createSkinCard(final Skin skin) {
         final JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.CYAN);
@@ -153,9 +152,9 @@ private Component createSkinCard(Skin skin) {
         // Skin preview: colored square
         final JPanel colorPreview = new JPanel();
         colorPreview.setBackground(skin.getColor());
-        colorPreview.setMaximumSize(new Dimension(48, 48));
-        colorPreview.setPreferredSize(new Dimension(48, 48));
-        colorPreview.setMinimumSize(new Dimension(48, 48));
+        colorPreview.setMaximumSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+        colorPreview.setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+        colorPreview.setMinimumSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
         colorPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
         card.add(colorPreview);
@@ -212,11 +211,10 @@ private Component createSkinCard(Skin skin) {
      *
      * @param coins the new coin balance
      */
-    public final void setCoins(int coins) {
-       this.coins = coins;
+    public final void setCoins(final int coins) {
        coinsLabel.setText("Coins: " + coins);
        refreshSkins();
-    }  
+    }
 
     /**
      * Sets the action to be performed when the back button is clicked.
@@ -256,5 +254,5 @@ private Component createSkinCard(Skin skin) {
     public final void setOnSkinSelected(final Consumer<String> onSkinSelected) {
         this.onSkinSelected = onSkinSelected;
     }
-   
+
 }

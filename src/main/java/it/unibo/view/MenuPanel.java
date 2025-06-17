@@ -20,12 +20,14 @@ import it.unibo.controller.MainController;
  */
 public final class MenuPanel extends JPanel {
 
-    private final static String PLAY_TEXT = "Play";
-    private final static String INSTRUCTIONS_TEXT = "Instructions";
-    private final static String SHOP_TEXT = "Shop";
-    private final static int BETWEEN_LOGO = 20;
-    private final static int BETWEEN_BUTTONS = 10;
-    private final static int FONT_SIZE = 48;
+
+    private final String playText = "Play";
+    private final String instructionsText = "Instructions";
+    private final String shopText = "Shop";
+    private final int betweenLogo = 20;
+    private final int betweenButtons = 10;
+    private final int fontSize = 48;
+
 
     private final JButton playButton;
     private final JButton instructionsButton;
@@ -43,29 +45,29 @@ public final class MenuPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLUE);
         this.controller = controller;
-        playButton = new JButton(PLAY_TEXT);
+        playButton = new JButton(playText);
         this.setPlayAction();
-        instructionsButton = new JButton(INSTRUCTIONS_TEXT);
+        instructionsButton = new JButton(instructionsText);
         this.setInstructionsAction();
-        shopButton = new JButton(SHOP_TEXT);
+        shopButton = new JButton(shopText);
         this.setShopAction();
         titleLabel = new JLabel("Road Hop");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, fontSize));
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_LOGO)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, betweenLogo)));
         centerPanel.add(titleLabel);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_LOGO)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, betweenLogo)));
         playButton.setAlignmentX(CENTER_ALIGNMENT);
         instructionsButton.setAlignmentX(CENTER_ALIGNMENT);
         shopButton.setAlignmentX(CENTER_ALIGNMENT);
         centerPanel.add(playButton);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_BUTTONS)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, betweenButtons)));
         centerPanel.add(instructionsButton);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, BETWEEN_BUTTONS)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, betweenButtons)));
         centerPanel.add(shopButton);
         this.add(centerPanel);
     }
@@ -86,7 +88,7 @@ public final class MenuPanel extends JPanel {
         playButton.setFont(playButton.getFont().deriveFont((float) baseFontSize));
         instructionsButton.setFont(instructionsButton.getFont().deriveFont((float) baseFontSize));
         shopButton.setFont(shopButton.getFont().deriveFont((float) baseFontSize));
-        final int minButtonWidth = getFontMetrics(instructionsButton.getFont()).stringWidth(INSTRUCTIONS_TEXT) + 40;
+        final int minButtonWidth = getFontMetrics(instructionsButton.getFont()).stringWidth(instructionsText) + 40;
         final int buttonWidth = Math.max(minButtonWidth, width / 3);
         final int buttonHeight = Math.max(40, height / 10);
         playButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
@@ -101,9 +103,9 @@ public final class MenuPanel extends JPanel {
         playButton.setHorizontalTextPosition(JButton.CENTER);
         instructionsButton.setHorizontalTextPosition(JButton.CENTER);
         shopButton.setHorizontalTextPosition(JButton.CENTER);
-        playButton.setText(PLAY_TEXT);
-        instructionsButton.setText(INSTRUCTIONS_TEXT);
-        shopButton.setText(SHOP_TEXT);
+        playButton.setText(playText);
+        instructionsButton.setText(instructionsText);
+        shopButton.setText(shopText);
         final int titleFontSize = Math.max(32, minDim / 6);
         titleLabel.setFont(titleLabel.getFont().deriveFont((float) titleFontSize));
     }

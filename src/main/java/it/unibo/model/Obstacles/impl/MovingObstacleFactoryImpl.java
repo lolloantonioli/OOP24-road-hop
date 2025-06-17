@@ -17,6 +17,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private static final int MIN_CAR_DISTANCE = 4;
     private static final int MIN_TRAIN_DISTANCE = 7;
     private static final int MIN_LOG_DISTANCE = 1;
+    
     private static int minCarSpeed = 15;
     private static int maxCarSpeed = 20;
     private static int minTrainSpeed = 25;

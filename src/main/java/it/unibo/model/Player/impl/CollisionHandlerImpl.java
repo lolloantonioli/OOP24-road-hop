@@ -5,15 +5,20 @@ import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Player.api.Player;
 
-public class CollisionHandlerImpl implements CollisionHandler{
+/**
+ * Implementation of the CollisionHandler interface.
+ * This class handles collisions between the player and other game objects,
+ * specifically fatal collisions and collectible collisions.
+ */
+public final class CollisionHandlerImpl implements CollisionHandler {
 
     @Override
-    public void handleFatalCollision(Player player) {
+    public void handleFatalCollision(final Player player) {
         player.die();
     }
 
     @Override
-    public void handleCollectibleCollision(Player player, Collectible collectible) {
+    public void handleCollectibleCollision(final Player player, final Collectible collectible) {
 
         if (collectible.isCollected()) {
             return;
@@ -28,10 +33,10 @@ public class CollisionHandlerImpl implements CollisionHandler{
             if (collectible.getType().equals(CollectibleType.SECOND_LIFE)) {
                 player.grantSecondLife();
             }
-            
+
             collectible.collect();
-        } catch (Exception e) {
-                System.err.println("Error processing collectible collision with: " + collectible.getClass().getSimpleName() + " - " + e.getMessage());
+        } catch (final Exception e) {
+                System.err.println("Error processing collectible collision - " + e.getMessage());
         }
     }
 

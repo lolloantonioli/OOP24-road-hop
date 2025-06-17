@@ -87,12 +87,12 @@ public final class GamePanel extends JPanel {
         drawScore(g);
 
         if (gameController.getPlayerController().hasPlayerSecondLife()) {
-            g.setColor(new Color(255, 105, 180)); // rosa
-            int radius = getHeight() / 20;
-            int padding = radius / 2;
+            g.setColor(Color.MAGENTA);
+            final int radius = getHeight() / 20;
+            final int padding = radius / 2;
             g.fillOval(padding, padding, radius, radius);
         }
-        
+
         drawPlayer(g, cellWidth, cellHeight);
 
         if (countdownValue.isPresent()) {
@@ -106,16 +106,16 @@ public final class GamePanel extends JPanel {
             return;
         }
 
-        int score = gameController.getPlayerController().getPlayerScore();
-        int coins = gameController.getPlayerController().getCollectedCoins();
+        final int score = gameController.getPlayerController().getPlayerScore();
+        final int coins = gameController.getPlayerController().getCollectedCoins();
 
-        String scoreText = String.valueOf(score);
-        String coinText = String.valueOf(coins);
+        final String scoreText = String.valueOf(score);
+        final String coinText = String.valueOf(coins);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, getHeight() / 10));
         int textWidth = g.getFontMetrics().stringWidth(scoreText);
-        int padding = 10;
+        final int padding = 10;
         g.drawString(scoreText, getWidth() - textWidth - padding, g.getFont().getSize() + padding);
 
         g.setColor(Color.YELLOW);
@@ -202,30 +202,28 @@ public final class GamePanel extends JPanel {
             g.setColor(Color.DARK_GRAY);
             g.fillRect(pixelX, y + cellHeight / 6, pixelWidth, cellHeight * 2 / 3);
         } else if (type == ObstacleType.LOG) {
-            g.setColor(Color.ORANGE);
+            g.setColor(new Color(139, 69, 19));
             g.fillRect(pixelX, y + cellHeight / 3, pixelWidth, cellHeight / 3);
         }
     }
 
     private void drawCell(final Graphics g, final int x, final int y,
-                          final int cellWidth, final int cellHeight, final int chunkIndex, final int cellIndex) {
+                          final int cellWidth, final int cellHeight,
+                          final int chunkIndex, final int cellIndex) {
         if (mapFormatter.isRailwayCell(chunkIndex)) {
-            // Sfondo grigio chiaro
             g.setColor(new Color(200, 200, 200));
             g.fillRect(x, y, cellWidth, cellHeight);
 
-            // Due rettangoli marroni verticali (traverse)
-            g.setColor(new Color(139, 69, 19)); // Marrone
-            int railWidth = cellWidth / 5;
+            g.setColor(new Color(139, 69, 19));
+            final int railWidth = cellWidth / 5;
             g.fillRect(x + cellWidth / 6, y, railWidth, cellHeight);
             g.fillRect(x + cellWidth * 4 / 6, y, railWidth, cellHeight);
 
-            // Rettangoli orizzontali grigio scuro (traverse)
             g.setColor(new Color(120, 120, 120));
-            int numTraverses = 3;
-            int traverseHeight = cellHeight / 8;
+            final int numTraverses = 2;
+            final int traverseHeight = cellHeight / 8;
             for (int t = 1; t <= numTraverses; t++) {
-                int traverseY = y + t * cellHeight / (numTraverses + 1) - traverseHeight / 2;
+                final int traverseY = y + t * cellHeight / (numTraverses + 1) - traverseHeight / 2;
                 g.fillRect(x, traverseY, cellWidth, traverseHeight);
             }
         } else {
@@ -250,19 +248,19 @@ public final class GamePanel extends JPanel {
         }
 
         // Ottieni la posizione del player dal controller
-        Cell playerPosition = gameController.getPlayerController().getPlayerPosition();
-        Player player = gameController.getPlayerController().getPlayer();
-        
+        final Cell playerPosition = gameController.getPlayerController().getPlayerPosition();
+        final Player player = gameController.getPlayerController().getPlayer();
+
         if (playerPosition == null || player == null || !gameController.getPlayerController().isPlayerAlive()) {
             return;
         }
 
         // Calcola le coordinate del player sullo schermo
-        int playerCol = playerPosition.getX();
-        int playerChunkY = playerPosition.getY();
+        final int playerCol = playerPosition.getX();
+        final int playerChunkY = playerPosition.getY();
 
         // Trova la riga visibile corrispondente alla posizione Y del player
-        List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
+        final List<Chunk> visibleChunks = gameController.getGameMap().getVisibleChunks();
         int screenRow = -1;
 
         for (int i = 0; i < visibleChunks.size(); i++) {
@@ -278,8 +276,8 @@ public final class GamePanel extends JPanel {
         }
 
         // Calcola le coordinate pixel
-        int pixelX = playerCol * cellWidth;
-        int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
+        final int pixelX = playerCol * cellWidth;
+        final int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
 
         // Disegna il player
         drawPlayerSprite(g, pixelX, pixelY, cellWidth, cellHeight, player);
@@ -294,10 +292,10 @@ public final class GamePanel extends JPanel {
         }
         // Disegna il corpo del player (rettangolo principale)
         g.setColor(playerColor);
-        int bodyWidth = cellWidth * 3 / 4;
-        int bodyHeight = cellHeight * 3 / 4;
-        int bodyX = x + (cellWidth - bodyWidth) / 2;
-        int bodyY = y + (cellHeight - bodyHeight) / 2;
+        final int bodyWidth = cellWidth * 3 / 4;
+        final int bodyHeight = cellHeight * 3 / 4;
+        final int bodyX = x + (cellWidth - bodyWidth) / 2;
+        final int bodyY = y + (cellHeight - bodyHeight) / 2;
         g.fillOval(bodyX, bodyY, bodyWidth, bodyHeight);
         // Disegna il bordo del player
         g.setColor(Color.BLACK);
