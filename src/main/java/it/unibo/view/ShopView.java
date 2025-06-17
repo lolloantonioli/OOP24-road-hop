@@ -39,21 +39,12 @@ public class ShopView extends JPanel {
     private BiConsumer<String, Integer> onSkinPurchase;
     private Consumer<String> onSkinSelected;
 
-<<<<<<< HEAD
-    private final float headerFontScale = 1.5f;
-    private final float nameLabelFontScale = 1.2f;
-    private final int cardBorderPadding = 5;
-    private final int cardWidth = 120;
-    private final int cardHeight = 160;
-    private final int squareDimension = 48;
-=======
     private final static float HEADER_FONT_SCALE = 1.5f;
     private final static float NAME_LABEL_FONT_SCALE = 1.2f;
     private final static int CARD_BORDER_PADDING = 5;
     private final static int CARD_WIDTH = 120;
     private final static int CARD_HEIGHT = 160;
     private final static int SQUARE_DIMENSION = 48;
->>>>>>> ef1a682268bc7c28b9e2ef8f7ee55dfda1a05157
 
     /**
      * Constructs a ShopView with a header, skins display area, and footer.
@@ -93,11 +84,11 @@ public class ShopView extends JPanel {
 
         titleLabel = new JLabel("Skin Shop", SwingConstants.CENTER);
         titleLabel.setForeground(Color.WHITE);
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * headerFontScale));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * HEADER_FONT_SCALE));
 
         coinsLabel = new JLabel("Coins: 0", SwingConstants.RIGHT);
         coinsLabel.setForeground(Color.YELLOW);
-        coinsLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * headerFontScale));
+        coinsLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * HEADER_FONT_SCALE));
 
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(coinsLabel, BorderLayout.EAST);
@@ -155,15 +146,15 @@ private Component createSkinCard(final Skin skin) {
 
         card.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(borderColor, 2),
-            BorderFactory.createEmptyBorder(cardBorderPadding, cardBorderPadding, cardBorderPadding, cardBorderPadding)
+            BorderFactory.createEmptyBorder(CARD_BORDER_PADDING, CARD_BORDER_PADDING, CARD_BORDER_PADDING, CARD_BORDER_PADDING)
         ));
 
         // Skin preview: colored square
         final JPanel colorPreview = new JPanel();
         colorPreview.setBackground(skin.getColor());
-        colorPreview.setMaximumSize(new Dimension(squareDimension, squareDimension));
-        colorPreview.setPreferredSize(new Dimension(squareDimension, squareDimension));
-        colorPreview.setMinimumSize(new Dimension(squareDimension, squareDimension));
+        colorPreview.setMaximumSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+        colorPreview.setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+        colorPreview.setMinimumSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
         colorPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
         card.add(colorPreview);
@@ -171,7 +162,7 @@ private Component createSkinCard(final Skin skin) {
 
         // Skin name
         final JLabel nameLabel = new JLabel(skin.getName(), SwingConstants.CENTER);
-        nameLabel.setFont(nameLabel.getFont().deriveFont(Font.BOLD, nameLabel.getFont().getSize() * nameLabelFontScale));
+        nameLabel.setFont(nameLabel.getFont().deriveFont(Font.BOLD, nameLabel.getFont().getSize() * NAME_LABEL_FONT_SCALE));
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         card.add(nameLabel);
@@ -207,9 +198,9 @@ private Component createSkinCard(final Skin skin) {
             });
         }
         card.add(actionButton);
-        card.setMaximumSize(new Dimension(cardWidth, cardHeight));
-        card.setPreferredSize(new Dimension(cardWidth, cardHeight));
-        card.setMinimumSize(new Dimension(cardWidth, cardHeight));
+        card.setMaximumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+        card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
+        card.setMinimumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
 
         return card;
     }
