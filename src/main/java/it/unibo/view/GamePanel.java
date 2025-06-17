@@ -23,7 +23,29 @@ import it.unibo.model.Player.api.Player;
  */
 public final class GamePanel extends JPanel {
 
-    private final static int DIV_FACTOR_FONT = 5;
+    private static final int DIV_FACTOR_FONT = 5;
+    private static final int FONT_DIV_COUNTDOWN = 15;
+    private static final int CONST_PADDING = 5;
+    private static final int SCORE_PADDING = 10;
+    private static final int PLAYER_RADIUS_DIV = 20;
+    private static final int PLAYER_RADIUS_PADDING_DIV = 2;
+    private static final int OBSTACLE_CAR_HEIGHT_DIV = 4;
+    private static final int OBSTACLE_CAR_HEIGHT_MUL = 2;
+    private static final int OBSTACLE_TRAIN_HEIGHT_DIV = 6;
+    private static final int OBSTACLE_TRAIN_HEIGHT_MUL = 2;
+    private static final int OBSTACLE_TRAIN_HEIGHT_DIV2 = 3;
+    private static final int OBSTACLE_LOG_HEIGHT_DIV = 3;
+    private static final int OBSTACLE_LOG_HEIGHT_DIV2 = 3;
+    private static final int RAILWAY_BG_COLOR = 200;
+    private static final int RAILWAY_RAIL_COLOR_R = 139;
+    private static final int RAILWAY_RAIL_COLOR_G = 69;
+    private static final int RAILWAY_RAIL_COLOR_B = 19;
+    private static final int RAILWAY_TRAVERSE_COLOR = 120;
+    private static final int RAILWAY_NUM_TRAVERSES = 2;
+    private static final int RAILWAY_RAIL_WIDTH_DIV = 5;
+    private static final int RAILWAY_RAIL_X_DIV1 = 6;
+    private static final int RAILWAY_RAIL_X_MUL2 = 4;
+    private static final int RAILWAY_TRAVERSE_HEIGHT_DIV = 8;
 
     private MovingObstacleController obstacleController;
     private GameController gameController;
@@ -88,8 +110,8 @@ public final class GamePanel extends JPanel {
 
         if (gameController.getPlayerController().hasPlayerSecondLife()) {
             g.setColor(Color.MAGENTA);
-            final int radius = getHeight() / 20;
-            final int padding = radius / 2;
+            final int radius = getHeight() / PLAYER_RADIUS_DIV;
+            final int padding = radius / PLAYER_RADIUS_PADDING_DIV;
             g.fillOval(padding, padding, radius, radius);
         }
 
@@ -115,13 +137,12 @@ public final class GamePanel extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, getHeight() / 10));
         int textWidth = g.getFontMetrics().stringWidth(scoreText);
-        final int padding = 10;
-        g.drawString(scoreText, getWidth() - textWidth - padding, g.getFont().getSize() + padding);
+        g.drawString(scoreText, getWidth() - textWidth - SCORE_PADDING, g.getFont().getSize() + SCORE_PADDING);
 
         g.setColor(Color.YELLOW);
-        g.setFont(new Font("Arial", Font.BOLD, getHeight() / 15));
+        g.setFont(new Font("Arial", Font.BOLD, getHeight() / FONT_DIV_COUNTDOWN));
         textWidth = g.getFontMetrics().stringWidth(coinText);
-        g.drawString(coinText, getWidth() - textWidth - padding, g.getFont().getSize() * 3 + padding + 5);
+        g.drawString(coinText, getWidth() - textWidth - SCORE_PADDING, g.getFont().getSize() * 3 + SCORE_PADDING + CONST_PADDING);
     }
 
     private void drawCountdown(final Graphics g) {
@@ -197,13 +218,13 @@ public final class GamePanel extends JPanel {
 
         if (type == ObstacleType.CAR) {
             g.setColor(Color.RED);
-            g.fillRect(pixelX, y + cellHeight / 4, pixelWidth, cellHeight / 2);
+            g.fillRect(pixelX, y + cellHeight / OBSTACLE_CAR_HEIGHT_DIV, pixelWidth, cellHeight / OBSTACLE_CAR_HEIGHT_MUL);
         } else if (type == ObstacleType.TRAIN) {
             g.setColor(Color.DARK_GRAY);
-            g.fillRect(pixelX, y + cellHeight / 6, pixelWidth, cellHeight * 2 / 3);
+            g.fillRect(pixelX, y + cellHeight / OBSTACLE_TRAIN_HEIGHT_DIV, pixelWidth, cellHeight * OBSTACLE_TRAIN_HEIGHT_MUL / OBSTACLE_TRAIN_HEIGHT_DIV2);
         } else if (type == ObstacleType.LOG) {
             g.setColor(new Color(139, 69, 19));
-            g.fillRect(pixelX, y + cellHeight / 3, pixelWidth, cellHeight / 3);
+            g.fillRect(pixelX, y + cellHeight / OBSTACLE_LOG_HEIGHT_DIV, pixelWidth, cellHeight / OBSTACLE_LOG_HEIGHT_DIV2);
         }
     }
 
@@ -211,17 +232,17 @@ public final class GamePanel extends JPanel {
                           final int cellWidth, final int cellHeight,
                           final int chunkIndex, final int cellIndex) {
         if (mapFormatter.isRailwayCell(chunkIndex)) {
-            g.setColor(new Color(200, 200, 200));
+            g.setColor(new Color(RAILWAY_BG_COLOR, RAILWAY_BG_COLOR, RAILWAY_BG_COLOR));
             g.fillRect(x, y, cellWidth, cellHeight);
 
-            g.setColor(new Color(139, 69, 19));
-            final int railWidth = cellWidth / 5;
-            g.fillRect(x + cellWidth / 6, y, railWidth, cellHeight);
-            g.fillRect(x + cellWidth * 4 / 6, y, railWidth, cellHeight);
+            g.setColor(new Color(RAILWAY_RAIL_COLOR_R, RAILWAY_RAIL_COLOR_G, RAILWAY_RAIL_COLOR_B));
+            final int railWidth = cellWidth / RAILWAY_RAIL_WIDTH_DIV;
+            g.fillRect(x + cellWidth / RAILWAY_RAIL_X_DIV1, y, railWidth, cellHeight);
+            g.fillRect(x + cellWidth * RAILWAY_RAIL_X_MUL2 / RAILWAY_RAIL_X_DIV1, y, railWidth, cellHeight);
 
-            g.setColor(new Color(120, 120, 120));
-            final int numTraverses = 2;
-            final int traverseHeight = cellHeight / 8;
+            g.setColor(new Color(RAILWAY_TRAVERSE_COLOR, RAILWAY_TRAVERSE_COLOR, RAILWAY_TRAVERSE_COLOR));
+            final int numTraverses = RAILWAY_NUM_TRAVERSES;
+            final int traverseHeight = cellHeight / RAILWAY_TRAVERSE_HEIGHT_DIV;
             for (int t = 1; t <= numTraverses; t++) {
                 final int traverseY = y + t * cellHeight / (numTraverses + 1) - traverseHeight / 2;
                 g.fillRect(x, traverseY, cellWidth, traverseHeight);
@@ -285,19 +306,16 @@ public final class GamePanel extends JPanel {
 
     private void drawPlayerSprite(final Graphics g, final int x, final int y, 
                                 final int cellWidth, final int cellHeight, final Player player) {
-        // Ottieni il colore della skin del player (se disponibile)
         Color playerColor = Color.PINK;
         if (player != null && player.getCurrentSkin() != null && player.getCurrentSkin().getColor() != null) {
             playerColor = player.getCurrentSkin().getColor();
         }
-        // Disegna il corpo del player (rettangolo principale)
         g.setColor(playerColor);
         final int bodyWidth = cellWidth * 3 / 4;
         final int bodyHeight = cellHeight * 3 / 4;
         final int bodyX = x + (cellWidth - bodyWidth) / 2;
         final int bodyY = y + (cellHeight - bodyHeight) / 2;
         g.fillOval(bodyX, bodyY, bodyWidth, bodyHeight);
-        // Disegna il bordo del player
         g.setColor(Color.BLACK);
         g.drawOval(bodyX, bodyY, bodyWidth, bodyHeight);
     }
