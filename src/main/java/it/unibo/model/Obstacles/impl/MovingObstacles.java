@@ -81,7 +81,6 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
 
     /**
      * Updates the position of the obstacle based on its speed.
-     * The obstacle moves every N updates based on its speed.
      */
     public void update() {
         if (!isMovable()) {
