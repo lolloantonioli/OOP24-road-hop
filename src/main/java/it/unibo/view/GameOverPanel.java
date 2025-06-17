@@ -17,15 +17,14 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
-    private final int LABEL_SIZE = 48;
-    private final int LABEL_BTN_SIZE = 32;
-    private final int HEIGHT_AREA = 40;
-    private final int DIVFACTORTITLE = 6;
-    private final int DIVFACTORBUTTON = 15;
+    private final static int LABEL_SIZE = 48;
+    private final static int LABEL_BTN_SIZE = 32;
+    private final static int HEIGHT_AREA = 40;
+    private final static int DIVFACTORTITLE = 6;
+    private final static int DIVFACTORBUTTON = 15;
+    private final static String GAME_OVER_TEXT = "Game Over";
+    private final static String MENU_BUTTON_TEXT = "Menu";
 
-
-    private final String GAME_OVER_TEXT = "Game Over";
-    private final String MENU_BUTTON_TEXT = "Menu";
     private final JButton menuButton;
     private final JLabel gameOverLabel;
 

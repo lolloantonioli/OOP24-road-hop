@@ -21,6 +21,7 @@ public final class CollectibleType {
         this.name = name;
     }
 
+    @Override
     public String toString() {
         return name;
     }
