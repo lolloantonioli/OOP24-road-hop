@@ -1,6 +1,9 @@
 package it.unibo;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,13 +58,13 @@ class GameObjectTest {
     void testGetXes() {
         gameObject.setWidthInCells(WIDTH);
         gameObject.setX(X_COORD);
-        List<Integer> xes = gameObject.getXes();
+        final List<Integer> xes = gameObject.getXes();
         assertEquals(List.of(X_COORD, X_COORD + 1, X_COORD + 2), xes);
     }
 
     @Test
     void testConstructorWithWidth() {
-        GameObject obj = new GameObjectImpl(X_COORD, Y_COORD, WIDTH);
+        final GameObject obj = new GameObjectImpl(X_COORD, Y_COORD, WIDTH);
         assertEquals(X_COORD, obj.getX());
         assertEquals(Y_COORD, obj.getY());
         assertEquals(WIDTH, obj.getWidthInCells());
