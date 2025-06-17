@@ -77,7 +77,7 @@ public interface GameObject {
      * Sets the width of the game object in cells.
      * @param widthInCells the width in cells.
      */
-    void setWidthInCells(final int widthInCells);
+    void setWidthInCells(int widthInCells);
 
     /**
      * Gets the width of the game object in cells.
@@ -85,10 +85,12 @@ public interface GameObject {
      */
     int getWidthInCells();
 
-    List<Integer> getOccupiedCells();
+    /**
+     * Gets the list of X coordinates occupied by the object.
+     * @return a list of X coordinates.
+     */
+    List<Integer> getXes();
 
     boolean occupiesCell(int cellX);
-
-    List<Cell> getOccupiedCells2();
 
 }

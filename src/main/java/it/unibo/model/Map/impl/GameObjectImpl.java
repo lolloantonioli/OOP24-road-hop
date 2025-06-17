@@ -6,7 +6,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
 
 /**
@@ -58,66 +57,55 @@ public class GameObjectImpl implements GameObject {
         this.widthInCells = widthInCells;
     }
 
-    
     @Override
     public int getX() {
         return this.x;
     }
 
-    
     @Override
     public int getY() {
         return this.y;
     }
-
 
     @Override
     public int getSpeed() {
         return this.speed;
     }
 
-
     @Override
     public boolean isMovable() {
         return this.movable;
     }
-
 
     @Override
     public void setMovable(final boolean movable) {
         this.movable = movable;
     }
 
-
     @Override
     public void setSpeed(final int speed) {
         this.speed = checkNotNull(speed);
     }
-
 
     @Override
     public boolean isPlatform() {
         return this.platform;
     }
 
-
     @Override
     public void setPlatform(final boolean platform) {
         this.platform = checkNotNull(platform);
     }
-
 
     @Override
     public void setX(final int x) {
         this.x = checkNotNull(x);
     }
 
-
     @Override
     public void setY(final int y) {
         this.y = checkNotNull(y);
     }
-
 
     @Override
     public void setWidthInCells(final int widthInCells) {
@@ -125,15 +113,13 @@ public class GameObjectImpl implements GameObject {
         this.widthInCells = widthInCells;
     }
 
-
     @Override
     public int getWidthInCells() {
         return widthInCells;
     }
 
-
     @Override
-    public List<Integer> getOccupiedCells() {
+    public List<Integer> getXes() {
         final int width = getWidthInCells();
         final List<Integer> cells = new ArrayList<>();
         for (int i = 0; i < width; i++) {
@@ -142,21 +128,12 @@ public class GameObjectImpl implements GameObject {
         return cells;
     }
 
-
     @Override
     public boolean occupiesCell(final int cellX) {
         checkArgument(cellX >= 0 && cellX <= ChunkImpl.CELLS_PER_ROW, CELL_MSG);
         final int startX = getX();
         final int endX = startX + getWidthInCells();
         return cellX >= startX && cellX < endX;
-    }
-
-
-    @Override
-    public List<Cell> getOccupiedCells2() {
-        final List<Cell> list = new ArrayList<>();
-        getOccupiedCells().forEach(cellX -> list.add(new CellImpl(cellX, getY())));
-        return list;
     }
 
 }

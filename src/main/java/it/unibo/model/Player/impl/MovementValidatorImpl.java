@@ -23,7 +23,7 @@ public final class MovementValidatorImpl implements MovementValidator {
         return map.getVisibleChunks().stream()
             .flatMap(chunk -> chunk.getObjects().stream())
             .filter(obj -> obj.getY() == newPosition.getY() 
-                            && obj.getOccupiedCells().contains(newPosition.getX()))
+                            && obj.getXes().contains(newPosition.getX()))
             .filter(Obstacle.class::isInstance)
             .map(Obstacle.class::cast)
             .noneMatch(obstacle -> obstacle.getType().equals(ObstacleType.TREE))
