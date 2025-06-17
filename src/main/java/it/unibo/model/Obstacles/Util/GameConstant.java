@@ -10,6 +10,6 @@ public final class GameConstant {
     }
 
     public static final int CELLS_PER_CHUNK = 9;
-    public static final int INCREASE_SPEED = 15;
+    public static final int INCREASE_SPEED = 5;
     
 }
