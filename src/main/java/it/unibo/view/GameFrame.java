@@ -14,6 +14,15 @@ import it.unibo.controller.MainController;
 import it.unibo.controller.util.CardName;
 
 /**
+* Suppresses FindBugs warning for exposing the InstructionsPanel instance directly.
+* The InstructionsPanel is not designed to be defensive copied, as it is a Swing component.
+*/
+@SuppressFBWarnings(
+    value = "EI",
+    justification = "Intentional: callers need direct access to the InstructionsPanel for layout/testing."
+)
+
+/**
  * The main game frame that contains all the panels for the game.
  * It uses a CardLayout to switch between different views such as menu, shop, instructions, game, and game over.
  */
@@ -32,11 +41,6 @@ public final class GameFrame extends JFrame {
     private final InstructionsPanel instructionsPanel;
     private final GamePanel gamePanel;
     private final GameOverPanel gameOverPanel;
-
-    @SuppressFBWarnings(
-        value = "EI",
-        justification = "Intentional: callers need direct access to the InstructionsPanel for layout/testing."
-    )
 
     /**
      * Constructs a new GameFrame with the specified MainController.

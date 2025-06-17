@@ -9,9 +9,13 @@ import it.unibo.view.ShopView;
 import it.unibo.model.shop.api.ShopModel;
 import it.unibo.model.shop.api.Skin;
 
+/**
+ * Suppresses FindBugs warning for exposing the ShopModel instance directly.
+ * The ShopModel is not designed to be defensive copied, as it is a model component.
+ */
 @SuppressFBWarnings(
     value = "EI2",
-    justification = "“Necessary to keep a direct reference to the provided ShopModel to synchronize skin purchase and selection states in real time."
+    justification = "Necessary to keep a direct reference to the provided ShopModel to synchronize skin in real time."
 )
 
 /**

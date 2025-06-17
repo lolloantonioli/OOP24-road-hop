@@ -9,9 +9,13 @@ import it.unibo.model.obstacles.util.SpeedConfig;
 import it.unibo.model.obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
+/**
+ * Suppresses FindBugs warning for exposing the GamePanel instance directly.
+ * The GamePanel is not designed to be defensive copied, as it is a Swing component.
+ */
 @SuppressFBWarnings(
     value = "EI_EXPOSE_REP",
-    justification = "The Swing layout manager requires the concrete panel instance to insert it into the component hierarchy; JPanel does not support defensive copying."
+    justification = "Swing layout manager requires the concrete panel instance; JPanel does not support defensive copying."
 )
 
 /**

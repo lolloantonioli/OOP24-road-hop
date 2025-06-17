@@ -3,7 +3,6 @@ package it.unibo.controller;
 import java.util.Optional;
 
 import it.unibo.model.map.api.GameMap;
-import it.unibo.model.shop.api.ShopModel;
 
 /**
  * MainController interface that defines the methods for navigating between different game states
