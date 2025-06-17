@@ -8,6 +8,7 @@ import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.Util.GameConstant;
+import it.unibo.model.Obstacles.Util.SpeedConfig;
 
 /**
  * Represent a moving obstacle in the game.
@@ -92,10 +93,17 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
      * @param amount Quantità da aggiungere
      */
     public void increaseSpeed(final int amount) {
+        final int maxSpeed;
+        switch (type.toString()) {
+            case "CAR" -> maxSpeed = SpeedConfig.CAP_CAR_SPEED;
+            case "TRAIN" -> maxSpeed = SpeedConfig.CAP_TRAIN_SPEED;
+            case "LOG" -> maxSpeed = SpeedConfig.CAP_LOG_SPEED;
+            default -> throw new IllegalArgumentException("Tipo di ostacolo sconosciuto: " + type);
+        }
         if (getSpeed() > 0) {
-            setSpeed(getSpeed() + amount);
+            setSpeed(Math.min(getSpeed() + amount, maxSpeed));
         } else if (getSpeed() < 0) {
-            setSpeed(getSpeed() - amount);
+            setSpeed(Math.max(getSpeed() - amount, -maxSpeed));
         }
     }
 
