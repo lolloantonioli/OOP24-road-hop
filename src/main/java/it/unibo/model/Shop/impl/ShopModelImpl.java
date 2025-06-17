@@ -16,16 +16,17 @@ import it.unibo.model.Shop.impl.ShopDataManagerImpl.SkinSaveData;
  */
 public class ShopModelImpl implements ShopModel {
 
+    private static final int DEFAULT_SKIN_PRICE = 0;
+    private static final int RED_SKIN_PRICE = 50;
+    private static final int BLUE_SKIN_PRICE = 75;
+    private static final int ORANGE_SKIN_PRICE = 100;
+    private static final int GRAY_SKIN_PRICE = 140;
+    private static final int WHITE_SKIN_PRICE = 160;
+
     private final List<Skin> skins;
     private Skin selectedSkin;
-    private int coins = 0;
+    private int coins;
 
-    private final int redSkinPrice = 50;
-    private final int defaultSkinPrice = 0;
-    private final int blueSkinPrice = 75;
-    private final int orangeSkinPrice = 100;
-    private final int graySkinPrice = 140;
-    private final int whiteSkinPrice = 160;
 
     /**
      * Constructs a ShopModelImpl instance.
@@ -53,12 +54,12 @@ public class ShopModelImpl implements ShopModel {
     }
 
     private void initializeSkins(final ShopSaveData saveData) {
-        createSkin("Default", "Default", defaultSkinPrice, Color.GREEN, saveData);
-        createSkin("red", "Red", redSkinPrice, Color.RED, saveData); // Rosso
-        createSkin("blue", "Blue", blueSkinPrice, Color.BLUE, saveData); // Blu
-        createSkin("orange", "Orange", orangeSkinPrice, Color.ORANGE, saveData); // Arancione
-        createSkin("gray", "Gray", graySkinPrice, Color.LIGHT_GRAY, saveData); // Azzurro
-        createSkin("white", "White", whiteSkinPrice, Color.WHITE, saveData); // Bianco        ./gradlew check
+        createSkin("Default", "Default", DEFAULT_SKIN_PRICE, Color.GREEN, saveData);
+        createSkin("red", "Red", RED_SKIN_PRICE, Color.RED, saveData); // Rosso
+        createSkin("blue", "Blue", BLUE_SKIN_PRICE, Color.BLUE, saveData); // Blu
+        createSkin("orange", "Orange", ORANGE_SKIN_PRICE, Color.ORANGE, saveData); // Arancione
+        createSkin("gray", "Gray", GRAY_SKIN_PRICE, Color.LIGHT_GRAY, saveData); // Azzurro
+        createSkin("white", "White", WHITE_SKIN_PRICE, Color.WHITE, saveData); // Bianco        ./gradlew check
     }
 
     private void createSkin(final String id, final String name, final int price, final Color color, final ShopSaveData saveData) {
