@@ -47,4 +47,14 @@ class ShopModelImplTest {
         assertNotNull(skins);
         assertFalse(skins.isEmpty());
     }
+
+    @Test
+    void testCannotPurchaseWithoutCoins() {
+        ShopModelImpl lowCoinsModel = new ShopModelImpl();
+        lowCoinsModel.setCoinsForTest(0); // Imposta le monete a 0
+        int coinsBefore = lowCoinsModel.getCoins();
+        lowCoinsModel.purchaseSkin("red");
+        assertEquals(coinsBefore, lowCoinsModel.getCoins());
+        assertFalse(lowCoinsModel.getSkinById("red").isUnlocked());
+    }
 }

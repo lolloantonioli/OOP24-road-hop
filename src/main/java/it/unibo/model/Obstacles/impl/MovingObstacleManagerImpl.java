@@ -40,11 +40,6 @@ public final class MovingObstacleManagerImpl implements MovingObstacleManager {
     }
 
     @Override
-    public void removeObstacle(final MovingObstacles obstacle) {
-        obstacles.remove(obstacle);
-    }
-
-    @Override
     public void updateAll() {
        obstacles.stream()
         .filter(MovingObstacles::isMovable)

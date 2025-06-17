@@ -183,4 +183,12 @@ public class ShopModelImpl implements ShopModel {
             saveData();
         }
     }
+
+    /**
+     * ONLY FOR TESTS: Sets the number of coins directly (does not save to file).
+     * @param coins the number of coins to set
+     */
+    public void setCoinsForTest(int coins) {
+        this.coins = coins;
+    }
 }

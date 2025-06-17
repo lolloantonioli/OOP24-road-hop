@@ -63,15 +63,7 @@ public interface MovingObstacleFactory {
      * @param amount Amount to increase the speed limits
      */
     void increaseSpeedLimits(int amount);
-
-    /**
-     * Gets the minimum distance between obstacles of the specified type.
-     *
-     * @param type Type of obstacle
-     * @return Minimum distance in cells
-     */
-    int getMinDistance(ObstacleType type);
-
+    
     /**
      * Gets the width of the obstacle in cells.
      *
