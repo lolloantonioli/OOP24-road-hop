@@ -7,7 +7,6 @@ package it.unibo.model.Obstacles.Util;
 public final class GameConstant {
 
     private GameConstant() {
-       // Prevent instantiation
     }
 
     public static final int CELLS_PER_CHUNK = 9;

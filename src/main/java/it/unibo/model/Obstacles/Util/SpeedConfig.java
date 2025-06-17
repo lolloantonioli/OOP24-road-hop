@@ -2,6 +2,9 @@ package it.unibo.model.Obstacles.Util;
 
 import java.util.Random;
 
+/**
+ * SpeedConfig class manages the speed configurations for different types of moving obstacles in the game.
+ */
 public class SpeedConfig {
 
     private static final int DEFAULT_MIN_CAR_SPEED   = 15;
@@ -11,14 +14,12 @@ public class SpeedConfig {
     private static final int DEFAULT_MIN_LOG_SPEED   = 10;
     private static final int DEFAULT_MAX_LOG_SPEED   = 15;
 
-
     public static int minCarSpeed   = DEFAULT_MIN_CAR_SPEED;
     public static int maxCarSpeed   = DEFAULT_MAX_CAR_SPEED;
     public static int minTrainSpeed = DEFAULT_MIN_TRAIN_SPEED;
     public static int maxTrainSpeed = DEFAULT_MAX_TRAIN_SPEED;
     public static int minLogSpeed   = DEFAULT_MIN_LOG_SPEED;
     public static int maxLogSpeed   = DEFAULT_MAX_LOG_SPEED;
-
 
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
@@ -29,7 +30,6 @@ public class SpeedConfig {
         maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
     }
 
-
     public static int randomCarSpeed(Random rnd) {
         return minCarSpeed + rnd.nextInt(maxCarSpeed - minCarSpeed + 1);
     }
@@ -39,7 +39,7 @@ public class SpeedConfig {
     public static int randomLogSpeed(Random rnd) {
         return minLogSpeed + rnd.nextInt(maxLogSpeed - minLogSpeed + 1);
     }
-
+    
     public static void increaseAllSpeeds(int delta) {
         minCarSpeed += delta;  
         maxCarSpeed += delta;
@@ -49,4 +49,3 @@ public class SpeedConfig {
         maxLogSpeed += delta;
     }
 }
-
