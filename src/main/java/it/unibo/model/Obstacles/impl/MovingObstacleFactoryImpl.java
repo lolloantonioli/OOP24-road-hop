@@ -62,8 +62,8 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     }
 
     @Override
-    public void increaseSpeedLimits(final int amount) {
-        SpeedConfig.increaseAllSpeeds(amount);
+    public void increaseSpeedLimits() {
+        SpeedConfig.increaseAllSpeeds();
     }
 
     @Override

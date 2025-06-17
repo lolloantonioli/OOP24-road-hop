@@ -2,6 +2,7 @@ package it.unibo;
 
 import it.unibo.model.map.api.Cell;
 import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.api.GameObject;
 import it.unibo.model.map.api.Obstacle;
 import it.unibo.model.map.impl.CellImpl;
 import it.unibo.model.map.impl.GameMapImpl;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Set;
 
 public class MovementValidatorTest {
 
@@ -29,6 +32,8 @@ public class MovementValidatorTest {
     @Test
     void testCanMoveToFreeCell() {
         Cell cell = new CellImpl(2, 2);
+        Set<GameObject> objs = map.getAllChunks().get(2).getCellAt(2).getContent();
+        objs.forEach(o -> map.getAllChunks().get(2).getCellAt(2).removeObject(o));
         assertTrue(validator.canMoveTo(map, cell));
     }
 

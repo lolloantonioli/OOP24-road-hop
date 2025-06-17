@@ -187,7 +187,7 @@ public final class GameEngine implements Runnable {
             final int newSpeed = gameMap.getScrollSpeed();
             if (newSpeed > speed) {
                 obstacleController.increaseAllObstaclesSpeed(increaseSpeed);
-                obstacleFactory.increaseSpeedLimits(increaseSpeed); 
+                obstacleFactory.increaseSpeedLimits(); 
             }
             final int difficultyLevel = Math.min(3, gameMap.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);
