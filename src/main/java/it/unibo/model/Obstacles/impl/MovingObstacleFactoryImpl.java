@@ -3,8 +3,8 @@ package it.unibo.model.obstacles.impl;
 import java.util.Random;
 
 import it.unibo.model.map.util.ObstacleType;
-import it.unibo.model.obstacles.Util.SpeedConfig;
 import it.unibo.model.obstacles.api.MovingObstacleFactory;
+import it.unibo.model.obstacles.util.SpeedConfig;
 
 /**
  * Implementation of MovingObstacleFactory.

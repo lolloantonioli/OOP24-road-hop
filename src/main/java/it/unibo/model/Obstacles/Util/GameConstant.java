@@ -1,4 +1,4 @@
-package it.unibo.model.obstacles.Util;
+package it.unibo.model.obstacles.util;
 
 /**
  * GameConstant class holds constant values used throughout the game.

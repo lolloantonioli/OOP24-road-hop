@@ -7,8 +7,8 @@ import it.unibo.controller.player.api.PlatformMovementObserver;
 import it.unibo.model.map.api.Obstacle;
 import it.unibo.model.map.impl.GameObjectImpl;
 import it.unibo.model.map.util.ObstacleType;
-import it.unibo.model.obstacles.Util.GameConstant;
-import it.unibo.model.obstacles.Util.SpeedConfig;
+import it.unibo.model.obstacles.util.GameConstant;
+import it.unibo.model.obstacles.util.SpeedConfig;
 
 /**
  * Represent a moving obstacle in the game.
