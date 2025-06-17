@@ -13,8 +13,6 @@ import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Obstacles.Util.GameConstant;
-import it.unibo.model.Obstacles.Util.SpeedConfig;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Shop.api.ShopModel;
@@ -29,7 +27,6 @@ public final class MainControllerImpl implements MainController {
 
     private static final int INITIAL_X = 4;
     private static final int INITIAL_Y = 2;
-    private static final int INITIAL_SPEED = GameConstant.INCREASE_SPEED;
 
     private final GameFrame gameFrame;
     private final ShopObserver shopObserver;
@@ -146,6 +143,8 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void showGameOverPanel() {
-        gameFrame.showGameOverPanel();
+        int score = playerController.getPlayerScore();
+        int coins = playerController.getCollectedCoins();
+        gameFrame.showGameOverPanel(score, coins);
     }
 }

@@ -123,7 +123,9 @@ public final class GameFrame extends JFrame {
     /**
      * Shows the game over panel with option to return to the menu.
      */
-    public void showGameOverPanel() {
+    public void showGameOverPanel(final int finalScore, final int finalCoins) {
+        gameOverPanel.setFinalScore(finalScore);
+        gameOverPanel.setFinalCoins(finalCoins);
         this.show(CardName.GAME_OVER);
     }
 

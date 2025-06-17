@@ -63,6 +63,8 @@ public final class GameOverPanel extends JPanel {
         centerPanel.add(gameOverLabel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT_AREA)));
         centerPanel.add(menuButton);
+        centerPanel.add(scoreLabel);
+        centerPanel.add(coinsLabel);
         add(centerPanel);
     }
 
@@ -82,5 +84,13 @@ public final class GameOverPanel extends JPanel {
         menuButton.setPreferredSize(null);
         menuButton.setHorizontalTextPosition(JButton.CENTER);
         menuButton.setText(MENU_BUTTON_TEXT);
+    }
+
+    public void setFinalCoins(int finalCoins) {
+        coinsLabel.setText("Coins: " + finalCoins);
+    }
+
+    public void setFinalScore(int finalScore) {
+        scoreLabel.setText("Score: " + finalScore);
     }
 }

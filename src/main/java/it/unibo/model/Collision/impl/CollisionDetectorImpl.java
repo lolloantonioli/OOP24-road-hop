@@ -19,8 +19,8 @@ public final class CollisionDetectorImpl implements CollisionDetector {
         checkNotNull(obj2, "not valid object");
 
         return obj1.getY() == obj2.getY()
-            && obj1.getOccupiedCells().stream()
-            .anyMatch(x -> obj2.getOccupiedCells().contains(x));
+            && obj1.getXes().stream()
+            .anyMatch(x -> obj2.getXes().contains(x));
     }
 
     @Override
