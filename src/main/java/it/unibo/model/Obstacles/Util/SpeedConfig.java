@@ -14,6 +14,10 @@ public class SpeedConfig {
     private static final int DEFAULT_MIN_LOG_SPEED   = 10;
     private static final int DEFAULT_MAX_LOG_SPEED   = 15;
 
+    private static final int CAP_CAR_SPEED   = 50;
+    private static final int CAP_TRAIN_SPEED = 60;
+    private static final int CAP_LOG_SPEED   = 40;
+
     public static int minCarSpeed   = DEFAULT_MIN_CAR_SPEED;
     public static int maxCarSpeed   = DEFAULT_MAX_CAR_SPEED;
     public static int minTrainSpeed = DEFAULT_MIN_TRAIN_SPEED;
@@ -41,11 +45,11 @@ public class SpeedConfig {
     }
     
     public static void increaseAllSpeeds(int delta) {
-        minCarSpeed += delta;  
-        maxCarSpeed += delta;
-        minTrainSpeed += delta;  
-        maxTrainSpeed += delta;
-        minLogSpeed += delta;  
-        maxLogSpeed += delta;
+        minCarSpeed = Math.min(minCarSpeed + delta, CAP_CAR_SPEED);
+        maxCarSpeed = Math.min(maxCarSpeed + delta, CAP_CAR_SPEED);
+        minTrainSpeed = Math.min(minTrainSpeed + delta, CAP_TRAIN_SPEED);
+        maxTrainSpeed = Math.min(maxTrainSpeed + delta, CAP_TRAIN_SPEED);
+        minLogSpeed = Math.min(minLogSpeed + delta, CAP_LOG_SPEED);
+        maxLogSpeed = Math.min(maxLogSpeed + delta, CAP_LOG_SPEED);
     }
 }

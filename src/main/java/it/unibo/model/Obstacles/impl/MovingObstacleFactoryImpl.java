@@ -1,11 +1,8 @@
 package it.unibo.model.Obstacles.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.Util.SpeedConfig;
 
@@ -18,8 +15,6 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private static final int MIN_CAR_DISTANCE = 4;
     private static final int MIN_TRAIN_DISTANCE = 7;
     private static final int MIN_LOG_DISTANCE = 1;
-    
-    private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final Random random;
 
     /**
@@ -43,46 +38,6 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     @Override
     public MovingObstacles createLog(final int x, final int y, final int speed) {
         return new MovingObstacles(x, y, ObstacleType.LOG, speed);
-    }
-
-    @Override
-    public List<MovingObstacles> createObstacleSet(final ObstacleType type, final int y, 
-                                                    final int count, final boolean leftToRight, final int speed) {
-        final List<MovingObstacles> obstacles = new ArrayList<>();
-        final int minDistance = getMinDistance(type);
-        final int obstacleWidth = getObstacleWidth(type);
-        final int spacing = obstacleWidth + minDistance;
-        final int minObstacles;
-        int placed = 0;
-        if (type == ObstacleType.CAR) {
-            minObstacles = Math.max(1, count);
-        } else if (type == ObstacleType.LOG) {
-            minObstacles = Math.max(1, count);
-        } else if (type == ObstacleType.TRAIN) {
-            minObstacles = Math.max(1, count);
-        } else {
-            throw new IllegalArgumentException("Unknown obstacle type: " + type);
-        }
-        if (leftToRight) {
-            final int start = -obstacleWidth + 1;
-            final int end = cells - 1 + obstacleWidth - 1;
-            for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
-                final int baseX = pos;
-                final MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
-                obstacles.add(obstacle);
-                placed++;
-            }
-        } else {
-            final int start = cells + obstacleWidth - 1;
-            final int end = -obstacleWidth + 1;
-            for (int pos = start; placed < minObstacles && pos >= end; pos -= spacing) {
-                final int baseX = pos;
-                final MovingObstacles obstacle = createObstacleByType(type, baseX, y, -speed);
-                obstacles.add(obstacle);
-                placed++;
-            }
-        }
-        return obstacles;
     }
 
     @Override

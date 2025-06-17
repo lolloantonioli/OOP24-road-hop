@@ -12,36 +12,6 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
 public interface MovingObstacleController {
 
     /**
-     * Create a car obstacle at the specified position with the given speed.
-     * @param y the Y coordinate (row) where the car will be created
-     * @param count the number of cars to create
-     * @param leftToRight the direction of movement (true = left to right, false = right to left)
-     * @param speed the speed of the car
-     * @return list of created car obstacles
-     */
-    List<MovingObstacles> createCarSet(int y, int count, boolean leftToRight, int speed);
-
-    /**
-     * Create a train obstacle at the specified position with the given speed.
-     * @param y the Y coordinate (row) where the train will be created
-     * @param count the number of train cars to create
-     * @param leftToRight the direction of movement (true = left to right, false = right to left)
-     * @param speed the speed of the train
-     * @return
-     */
-    List<MovingObstacles> createTrainSet(int y, int count, boolean leftToRight, int speed);
-
-    /**
-     * Create a log obstacle at the specified position with the given speed.
-     * @param y the Y coordinate (row) where the log will be created
-     * @param count the number of logs to create
-     * @param leftToRight the direction of movement (true = left to right, false = right to left)
-     * @param speed the speed of the log
-     * @return list of created log obstacles
-     */
-    List<MovingObstacles> createLogSet(int y, int count, boolean leftToRight, int speed);
-
-    /**
      * Updates the state of all moving obstacles.
      */
     void update();
