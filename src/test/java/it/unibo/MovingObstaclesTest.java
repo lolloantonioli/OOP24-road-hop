@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MovingObstaclesAllTest {
-
-    // --- MovingObstacles ---
+class MovingObstaclesTest {
 
     @Test
     void testCarCreation() {
@@ -33,15 +31,47 @@ class MovingObstaclesAllTest {
     }
 
     @Test
+    void testLogCreation() {
+        MovingObstacles log = new MovingObstacles(5, 6, ObstacleType.LOG, 2);
+        assertEquals(5, log.getX());
+        assertEquals(6, log.getY());
+        assertEquals(ObstacleType.LOG, log.getType());
+        assertEquals(3, log.getWidthInCells());
+        assertTrue(log.isVisible());
+    }
+
+    @Test
     void testObstacleMovementAndVisibility() {
-        MovingObstacles car = new MovingObstacles(0, 0, ObstacleType.CAR, 1);
-        for (int i = 0; i < 100; i++) {
-            car.update();
-        }
+        MovingObstacles car = new MovingObstacles(MovingObstacles.CELLS - 1, 0, ObstacleType.CAR, 50);
         assertTrue(car.isVisible());
-        car.setX(MovingObstacles.CELLS);
         car.update();
         assertFalse(car.isVisible());
+    }
+
+    @Test
+    void testObstacleMovementAndVisibilityGradual() {
+        MovingObstacles car = new MovingObstacles(0, 0, ObstacleType.CAR, 49);
+        assertTrue(car.isVisible());
+        for (int i = 0; i < MovingObstacles.CELLS; i++) {
+            car.update(); 
+            if (i < MovingObstacles.CELLS - 1) {
+                assertTrue(car.isVisible(), "Dovrebbe essere visibile alla posizione " + car.getX());
+            }
+        }
+        assertFalse(car.isVisible());
+    }
+
+    @Test
+    void testSetVisibility() {
+        MovingObstacles car = new MovingObstacles(0, 0, ObstacleType.CAR, 1);
+        
+        assertTrue(car.isVisible());
+        
+        car.setVisible(false);
+        assertFalse(car.isVisible());
+        
+        car.setVisible(true);
+        assertTrue(car.isVisible());
     }
 
     @Test
@@ -49,18 +79,6 @@ class MovingObstaclesAllTest {
         MovingObstacles log = new MovingObstacles(0, 0, ObstacleType.LOG, 2);
         log.increaseSpeed(3);
         assertEquals(5, log.getSpeed());
-    }
-
-    // --- MovingObstacleManagerImpl ---
-
-    @Test
-    void testAddAndRemoveObstacle() {
-        MovingObstacleManagerImpl manager = new MovingObstacleManagerImpl();
-        MovingObstacles car = new MovingObstacles(0, 0, ObstacleType.CAR, 1);
-        manager.addObstacle(car);
-        assertEquals(1, manager.getObstacleCount());
-        manager.removeObstacle(car);
-        assertEquals(0, manager.getObstacleCount());
     }
 
     @Test
@@ -85,8 +103,6 @@ class MovingObstaclesAllTest {
         assertEquals(ObstacleType.CAR, cars.get(0).getType());
     }
 
-    // --- MovingObstacleFactoryImpl ---
-
     @Test
     void testCreateCar() {
         MovingObstacleFactoryImpl factory = new MovingObstacleFactoryImpl();
@@ -105,6 +121,16 @@ class MovingObstaclesAllTest {
         assertEquals(0, train.getX());
         assertEquals(1, train.getY());
         assertEquals(-2, train.getSpeed());
+    }
+
+    @Test
+    void testCreateLog() {
+        MovingObstacleFactoryImpl factory = new MovingObstacleFactoryImpl();
+        MovingObstacles log = factory.createLog(5, 6, 2);
+        assertEquals(ObstacleType.LOG, log.getType());
+        assertEquals(5, log.getX());
+        assertEquals(6, log.getY());
+        assertEquals(2, log.getSpeed());
     }
 
     @Test

@@ -4,22 +4,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import it.unibo.model.Player.api.CollisionHandler;
 import it.unibo.controller.Player.api.PlatformMovementObserver;
 import it.unibo.controller.Player.api.PlayerController;
 import it.unibo.model.Collision.api.CollisionDetector;
+import it.unibo.model.Collision.api.CollisionHandler;
+import it.unibo.model.Collision.api.CollisionIdentifier;
 import it.unibo.model.Collision.impl.CollisionDetectorImpl;
+import it.unibo.model.Collision.impl.CollisionHandlerImpl;
+import it.unibo.model.Collision.impl.CollisionIdentifierImpl;
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
-import it.unibo.model.Player.api.CollisionIdentifier;
 import it.unibo.model.Player.api.MovementValidator;
 import it.unibo.model.Player.api.Player;
-import it.unibo.model.Player.impl.CollisionHandlerImpl;
-import it.unibo.model.Player.impl.CollisionIdentifierImpl;
 import it.unibo.model.Player.impl.MovementValidatorImpl;
 import it.unibo.model.Player.impl.PlayerImpl;
 import it.unibo.model.Player.util.Direction;
