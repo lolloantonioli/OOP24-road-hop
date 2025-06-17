@@ -2,7 +2,10 @@ package it.unibo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import it.unibo.model.Shop.api.Skin;
 import it.unibo.model.Shop.impl.ShopModelImpl;
@@ -18,7 +21,7 @@ class ShopLogicTest {
 
     @Test
     void testDefaultSkinIsSelectedAtStart() {
-        Skin selected = shopModel.getSelectedSkin();
+        final Skin selected = shopModel.getSelectedSkin();
         assertNotNull(selected);
         assertEquals("Default", selected.getId());
         assertTrue(selected.isSelected());
@@ -28,8 +31,8 @@ class ShopLogicTest {
     void testSelectSkinDeselectsPrevious() {
         shopModel.purchaseSkin("red");
         shopModel.selectSkin("red");
-        Skin red = shopModel.getSkinById("red");
-        Skin def = shopModel.getSkinById("Default");
+        final Skin red = shopModel.getSkinById("red");
+        final Skin def = shopModel.getSkinById("Default");
         assertTrue(red.isSelected());
         assertFalse(def.isSelected());
     }
