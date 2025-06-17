@@ -107,7 +107,6 @@ public final class MovingObstacleManagerImpl implements MovingObstacleManager {
             if (obstacle.getY() != chunkY) {
                 continue; 
             }
-            // Controlla sovrapposizione tra aree
             final int obstacleStart = obstacle.getX();
             final int obstacleEnd = obstacleStart + obstacle.getWidthInCells();
             final int newObstacleEnd = cellX + widthInCells;

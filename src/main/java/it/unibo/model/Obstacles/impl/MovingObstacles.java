@@ -41,7 +41,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
     private final ObstacleType type;
     private final List<PlatformMovementObserver> observers = new ArrayList<>();
     private boolean visible;
-    private int updateCounter; // Per gestire movimento sub-cella
+    private int updateCounter;
 
     /**
      * Constructs a new MovingObstacles instance.
@@ -87,7 +87,6 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
             return;
         }
         updateCounter++;
-        // Movimento basato su velocità (ogni N update muove di una cella)
         final int movementThreshold = Math.max(1,  BASE_MOVEMENT_THRESHOLD - Math.abs(getSpeed())); 
         if (updateCounter >= movementThreshold) {
             updateCounter = 0;
@@ -110,9 +109,9 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
     }
 
     /**
-     * Aumenta la velocità dell'ostacolo mantenendo la direzione.
+     * Increases the speed of the obstacle by a specified amount.
      * 
-     * @param amount Quantità da aggiungere
+     * @param amount The amount to increase the speed by.
      */
     public void increaseSpeed(final int amount) {
         final int maxSpeed;
@@ -120,7 +119,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
             case "CAR" -> maxSpeed = SpeedConfig.CAP_CAR_SPEED;
             case "TRAIN" -> maxSpeed = SpeedConfig.CAP_TRAIN_SPEED;
             case "LOG" -> maxSpeed = SpeedConfig.CAP_LOG_SPEED;
-            default -> throw new IllegalArgumentException("Tipo di ostacolo sconosciuto: " + type);
+            default -> throw new IllegalArgumentException("Unknown obstacle: " + type);
         }
         if (getSpeed() > 0) {
             setSpeed(Math.min(getSpeed() + amount, maxSpeed));
@@ -136,26 +135,25 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
 
     @Override
     public void setPlatform(final boolean platform) {
-        // Solo i tronchi possono essere impostati come piattaforme
         if (platform && type != ObstacleType.LOG) {
-            throw new UnsupportedOperationException("Solo gli ostacoli di tipo LOG possono essere impostati come piattaforme");
+            throw new UnsupportedOperationException("Only logs can be set as platforms.");
         }
 
     }
 
      /**
-     * Controlla se l'ostacolo è visibile.
+     * Checks if the obstacle is visible.
      * 
-     * @return Vero se è visibile.
+     * @return True if the obstacle is visible, false otherwise.
      */
     public boolean isVisible() {
         return visible;
     }
 
     /**
-     * Setta la visibilità dell'ostacolo.
+     * Sets the visibility of the obstacle.
      * 
-     * @param visible Vero per segnare l'ostacolo visibile
+     * @param visible True to make the obstacle visible, false to hide it.
      */
     public void setVisible(final boolean visible) {
         this.visible = visible;
