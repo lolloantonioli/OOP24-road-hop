@@ -3,6 +3,7 @@ package it.unibo;
 import it.unibo.model.Collision.impl.CollisionHandlerImpl;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Map.impl.CollectibleImpl;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Map.util.CollectibleType;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Color;
+import java.util.Set;
 
 public class CollisionHandlerTest {
 
@@ -65,17 +67,23 @@ public class CollisionHandlerTest {
     }
 
     @Test
-    void testHandleFatalCollision() {
+    void testHandleFatalCollisionImmortal() {
     
         map = new GameMapImpl();
-        boolean moved = player.tryMove(Direction.UP, map, new MovementValidatorImpl());
         CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleFatalCollision(player);
+        assertTrue(player.isAlive());
+    }
 
-        if (moved) {
-            assertFalse(player.isAlive());
-        } else {
-            assertTrue(player.isAlive());
-        }
+    @Test
+    void testHandleFatalCollisionMortal() {
+    
+        map = new GameMapImpl();
+        Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
+        objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
+        player.tryMove(Direction.UP, map, new MovementValidatorImpl());
+        CollisionHandlerImpl handler = new CollisionHandlerImpl();
+        handler.handleFatalCollision(player);
+        assertFalse(player.isAlive());
     }
 }

@@ -6,8 +6,8 @@ import it.unibo.model.Shop.api.Skin;
 import it.unibo.model.Shop.impl.SkinImpl;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.api.Obstacle;
 import it.unibo.model.Map.impl.GameMapImpl;
+import it.unibo.model.Map.impl.ObstacleImpl;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Player.api.MovementValidator;
 import it.unibo.model.Player.impl.MovementValidatorImpl;
@@ -43,23 +43,23 @@ public class PlayerTest {
     }
 
     @Test
-    void testMoveAndScore() {
+    void testFailedMoveAndScore() {
+        map.getAllChunks().get(3).getCellAt(2).addObject(new ObstacleImpl(2, 3, ObstacleType.TREE, false));
         boolean moved = player.tryMove(Direction.UP, map, validator);
-        boolean hasTree = map.getAllChunks()
-            .get(3)
-            .getCellAt(2)
-            .getContent()
-            .stream()
-            .anyMatch(obj -> obj instanceof Obstacle obstacle && obstacle.getType() == ObstacleType.TREE);
 
-        assertTrue(moved == !hasTree);
-        if (moved) {
-            assertEquals(1, player.getScore());
-            assertFalse(player.isInvincible());
-        } else {
-            assertEquals(0, player.getScore());
-            assertTrue(player.isInvincible());
-        }
+        assertFalse(moved);
+        assertEquals(0, player.getScore());
+        assertTrue(player.isInvincible());
+    }
+
+    @Test
+    void testSuccessfulMoveAndScore() {
+        Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
+        objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
+        boolean moved = player.tryMove(Direction.UP, map, validator);
+        assertTrue(moved);
+        assertEquals(1, player.getScore());
+        assertFalse(player.isInvincible());
     }
 
     @Test
