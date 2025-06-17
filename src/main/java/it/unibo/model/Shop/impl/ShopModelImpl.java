@@ -20,12 +20,12 @@ public class ShopModelImpl implements ShopModel {
     private Skin selectedSkin;
     private int coins;
 
-    private static final int RED_SKIN_PRICE = 50;
-    private static final int DEFAULT_SKIN_PRICE = 0;
-    private static final int BLUE_SKIN_PRICE = 75;
-    private static final int ORANGE_SKIN_PRICE = 100;
-    private static final int CYAN_SKIN_PRICE = 140;
-    private static final int WHITE_SKIN_PRICE = 160;
+    private final static int RED_SKIN_PRICE = 50;
+    private final static int DEFAULT_SKIN_PRICE = 0;
+    private final static int BLUE_SKIN_PRICE = 75;
+    private final static int ORANGE_SKIN_PRICE = 100;
+    private final static int CYAN_SKIN_PRICE = 140;
+    private final static int WHITE_SKIN_PRICE = 160;
 
     /**
      * Constructs a ShopModelImpl instance.
@@ -67,7 +67,7 @@ public class ShopModelImpl implements ShopModel {
                 .findFirst()
                 .orElse(null);
 
-        final boolean unlocked = (skinData != null) ? skinData.isUnlocked() : (id.equals("Default"));
+        final boolean unlocked = (skinData != null) ? skinData.isUnlocked() : ("Default".equals(id));
         final boolean selected = (skinData != null) ? skinData.isSelected() : false;
 
         final Skin skin = new SkinImpl(id, name, price, unlocked, color);
@@ -120,7 +120,7 @@ public class ShopModelImpl implements ShopModel {
 
     @Override
     public final void selectSkin(final String id) {
-        Skin skin = getSkinById(id);
+        final Skin skin = getSkinById(id);
         if (skin != null && skin.isUnlocked()) {
             if (selectedSkin != null) {
                 selectedSkin.deselect();
