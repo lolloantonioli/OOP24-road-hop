@@ -1,5 +1,7 @@
 package it.unibo.controller;
 
+import java.util.Objects;
+
 import it.unibo.controller.obstacles.api.MovingObstacleController;
 import it.unibo.controller.state.api.GameState;
 import it.unibo.controller.state.impl.OnGameState;
@@ -51,7 +53,7 @@ public final class GameEngine implements Runnable {
                       final MainController mainController,
                       final GameController gameController) {
         this.gameMap = gameMap;
-        this.gamePanel = gamePanel;
+        this.gamePanel = Objects.requireNonNull(gamePanel, "GamePanel cannot be null");
         this.obstacleController = obstacleController;
         this.obstacleFactory = obstacleFactory;
         this.mainController = mainController;

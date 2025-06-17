@@ -75,6 +75,10 @@ public final class ShopView extends JPanel {
 
     }
 
+    private void readObject(final java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.skins = new ArrayList<>();
+    }
 
     private JPanel createHeaderPanel() {
         final JPanel headerPanel = new JPanel(new BorderLayout());
