@@ -5,12 +5,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.controller.obstacles.impl.MovingObstacleControllerImpl;
-import it.unibo.model.map.api.GameMap;
-import it.unibo.model.map.impl.GameMapImpl;
 import it.unibo.model.map.util.ObstacleType;
 import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.obstacles.impl.MovingObstacleManagerImpl;
@@ -19,19 +15,9 @@ import it.unibo.model.obstacles.impl.MovingObstacles;
 class MovingObstaclesTest {
 
     private static final int CELLS = MovingObstacles.CELLS;
-    private static final int EXTRA_UPDATES = 5;
     private static final int CAR_WIDTH = 1; 
     private static final int TRAIN_WIDTH = 4; 
     private static final int LOG_WIDTH = 3; 
-
-    private GameMap gameMap;
-    private MovingObstacleControllerImpl controller;
-
-    @BeforeEach
-    void setUp() {
-        gameMap = new GameMapImpl();
-        controller = new MovingObstacleControllerImpl(gameMap);
-    }
 
     @Test
     void testCarCreation() {
