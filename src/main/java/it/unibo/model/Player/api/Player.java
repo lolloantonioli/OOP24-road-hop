@@ -133,4 +133,16 @@ public interface Player extends GameObject {
      */
     void removeObserver(DeathObserver observer);
 
+    /**
+     * Gets the initial X position of the player.
+     * @return the initial X position
+     */
+    int getInitialX();
+
+    /**
+     * Gets the initial Y position of the player.
+     * @return the initial Y position
+     */
+    int getInitialY();
+
 }

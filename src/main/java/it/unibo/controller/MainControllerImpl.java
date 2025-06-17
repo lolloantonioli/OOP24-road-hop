@@ -56,7 +56,7 @@ public final class MainControllerImpl implements MainController {
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
         obstacleController.resetObstacles();
         this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), INITIAL_X, INITIAL_Y);
-        playerController.getPlayer().addObserver(new DeathObserverImpl(this));
+        playerController.addDeathObserver(new DeathObserverImpl(this));
     }
 
     @Override

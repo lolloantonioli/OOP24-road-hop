@@ -57,6 +57,25 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
     }
 
     /**
+     * Constructor for PlayerImpl that creates a player from an existing Player instance.
+     * @param player the Player instance to copy attributes from
+     */
+    public PlayerImpl(final Player player) {
+        super(player.getX(), player.getY());
+        checkNotNull(player, "player cannot be null");
+        this.initialX = player.getInitialX();
+        this.initialY = player.getInitialY();
+        this.score = player.getScore();
+        this.collectedCoins = player.getCollectedCoins();
+        this.isOutOfBounds = player.isOutOfBounds();
+        this.isAlive = player.isAlive();
+        this.hasSecondLife = player.hasSecondLife();
+        this.isInvincible = player.isInvincible();
+        this.currentSkin = player.getCurrentSkin();
+        setMovable(true);
+    }
+
+    /**
      * Updates the player's score based on their current Y position.
      * The score is calculated as the difference between the current Y position
      * and the initial Y position when the player was created.
@@ -206,6 +225,16 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
      */
     private void notifyObservers() {
         observers.forEach(DeathObserver::endGame);
+    }
+
+    @Override
+    public int getInitialX() {
+        return initialX;
+    }
+
+    @Override
+    public int getInitialY() {
+        return initialY;
     }
 
 }

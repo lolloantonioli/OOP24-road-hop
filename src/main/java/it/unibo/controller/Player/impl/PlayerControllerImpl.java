@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import it.unibo.controller.player.api.DeathObserver;
 import it.unibo.controller.player.api.PlatformMovementObserver;
 import it.unibo.controller.player.api.PlayerController;
 import it.unibo.model.collision.api.CollisionDetector;
@@ -130,11 +131,6 @@ public final class PlayerControllerImpl implements PlayerController {
     }
 
     @Override
-    public Player getPlayer() {
-        return player;
-    }
-
-    @Override
     public Cell getPlayerPosition() {
         return player.getCurrentCell();
     }
@@ -200,6 +196,21 @@ public final class PlayerControllerImpl implements PlayerController {
     @Override
     public boolean hasPlayerSecondLife() {
         return player.hasSecondLife();
+    }
+
+    @Override
+    public void addDeathObserver(final DeathObserver observer) {
+        player.addObserver(observer);
+    }
+
+    @Override
+    public void removeDeathObserver(final DeathObserver observer) {
+        player.removeObserver(observer);
+    }
+
+    @Override
+    public Player getPlayer() {
+        return new PlayerImpl(player);
     }
 
 }
