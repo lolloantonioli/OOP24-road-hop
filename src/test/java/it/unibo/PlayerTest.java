@@ -26,7 +26,7 @@ class PlayerTest {
     private PlayerImpl player;
     private GameMap map;
     private MovementValidator validator;
-    private Skin skin = new SkinImpl("idskin", "name", 10, true, Color.GREEN);
+    private final Skin skin = new SkinImpl("idskin", "name", 10, true, Color.GREEN);
 
     @BeforeEach
     void setUp() {
