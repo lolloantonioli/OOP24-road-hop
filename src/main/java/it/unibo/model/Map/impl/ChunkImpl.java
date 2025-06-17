@@ -39,7 +39,7 @@ public final class ChunkImpl implements Chunk {
     public ChunkImpl(final int position, final ChunkType type) {
         checkArgument(position >= 0, "Position must be non-negative");
         this.position = position;
-        this.type = checkNotNull(type, "ChunkType cannot be null"); // mettere nella doc la dicitura @throws NullPointerException
+        this.type = checkNotNull(type, "ChunkType cannot be null");
         this.cells = IntStream.range(0, CELLS_PER_ROW)
             .mapToObj(x -> new CellImpl(x, position))
             .collect(Collectors.toList());
