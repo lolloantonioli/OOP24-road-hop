@@ -1,7 +1,7 @@
-package it.unibo.model.Obstacles.api;
+package it.unibo.model.obstacles.api;
 
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.impl.MovingObstacles;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.impl.MovingObstacles;
 
 /**
  * Factory interface for creating moving obstacles.

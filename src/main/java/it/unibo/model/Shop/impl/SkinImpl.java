@@ -1,7 +1,8 @@
-package it.unibo.model.Shop.impl;
+package it.unibo.model.shop.impl;
 
-import it.unibo.model.Shop.api.Skin;
 import java.awt.Color;
+
+import it.unibo.model.shop.api.Skin;
 
 /**
  * Implementation of the Skin interface.

@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
-
+    private static final long serialVersionUID = 1L;
     private static final int LABEL_SIZE = 48;
     private static final int LABEL_BIN_SIZE = 32;
     private static final int HEIGHT_AREA = 40;

@@ -1,4 +1,4 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,12 +7,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.api.ObjectPlacer;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.util.CollectibleType;
-import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.api.ObjectPlacer;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.util.CollectibleType;
+import it.unibo.model.map.util.ObstacleType;
 
 /**
  * Implementation of the {@code ObjectPlacer} interface.
@@ -70,7 +70,7 @@ public final class ObjectPlacerImpl implements ObjectPlacer {
             final List<Integer> availablePositions = new ArrayList<>();
             IntStream.range(0, ChunkImpl.CELLS_PER_ROW)
                 .filter(i -> !occupiedPositions.contains(i))
-                .forEach(i -> availablePositions.add(i));
+                .forEach(availablePositions::add);
             if (!availablePositions.isEmpty()) {
                 final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
                 final CollectibleType type = random.nextDouble() < SECOND_LIFE_PROBABILITY

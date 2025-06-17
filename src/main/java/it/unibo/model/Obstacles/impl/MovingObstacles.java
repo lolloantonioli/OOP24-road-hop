@@ -1,14 +1,14 @@
-package it.unibo.model.Obstacles.impl;
+package it.unibo.model.obstacles.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.controller.Player.api.PlatformMovementObserver;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.GameObjectImpl;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.Util.GameConstant;
-import it.unibo.model.Obstacles.Util.SpeedConfig;
+import it.unibo.controller.player.api.PlatformMovementObserver;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.impl.GameObjectImpl;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.Util.GameConstant;
+import it.unibo.model.obstacles.Util.SpeedConfig;
 
 /**
  * Represent a moving obstacle in the game.

@@ -1,4 +1,4 @@
-package it.unibo.controller.Player.api;
+package it.unibo.controller.player.api;
 
 /**
  * Interface for observing player death events.

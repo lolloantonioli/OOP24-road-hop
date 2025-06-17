@@ -1,9 +1,10 @@
 package it.unibo;
 
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.impl.MovingObstacles;
-import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
-import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
+import it.unibo.model.obstacles.impl.MovingObstacleManagerImpl;
+import it.unibo.model.obstacles.impl.MovingObstacles;
+
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

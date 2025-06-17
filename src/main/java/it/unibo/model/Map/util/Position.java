@@ -1,4 +1,4 @@
-package it.unibo.model.Map.util;
+package it.unibo.model.map.util;
 
 /**
  * Represents a position in a 2D grid.

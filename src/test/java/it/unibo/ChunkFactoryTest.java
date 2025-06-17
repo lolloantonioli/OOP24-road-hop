@@ -10,16 +10,16 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.ChunkFactory;
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.ChunkFactoryImpl;
-import it.unibo.model.Map.impl.ChunkImpl;
-import it.unibo.model.Map.util.ChunkType;
-import it.unibo.model.Map.util.CollectibleType;
-import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.ChunkFactory;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.impl.ChunkFactoryImpl;
+import it.unibo.model.map.impl.ChunkImpl;
+import it.unibo.model.map.util.ChunkType;
+import it.unibo.model.map.util.CollectibleType;
+import it.unibo.model.map.util.ObstacleType;
 
 /**
  * Test class for the {@link ChunkFactoryImpl} class.

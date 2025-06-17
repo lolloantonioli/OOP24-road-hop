@@ -1,19 +1,19 @@
-package it.unibo.model.Player.impl;
+package it.unibo.model.player.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.controller.Player.api.DeathObserver;
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.impl.CellImpl;
-import it.unibo.model.Map.impl.GameObjectImpl;
-import it.unibo.model.Player.api.MovementValidator;
-import it.unibo.model.Player.api.Player;
-import it.unibo.model.Player.util.Direction;
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.controller.player.api.DeathObserver;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.impl.CellImpl;
+import it.unibo.model.map.impl.GameObjectImpl;
+import it.unibo.model.player.api.MovementValidator;
+import it.unibo.model.player.api.Player;
+import it.unibo.model.player.util.Direction;
+import it.unibo.model.shop.api.Skin;
 
 /**
  * Implementation of the Player interface.

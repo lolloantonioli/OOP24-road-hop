@@ -9,9 +9,9 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.impl.GameMapImpl;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.impl.GameMapImpl;
 
 /**
  * Test class for the {@link GameMapImpl} class.

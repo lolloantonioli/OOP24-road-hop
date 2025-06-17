@@ -1,7 +1,7 @@
-package it.unibo.model.Player.api;
+package it.unibo.model.player.api;
 
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameMap;
 
 /**
  * Interface for validating player movements in the game.

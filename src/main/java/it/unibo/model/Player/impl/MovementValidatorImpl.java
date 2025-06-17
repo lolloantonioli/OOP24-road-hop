@@ -1,12 +1,12 @@
-package it.unibo.model.Player.impl;
+package it.unibo.model.player.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Player.api.MovementValidator;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.player.api.MovementValidator;
 
 /**
  * Implementation of the MovementValidator interface.

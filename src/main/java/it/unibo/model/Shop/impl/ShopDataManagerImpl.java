@@ -1,4 +1,4 @@
-package it.unibo.model.Shop.impl;
+package it.unibo.model.shop.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.model.shop.api.Skin;
 
 /**
  * Data Management for the Shop.

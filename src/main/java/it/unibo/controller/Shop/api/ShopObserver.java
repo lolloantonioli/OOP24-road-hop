@@ -1,4 +1,4 @@
-package it.unibo.controller.Shop.api;
+package it.unibo.controller.shop.api;
 
 /**
  * ShopObserver interface that defines the methods for observing changes in the shop.

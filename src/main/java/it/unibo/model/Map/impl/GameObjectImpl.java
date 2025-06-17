@@ -1,4 +1,4 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -6,7 +6,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.map.api.GameObject;
 
 /**
  * Base implementation for game objects placed on the map.

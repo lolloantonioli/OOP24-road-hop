@@ -1,4 +1,4 @@
-package it.unibo.model.Shop.api;
+package it.unibo.model.shop.api;
 
 import java.util.List;
 /**

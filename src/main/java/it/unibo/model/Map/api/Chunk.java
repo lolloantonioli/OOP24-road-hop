@@ -1,8 +1,8 @@
-package it.unibo.model.Map.api;
+package it.unibo.model.map.api;
 
 import java.util.List;
 
-import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.map.util.ChunkType;
 
 /**
  * Represents a chunk of the game map.

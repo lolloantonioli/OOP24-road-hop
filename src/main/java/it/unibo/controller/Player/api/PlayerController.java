@@ -1,9 +1,9 @@
-package it.unibo.controller.Player.api;
+package it.unibo.controller.player.api;
 
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Player.api.Player;
-import it.unibo.model.Player.util.Direction;
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.player.api.Player;
+import it.unibo.model.player.util.Direction;
+import it.unibo.model.shop.api.Skin;
 
 /**
  * Interface for controlling player actions and state in the game.

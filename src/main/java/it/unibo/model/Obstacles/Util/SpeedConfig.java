@@ -1,4 +1,4 @@
-package it.unibo.model.Obstacles.Util;
+package it.unibo.model.obstacles.Util;
 
 import java.util.Random;
 

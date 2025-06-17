@@ -1,11 +1,11 @@
-package it.unibo.model.Obstacles.impl;
+package it.unibo.model.obstacles.impl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import it.unibo.model.Obstacles.api.MovingObstacleManager;
+import it.unibo.model.obstacles.api.MovingObstacleManager;
 
 /**
  * Handles the management of moving obstacles in the game.

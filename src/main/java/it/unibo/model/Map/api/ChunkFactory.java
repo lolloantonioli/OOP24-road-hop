@@ -1,4 +1,4 @@
-package it.unibo.model.Map.api;
+package it.unibo.model.map.api;
 
 /**
  * Factory interface for creating {@code Chunk} instances.

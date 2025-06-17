@@ -1,13 +1,13 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Random;
 
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.ChunkFactory;
-import it.unibo.model.Map.api.ObjectPlacer;
-import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.ChunkFactory;
+import it.unibo.model.map.api.ObjectPlacer;
+import it.unibo.model.map.util.ChunkType;
 
 /**
  * Implementation of the {@code ChunkFactory} interface.

@@ -1,8 +1,8 @@
-package it.unibo.model.Collision.api;
+package it.unibo.model.collision.api;
 
 import java.util.List;
 
-import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.map.api.GameObject;
 
 /**
  * Interface for identifying collisions between the player and other game objects.

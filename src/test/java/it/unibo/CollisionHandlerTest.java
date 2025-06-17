@@ -1,16 +1,16 @@
 package it.unibo;
 
-import it.unibo.model.Collision.impl.CollisionHandlerImpl;
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.impl.CollectibleImpl;
-import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Map.util.CollectibleType;
-import it.unibo.model.Player.api.Player;
-import it.unibo.model.Player.impl.MovementValidatorImpl;
-import it.unibo.model.Player.impl.PlayerImpl;
-import it.unibo.model.Player.util.Direction;
-import it.unibo.model.Shop.impl.SkinImpl;
+import it.unibo.model.collision.impl.CollisionHandlerImpl;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.impl.CollectibleImpl;
+import it.unibo.model.map.impl.GameMapImpl;
+import it.unibo.model.map.util.CollectibleType;
+import it.unibo.model.player.api.Player;
+import it.unibo.model.player.impl.MovementValidatorImpl;
+import it.unibo.model.player.impl.PlayerImpl;
+import it.unibo.model.player.util.Direction;
+import it.unibo.model.shop.impl.SkinImpl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

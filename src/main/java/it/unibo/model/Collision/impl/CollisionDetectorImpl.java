@@ -1,12 +1,12 @@
-package it.unibo.model.Collision.impl;
+package it.unibo.model.collision.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import it.unibo.model.Collision.api.CollisionDetector;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.api.GameObject;
+import it.unibo.model.collision.api.CollisionDetector;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.api.GameObject;
 
 /**
  * Implementation of the CollisionDetector interface.
