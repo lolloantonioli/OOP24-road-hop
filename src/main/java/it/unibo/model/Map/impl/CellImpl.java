@@ -70,13 +70,4 @@ public final class CellImpl implements Cell {
         return this.position.y();
     }
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        CellImpl cell = (CellImpl) obj;
-        return getX() == cell.getX() && getY() == cell.getY();
-    }
-
 }
