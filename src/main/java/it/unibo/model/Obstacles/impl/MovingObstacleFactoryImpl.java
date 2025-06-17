@@ -7,6 +7,7 @@ import java.util.Random;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
+import it.unibo.model.Obstacles.Util.SpeedConfig;
 
 /**
  * Implementation of MovingObstacleFactory.
@@ -18,12 +19,6 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private static final int MIN_TRAIN_DISTANCE = 7;
     private static final int MIN_LOG_DISTANCE = 1;
     
-    private static int minCarSpeed = 15;
-    private static int maxCarSpeed = 20;
-    private static int minTrainSpeed = 25;
-    private static int maxTrainSpeed = 30;
-    private static int minLogSpeed = 10;
-    private static int maxLogSpeed = 15;
     private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final Random random;
 
@@ -105,23 +100,18 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     @Override
     public int getRandomSpeed(final ObstacleType type) {
         if (type == ObstacleType.CAR) {
-            return minCarSpeed + random.nextInt(maxCarSpeed - minCarSpeed + 1);
+            return SpeedConfig.randomCarSpeed(random);
         } else if (type == ObstacleType.TRAIN) {
-            return minTrainSpeed + random.nextInt(maxTrainSpeed - minTrainSpeed + 1);
+            return SpeedConfig.randomTrainSpeed(random);
         } else if (type == ObstacleType.LOG) {
-            return minLogSpeed + random.nextInt(maxLogSpeed - minLogSpeed + 1);
+            return SpeedConfig.randomLogSpeed(random);
         }
         throw new IllegalArgumentException("Unknown obstacle type: " + type);
     }
 
     @Override
     public void increaseSpeedLimits(final int amount) {
-        minCarSpeed += amount;
-        maxCarSpeed += amount;
-        minTrainSpeed += amount;
-        maxTrainSpeed += amount;
-        minLogSpeed += amount;
-        maxLogSpeed += amount;
+        SpeedConfig.increaseAllSpeeds(amount);
     }
 
     @Override
