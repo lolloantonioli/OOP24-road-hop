@@ -21,6 +21,7 @@ class GameMapTest {
     private static final int INITIAL_SPEED = 1;
     private static final int BUFFER_SIZE = 5;
     private static final int MAX_SPEED = 10;
+    private static final int UPDATES = 20;
     private GameMap gameMap;
 
     /**
@@ -92,7 +93,7 @@ class GameMapTest {
     @Test
     void testChunkGeneration() {
         final int initialChunks = gameMap.getAllChunks().size();
-        IntStream.range(0, 20).forEach(i -> gameMap.update());
+        IntStream.range(0, UPDATES).forEach(i -> gameMap.update());
         assertTrue(gameMap.getAllChunks().size() > initialChunks);
     }
 
@@ -102,7 +103,7 @@ class GameMapTest {
      */
     @Test
     void testChunkCleanup() {
-        IntStream.range(0, 20).forEach(i -> gameMap.update());
+        IntStream.range(0, UPDATES).forEach(i -> gameMap.update());
         gameMap.getAllChunks().forEach(chunk -> {
             assertTrue(chunk.getPosition() >= gameMap.getCurrentPosition() - GameMapImpl.CHUNKS_NUMBER);
         });
@@ -114,7 +115,7 @@ class GameMapTest {
      */
     @Test
     void testBufferChunks() {
-        IntStream.range(0, 20).forEach(i -> gameMap.update());
+        IntStream.range(0, UPDATES).forEach(i -> gameMap.update());
         int farthestPosition = 0;
         for (final Chunk chunk : gameMap.getAllChunks()) {
             farthestPosition = Math.max(farthestPosition, chunk.getPosition());

@@ -29,6 +29,7 @@ import it.unibo.model.map.util.ObstacleType;
  */
 class ChunkFactoryTest {
 
+    private static final int NUM_CHUNKS = 50;
     private static final int INVALID_COORD = -1;
     private static final int VALID_COORD = 1;
     private ChunkFactory chunkFactory;
@@ -66,7 +67,7 @@ class ChunkFactoryTest {
     @Test
     void testTypesNumber() {
         final Set<ChunkType> encounteredTypes = new HashSet<>();
-        IntStream.range(0, 50).forEach(i -> {
+        IntStream.range(0, NUM_CHUNKS).forEach(i -> {
             final Chunk chunk = chunkFactory.createRandomChunk(i);
             encounteredTypes.add(chunk.getType());
         });
@@ -123,7 +124,7 @@ class ChunkFactoryTest {
      */
     @Test
     void testObjectTypes() {
-        IntStream.range(0, 50).forEach(i -> {
+        IntStream.range(0, NUM_CHUNKS).forEach(i -> {
             final Chunk chunk = chunkFactory.createGrassChunk(i);
             chunk.getObjects().forEach(obj -> {
                 if (obj instanceof Obstacle obstacle) {
@@ -166,7 +167,7 @@ class ChunkFactoryTest {
      */
     @Test
     void testObjectsPlacement() {
-        IntStream.range(0, 50).forEach(i -> {
+        IntStream.range(0, NUM_CHUNKS).forEach(i -> {
             final Chunk chunk = chunkFactory.createGrassChunk(i);
             final Set<Integer> obstaclePositions = new HashSet<>();
             final Set<Integer> collectiblePositions = new HashSet<>();
