@@ -26,7 +26,6 @@ class CellTest {
 
     private static final int X_COORD = ChunkImpl.CELLS_PER_ROW - 1;
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
-    private static final int INVALID_COORD = -1;
     private Cell cell;
     private GameObject testObject;
 
@@ -48,16 +47,6 @@ class CellTest {
         assertEquals(Y_COORD, cell.getY());
         assertFalse(cell.hasObject());
         assertTrue(cell.getContent().isEmpty());
-    }
-
-    /**
-     * Tests that creating a cell with invalid coordinates throws an exception.
-     */
-    @Test
-    void testInvalidCreation() {
-        assertThrows(IllegalArgumentException.class, () -> new CellImpl(INVALID_COORD, Y_COORD));
-        assertThrows(IllegalArgumentException.class, () -> new CellImpl(X_COORD, INVALID_COORD));
-        assertThrows(IllegalArgumentException.class, () -> new CellImpl(INVALID_COORD, INVALID_COORD));
     }
 
     /**

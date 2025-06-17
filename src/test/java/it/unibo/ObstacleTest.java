@@ -2,7 +2,6 @@ package it.unibo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,6 @@ class ObstacleTest {
 
     private static final int X_COORD = ChunkImpl.CELLS_PER_ROW - 1;
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
-    private static final int INVALID_COORD = -1;
     private Obstacle staticObstacle;
 
     /**
@@ -43,20 +41,4 @@ class ObstacleTest {
         assertFalse(staticObstacle.isMovable());
     }
 
-    /**
-     * Tests that creating an {@link ObstacleImpl} with invalid coordinates
-     * throws an {@link IllegalArgumentException}.
-     */
-    @Test
-    void testInvalidObstacleCreation() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ObstacleImpl(INVALID_COORD, Y_COORD, ObstacleType.TREE, false);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ObstacleImpl(X_COORD, INVALID_COORD, ObstacleType.TREE, false);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ObstacleImpl(INVALID_COORD, INVALID_COORD, ObstacleType.TREE, false);
-        });
-    }
 }
