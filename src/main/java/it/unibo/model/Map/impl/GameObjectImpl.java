@@ -127,13 +127,5 @@ public class GameObjectImpl implements GameObject {
         }
         return cells;
     }
-
-    @Override
-    public boolean occupiesCell(final int cellX) {
-        checkArgument(cellX >= 0 && cellX <= ChunkImpl.CELLS_PER_ROW, CELL_MSG);
-        final int startX = getX();
-        final int endX = startX + getWidthInCells();
-        return cellX >= startX && cellX < endX;
-    }
-
+    
 }

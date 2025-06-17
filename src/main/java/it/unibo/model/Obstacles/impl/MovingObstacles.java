@@ -18,12 +18,25 @@ import it.unibo.model.Obstacles.Util.SpeedConfig;
 public final class MovingObstacles extends GameObjectImpl implements Obstacle {
 
     /**
-     * Width of the obstacles in cells.
+     * Width of the car in cells.
      */
     public static final int CAR_WIDTH_CELLS = 1;
+
+    /**
+     * Width of the train in cells.
+     */
     public static final int TRAIN_WIDTH_CELLS = 4;
+
+    /**
+     * Width of the log in cells.
+     */
     public static final int LOG_WIDTH_CELLS = 3;
+
+    /**
+     * Number of cells in a chunk.
+     */
     public static final int CELLS = GameConstant.CELLS_PER_CHUNK;
+
     private static final int BASE_MOVEMENT_THRESHOLD = 50; 
     private final ObstacleType type;
     private final List<PlatformMovementObserver> observers = new ArrayList<>();
@@ -47,6 +60,12 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
         this.updateCounter = 0;
     }
 
+    /**
+     * Returns the width of the obstacle in cells based on its type.
+     * 
+     * @param type The type of the obstacle.
+     * @return The width in cells.
+     */
     private static int getWidthForType(final ObstacleType type) {
         return switch (type.toString()) {
             case "TRAIN" -> TRAIN_WIDTH_CELLS;
@@ -60,6 +79,9 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
         return type;
     }
 
+    /**
+     * Updates the position of the obstacle based on its speed.
+     */
     public void update() {
         if (!isMovable()) {
             return;

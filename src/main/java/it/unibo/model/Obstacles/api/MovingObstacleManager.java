@@ -24,13 +24,6 @@ public interface MovingObstacleManager {
     void addObstacles(List<MovingObstacles> obstacles);
 
     /**
-     * Removes an obstacle from management.
-     * 
-     * @param obstacle The obstacle to remove
-     */
-    void removeObstacle(MovingObstacles obstacle);
-
-    /**
      * Updates the state of all managed obstacles.
      */
     void updateAll();

@@ -25,7 +25,6 @@ public interface MovingObstacleController {
 
     /**
      * Adds a new moving obstacle to the game.
-     * @param obstacle the moving obstacle to add
      * @return true if the obstacle was added successfully, false otherwise
      */
     List<MovingObstacles> getAllObstacles();
@@ -39,7 +38,6 @@ public interface MovingObstacleController {
     /**
      * Generates obstacles based on the current difficulty level.
      * The difficulty level can affect the type, number, and speed of obstacles generated.
-     * 
      * @param difficultyLevel the current difficulty level of the game
      */
     void generateObstacles(int difficultyLevel);
@@ -47,9 +45,7 @@ public interface MovingObstacleController {
     /**
      * Increases the speed of all obstacles by a specified amount.
      * This method is typically used to make the game more challenging as the player progresses.
-     * 
-     * @param i the amount by which to increase the speed of all obstacles
+     * @param amount the amount by which to increase the speed of all obstacles
      */
     void increaseAllObstaclesSpeed(int amount);
-    
 }
