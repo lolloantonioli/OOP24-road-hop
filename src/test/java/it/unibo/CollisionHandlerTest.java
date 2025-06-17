@@ -24,17 +24,20 @@ import it.unibo.model.shop.impl.SkinImpl;
 
 class CollisionHandlerTest {
 
+    private static final int PLAYER_START_X = 2;
+    private static final int PLAYER_START_Y = 6;
+
     private Player player;
     private GameMap map;
 
     @BeforeEach
     void setUp() {
-        player = new PlayerImpl(2, 6, new SkinImpl("id", "name", 10, false, Color.CYAN));
+        player = new PlayerImpl(PLAYER_START_X, PLAYER_START_Y, new SkinImpl("id", "name", 10, false, Color.CYAN));
     }
 
     @Test
     void testHandleCollectibleCoin() {
-        final Collectible coin = new CollectibleImpl(2, 6, CollectibleType.COIN);
+        final Collectible coin = new CollectibleImpl(PLAYER_START_X, PLAYER_START_Y, CollectibleType.COIN);
 
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleCollectibleCollision(player, coin);
@@ -45,7 +48,7 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleCollectibleSecondLife() {
-        final Collectible secondLife = new CollectibleImpl(2, 6, CollectibleType.SECOND_LIFE);
+        final Collectible secondLife = new CollectibleImpl(PLAYER_START_X, PLAYER_START_Y, CollectibleType.SECOND_LIFE);
 
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleCollectibleCollision(player, secondLife);
@@ -56,7 +59,7 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleCollectibleAlreadyCollected() {
-        final Collectible coin = new CollectibleImpl(2, 6, CollectibleType.COIN);
+        final Collectible coin = new CollectibleImpl(PLAYER_START_X, PLAYER_START_Y, CollectibleType.COIN);
         coin.collect(); // già raccolto
 
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
