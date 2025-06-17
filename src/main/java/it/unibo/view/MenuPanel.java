@@ -20,7 +20,6 @@ import it.unibo.controller.MainController;
  */
 public final class MenuPanel extends JPanel {
 
-
     private static final long serialVersionUID = 1L;
     private static final String PLAY_TEXT = "Play";
     private static final String INSTRUCTIONS_TEXT = "Instructions";
@@ -29,12 +28,11 @@ public final class MenuPanel extends JPanel {
     private static final int BETWEEN_BUTTONS = 10;
     private static final int FONT_SIZE = 48;
 
-
     private final JButton playButton;
     private final JButton instructionsButton;
     private final JButton shopButton;
     private final JLabel titleLabel;
-    private transient final MainController controller;
+    private final transient MainController controller;
 
     /**
      * Constructor for the MenuPanel.
