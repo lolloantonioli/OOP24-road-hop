@@ -7,23 +7,23 @@ import java.util.Random;
  */
 public class SpeedConfig {
 
-    private static final int DEFAULT_MIN_CAR_SPEED   = 15;
-    private static final int DEFAULT_MAX_CAR_SPEED   = 20;
+    private static final int DEFAULT_MIN_CAR_SPEED = 15;
+    private static final int DEFAULT_MAX_CAR_SPEED = 20;
     private static final int DEFAULT_MIN_TRAIN_SPEED = 25;
-    private static final int DEFAULT_MAX_TRAIN_SPEED = 30;
-    private static final int DEFAULT_MIN_LOG_SPEED   = 10;
-    private static final int DEFAULT_MAX_LOG_SPEED   = 15;
+    private static final int DEFAULT_MAX_TRAIN_SPEED = 25;
+    private static final int DEFAULT_MIN_LOG_SPEED = 10;
+    private static final int DEFAULT_MAX_LOG_SPEED = 15;
 
-    private static final int CAP_CAR_SPEED   = 50;
-    private static final int CAP_TRAIN_SPEED = 60;
-    private static final int CAP_LOG_SPEED   = 40;
+    public static final int CAP_CAR_SPEED = 40;
+    public static final int CAP_TRAIN_SPEED = 45;
+    public static final int CAP_LOG_SPEED = 35;
 
-    public static int minCarSpeed   = DEFAULT_MIN_CAR_SPEED;
-    public static int maxCarSpeed   = DEFAULT_MAX_CAR_SPEED;
+    public static int minCarSpeed = DEFAULT_MIN_CAR_SPEED;
+    public static int maxCarSpeed = DEFAULT_MAX_CAR_SPEED;
     public static int minTrainSpeed = DEFAULT_MIN_TRAIN_SPEED;
     public static int maxTrainSpeed = DEFAULT_MAX_TRAIN_SPEED;
-    public static int minLogSpeed   = DEFAULT_MIN_LOG_SPEED;
-    public static int maxLogSpeed   = DEFAULT_MAX_LOG_SPEED;
+    public static int minLogSpeed = DEFAULT_MIN_LOG_SPEED;
+    public static int maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
 
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
