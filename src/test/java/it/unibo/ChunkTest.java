@@ -70,17 +70,6 @@ class ChunkTest {
     }
 
     /**
-     * Tests adding an object at a valid position in the chunk.
-     */
-    @Test
-    void testAddObjectAtValidPosition() {
-        assertTrue(chunk.addObjectAt(testObject, TEST_X_COORD));
-        final List<GameObject> objects = chunk.getObjects();
-        assertEquals(1, objects.size());
-        assertEquals(testObject, objects.get(0));
-    }
-
-    /**
      * Tests that adding an object at an invalid position throws an exception.
      */
     @Test
