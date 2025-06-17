@@ -176,12 +176,11 @@ public final class GamePanel extends JPanel {
             if (screenY == -1) {
                 continue;
             }
-
-            final int obstacleX = obstacle.getX();
+            
             final int obstacleWidth = obstacle.getWidthInCells();
 
-            final int leftBound = Math.max(0, obstacleX);
-            final int rightBound = Math.min(cellsPerRow, obstacleX + obstacleWidth);
+            final int leftBound = Math.max(0, obstacle.getX());
+            final int rightBound = Math.min(cellsPerRow, obstacle.getX() + obstacleWidth);
 
             if (leftBound >= rightBound || rightBound <= 0 || leftBound >= cellsPerRow) {
                 continue;
@@ -189,7 +188,7 @@ public final class GamePanel extends JPanel {
 
             final int pixelY = (chunksNumber - screenY - 1) * cellHeight + animationOffset;
 
-            drawObstacle(g, obstacle, obstacleX, pixelY, cellWidth, cellHeight, leftBound, rightBound);
+            drawObstacle(g, obstacle, obstacle.getX(), pixelY, cellWidth, cellHeight, leftBound, rightBound);
         }
     }
 

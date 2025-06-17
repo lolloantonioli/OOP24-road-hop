@@ -20,7 +20,7 @@ public final class GameEngine implements Runnable {
     private static final int SCROLL_TIME_MS = 1000;
     private static final int WAIT_TIME = 700; // 700ms for countdown
     private static final double SPEED_FACTOR = 0.5;
-    private static final int increaseSpeed = SpeedConfig.INCREASE_SPEED; // Speed increase for obstacles
+    private static final int INCREASE_SPEED = SpeedConfig.INCREASE_SPEED; // Speed increase for obstacles
 
     private final GameMap gameMap;
     private final GamePanel gamePanel;
@@ -186,7 +186,7 @@ public final class GameEngine implements Runnable {
 
             final int newSpeed = gameMap.getScrollSpeed();
             if (newSpeed > speed) {
-                obstacleController.increaseAllObstaclesSpeed(increaseSpeed);
+                obstacleController.increaseAllObstaclesSpeed(INCREASE_SPEED);
                 obstacleFactory.increaseSpeedLimits(); 
             }
             final int difficultyLevel = Math.min(3, gameMap.getScrollSpeed());
