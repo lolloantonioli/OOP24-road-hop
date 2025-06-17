@@ -110,11 +110,11 @@ public final class ShopDataManagerImpl {
             LOGGER.info("Dati shop caricati con successo");
             return saveData;
 
-        }  catch (IOException ioe) {
+        }  catch (final IOException ioe) {
             LOGGER.error("Errore nel caricare i dati dello shop, uso dati di default", ioe);
 
             return getDefaultSaveData();
-        } catch (NumberFormatException nfe) {
+        } catch (final NumberFormatException nfe) {
             LOGGER.error("Errore nel formato dei dati dello shop, uso dati di default", nfe);
 
             return getDefaultSaveData();
@@ -152,7 +152,7 @@ public final class ShopDataManagerImpl {
         private int coins;
         private String selectedSkin;
         private int maxScore;
-        private List<SkinSaveData> skins = new ArrayList<>();
+        private final List<SkinSaveData> skins = new ArrayList<>();
 
         /**
          * Gets the number of coins saved.

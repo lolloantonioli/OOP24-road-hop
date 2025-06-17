@@ -26,7 +26,7 @@ import it.unibo.model.shop.api.Skin;
  * It displays a list of skins available for purchase or selection,
  * along with the player's current coin balance and a back button to return to the main menu.
  */
-public class ShopView extends JPanel {
+public final class ShopView extends JPanel {
 
     private static final float HEADER_FONT_SCALE      = 1.5f;
     private static final float NAME_LABEL_FONT_SCALE = 1.2f;
@@ -35,9 +35,8 @@ public class ShopView extends JPanel {
     private static final int   CARD_HEIGHT           = 160;
     private static final int   SQUARE_DIMENSION      = 48;
 
-    private JLabel titleLabel;
+
     private JLabel coinsLabel; 
-    private JButton backButton;
     private final JPanel skinsPanel;
     private final JScrollPane scrollPane;
 
@@ -46,9 +45,6 @@ public class ShopView extends JPanel {
     private BiConsumer<String, Integer> onSkinPurchase;
     private Consumer<String> onSkinSelected;
 
-
-
-
     /**
      * Constructs a ShopView with a header, skins display area, and footer.
      * The header contains the shop title and coin balance,
@@ -56,14 +52,13 @@ public class ShopView extends JPanel {
      * and the footer contains a back button to return to the main menu.
      */
     public ShopView() {
+        super();
         setLayout(new BorderLayout());
         setBackground(Color.BLUE);
 
-        final JPanel headerPanel = createHeaderPanel();
-        add(headerPanel, BorderLayout.NORTH);
+        add(createHeaderPanel(), BorderLayout.NORTH);
 
-        skinsPanel = new JPanel();
-        skinsPanel.setLayout(new GridLayout(0, 3));
+        skinsPanel = new JPanel(new GridLayout(0,3));
         skinsPanel.setBackground(Color.BLUE);
 
         scrollPane = new JScrollPane(skinsPanel);
@@ -74,8 +69,7 @@ public class ShopView extends JPanel {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane, BorderLayout.CENTER);
 
-        final JPanel footerPanel = createFooterPanel();
-        add(footerPanel, BorderLayout.SOUTH);
+        add(createFooterPanel(), BorderLayout.SOUTH);
 
     }
 
@@ -85,7 +79,7 @@ public class ShopView extends JPanel {
         headerPanel.setBackground(Color.BLUE);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        titleLabel = new JLabel("Skin Shop", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Skin Shop", SwingConstants.CENTER);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * HEADER_FONT_SCALE));
 
@@ -103,7 +97,7 @@ public class ShopView extends JPanel {
         final JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         footerPanel.setBackground(Color.BLUE);
 
-        backButton = new JButton("Back");
+        JButton backButton = new JButton("Back");
         backButton.setBackground(Color.BLUE);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
@@ -158,7 +152,6 @@ private Component createSkinCard(final Skin skin) {
         colorPreview.setMaximumSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
         colorPreview.setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
         colorPreview.setMinimumSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
-        colorPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
         colorPreview.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
         card.add(colorPreview);
         card.add(Box.createVerticalStrut(8));
@@ -167,13 +160,11 @@ private Component createSkinCard(final Skin skin) {
         final JLabel nameLabel = new JLabel(skin.getName(), SwingConstants.CENTER);
         nameLabel.setFont(nameLabel.getFont().deriveFont(Font.BOLD, nameLabel.getFont().getSize() * NAME_LABEL_FONT_SCALE));
         nameLabel.setForeground(Color.WHITE);
-        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         card.add(nameLabel);
         card.add(Box.createVerticalStrut(8));
 
         // Bottone acquista/equip
         final JButton actionButton = new JButton();
-        actionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         if (skin.isSelected()) {
             actionButton.setText("EQUIPPED");
             actionButton.setEnabled(false);
@@ -214,7 +205,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param coins the new coin balance
      */
-    public final void setCoins(final int coins) {
+    public final void setCoins(int coins) {
        coinsLabel.setText("Coins: " + coins);
        refreshSkins();
     }
@@ -224,7 +215,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param onBackToMainMenu the action to perform when the back button is clicked
      */
-    public final void setOnBackToMainMenu(final Runnable onBackToMainMenu) {
+    public final void setOnBackToMainMenu(Runnable onBackToMainMenu) {
         this.onBackToMainMenu = onBackToMainMenu;
     }
 
@@ -233,7 +224,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param skins the list of skins to display
      */
-    public final void setSkins(final List<Skin> skins) {
+    public final void setSkins(List<Skin> skins) {
         this.skins = new ArrayList<>(skins);
         refreshSkins();
     }
@@ -244,7 +235,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param skinPurchase the action to perform when a skin is purchased, accepting skin ID and price
      */
-    public final void setOnSkinPurchase(final BiConsumer<String, Integer> skinPurchase) {
+    public final void setOnSkinPurchase(BiConsumer<String, Integer> skinPurchase) {
         this.onSkinPurchase = skinPurchase;
     }
 
@@ -254,7 +245,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param onSkinSelected the action to perform when a skin is selected, accepting skin ID
      */
-    public final void setOnSkinSelected(final Consumer<String> onSkinSelected) {
+    public final void setOnSkinSelected(Consumer<String> onSkinSelected) {
         this.onSkinSelected = onSkinSelected;
     }
 

@@ -22,6 +22,7 @@ public class ShopModelImpl implements ShopModel {
     private static final int ORANGE_SKIN_PRICE = 100;
     private static final int GRAY_SKIN_PRICE = 140;
     private static final int WHITE_SKIN_PRICE = 160;
+    private static final String DEFAULT_SKIN_ID = "Default";
 
     private final List<Skin> skins;
     private Skin selectedSkin;
@@ -56,7 +57,7 @@ public class ShopModelImpl implements ShopModel {
     }
 
     private void initializeSkins(final ShopSaveData saveData) {
-        createSkin("Default", "Default", DEFAULT_SKIN_PRICE, Color.GREEN, saveData);
+        createSkin(DEFAULT_SKIN_ID, DEFAULT_SKIN_ID, DEFAULT_SKIN_PRICE, Color.GREEN, saveData);
         createSkin("red", "Red", RED_SKIN_PRICE, Color.RED, saveData); // Rosso
         createSkin("blue", "Blue", BLUE_SKIN_PRICE, Color.BLUE, saveData); // Blu
         createSkin("orange", "Orange", ORANGE_SKIN_PRICE, Color.ORANGE, saveData); // Arancione
@@ -70,8 +71,9 @@ public class ShopModelImpl implements ShopModel {
                 .findFirst()
                 .orElse(null);
 
-        final boolean unlocked = (skinData != null) ? skinData.isUnlocked() : ("Default".equals(id));
-        final boolean selected = (skinData != null) ? skinData.isSelected() : false;
+        final boolean unlocked = (skinData != null) ? skinData.isUnlocked() : DEFAULT_SKIN_ID.equals(id);
+        final boolean selected = skinData != null && skinData.isSelected();
+
 
         final Skin skin = new SkinImpl(id, name, price, unlocked, color);
         if (selected) {
@@ -82,7 +84,7 @@ public class ShopModelImpl implements ShopModel {
 
 
     private void saveData() {
-        final String selectedSkinId = (selectedSkin != null) ? selectedSkin.getId() : "Default";
+        final String selectedSkinId = (selectedSkin != null) ? selectedSkin.getId() : DEFAULT_SKIN_ID;
         ShopDataManagerImpl.saveShopData(skins, selectedSkinId, coins, maxScore);
     }
 
@@ -151,6 +153,7 @@ public class ShopModelImpl implements ShopModel {
      * Adds coins to the shop's coin balance.
      * @param amount the amount of coins to add
      */
+    @Override
     public final void addCoins(final int amount) {
         if (amount > 0) {
             this.coins += amount;
@@ -170,6 +173,7 @@ public class ShopModelImpl implements ShopModel {
      * Returns the max score saved.
      * @return the max score
      */
+    @Override
     public int getMaxScore() {
         return maxScore;
     }
@@ -177,6 +181,7 @@ public class ShopModelImpl implements ShopModel {
      * Updates the max score if the new score is higher and saves the data.
      * @param score the new score to check
      */
+    @Override
     public void updateMaxScore(final int score) {
         if (score > maxScore) {
             maxScore = score;
