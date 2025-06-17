@@ -1,10 +1,12 @@
-package it.unibo.model.Shop.impl;
+package it.unibo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import it.unibo.model.Shop.api.Skin;
+import it.unibo.model.Shop.impl.ShopModelImpl;
 
 class ShopModelImplExtraTest {
     private ShopModelImpl shopModel;
@@ -18,21 +20,21 @@ class ShopModelImplExtraTest {
     @Test
     void testCannotPurchaseUnlockedSkin() {
         shopModel.purchaseSkin("red");
-        int coinsBefore = shopModel.getCoins();
+        final int coinsBefore = shopModel.getCoins();
         shopModel.purchaseSkin("red"); // Prova a riacquistare
         assertEquals(coinsBefore, shopModel.getCoins());
     }
 
     @Test
     void testCannotSelectLockedSkin() {
-        Skin before = shopModel.getSelectedSkin();
+        final Skin before = shopModel.getSelectedSkin();
         shopModel.selectSkin("blue"); // Non sbloccata
         assertEquals(before, shopModel.getSelectedSkin());
     }
 
     @Test
     void testDefaultSkinAlwaysUnlocked() {
-        Skin defaultSkin = shopModel.getSkinById("Default");
+        final Skin defaultSkin = shopModel.getSkinById("Default");
         assertTrue(defaultSkin.isUnlocked());
     }
 }

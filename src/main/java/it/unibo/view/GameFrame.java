@@ -130,6 +130,9 @@ public final class GameFrame extends JFrame {
 
     /**
      * Shows the game over panel with option to return to the menu.
+     * @param finalScore the final score of the game
+     * @param finalCoins the final coins collected in the game
+     * @param maxScore the maximum score achieved in the game
      */
     public void showGameOverPanel(final int finalScore, final int finalCoins, final int maxScore) {
         gameOverPanel.setFinalScore(finalScore);

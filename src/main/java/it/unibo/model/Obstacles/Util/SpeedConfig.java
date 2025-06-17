@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * SpeedConfig class manages the speed configurations for different types of moving obstacles in the game.
  */
-public class SpeedConfig {
+public final class SpeedConfig {
 
     /**
      * Maximum speed limits for car.
@@ -44,6 +44,13 @@ public class SpeedConfig {
     private static int minLogSpeed = DEFAULT_MIN_LOG_SPEED;
     private static int maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
 
+    private SpeedConfig() {
+        // Private constructor to prevent instantiation
+    }
+
+    /**
+     * Resets the speed limits to their default values.
+     */
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
         maxCarSpeed = DEFAULT_MAX_CAR_SPEED;
@@ -54,7 +61,7 @@ public class SpeedConfig {
     }
 
     /**
-     * Generates a random speed for a car within the defined limits.    
+     * Generates a random speed for a car within the defined limits.
      * @param rnd the Random instance to use for generating the speed
      * @return a random speed for a car
      */

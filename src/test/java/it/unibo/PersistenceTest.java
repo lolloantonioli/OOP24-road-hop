@@ -1,10 +1,15 @@
-package it.unibo.model.Shop.impl;
+package it.unibo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import it.unibo.model.Shop.impl.ShopModelImpl;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PersistenceTest {
+    private static final int COINS_TO_ADD = 123;
     private ShopModelImpl shopModel;
 
     @BeforeEach
@@ -15,24 +20,24 @@ class PersistenceTest {
 
     @Test
     void testMaxScoreIsUpdatedAndSaved() {
-        int oldMax = shopModel.getMaxScore();
-        int newScore = oldMax + 10;
+        final int oldMax = shopModel.getMaxScore();
+        final int newScore = oldMax + 10;
         shopModel.updateMaxScore(newScore);
         assertEquals(newScore, shopModel.getMaxScore());
     }
 
     @Test
     void testMaxScoreNotUpdatedIfLower() {
-        int oldMax = shopModel.getMaxScore();
+        final int oldMax = shopModel.getMaxScore();
         shopModel.updateMaxScore(oldMax - 1);
         assertEquals(oldMax, shopModel.getMaxScore());
     }
 
     @Test
     void testAddCoinsPersistsValue() {
-        int before = shopModel.getCoins();
-        shopModel.addCoins(123);
+        final int before = shopModel.getCoins();
+        shopModel.addCoins(COINS_TO_ADD);
         ShopModelImpl reloaded = new ShopModelImpl();
-        assertTrue(reloaded.getCoins() >= before + 123);
+        assertTrue(reloaded.getCoins() >= before + COINS_TO_ADD);
     }
 }

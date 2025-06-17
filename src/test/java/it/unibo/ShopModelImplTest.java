@@ -1,15 +1,19 @@
-package it.unibo.model.Shop.impl;
+package it.unibo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import it.unibo.model.Shop.api.Skin;
-
+import it.unibo.model.Shop.impl.ShopModelImpl;
 
 import java.util.List;
 
 class ShopModelImplTest {
+    private static final int COINS_TO_ADD = 50;
     private ShopModelImpl shopModel;
 
     @BeforeEach
@@ -29,30 +33,30 @@ class ShopModelImplTest {
     void testSelectSkin() {
         shopModel.purchaseSkin("red");
         shopModel.selectSkin("red");
-        Skin selected = shopModel.getSelectedSkin();
+        final Skin selected = shopModel.getSelectedSkin();
         assertEquals("red", selected.getId());
         assertTrue(selected.isSelected());
     }
 
     @Test
     void testAddCoins() {
-        int before = shopModel.getCoins();
-        shopModel.addCoins(50);
-        assertEquals(before + 50, shopModel.getCoins());
+        final int before = shopModel.getCoins();
+        shopModel.addCoins(COINS_TO_ADD);
+        assertEquals(before + COINS_TO_ADD, shopModel.getCoins());
     }
 
     @Test
     void testGetAllSkins() {
-        List<Skin> skins = shopModel.getAllSkins();
+        final List<Skin> skins = shopModel.getAllSkins();
         assertNotNull(skins);
         assertFalse(skins.isEmpty());
     }
 
     @Test
     void testCannotPurchaseWithoutCoins() {
-        ShopModelImpl lowCoinsModel = new ShopModelImpl();
+        final ShopModelImpl lowCoinsModel = new ShopModelImpl();
         lowCoinsModel.setCoinsForTest(0); // Imposta le monete a 0
-        int coinsBefore = lowCoinsModel.getCoins();
+        final int coinsBefore = lowCoinsModel.getCoins();
         lowCoinsModel.purchaseSkin("red");
         assertEquals(coinsBefore, lowCoinsModel.getCoins());
         assertFalse(lowCoinsModel.getSkinById("red").isUnlocked());

@@ -32,6 +32,11 @@ public final class GameOverPanel extends JPanel {
     private final JLabel scoreLabel;
     private final JLabel maxScoreLabel;
 
+    /**
+     * Constructs a GameOverPanel with a button to return to the menu.
+     *
+     * @param onMenu the action to perform when the menu button is clicked
+     */
     public GameOverPanel(final Runnable onMenu) {
         this(onMenu, 0, 0, 0);
     }
@@ -40,8 +45,11 @@ public final class GameOverPanel extends JPanel {
      * Constructs a GameOverPanel with a button to return to the menu.
      *
      * @param onMenu the action to perform when the menu button is clicked
+     * @param finalScore the final score of the game
+     * @param finalCoins the final number of coins collected in the game
+     * @param maxScore the maximum score achieved in the game
      */
-    public GameOverPanel(final Runnable onMenu, int finalScore, int finalCoins, int maxScore) {
+    public GameOverPanel(final Runnable onMenu, final int finalScore, final int finalCoins, final int maxScore) {
         setLayout(new GridBagLayout());
         setBackground(Color.BLUE);
         gameOverLabel = new JLabel(GAME_OVER_TEXT);
@@ -73,6 +81,14 @@ public final class GameOverPanel extends JPanel {
         add(centerPanel);
     }
 
+    /**
+     * Sets the bounds of the panel and adjusts the font sizes based on the panel's dimensions.
+     *
+     * @param x the x coordinate of the panel
+     * @param y the y coordinate of the panel
+     * @param width the width of the panel
+     * @param height the height of the panel
+     */
     @Override
     public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
@@ -91,15 +107,30 @@ public final class GameOverPanel extends JPanel {
         menuButton.setText(MENU_BUTTON_TEXT);
     }
 
-    public void setFinalCoins(int finalCoins) {
+    /**
+     * Sets the final number of coins collected in the game.
+     *
+     * @param finalCoins the final number of coins
+     */
+    public void setFinalCoins(final int finalCoins) {
         coinsLabel.setText("Coins: " + finalCoins);
     }
 
-    public void setFinalScore(int finalScore) {
+    /**
+     * Sets the final score of the game.
+     *
+     * @param finalScore the final score
+     */
+    public void setFinalScore(final int finalScore) {
         scoreLabel.setText("Score: " + finalScore);
     }
 
-    public void setMaxScore(int maxScore) {
+    /**
+     * Sets the maximum score achieved in the game.
+     *
+     * @param maxScore the maximum score
+     */
+    public void setMaxScore(final int maxScore) {
         maxScoreLabel.setText("Max Score: " + maxScore);
     }
 }

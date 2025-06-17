@@ -143,11 +143,11 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void showGameOverPanel() {
-        int score = playerController.getPlayerScore();
-        int coins = playerController.getCollectedCoins();
-        shopModel.addCoins(coins); // Aggiunge e salva i coins guadagnati
-        shopModel.updateMaxScore(score); // Aggiorna e salva il maxScore se necessario
-        int maxScore = shopModel.getMaxScore(); // Recupera il maxScore aggiornato
+        final int score = playerController.getPlayerScore();
+        final int coins = playerController.getCollectedCoins();
+        shopModel.addCoins(coins);
+        shopModel.updateMaxScore(score);
+        final int maxScore = shopModel.getMaxScore();
         gameFrame.showGameOverPanel(score, coins, maxScore);
     }
 }
