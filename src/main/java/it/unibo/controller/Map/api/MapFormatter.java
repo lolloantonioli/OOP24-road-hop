@@ -45,6 +45,6 @@ public interface MapFormatter {
      * @param chunkIndex the index of the cell within the chunk
      * @return true if the chunk is a railway cell, false otherwise
      */
-    boolean isRailwayCell(final int chunkIndex);
+    boolean isRailwayCell(int chunkIndex);
 
 }

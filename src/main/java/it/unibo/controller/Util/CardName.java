@@ -6,15 +6,30 @@ package it.unibo.controller.Util;
  */
 public final class CardName {
 
-    // CHECKSTYLE: CostantNameCheck OFF
-    // Card names are esplictly
+    /**
+     * Card name which represents the main menu.
+     */
     public static final CardName MENU = new CardName("MENU");
+    /**
+     * Card name which represents the game screen.
+     */
     public static final CardName GAME = new CardName("GAME");
+    /**
+     * Card name which represents the instructions screen.
+     */
     public static final CardName INSTRUCTIONS = new CardName("INSTRUCTIONS");
+    /**
+     * Card name which represents the shop screen.
+     */
     public static final CardName SHOP = new CardName("SHOP");
+    /**
+     * Card name which represents the pause screen.
+     */
     public static final CardName PAUSE = new CardName("PAUSE");
+    /**
+     * Card name which represents the game over screen.
+     */
     public static final CardName GAME_OVER = new CardName("GAME_OVER");
-    // CHECKSTYLE: CostantNameCheck ON
 
     private final String name;
 
