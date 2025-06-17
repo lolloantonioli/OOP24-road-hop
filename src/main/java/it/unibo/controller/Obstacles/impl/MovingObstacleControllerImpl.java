@@ -136,10 +136,11 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     }
 
     @Override
-    public void resetObstacles() {
+    public void resetObstacles(final int amount) {
         chunkSpeeds.clear();
         chunkDirections.clear();
         manager.resetAll(); 
+        manager.increaseSpeed(-amount); 
     }
 
     @Override
@@ -161,7 +162,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     }
 
     @Override
-    public void increaseAllObstaclesSpeed(final int i) {
-        manager.increaseSpeed(i);
+    public void increaseAllObstaclesSpeed(final int amount) {
+        manager.increaseSpeed(amount);
     }
 }

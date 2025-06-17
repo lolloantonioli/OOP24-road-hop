@@ -64,7 +64,7 @@ public interface MovingObstacleController {
      * Resets all obstacles in the game.
      * This method clears the list of obstacles and prepares for a new game or level.
      */
-    void resetObstacles();
+    void resetObstacles(int amount);
 
     /**
      * Generates obstacles based on the current difficulty level.
@@ -80,6 +80,6 @@ public interface MovingObstacleController {
      * 
      * @param i the amount by which to increase the speed of all obstacles
      */
-    void increaseAllObstaclesSpeed(int i);
+    void increaseAllObstaclesSpeed(int amount);
     
 }

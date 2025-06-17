@@ -4,8 +4,10 @@ import it.unibo.controller.Obstacles.api.MovingObstacleController;
 import it.unibo.controller.State.api.GameState;
 import it.unibo.controller.State.impl.OnGameState;
 import it.unibo.model.Map.api.GameMap;
+import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
+
 
 //aggiungere il playerController
 
@@ -18,7 +20,7 @@ public final class GameEngine implements Runnable {
     private static final long PERIOD = 16; // 60fps
     private static final int SCROLL_TIME_MS = 1000;
     private static final int WAIT_TIME = 700; // 700ms for countdown
-    private static final int INCREASE_SPEED = 20; // Speed increase for obstacles
+    private final int increaseSpeed = GameConstant.INCREASE_SPEED; // Speed increase for obstacles
 
     private final GameMap gameMap;
     private final GamePanel gamePanel;
@@ -183,8 +185,8 @@ public final class GameEngine implements Runnable {
 
             final int newSpeed = gameMap.getScrollSpeed();
             if (newSpeed > speed) {
-                obstacleController.increaseAllObstaclesSpeed(INCREASE_SPEED);
-                obstacleFactory.increaseSpeedLimits(INCREASE_SPEED); 
+                obstacleController.increaseAllObstaclesSpeed(increaseSpeed);
+                obstacleFactory.increaseSpeedLimits(increaseSpeed); 
             }
             final int difficultyLevel = Math.min(3, gameMap.getScrollSpeed());
             obstacleController.generateObstacles(difficultyLevel);
