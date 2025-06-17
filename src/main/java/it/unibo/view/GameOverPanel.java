@@ -17,6 +17,7 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
+<<<<<<< HEAD
 
     private static final int LABEL_SIZE = 48;
     private static final int LABEL_BIN_SIZE = 32;
@@ -27,6 +28,15 @@ public final class GameOverPanel extends JPanel {
     private static final String MENU_BUTTON_TEXT = "Menu";
 
 
+=======
+    private final static int LABEL_SIZE = 48;
+    private final static int LABEL_BTN_SIZE = 32;
+    private final static int HEIGHT_AREA = 40;
+    private final static int DIVFACTORTITLE = 6;
+    private final static int DIVFACTORBUTTON = 15;
+    private final static String GAME_OVER_TEXT = "Game Over";
+    private final static String MENU_BUTTON_TEXT = "Menu";
+>>>>>>> 1d88e8d72086d40ca4a3ef244603275edc43426c
 
     private final JButton menuButton;
     private final JLabel gameOverLabel;
@@ -43,7 +53,11 @@ public final class GameOverPanel extends JPanel {
         gameOverLabel.setForeground(Color.WHITE);
         gameOverLabel.setFont(new Font("Arial", Font.BOLD, LABEL_SIZE));
         menuButton = new JButton(MENU_BUTTON_TEXT);
+<<<<<<< HEAD
         menuButton.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+=======
+        menuButton.setFont(new Font("Arial", Font.BOLD, LABEL_BTN_SIZE));
+>>>>>>> 1d88e8d72086d40ca4a3ef244603275edc43426c
         menuButton.addActionListener(e -> onMenu.run());
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -60,8 +74,13 @@ public final class GameOverPanel extends JPanel {
     public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
         final int minDim = Math.min(width, height);
+<<<<<<< HEAD
         final int titleFontSize = Math.max(32, minDim / DIV_FACTOR_TITLE);
         final int buttonFontSize = Math.max(12, minDim / DIV_FACTOR_BUTTON);
+=======
+        final int titleFontSize = Math.max(32, minDim / DIVFACTORTITLE);
+        final int buttonFontSize = Math.max(12, minDim / DIVFACTORBUTTON);
+>>>>>>> 1d88e8d72086d40ca4a3ef244603275edc43426c
         gameOverLabel.setFont(gameOverLabel.getFont().deriveFont((float) titleFontSize));
         menuButton.setFont(menuButton.getFont().deriveFont((float) buttonFontSize));
         final int minButtonWidth = getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT) + 40;
