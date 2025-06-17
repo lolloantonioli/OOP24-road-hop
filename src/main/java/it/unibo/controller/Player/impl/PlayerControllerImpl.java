@@ -24,11 +24,12 @@ import it.unibo.model.Player.impl.MovementValidatorImpl;
 import it.unibo.model.Player.impl.PlayerImpl;
 import it.unibo.model.Player.util.Direction;
 import it.unibo.model.Shop.api.Skin;
-//import it.unibo.controller.MainController;
 
-public class PlayerControllerImpl implements PlayerController {
-
-    //aggiungere il fatto che posse avere un observer che controlla quando muore per terminare il gioco?
+/**
+ * Implementation of the PlayerController interface.
+ * Manages player movement, collision detection, and interactions with the game map.
+ */
+public final class PlayerControllerImpl implements PlayerController {
 
     private final Player player;
     private final GameMap gameMap;
@@ -38,9 +39,15 @@ public class PlayerControllerImpl implements PlayerController {
     private final CollisionHandler collisionHandler;
     private final PlatformMovementObserver platformObserver;
 
-    private MovingObstacles currentPlatform = null;
-    
-    //da aggiungere current platform all'input?
+    private MovingObstacles currentPlatform;
+
+    /**
+     * Constructor for PlayerControllerImpl.
+     * @param gameMap the game map where the player operates
+     * @param initialSkin the initial skin of the player
+     * @param startX the starting X coordinate of the player
+     * @param startY the starting Y coordinate of the player
+     */
     public PlayerControllerImpl(final GameMap gameMap, final Skin initialSkin, final int startX, final int startY) {
         checkNotNull(gameMap, "GameMap cannot be null");
         checkNotNull(initialSkin, "Initial skin cannot be null");
@@ -54,26 +61,30 @@ public class PlayerControllerImpl implements PlayerController {
     }
 
     @Override
-    public boolean movePlayer(Direction direction) {
+    public boolean movePlayer(final Direction direction) {
         checkNotNull(direction, "Direction cannot be null");
-        
+
         if (!player.isAlive()) {
             return false;
         }
 
+        final boolean moveSuccessful = player.tryMove(direction, gameMap, movementValidator);
 
-        boolean moveSuccessful = player.tryMove(direction, gameMap, movementValidator);
-        
         if (moveSuccessful) {
             processCollisions();
             if (isPlayerDrowned()) {
                 killPlayer();
             }
         }
-        
+
         return moveSuccessful;
     }
 
+    /**
+     * Checks if the player is currently drowned.
+     * A player is considered drowned if they are in a river chunk and not on a platform.
+     * @return true if the player is drowned, false otherwise
+     */
     private boolean isPlayerDrowned() {
         return gameMap.getVisibleChunks().stream()
             .filter(chunk -> chunk.getCells().contains(player.getCurrentCell()))
@@ -82,6 +93,9 @@ public class PlayerControllerImpl implements PlayerController {
             .getType().equals(ChunkType.RIVER) && !isPlayerOnPlatform();
     }
 
+    /**
+     * Kills the player by invoking the die method on the player object.
+     */
     private void killPlayer() {
         player.die();
     }
@@ -92,26 +106,26 @@ public class PlayerControllerImpl implements PlayerController {
             return;
         }
 
-        List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
+        final List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
 
         MovingObstacles newPlatform = null;
 
-        for (GameObject obj : collidedObjects) {
+        for (final GameObject obj : collidedObjects) {
             try {
                 if (collisionIdentifier.isOnPlatform(obj)) {
                     newPlatform = (MovingObstacles) obj;
                 }
-                
+
                 if (collisionIdentifier.isFatalCollision(obj)) {
                     collisionHandler.handleFatalCollision(player);
                 }
-                
+
                 if (collisionIdentifier.isCollectibleCollision(obj)) {
                     collisionHandler.handleCollectibleCollision(player, (Collectible) obj);
                 }
-                
-            } catch (Exception e) {
-                System.err.println("Error processing collision with object: " + obj.getClass().getSimpleName() + " - " + e.getMessage());
+
+            } catch (final Exception e) {
+                System.err.println("Error processing collision with: " + obj.getClass().getSimpleName() + " - " + e.getMessage());
             }
         }
 
@@ -135,7 +149,7 @@ public class PlayerControllerImpl implements PlayerController {
     }
 
     @Override
-    public void updatePlayerSkin(Skin skin) {
+    public void updatePlayerSkin(final Skin skin) {
         player.setSkin(skin);
     }
 
@@ -151,19 +165,19 @@ public class PlayerControllerImpl implements PlayerController {
 
     @Override
     public int getCollectedCoins() {
-        return player.getCollectedCoins();    
+        return player.getCollectedCoins();
     }
 
     @Override
     public void update() {
-        if (player.isAlive()){
+        if (player.isAlive()) {
 
-            if (!player.isInvincible())
-            processCollisions();
+            if (!player.isInvincible()) {
+                processCollisions();
+            }
 
-            //controlla se il player è ancora in una posizione valida
             player.setOutOfBounds(movementValidator.isOutOfBounds(player.getCurrentCell(), gameMap));
-            if(player.isOutOfBounds()) {
+            if (player.isOutOfBounds()) {
                 killPlayer();
             }
         }
@@ -171,10 +185,10 @@ public class PlayerControllerImpl implements PlayerController {
 
     @Override
     public boolean isPlayerOnPlatform() {
-        return currentPlatform != null;    
+        return currentPlatform != null;
     }
 
-    private void setNewPlatform(MovingObstacles newPlatform) {
+    private void setNewPlatform(final MovingObstacles newPlatform) {
         if (currentPlatform != null) {
             currentPlatform.removeObserver(platformObserver);
         }

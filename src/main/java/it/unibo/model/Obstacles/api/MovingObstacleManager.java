@@ -8,40 +8,40 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
  * Interface for managing moving obstacles in the game.
  */
 public interface MovingObstacleManager {
-    
+
     /**
      * Adds a moving obstacle to be managed.
      * 
      * @param obstacle The obstacle to add
      */
     void addObstacle(MovingObstacles obstacle);
-    
+
     /**
      * Adds multiple obstacles at once.
      * 
      * @param obstacles Array of obstacles to add
      */
     void addObstacles(List<MovingObstacles> obstacles);
-    
+
     /**
      * Removes an obstacle from management.
      * 
      * @param obstacle The obstacle to remove
      */
     void removeObstacle(MovingObstacles obstacle);
-    
+
     /**
      * Updates the state of all managed obstacles.
      */
     void updateAll();
-    
+
     /**
      * Gets all currently active obstacles.
      * 
      * @return List of active obstacles
      */
     List<MovingObstacles> getActiveObstacles();
-    
+
     /**
      * Gets obstacles of a specific type.
      * 
@@ -57,7 +57,7 @@ public interface MovingObstacleManager {
      * @return List of obstacles in the specified chunk
      */
     List<MovingObstacles> getObstaclesInChunk(int chunkY);
-    
+
     /**
      * Increases the speed of all obstacles by a factor.
      * Used when difficulty increases.
@@ -65,13 +65,13 @@ public interface MovingObstacleManager {
      * @param factor Speed increase factor
      */
     void increaseSpeed(int factor);
-    
+
     /**
      * Removes obstacles that are outside the visible area.
     
      */
     void cleanupOffscreenObstacles();
-    
+
     /**
      * Gets the total number of managed obstacles.
      * 
@@ -83,7 +83,7 @@ public interface MovingObstacleManager {
     * Resets all obstacles to their initial position and state.
     */
     void resetAll();
-
+    
     /**
      * Checks if a position is safe for placing a new obstacle.
      * 

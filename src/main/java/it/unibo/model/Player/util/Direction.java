@@ -1,19 +1,36 @@
 package it.unibo.model.Player.util;
 
+/**
+ * Enum representing the four cardinal directions with their associated movement values.
+ * Each direction has a delta X and delta Y value that indicates how it affects movement
+ * in a 2D space.
+ */
 public enum Direction {
+    /**
+     * UP - moves the player one unit up (positive Y direction).
+     */
     UP(0, 1),
+    /**
+     * DOWN - moves the player one unit down (negative Y direction).
+     */
     DOWN(0, -1),
+    /**
+     * LEFT - moves the player one unit left (negative X direction).
+     */
     LEFT(-1, 0),
+    /**
+     * RIGHT - moves the player one unit right (positive X direction).
+     */
     RIGHT(1, 0);
-    
+
     private final int deltaX;
     private final int deltaY;
-    
+
     Direction(final int deltaX, final int deltaY) {
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }
-    
+
     /**
      * Gets the X-axis movement value associated with this direction.
      * 
@@ -31,7 +48,7 @@ public enum Direction {
     public int getDeltaY() {
         return deltaY;
     }
-    
+
     /**
      * Determines if this direction is horizontal.
      * 
@@ -40,7 +57,7 @@ public enum Direction {
     public boolean isHorizontal() {
         return deltaY == 0;
     }
-    
+
     /**
      * Determines if this direction is vertical.
      * 

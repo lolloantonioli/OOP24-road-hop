@@ -202,36 +202,58 @@ private Component createSkinCard(Skin skin) {
         card.setMaximumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
         card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
         card.setMinimumSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
-        
+
         return card;
     }
 
-    public void setCoins(int coins) {
+    /**
+     * Sets the current coin balance and updates the coins label.
+     * Also refreshes the skins display to reflect any changes in skin ownership.
+     *
+     * @param coins the new coin balance
+     */
+    public final void setCoins(int coins) {
        this.coins = coins;
        coinsLabel.setText("Coins: " + coins);
        refreshSkins();
-    }    
+    }  
 
-    
-    public void setOnBackToMainMenu(Runnable onBackToMainMenu) {
+    /**
+     * Sets the action to be performed when the back button is clicked.
+     *
+     * @param onBackToMainMenu the action to perform when the back button is clicked
+     */
+    public final void setOnBackToMainMenu(final Runnable onBackToMainMenu) {
         this.onBackToMainMenu = onBackToMainMenu;
     }
 
-    
-    public void setSkins(List<Skin> skins) {
+    /**
+     * Sets the list of skins available in the shop and refreshes the display.
+     *
+     * @param skins the list of skins to display
+     */
+    public final void setSkins(final List<Skin> skins) {
         this.skins = new ArrayList<>(skins);
         refreshSkins();
     }
 
 
-    
-    public void setOnSkinPurchase(BiConsumer<String, Integer> skinPurchase) {
+    /**
+     * Sets the action to be performed when a skin is purchased.
+     *
+     * @param skinPurchase the action to perform when a skin is purchased, accepting skin ID and price
+     */
+    public final void setOnSkinPurchase(final BiConsumer<String, Integer> skinPurchase) {
         this.onSkinPurchase = skinPurchase;
     }
 
 
-    
-    public void setOnSkinSelected(Consumer<String> onSkinSelected) {
+    /**
+     * Sets the action to be performed when a skin is selected.
+     *
+     * @param onSkinSelected the action to perform when a skin is selected, accepting skin ID
+     */
+    public final void setOnSkinSelected(final Consumer<String> onSkinSelected) {
         this.onSkinSelected = onSkinSelected;
     }
    

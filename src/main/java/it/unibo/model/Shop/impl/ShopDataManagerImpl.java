@@ -15,10 +15,17 @@ import it.unibo.model.Shop.api.Skin;
  * This class handles saving and loading shop data using Properties.
  * It provides methods to save the current state of the shop and load it from a file.
  */
-public class ShopDataManagerImpl {
+public final class ShopDataManagerImpl {
 
     private static final String SAVE_FILE_PATH = "src" + File.separator + "main" + File.separator + "resources"
                                                 + File.separator + "ShopSave.properties";
+
+    /**
+     * Private constructor to prevent instantiation of utility class.
+     */
+    private ShopDataManagerImpl() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     /**
      * Saves shop data to a file using Properties.
@@ -90,7 +97,7 @@ public class ShopDataManagerImpl {
                 final SkinSaveData skinData = new SkinSaveData();
                 skinData.id = id;
                 skinData.unlocked = Boolean.parseBoolean(props.getProperty("skin." + id + ".unlocked",
-                                                        id.equals("Default") ? "true" : "false"));
+                                                        "Default".equals(id) ? "true" : "false"));
                 skinData.selected = Boolean.parseBoolean(props.getProperty("skin." + id + ".selected", "false"));
                 saveData.skins.add(skinData);
             }
@@ -120,8 +127,8 @@ public class ShopDataManagerImpl {
         for (final String id : skinIds) {
             final SkinSaveData skinData = new SkinSaveData();
             skinData.id = id;
-            skinData.unlocked = id.equals("Default");
-            skinData.selected = id.equals("Default");
+            skinData.unlocked = "Default".equals(id);
+            skinData.selected = "Default".equals(id);
             defaultData.skins.add(skinData);
         }
 
@@ -132,32 +139,78 @@ public class ShopDataManagerImpl {
      * Class to hold the shop save data.
      */
     public static class ShopSaveData {
-        public int coins;
-        public String selectedSkin;
+        private int coins;
+        private String selectedSkin;
         private List<SkinSaveData> skins = new ArrayList<>();
 
-        public List<SkinSaveData> getSkins() {
+        /**
+         * Gets the number of coins saved.
+         * @return the coins
+         */
+        public final int getCoins() {
+            return coins;
+        }
+        /**
+         * Sets the number of coins saved.
+         * @param coins the coins to set
+         */
+        public final void setCoins(final int coins) {
+            this.coins = coins;
+        }
+        /**
+         * Gets the selected skin id.
+         * @return the selected skin id
+         */
+        public final String getSelectedSkin() {
+            return selectedSkin;
+        }
+        /**
+         * Sets the selected skin id.
+         * @param selectedSkin the selected skin id to set
+         */
+        public final void setSelectedSkin(final String selectedSkin) {
+            this.selectedSkin = selectedSkin;
+        }
+
+        /**
+         * Gets the list of skins saved.
+         * @return the list of skins
+         */
+        public final List<SkinSaveData> getSkins() {
             return skins;
         }
     }
 
     /**
      * Class to hold individual skin save data.
+     * This class contains the ID, unlocked status, and selected status of a skin.
      */
     public static class SkinSaveData {
         private String id;
         private boolean unlocked;
         private boolean selected;
 
-        public String getId() {
+        /**
+         * Gets the ID of the skin.
+         * @return the skin ID
+         */
+        public final String getId() {
             return id;
         }
 
-        public boolean isUnlocked() {
+        /**
+         * Sets the ID of the skin.
+         * @return whether the ID is unlocked
+         */
+        public final boolean isUnlocked() {
             return unlocked;
         }
 
-        public boolean isSelected() {
+        /**
+         * Sets the unlocked status of the skin.
+         * @return whether the skin is selected
+         */
+        public final boolean isSelected() {
             return selected;
         }
     }

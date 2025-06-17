@@ -5,6 +5,11 @@ import java.util.List;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.api.GameObject;
 
+/**
+ * Interface for detecting collisions between game objects.
+ * It provides methods to check if two objects collide and to retrieve all objects
+ * that collide with a specific object within a game map.
+ */
 public interface CollisionDetector {
 
     /**
@@ -17,7 +22,7 @@ public interface CollisionDetector {
     boolean checkCollision(GameObject obj1, GameObject obj2);
 
     /**
-     * Returns all the game objects colliding in a specific object
+     * Returns all the game objects colliding in a specific object.
      * 
      * @param obj the game object
      * @param map the game map
