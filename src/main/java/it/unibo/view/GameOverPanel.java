@@ -28,13 +28,19 @@ public final class GameOverPanel extends JPanel {
 
     private final JButton menuButton;
     private final JLabel gameOverLabel;
+    private final JLabel coinsLabel;
+    private final JLabel scoreLabel;
+
+    public GameOverPanel(final Runnable onMenu) {
+        this(onMenu, 0, 0);
+    }
 
     /**
      * Constructs a GameOverPanel with a button to return to the menu.
      *
      * @param onMenu the action to perform when the menu button is clicked
      */
-    public GameOverPanel(final Runnable onMenu) {
+    public GameOverPanel(final Runnable onMenu, int finalScore, int finalCoins) {
         setLayout(new GridBagLayout());
         setBackground(Color.BLUE);
         gameOverLabel = new JLabel(GAME_OVER_TEXT);
@@ -43,6 +49,12 @@ public final class GameOverPanel extends JPanel {
         menuButton = new JButton(MENU_BUTTON_TEXT);
         menuButton.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
         menuButton.addActionListener(e -> onMenu.run());
+        scoreLabel = new JLabel("Score: " + finalScore);
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+        coinsLabel = new JLabel("Coins: " + finalCoins);
+        coinsLabel.setForeground(Color.WHITE);
+        coinsLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);

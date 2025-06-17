@@ -123,10 +123,11 @@ public class ShopModelImpl implements ShopModel {
     public final void selectSkin(final String id) {
         final Skin skin = getSkinById(id);
         if (skin != null && skin.isUnlocked()) {
-            if (selectedSkin != null) {
-                selectedSkin.deselect();
+            for (final Skin s : skins) {
+                if (s.isSelected()) {
+                    s.deselect(); // Deseleziona la skin attualmente selezionata
+                }
             }
-
             skin.select();
             selectedSkin = skin;
             saveData(); // Salva dopo la selezione
