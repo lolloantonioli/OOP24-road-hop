@@ -143,6 +143,8 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void showGameOverPanel() {
-        gameFrame.showGameOverPanel();
+        int score = playerController.getPlayerScore();
+        int coins = playerController.getCollectedCoins();
+        gameFrame.showGameOverPanel(score, coins);
     }
 }
