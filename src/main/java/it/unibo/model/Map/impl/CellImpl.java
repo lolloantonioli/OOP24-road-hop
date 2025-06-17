@@ -40,11 +40,7 @@ public final class CellImpl implements Cell {
     @Override
     public boolean addObject(final GameObject obj) {
         checkNotNull(obj, NULL_MSG);
-        // Allow multiple different objects, but prevent duplicates
-        if (content.contains(obj)) {
-            return false;
-        }
-        return content.add(obj);
+        return !content.contains(obj) && content.add(obj);
     }
 
     @Override

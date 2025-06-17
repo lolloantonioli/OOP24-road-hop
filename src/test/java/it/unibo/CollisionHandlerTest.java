@@ -81,7 +81,8 @@ class CollisionHandlerTest {
     void testHandleFatalCollisionMortal() {
         final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
-        player.tryMove(Direction.UP, map, new MovementValidatorImpl());
+        final boolean move = player.tryMove(Direction.UP, map, new MovementValidatorImpl());
+        assertTrue(move);
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleFatalCollision(player);
         assertFalse(player.isAlive());

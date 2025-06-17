@@ -129,28 +129,96 @@ public final class ShopDataManagerImpl {
         return defaultData;
     }
 
+    /**
+     * Represents the saved data for the shop.
+     * Contains coins, selected skin, maximum score, and a list of skins with their states.
+     */
     public static class ShopSaveData {
         private int coins;
         private String selectedSkin;
         private int maxScore;
         private final List<SkinSaveData> skins = new ArrayList<>();
 
-        public final int getCoins() { return coins; }
-        public final void setCoins(final int coins) { this.coins = coins; }
-        public final String getSelectedSkin() { return selectedSkin; }
-        public final void setSelectedSkin(final String selectedSkin) { this.selectedSkin = selectedSkin; }
-        public final int getMaxScore() { return maxScore; }
-        public final void setMaxScore(final int maxScore) { this.maxScore = maxScore; }
-        public final List<SkinSaveData> getSkins() { return Collections.unmodifiableList(skins); }
+        /**
+         * Gets the number of coins available in the shop.
+         * @return the number of coins
+         */
+        public final int getCoins() { 
+            return coins; 
+        }
+        /**
+         * Sets the number of coins available in the shop.
+         * @param coins the number of coins to set
+         */
+        public final void setCoins(final int coins) { 
+            this.coins = coins; 
+        }
+        /**
+         * Gets the ID of the currently selected skin.
+         * @return the ID of the selected skin
+         */
+        public final String getSelectedSkin() { 
+            return selectedSkin; 
+        }
+        /**
+         * Sets the ID of the currently selected skin.
+         * @param selectedSkin the ID of the skin to set as selected
+         */
+        public final void setSelectedSkin(final String selectedSkin) { 
+            this.selectedSkin = selectedSkin; 
+        }
+        /**
+         * Gets the maximum score achieved in the game.
+         * @return the maximum score
+         */
+        public final int getMaxScore() { 
+            return maxScore; 
+        }
+        /**
+         * Sets the maximum score achieved in the game.
+         * @param maxScore the maximum score to set
+         */
+        public final void setMaxScore(final int maxScore) { 
+            this.maxScore = maxScore; 
+        }
+        /**
+         * Gets the list of skins available in the shop.
+         * @return an unmodifiable list of SkinSaveData representing the skins
+         */
+        public final List<SkinSaveData> getSkins() { 
+            return Collections.unmodifiableList(skins); 
+        }
     }
 
+    /**
+     * Represents the saved state of a skin.
+     * Contains the skin ID, whether it is unlocked, and whether it is selected.
+     */
     public static class SkinSaveData {
         private String id;
         private boolean unlocked;
         private boolean selected;
 
-        public final String getId() { return id; }
-        public final boolean isUnlocked() { return unlocked; }
-        public final boolean isSelected() { return selected; }
+        /**
+         * Gets the ID of the skin.
+         * @return the ID of the skin
+         */
+        public final String getId() { 
+            return id; 
+        }
+        /**
+         * Checks if the skin is unlocked.
+         * @return true if the skin is unlocked, false otherwise
+         */
+        public final boolean isUnlocked() { 
+            return unlocked; 
+        }
+        /**
+         * Checks if the skin is selected.
+         * @return true if the skin is selected, false otherwise
+         */
+        public final boolean isSelected() { 
+            return selected; 
+        }
     }
 }
