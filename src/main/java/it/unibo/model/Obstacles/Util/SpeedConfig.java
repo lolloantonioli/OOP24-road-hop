@@ -44,6 +44,15 @@ public final class SpeedConfig {
     private static int minLogSpeed = DEFAULT_MIN_LOG_SPEED;
     private static int maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
 
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
+    private SpeedConfig() {
+    }
+
+    /**
+     * Sets the default speed limits for obstacles.
+     */
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
         maxCarSpeed = DEFAULT_MAX_CAR_SPEED;
@@ -52,7 +61,7 @@ public final class SpeedConfig {
         minLogSpeed = DEFAULT_MIN_LOG_SPEED;
         maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
     }
-    
+   
     /**
      * Generates a random speed for a car within the defined limits.
      * @param rnd the Random instance to use for generating the speed
@@ -82,7 +91,6 @@ public final class SpeedConfig {
 
     /**
      * Increases all speed limits by a specified delta, ensuring they do not exceed their maximum caps.
-     * @param delta the amount to increase the speeds by
      */
     public static void increaseAllSpeeds() {
         minCarSpeed = Math.min(minCarSpeed + INCREASE_SPEED, CAP_CAR_SPEED);
