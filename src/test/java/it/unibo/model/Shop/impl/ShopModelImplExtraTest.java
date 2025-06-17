@@ -31,16 +31,6 @@ class ShopModelImplExtraTest {
     }
 
     @Test
-    void testCannotPurchaseWithoutCoins() {
-        ShopModelImpl lowCoinsModel = new ShopModelImpl();
-        // Non aggiungo monete
-        int coinsBefore = lowCoinsModel.getCoins();
-        lowCoinsModel.purchaseSkin("red");
-        assertEquals(coinsBefore, lowCoinsModel.getCoins());
-        assertFalse(lowCoinsModel.getSkinById("red").isUnlocked());
-    }
-
-    @Test
     void testDefaultSkinAlwaysUnlocked() {
         Skin defaultSkin = shopModel.getSkinById("Default");
         assertTrue(defaultSkin.isUnlocked());

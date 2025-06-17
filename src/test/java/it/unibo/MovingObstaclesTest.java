@@ -1,6 +1,4 @@
-package it.unibo.tests;
-
-package it.unibo.model.Obstacles;
+package it.unibo;
 
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
