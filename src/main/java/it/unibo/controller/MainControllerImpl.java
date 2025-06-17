@@ -13,7 +13,6 @@ import it.unibo.controller.Shop.impl.ShopObserverImpl;
 import it.unibo.controller.Util.CardName;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Obstacles.Util.SpeedConfig;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Shop.api.ShopModel;
