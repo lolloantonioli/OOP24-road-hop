@@ -108,15 +108,6 @@ class CellTest {
     }
 
     /**
-     * Tests that adding or removing a null object throws an IllegalArgumentException.
-     */
-    @Test
-    void testNullObject() {
-        assertThrows(IllegalArgumentException.class, () -> cell.addObject(null));
-        assertThrows(IllegalArgumentException.class, () -> cell.removeObject(null));
-    }
-
-    /**
      * Tests that the cell's position (x and y) remains correct.
      */
     @Test

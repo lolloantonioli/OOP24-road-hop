@@ -5,7 +5,6 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.collect.ImmutableSet;
 
 import it.unibo.model.map.api.Cell;
@@ -40,7 +39,11 @@ public final class CellImpl implements Cell {
 
     @Override
     public boolean addObject(final GameObject obj) {
-        checkArgument(obj != null, NULL_MSG);
+        checkNotNull(obj, NULL_MSG);
+        // Allow multiple different objects, but prevent duplicates
+        if (content.contains(obj)) {
+            return false;
+        }
         return content.add(obj);
     }
 

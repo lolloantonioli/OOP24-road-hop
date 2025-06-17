@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +27,6 @@ public final class ShopDataManagerImpl {
     private static final String SKIN_PREFIX = "skin.";
     private static final String DEFAULT_SKIN_ID = "Default";
 
-
-    /**
-     * Private constructor to prevent instantiation of utility class.
-     */
     private ShopDataManagerImpl() {
         throw new UnsupportedOperationException("Utility class");
     }
@@ -43,33 +40,27 @@ public final class ShopDataManagerImpl {
      */
     static void saveShopData(final List<Skin> skins, final String selectedSkinId, final int coins, final int maxScore) {
         final Properties props = new Properties();
+        props.setProperty("coins", String.valueOf(coins));
+        props.setProperty("selectedSkin", selectedSkinId);
+        props.setProperty("maxScore", String.valueOf(maxScore));
 
-        try {
-            // Salva coins, selected skin e maxScore
-            props.setProperty("coins", String.valueOf(coins));
-            props.setProperty("selectedSkin", selectedSkinId);
-            props.setProperty("maxScore", String.valueOf(maxScore));
+        for (final Skin skin : skins) {
+            props.setProperty(SKIN_PREFIX + skin.getId() + ".unlocked", String.valueOf(skin.isUnlocked()));
+            props.setProperty(SKIN_PREFIX + skin.getId() + ".selected", String.valueOf(skin.isSelected()));
+        }
 
-            // Salva ogni skin
-            for (final Skin skin : skins) {
-                props.setProperty(SKIN_PREFIX + skin.getId() + ".unlocked", String.valueOf(skin.isUnlocked()));
-                props.setProperty(SKIN_PREFIX + skin.getId() + ".selected", String.valueOf(skin.isSelected()));
-            }
+        // Ensure save directory exists
+        final File file = new File(SAVE_FILE_PATH);
+        final File parent = file.getParentFile();
+        if (!parent.exists() && !parent.mkdirs()) {
+            LOGGER.error("Could not create directory: {}", parent);
+            return;
+        }
 
-            // Crea la directory se non esiste
-            final File file = new File(SAVE_FILE_PATH);
-            if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
-                throw new IOException("Could not create directory: " + file.getParentFile());
-            }
-            file.getParentFile().mkdirs();
-
-            // Salva il file con try-with-resources
-            try (FileOutputStream out = new FileOutputStream(file)) {
-                props.store(out, "Shop Save Data");
-            }
-
+        // Write properties to file
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            props.store(out, "Shop Save Data");
             LOGGER.info("Dati shop salvati con successo");
-
         } catch (final IOException e) {
             LOGGER.error("Errore nel salvare i dati dello shop", e);
         }
@@ -90,7 +81,6 @@ public final class ShopDataManagerImpl {
                 return getDefaultSaveData();
             }
 
-            // Carica il file
             try (FileInputStream in = new FileInputStream(file)) {
                 props.load(in);
             }
@@ -100,13 +90,12 @@ public final class ShopDataManagerImpl {
             saveData.setSelectedSkin(props.getProperty("selectedSkin", DEFAULT_SKIN_ID));
             saveData.setMaxScore(Integer.parseInt(props.getProperty("maxScore", "0")));
 
-            // Carica le skin
             final String[] skinIds = {DEFAULT_SKIN_ID, "red", "blue", "gold", "rainbow"};
             for (final String id : skinIds) {
                 final SkinSaveData skinData = new SkinSaveData();
                 skinData.id = id;
                 skinData.unlocked = Boolean.parseBoolean(props.getProperty(SKIN_PREFIX + id + ".unlocked",
-                                                        DEFAULT_SKIN_ID.equals(id) ? "true" : "false"));
+                                DEFAULT_SKIN_ID.equals(id) ? "true" : "false"));
                 skinData.selected = Boolean.parseBoolean(props.getProperty(SKIN_PREFIX + id + ".selected", "false"));
                 saveData.skins.add(skinData);
             }
@@ -114,29 +103,20 @@ public final class ShopDataManagerImpl {
             LOGGER.info("Dati shop caricati con successo");
             return saveData;
 
-        }  catch (final IOException ioe) {
+        } catch (final IOException ioe) {
             LOGGER.error("Errore nel caricare i dati dello shop, uso dati di default", ioe);
-
             return getDefaultSaveData();
         } catch (final NumberFormatException nfe) {
             LOGGER.error("Errore nel formato dei dati dello shop, uso dati di default", nfe);
-
             return getDefaultSaveData();
         }
     }
 
-    /**
-     * Returns default shop save data.
-     * This method creates a default ShopSaveData object with initial values.
-     * It includes a default amount of coins and a set of predefined skins.
-     * @return ShopSaveData with default values.
-     */
     private static ShopSaveData getDefaultSaveData() {
         final ShopSaveData defaultData = new ShopSaveData();
         defaultData.coins = 1000;
         defaultData.selectedSkin = DEFAULT_SKIN_ID;
 
-        // Skin di default
         final String[] skinIds = {DEFAULT_SKIN_ID, "red", "blue", "gold", "rainbow"};
         for (final String id : skinIds) {
             final SkinSaveData skinData = new SkinSaveData();
@@ -149,98 +129,28 @@ public final class ShopDataManagerImpl {
         return defaultData;
     }
 
-    /**
-     * Class to hold the shop save data.
-     */
     public static class ShopSaveData {
         private int coins;
         private String selectedSkin;
         private int maxScore;
         private final List<SkinSaveData> skins = new ArrayList<>();
 
-        /**
-         * Gets the number of coins saved.
-         * @return the coins
-         */
-        public final int getCoins() {
-            return coins;
-        }
-        /**
-         * Sets the number of coins saved.
-         * @param coins the coins to set
-         */
-        public final void setCoins(final int coins) {
-            this.coins = coins;
-        }
-        /**
-         * Gets the selected skin id.
-         * @return the selected skin id
-         */
-        public final String getSelectedSkin() {
-            return selectedSkin;
-        }
-        /**
-         * Sets the selected skin id.
-         * @param selectedSkin the selected skin id to set
-         */
-        public final void setSelectedSkin(final String selectedSkin) {
-            this.selectedSkin = selectedSkin;
-        }
-        /**
-         * Gets the maximum score achieved.
-         * @return the maxScore
-         */
-        public final int getMaxScore() {
-            return maxScore;
-        }
-        /**
-         * Sets the maximum score achieved.
-         * @param maxScore the maxScore to set
-         */
-        public final void setMaxScore(final int maxScore) {
-            this.maxScore = maxScore;
-        }
-
-        /**
-         * Gets the list of skins saved.
-         * @return the list of skins
-         */
-        public final List<SkinSaveData> getSkins() {
-            return Collections.unmodifiableList(skins);
-        }
+        public final int getCoins() { return coins; }
+        public final void setCoins(final int coins) { this.coins = coins; }
+        public final String getSelectedSkin() { return selectedSkin; }
+        public final void setSelectedSkin(final String selectedSkin) { this.selectedSkin = selectedSkin; }
+        public final int getMaxScore() { return maxScore; }
+        public final void setMaxScore(final int maxScore) { this.maxScore = maxScore; }
+        public final List<SkinSaveData> getSkins() { return Collections.unmodifiableList(skins); }
     }
 
-    /**
-     * Class to hold individual skin save data.
-     * This class contains the ID, unlocked status, and selected status of a skin.
-     */
     public static class SkinSaveData {
         private String id;
         private boolean unlocked;
         private boolean selected;
 
-        /**
-         * Gets the ID of the skin.
-         * @return the skin ID
-         */
-        public final String getId() {
-            return id;
-        }
-
-        /**
-         * Sets the ID of the skin.
-         * @return whether the ID is unlocked
-         */
-        public final boolean isUnlocked() {
-            return unlocked;
-        }
-
-        /**
-         * Sets the unlocked status of the skin.
-         * @return whether the skin is selected
-         */
-        public final boolean isSelected() {
-            return selected;
-        }
+        public final String getId() { return id; }
+        public final boolean isUnlocked() { return unlocked; }
+        public final boolean isSelected() { return selected; }
     }
 }
