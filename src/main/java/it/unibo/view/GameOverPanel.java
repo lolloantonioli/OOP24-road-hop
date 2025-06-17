@@ -32,6 +32,11 @@ public final class GameOverPanel extends JPanel {
     private final JLabel scoreLabel;
     private final JLabel maxScoreLabel;
 
+    /**
+     * Constructs a GameOverPanel with a button to return to the menu.
+     *
+     * @param onMenu the action to perform when the menu button is clicked
+     */
     public GameOverPanel(final Runnable onMenu) {
         this(onMenu, 0, 0, 0);
     }
