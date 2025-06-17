@@ -37,7 +37,7 @@ class PersistenceTest {
     void testAddCoinsPersistsValue() {
         final int before = shopModel.getCoins();
         shopModel.addCoins(COINS_TO_ADD);
-        ShopModelImpl reloaded = new ShopModelImpl();
+        final ShopModelImpl reloaded = new ShopModelImpl();
         assertTrue(reloaded.getCoins() >= before + COINS_TO_ADD);
     }
 }
