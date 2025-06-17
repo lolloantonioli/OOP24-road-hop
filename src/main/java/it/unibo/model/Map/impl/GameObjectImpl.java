@@ -109,7 +109,7 @@ public class GameObjectImpl implements GameObject {
 
     @Override
     public void setWidthInCells(final int widthInCells) {
-        checkArgument(widthInCells >= 1, MSG);
+        checkArgument(widthInCells >= 1, CELL_MSG);
         this.widthInCells = widthInCells;
     }
 
