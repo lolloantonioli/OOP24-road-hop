@@ -23,6 +23,7 @@ import it.unibo.model.player.api.Player;
  */
 public final class GamePanel extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final int DIV_FACTOR_FONT = 5;
     private static final int FONT_DIV_COUNTDOWN = 15;
     private static final int CONST_PADDING = 5;
@@ -176,7 +177,7 @@ public final class GamePanel extends JPanel {
                 continue;
             }
 
-            final int obstacleX = (int) obstacle.getX();
+            final int obstacleX = obstacle.getX();
             final int obstacleWidth = obstacle.getWidthInCells();
 
             final int leftBound = Math.max(0, obstacleX);

@@ -25,6 +25,7 @@ public final class GameOverPanel extends JPanel {
     private static final int DIV_FACTOR_BUTTON = 15;
     private static final String GAME_OVER_TEXT = "Game Over";
     private static final String MENU_BUTTON_TEXT = "Menu";
+    private static final String ARIAL = "Arial";
 
     private final JButton menuButton;
     private final JLabel gameOverLabel;
@@ -54,19 +55,19 @@ public final class GameOverPanel extends JPanel {
         setBackground(Color.BLUE);
         gameOverLabel = new JLabel(GAME_OVER_TEXT);
         gameOverLabel.setForeground(Color.WHITE);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, LABEL_SIZE));
+        gameOverLabel.setFont(new Font(ARIAL, Font.BOLD, LABEL_SIZE));
         menuButton = new JButton(MENU_BUTTON_TEXT);
-        menuButton.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+        menuButton.setFont(new Font(ARIAL, Font.BOLD, LABEL_BIN_SIZE));
         menuButton.addActionListener(e -> onMenu.run());
         scoreLabel = new JLabel("Score: " + finalScore);
         scoreLabel.setForeground(Color.WHITE);
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+        scoreLabel.setFont(new Font(ARIAL, Font.BOLD, LABEL_BIN_SIZE));
         coinsLabel = new JLabel("Coins: " + finalCoins);
         coinsLabel.setForeground(Color.WHITE);
-        coinsLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+        coinsLabel.setFont(new Font(ARIAL, Font.BOLD, LABEL_BIN_SIZE));
         maxScoreLabel = new JLabel("Max Score: " + maxScore);
         maxScoreLabel.setForeground(Color.YELLOW);
-        maxScoreLabel.setFont(new Font("Arial", Font.BOLD, LABEL_BIN_SIZE));
+        maxScoreLabel.setFont(new Font(ARIAL, Font.BOLD, LABEL_BIN_SIZE));
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBackground(Color.BLUE);
