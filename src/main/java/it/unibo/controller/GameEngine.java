@@ -19,6 +19,7 @@ public final class GameEngine implements Runnable {
     private static final long PERIOD = 16; // 60fps
     private static final int SCROLL_TIME_MS = 1000;
     private static final int WAIT_TIME = 700; // 700ms for countdown
+    private static final double SPEED_FACTOR = 0.5;
     private final int increaseSpeed = GameConstant.INCREASE_SPEED; // Speed increase for obstacles
 
     private final GameMap gameMap;
@@ -170,7 +171,8 @@ public final class GameEngine implements Runnable {
     public void doGameUpdate() {
         final int cellHeight = gamePanel.getCellHeight();
         final int speed = gameMap.getScrollSpeed();
-        final int scrollTime = SCROLL_TIME_MS / speed;
+        final double effectiveSpeed = 1.0 + (speed - 1) * SPEED_FACTOR;
+        final int scrollTime = (int) (SCROLL_TIME_MS / effectiveSpeed);
         final double framesPerCell = scrollTime / (double) PERIOD;
         frameCounter = frameCounter + 1;
         final int offset = (int) ((cellHeight * frameCounter) / framesPerCell);
