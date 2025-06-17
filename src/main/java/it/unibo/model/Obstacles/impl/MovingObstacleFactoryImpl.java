@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
@@ -15,7 +16,7 @@ import it.unibo.model.Obstacles.api.MovingObstacleFactory;
  */
 public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
 
-    public static final int CELLS_PER_CHUNK = 9;
+    private static final int CELLS_PER_CHUNK = ChunkImpl.CELLS_PER_ROW;
     private static final int MIN_CAR_DISTANCE = 3;
     private static final int MIN_TRAIN_DISTANCE = 6;
     private static final int MIN_LOG_DISTANCE = 1;

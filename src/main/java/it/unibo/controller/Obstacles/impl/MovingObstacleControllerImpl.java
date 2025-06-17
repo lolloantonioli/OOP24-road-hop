@@ -22,9 +22,10 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
  */
 public final class MovingObstacleControllerImpl implements MovingObstacleController {
 
-    private final static int TRAIN_SPAWN_DISTANCE = 6;
-    private final static int CAR_SPAWN_DISTANCE = 3;
-    private final static int LOG_SPAWN_DISTANCE = 1;
+    private static final int TRAIN_SPAWN_DISTANCE = 6;
+    private static final int CAR_SPAWN_DISTANCE = 3;
+    private static final int LOG_SPAWN_DISTANCE = 1;
+
     private final MovingObstacleFactory factory;
     private final MovingObstacleManager manager;
     private final GameMap gameMap;

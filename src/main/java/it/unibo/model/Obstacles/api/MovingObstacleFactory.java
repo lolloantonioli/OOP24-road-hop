@@ -19,7 +19,7 @@ public interface MovingObstacleFactory {
      * @return A new car obstacle
      */
     MovingObstacles createCar(int x, int y, int speed);
-    
+
     /**
      * Creates a train obstacle moving at a specified speed.
      *
@@ -39,7 +39,7 @@ public interface MovingObstacleFactory {
      * @return A new log obstacle
      */
     MovingObstacles createLog(int x, int y, int speed);
-    
+
     /**
      * Creates a set of obstacles evenly distributed across a chunk.
      *
@@ -47,6 +47,7 @@ public interface MovingObstacleFactory {
      * @param y Y-coordinate of the road
      * @param count Number of cars to create
      * @param leftToRight Direction of movement
+     * @param speed Movement speed (positive for right, negative for left)
      * @return Array of obstacles
      */
     List<MovingObstacles> createObstacleSet(ObstacleType type, int y, int count, boolean leftToRight, int speed);
