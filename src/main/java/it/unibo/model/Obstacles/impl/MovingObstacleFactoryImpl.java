@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
-
-// COSTANTE CELLSXCHUNK DA CENTRALIZZARE ?
 
 /**
  * Implementation of MovingObstacleFactory.
@@ -16,8 +14,8 @@ import it.unibo.model.Obstacles.api.MovingObstacleFactory;
  */
 public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
 
-    private static final int MIN_CAR_DISTANCE = 3;
-    private static final int MIN_TRAIN_DISTANCE = 6;
+    private static final int MIN_CAR_DISTANCE = 4;
+    private static final int MIN_TRAIN_DISTANCE = 7;
     private static final int MIN_LOG_DISTANCE = 1;
     
     private static int minCarSpeed = 15;
@@ -26,6 +24,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     private static int maxTrainSpeed = 30;
     private static int minLogSpeed = 10;
     private static int maxLogSpeed = 15;
+    private final int cells = GameConstant.CELLS_PER_CHUNK;
     private final Random random;
 
     /**
@@ -61,9 +60,9 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         final int minObstacles;
         int placed = 0;
         if (type == ObstacleType.CAR) {
-            minObstacles = Math.max(3, count);
+            minObstacles = Math.max(1, count);
         } else if (type == ObstacleType.LOG) {
-            minObstacles = Math.max(2, count);
+            minObstacles = Math.max(1, count);
         } else if (type == ObstacleType.TRAIN) {
             minObstacles = Math.max(1, count);
         } else {
@@ -71,7 +70,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         }
         if (leftToRight) {
             final int start = -obstacleWidth + 1;
-            final int end = ChunkImpl.CELLS_PER_ROW - 1 + obstacleWidth - 1;
+            final int end = cells - 1 + obstacleWidth - 1;
             for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
                 final int baseX = pos;
                 final MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
@@ -79,7 +78,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
                 placed++;
             }
         } else {
-            final int start = ChunkImpl.CELLS_PER_ROW + obstacleWidth - 1;
+            final int start = cells + obstacleWidth - 1;
             final int end = -obstacleWidth + 1;
             for (int pos = start; placed < minObstacles && pos >= end; pos -= spacing) {
                 final int baseX = pos;

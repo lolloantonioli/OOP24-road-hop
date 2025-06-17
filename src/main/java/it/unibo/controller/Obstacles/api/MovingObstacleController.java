@@ -12,81 +12,74 @@ import it.unibo.model.Obstacles.impl.MovingObstacles;
 public interface MovingObstacleController {
 
     /**
-     * Crea un set di macchine sulla stessa riga.
-     * 
-     * @param y la posizione Y (riga) dove creare le macchine
-     * @param count il numero di macchine da creare
-     * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
-     * @param speed la velocità di movimento delle macchine
-     * @return array degli ostacoli macchina creati
+     * Create a car obstacle at the specified position with the given speed.
+     * @param y the Y coordinate (row) where the car will be created
+     * @param count the number of cars to create
+     * @param leftToRight the direction of movement (true = left to right, false = right to left)
+     * @param speed the speed of the car
+     * @return list of created car obstacles
      */
     List<MovingObstacles> createCarSet(int y, int count, boolean leftToRight, int speed);
 
     /**
-     * Crea un set di treni sulla stessa riga.
-     * 
-     * @param y la posizione Y (riga) dove creare i treni
-     * @param count il numero di treni da creare
-     * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
-     * @param speed la velocità di movimento dei treni
-     * @return array degli ostacoli treno creati
+     * Create a train obstacle at the specified position with the given speed.
+     * @param y the Y coordinate (row) where the train will be created
+     * @param count the number of train cars to create
+     * @param leftToRight the direction of movement (true = left to right, false = right to left)
+     * @param speed the speed of the train
+     * @return
      */
     List<MovingObstacles> createTrainSet(int y, int count, boolean leftToRight, int speed);
 
     /**
-     * Crea un set di tronchi sulla stessa riga.
-     * I tronchi fungono da piattaforme sui fiumi e permettono al giocatore di attraversare l'acqua.
-     * 
-     * @param y la posizione Y (riga) dove creare i tronchi
-     * @param count il numero di tronchi da creare
-     * @param leftToRight la direzione di movimento (true = sinistra-destra, false = destra-sinistra)
-     * @param speed la velocità di movimento dei tronchi
-     * @return array degli ostacoli tronco creati
+     * Create a log obstacle at the specified position with the given speed.
+     * @param y the Y coordinate (row) where the log will be created
+     * @param count the number of logs to create
+     * @param leftToRight the direction of movement (true = left to right, false = right to left)
+     * @param speed the speed of the log
+     * @return list of created log obstacles
      */
     List<MovingObstacles> createLogSet(int y, int count, boolean leftToRight, int speed);
 
     /**
-     * Aggiorna tutti gli ostacoli mobili.
-     * Deve essere chiamato ad ogni frame del gioco per aggiornare posizioni e stato.
+     * Updates the state of all moving obstacles.
      */
     void update();
 
     /**
-     * Ottiene tutti gli ostacoli di un tipo specifico.
-     * 
-     * @param type il tipo di ostacolo richiesto
-     * @return lista degli ostacoli del tipo specificato
+     * Adds a new moving obstacle to the game.
+     * @param type the type of the obstacle (e.g., CAR, TRAIN, LOG)
+     * @return the created moving obstacle
      */
     List<MovingObstacles> getObstaclesByType(ObstacleType type);
 
     /**
-     * Ottiene tutti gli ostacoli attualmente attivi.
-     * 
-     * @return lista di tutti gli ostacoli attivi
+     * Adds a new moving obstacle to the game.
+     * @param obstacle the moving obstacle to add
+     * @return true if the obstacle was added successfully, false otherwise
      */
     List<MovingObstacles> getAllObstacles();
 
     /**
-     * Resetta tutti gli ostacoli, rimuovendoli dalla mappa e liberando le risorse.
-     * Deve essere chiamato all'inizio di una nuova partita o quando si vogliono rimuovere tutti gli ostacoli.
+     * Resets all obstacles in the game.
+     * This method clears the list of obstacles and prepares for a new game or level.
      */
     void resetObstacles();
 
     /**
-     * Genera ostacoli in base al livello di difficoltà.
+     * Generates obstacles based on the current difficulty level.
+     * The difficulty level can affect the type, number, and speed of obstacles generated.
      * 
-     * @param difficultyLevel il livello di difficoltà (1-3)
-     * 1: Facile - pochi ostacoli
-     * 2: Medio - ostacoli moderati
-     * 3: Difficile - molti ostacoli
+     * @param difficultyLevel the current difficulty level of the game
      */
     void generateObstacles(int difficultyLevel);
 
     /**
-     * Aumenta i limiti di velocità per tutti gli ostacoli.
+     * Increases the speed of all obstacles by a specified amount.
+     * This method is typically used to make the game more challenging as the player progresses.
      * 
-     * @param i l'ammontare da aggiungere ai limiti di velocità
+     * @param i the amount by which to increase the speed of all obstacles
      */
     void increaseAllObstaclesSpeed(int i);
-
+    
 }

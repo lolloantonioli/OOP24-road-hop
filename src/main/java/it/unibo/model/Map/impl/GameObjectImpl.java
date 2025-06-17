@@ -1,10 +1,10 @@
 package it.unibo.model.Map.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
@@ -27,14 +27,6 @@ public class GameObjectImpl implements GameObject {
     private boolean platform;
     private int widthInCells = 1; // Default width in cells
 
-    /**
-     * Constructs a new {@code GameObjectImpl} with the specified coordinates.
-     * This constructor initializes the object with a default width of 1 cell.
-     *
-     * @param x the x coordinate of the object.
-     * @param y the y coordinate of the object.
-     * @throws NullPointerException if x or y is null.
-     */
     public GameObjectImpl(final int x, final int y) {
         this(checkNotNull(x), checkNotNull(y), 1);
     }
@@ -158,12 +150,6 @@ public class GameObjectImpl implements GameObject {
         this.y = checkNotNull(y);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should update the width in cells accordingly.
-     */
-    @Override
     public void setWidthInCells(final int widthInCells) {
         checkArgument(widthInCells >= 1, MSG);
         this.widthInCells = widthInCells;
@@ -179,11 +165,7 @@ public class GameObjectImpl implements GameObject {
         return widthInCells;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure the returned list accurately represents all occupied cells.
-     */
+    // tutte le posizioni x occupate da un oggetto
     @Override
     public List<Integer> getOccupiedCells() {
         final int width = getWidthInCells();
@@ -194,11 +176,7 @@ public class GameObjectImpl implements GameObject {
         return cells;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure the returned value is consistent with {@link #getOccupiedCells()}.
-     */
+    // controlla se un oggetto occupa una specifica cella
     @Override
     public boolean occupiesCell(final int cellX) {
         checkArgument(cellX >= 0 && cellX <= ChunkImpl.CELLS_PER_ROW, CELL_MSG);

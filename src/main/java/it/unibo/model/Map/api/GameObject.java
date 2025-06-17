@@ -74,36 +74,21 @@ public interface GameObject {
     void setPlatform(boolean platform);
 
     /**
-     * Gets the width of the object in cells.
-     * @return the width of the object in cells.
+     * Sets the width of the game object in cells.
+     * @param widthInCells the width in cells.
+     */
+    void setWidthInCells(final int widthInCells);
+
+    /**
+     * Gets the width of the game object in cells.
+     * @return the width in cells.
      */
     int getWidthInCells();
 
-    /**
-     * Sets the width of the object in cells.
-     * @param widthInCells the new width of the object in cells.
-     * @throws IllegalArgumentException if the widthInCells is zero or negative.
-     */
-    void setWidthInCells(int widthInCells);
-
-    /**
-     * Gets the cells occupied by the object.
-     * @return a list of occupied cell X coordinates.
-     */
     List<Integer> getOccupiedCells();
 
-    /**
-     * Checks if the object occupies a specific cell.
-     * @param cellX the X coordinate of the cell to check.
-     * @return true if the object occupies the cell, false otherwise.
-     * @throws IllegalArgumentException if the cellX is not between 0 and the width of the map.
-     */
     boolean occupiesCell(int cellX);
 
-    /**
-     * Gets the cells occupied by the object.
-     * @return a list of occupied cells.
-     */
     List<Cell> getOccupiedCells2();
 
 }

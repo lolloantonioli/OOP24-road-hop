@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 
-// controlla reset in moving obstacles
-
 /**
  * Handles the management of moving obstacles in the game.
  * This includes adding, removing, updating, and checking the safety of positions for obstacles.
@@ -105,9 +103,7 @@ public final class MovingObstacleManagerImpl implements MovingObstacleManager {
 
     @Override
     public void resetAll() {
-        for (final MovingObstacles obstacle : obstacles) {
-            removeObstacle(obstacle);
-        }
+        obstacles.clear();
     }
 
     @Override
