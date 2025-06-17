@@ -34,7 +34,7 @@ class ObstacleTest {
      * and the correct setting of its properties.
      */
     @Test
-    void testObstacleCreation() {        
+    void testObstacleCreation() {      
         assertEquals(X_COORD, staticObstacle.getX());
         assertEquals(Y_COORD, staticObstacle.getY());
         assertEquals(ObstacleType.TREE, staticObstacle.getType());
@@ -57,5 +57,4 @@ class ObstacleTest {
             new ObstacleImpl(INVALID_COORD, INVALID_COORD, ObstacleType.TREE, false);
         });
     }
-    
 }

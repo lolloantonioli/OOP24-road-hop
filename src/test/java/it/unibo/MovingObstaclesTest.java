@@ -100,7 +100,9 @@ class MovingObstaclesTest {
         final MovingObstacleManagerImpl manager = new MovingObstacleManagerImpl();
         final MovingObstacles car = new MovingObstacles(CELLS - 1, 0, ObstacleType.CAR, 1);
         manager.addObstacle(car);
-        for (int i = 0; i < CELLS + EXTRA_UPDATES; i++) {
+        final int baseThreshold = 50;
+        final int movementThreshold = Math.max(1, baseThreshold - Math.abs(car.getSpeed()));
+        for (int i = 0; i < movementThreshold; i++) {
             manager.updateAll();
         }
         manager.cleanupOffscreenObstacles();
@@ -160,5 +162,5 @@ class MovingObstaclesTest {
         assertEquals(y, log.getY());
         assertEquals(speed, log.getSpeed());
     }
-    
+
 }

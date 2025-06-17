@@ -30,7 +30,6 @@ class CollisionHandlerTest {
     @BeforeEach
     void setUp() {
         player = new PlayerImpl(2, 6, new SkinImpl("id", "name", 10, false, Color.CYAN));
-        
     }
 
     @Test
@@ -69,7 +68,6 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleFatalCollisionImmortal() {
-    
         map = new GameMapImpl();
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleFatalCollision(player);
@@ -78,7 +76,6 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleFatalCollisionMortal() {
-    
         map = new GameMapImpl();
         final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
