@@ -61,7 +61,7 @@ public interface MovingObstacleFactory {
      * Increases the speed limits for all obstacles.
      */
     void increaseSpeedLimits();
-    
+
     /**
      * Gets the width of the obstacle in cells.
      *

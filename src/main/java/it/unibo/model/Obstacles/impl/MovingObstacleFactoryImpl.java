@@ -60,7 +60,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         }
         throw new IllegalArgumentException("Unknown obstacle type: " + type);
     }
-    
+
     @Override
     public void increaseSpeedLimits() {
         SpeedConfig.increaseAllSpeeds();
