@@ -1,10 +1,11 @@
-package it.unibo.model.Shop.impl;
+package it.unibo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.unibo.model.Shop.api.Skin;
+import it.unibo.model.Shop.impl.ShopModelImpl;
 
 class ShopModelImplExtraTest {
     private ShopModelImpl shopModel;

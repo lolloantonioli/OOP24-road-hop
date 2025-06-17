@@ -1,7 +1,10 @@
-package it.unibo.model.Shop.impl;
+package it.unibo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import it.unibo.model.Shop.impl.ShopModelImpl;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersistenceTest {
