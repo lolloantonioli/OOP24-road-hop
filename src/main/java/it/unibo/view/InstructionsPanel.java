@@ -1,11 +1,11 @@
 package it.unibo.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,9 +21,9 @@ import it.unibo.controller.MainController;
  */
 public final class InstructionsPanel extends JPanel {
 
-    private final int height = 20;
-    private final String backButtonText = "Back";
-    private final String instructionsText = "Instructions:\n"
+    private static final int height = 20;
+    private static final String backButtonText = "Back";
+    private static final String instructionsText = "Instructions:\n"
             + "1. Use WASD to move your character.\n"
             + "2. Collect coins.\n"
             + "3. Avoid obstacles to stay alive.\n"

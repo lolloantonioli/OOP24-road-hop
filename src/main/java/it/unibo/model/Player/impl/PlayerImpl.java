@@ -1,9 +1,9 @@
 package it.unibo.model.player.impl;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import it.unibo.controller.player.api.DeathObserver;
 import it.unibo.model.map.api.Cell;
@@ -71,6 +71,7 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
      * Forces the player to move to a new position and updates the score.
      * @param newPos the new position to move the player to
      */
+    @Override
     public void move(final Cell newPos) {
         checkNotNull(newPos, "new position cannot be null");
         super.setX(newPos.getX());
@@ -204,7 +205,7 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
      * Notifies all observers that the game has ended.
      */
     private void notifyObservers() {
-        observers.forEach(o -> o.endGame());
+        observers.forEach(DeathObserver::endGame);
     }
 
 }

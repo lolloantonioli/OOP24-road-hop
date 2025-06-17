@@ -24,20 +24,15 @@ public final class CollisionHandlerImpl implements CollisionHandler {
             return;
         }
 
-        try {
-
-            if (collectible.getType().equals(CollectibleType.COIN)) {
-                player.collectACoin();
-            }
-
-            if (collectible.getType().equals(CollectibleType.SECOND_LIFE)) {
-                player.grantSecondLife();
-            }
-
-            collectible.collect();
-        } catch (final Exception e) {
-                System.err.println("Error processing collectible collision - " + e.getMessage());
+        if (collectible.getType().equals(CollectibleType.COIN)) {
+            player.collectACoin();
         }
+
+        if (collectible.getType().equals(CollectibleType.SECOND_LIFE)) {
+            player.grantSecondLife();
+        }
+
+        collectible.collect();
     }
 
 }

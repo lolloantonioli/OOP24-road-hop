@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -79,7 +80,7 @@ public final class ShopView extends JPanel {
         headerPanel.setBackground(Color.BLUE);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel titleLabel = new JLabel("Skin Shop", SwingConstants.CENTER);
+        final JLabel titleLabel = new JLabel("Skin Shop", SwingConstants.CENTER);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.ITALIC, titleLabel.getFont().getSize() * HEADER_FONT_SCALE));
 
@@ -97,7 +98,7 @@ public final class ShopView extends JPanel {
         final JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         footerPanel.setBackground(Color.BLUE);
 
-        JButton backButton = new JButton("Back");
+        final JButton backButton = new JButton("Back");
         backButton.setBackground(Color.BLUE);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
@@ -205,7 +206,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param coins the new coin balance
      */
-    public final void setCoins(int coins) {
+    public void setCoins(final int coins) {
        coinsLabel.setText("Coins: " + coins);
        refreshSkins();
     }
@@ -215,7 +216,7 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param onBackToMainMenu the action to perform when the back button is clicked
      */
-    public final void setOnBackToMainMenu(Runnable onBackToMainMenu) {
+    public void setOnBackToMainMenu(final Runnable onBackToMainMenu) {
         this.onBackToMainMenu = onBackToMainMenu;
     }
 
@@ -224,28 +225,26 @@ private Component createSkinCard(final Skin skin) {
      *
      * @param skins the list of skins to display
      */
-    public final void setSkins(List<Skin> skins) {
+    public void setSkins(final List<Skin> skins) {
         this.skins = new ArrayList<>(skins);
         refreshSkins();
     }
-
 
     /**
      * Sets the action to be performed when a skin is purchased.
      *
      * @param skinPurchase the action to perform when a skin is purchased, accepting skin ID and price
      */
-    public final void setOnSkinPurchase(BiConsumer<String, Integer> skinPurchase) {
+    public void setOnSkinPurchase(final BiConsumer<String, Integer> skinPurchase) {
         this.onSkinPurchase = skinPurchase;
     }
-
 
     /**
      * Sets the action to be performed when a skin is selected.
      *
      * @param onSkinSelected the action to perform when a skin is selected, accepting skin ID
      */
-    public final void setOnSkinSelected(Consumer<String> onSkinSelected) {
+    public void setOnSkinSelected(final Consumer<String> onSkinSelected) {
         this.onSkinSelected = onSkinSelected;
     }
 

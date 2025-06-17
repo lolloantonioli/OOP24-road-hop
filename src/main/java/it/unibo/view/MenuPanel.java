@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,14 +20,12 @@ import it.unibo.controller.MainController;
  */
 public final class MenuPanel extends JPanel {
 
-
-    private final String playText = "Play";
-    private final String instructionsText = "Instructions";
-    private final String shopText = "Shop";
-    private final int betweenLogo = 20;
-    private final int betweenButtons = 10;
-    private final int fontSize = 48;
-
+    private static final String playText = "Play";
+    private static final String instructionsText = "Instructions";
+    private static final String shopText = "Shop";
+    private static final int betweenLogo = 20;
+    private static final int betweenButtons = 10;
+    private static final int fontSize = 48;
 
     private final JButton playButton;
     private final JButton instructionsButton;
