@@ -1,6 +1,6 @@
-package it.unibo.model.Player.impl;
+package it.unibo.model.Collision.impl;
 
-import it.unibo.model.Player.api.CollisionHandler;
+import it.unibo.model.Collision.api.CollisionHandler;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.util.CollectibleType;
 import it.unibo.model.Player.api.Player;

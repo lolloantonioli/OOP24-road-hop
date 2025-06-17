@@ -46,6 +46,9 @@ public final class GamePanel extends JPanel {
     private static final int RAILWAY_RAIL_X_DIV1 = 6;
     private static final int RAILWAY_RAIL_X_MUL2 = 4;
     private static final int RAILWAY_TRAVERSE_HEIGHT_DIV = 8;
+    private static final int BROWN_R = 139;
+    private static final int BROWN_G = 69;
+    private static final int BROWN_B = 19;
 
     private MovingObstacleController obstacleController;
     private GameController gameController;
@@ -221,9 +224,10 @@ public final class GamePanel extends JPanel {
             g.fillRect(pixelX, y + cellHeight / OBSTACLE_CAR_HEIGHT_DIV, pixelWidth, cellHeight / OBSTACLE_CAR_HEIGHT_MUL);
         } else if (type == ObstacleType.TRAIN) {
             g.setColor(Color.DARK_GRAY);
-            g.fillRect(pixelX, y + cellHeight / OBSTACLE_TRAIN_HEIGHT_DIV, pixelWidth, cellHeight * OBSTACLE_TRAIN_HEIGHT_MUL / OBSTACLE_TRAIN_HEIGHT_DIV2);
+            g.fillRect(pixelX, y + cellHeight / OBSTACLE_TRAIN_HEIGHT_DIV,
+            pixelWidth, cellHeight * OBSTACLE_TRAIN_HEIGHT_MUL / OBSTACLE_TRAIN_HEIGHT_DIV2);
         } else if (type == ObstacleType.LOG) {
-            g.setColor(new Color(139, 69, 19));
+            g.setColor(new Color(BROWN_R, BROWN_G, BROWN_B));
             g.fillRect(pixelX, y + cellHeight / OBSTACLE_LOG_HEIGHT_DIV, pixelWidth, cellHeight / OBSTACLE_LOG_HEIGHT_DIV2);
         }
     }

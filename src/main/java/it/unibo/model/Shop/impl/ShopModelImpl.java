@@ -177,7 +177,7 @@ public class ShopModelImpl implements ShopModel {
      * Updates the max score if the new score is higher and saves the data.
      * @param score the new score to check
      */
-    public void updateMaxScore(int score) {
+    public void updateMaxScore(final int score) {
         if (score > maxScore) {
             maxScore = score;
             saveData();
@@ -188,7 +188,7 @@ public class ShopModelImpl implements ShopModel {
      * ONLY FOR TESTS: Sets the number of coins directly (does not save to file).
      * @param coins the number of coins to set
      */
-    public void setCoinsForTest(int coins) {
+    public void setCoinsForTest(final int coins) {
         this.coins = coins;
     }
 }

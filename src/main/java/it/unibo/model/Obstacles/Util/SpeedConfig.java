@@ -44,15 +44,6 @@ public final class SpeedConfig {
     private static int minLogSpeed = DEFAULT_MIN_LOG_SPEED;
     private static int maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
 
-    /**
-     * Private constructor to prevent instantiation.
-     */
-    private SpeedConfig() {
-    }
-
-    /**
-     * Sets the default speed limits for obstacles.
-     */
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
         maxCarSpeed = DEFAULT_MAX_CAR_SPEED;
@@ -63,7 +54,7 @@ public final class SpeedConfig {
     }
     
     /**
-     * Generates a random speed for a car within the defined limits.    
+     * Generates a random speed for a car within the defined limits.
      * @param rnd the Random instance to use for generating the speed
      * @return a random speed for a car
      */

@@ -1,11 +1,11 @@
-package it.unibo.model.Player.impl;
+package it.unibo.model.Collision.impl;
 
 import java.util.List;
 
+import it.unibo.model.Collision.api.CollisionIdentifier;
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameObject;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
-import it.unibo.model.Player.api.CollisionIdentifier;
 
 /**
  * Implementation of the CollisionIdentifier interface.
