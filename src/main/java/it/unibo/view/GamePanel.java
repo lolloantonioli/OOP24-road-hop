@@ -23,7 +23,7 @@ import it.unibo.model.Player.api.Player;
  */
 public final class GamePanel extends JPanel {
 
-    private final int DIV_FACTOR_FONT = 5;
+    private final static int DIV_FACTOR_FONT = 5;
 
     private MovingObstacleController obstacleController;
     private GameController gameController;
@@ -87,7 +87,7 @@ public final class GamePanel extends JPanel {
         drawScore(g);
 
         if (gameController.getPlayerController().hasPlayerSecondLife()) {
-            g.setColor(new Color(255, 105, 180)); // rosa
+            g.setColor(Color.MAGENTA);
             final int radius = getHeight() / 20;
             final int padding = radius / 2;
             g.fillOval(padding, padding, radius, radius);
@@ -276,8 +276,8 @@ public final class GamePanel extends JPanel {
         }
 
         // Calcola le coordinate pixel
-        int pixelX = playerCol * cellWidth;
-        int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
+        final int pixelX = playerCol * cellWidth;
+        final int pixelY = (chunksNumber - screenRow - 1) * cellHeight + animationOffset;
 
         // Disegna il player
         drawPlayerSprite(g, pixelX, pixelY, cellWidth, cellHeight, player);

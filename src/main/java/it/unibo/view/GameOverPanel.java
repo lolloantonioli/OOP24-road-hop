@@ -17,6 +17,7 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
+<<<<<<< HEAD
     private final int labelSize = 48;
     private final int labelBinSize = 32;
     private final int heightArea = 40;
@@ -26,6 +27,16 @@ public final class GameOverPanel extends JPanel {
 
     private final String gameOverText = "Game Over";
     private final String menuButtonText = "Menu";
+=======
+    private final static int LABEL_SIZE = 48;
+    private final static int LABEL_BTN_SIZE = 32;
+    private final static int HEIGHT_AREA = 40;
+    private final static int DIVFACTORTITLE = 6;
+    private final static int DIVFACTORBUTTON = 15;
+    private final static String GAME_OVER_TEXT = "Game Over";
+    private final static String MENU_BUTTON_TEXT = "Menu";
+
+>>>>>>> ef1a682268bc7c28b9e2ef8f7ee55dfda1a05157
     private final JButton menuButton;
     private final JLabel gameOverLabel;
 

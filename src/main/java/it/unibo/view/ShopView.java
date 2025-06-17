@@ -39,12 +39,21 @@ public class ShopView extends JPanel {
     private BiConsumer<String, Integer> onSkinPurchase;
     private Consumer<String> onSkinSelected;
 
+<<<<<<< HEAD
     private final float headerFontScale = 1.5f;
     private final float nameLabelFontScale = 1.2f;
     private final int cardBorderPadding = 5;
     private final int cardWidth = 120;
     private final int cardHeight = 160;
     private final int squareDimension = 48;
+=======
+    private final static float HEADER_FONT_SCALE = 1.5f;
+    private final static float NAME_LABEL_FONT_SCALE = 1.2f;
+    private final static int CARD_BORDER_PADDING = 5;
+    private final static int CARD_WIDTH = 120;
+    private final static int CARD_HEIGHT = 160;
+    private final static int SQUARE_DIMENSION = 48;
+>>>>>>> ef1a682268bc7c28b9e2ef8f7ee55dfda1a05157
 
     /**
      * Constructs a ShopView with a header, skins display area, and footer.
