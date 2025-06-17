@@ -18,7 +18,7 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-//CONTROLLA CHE è DIFFICULTYLEVEL + COSTANTI VELOCITà
+//CONTROLLA CHE è DIFFICULTYLEVEL + SPAWN DISTANCE
 
 /**
  * Implementation of MovingObstacleController.
@@ -29,7 +29,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     private final static int TRAIN_SPAWN_DISTANCE = 7;
     private final static int CAR_SPAWN_DISTANCE = 4;
     private final static int LOG_SPAWN_DISTANCE = 1;
-    private final int cells = GameConstant.CELLS_PER_CHUNK;
+    private final int CELLS = GameConstant.CELLS_PER_CHUNK;
     private final MovingObstacleFactory factory;
     private final MovingObstacleManager manager;
     private final GameMap gameMap;
@@ -47,27 +47,6 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
         this.gameMap = gameMap;
         this.factory = new MovingObstacleFactoryImpl();
         this.manager = new MovingObstacleManagerImpl();
-    }
-
-    @Override
-    public List<MovingObstacles> createCarSet(final int y, final int count, final boolean leftToRight, final int speed) {
-        final List<MovingObstacles> cars = factory.createObstacleSet(ObstacleType.CAR, y, count, leftToRight, speed);
-        manager.addObstacles(cars);
-        return cars;
-    }
-
-    @Override
-    public List<MovingObstacles> createTrainSet(final int y, final int count, final boolean leftToRight, final int speed) {
-        final List<MovingObstacles> trains = factory.createObstacleSet(ObstacleType.TRAIN, y, count, leftToRight, speed);
-        manager.addObstacles(trains);
-        return trains;
-    }
-
-    @Override
-    public List<MovingObstacles> createLogSet(final int y, final int count, final boolean leftToRight, final int speed) {
-        final List<MovingObstacles> logs = factory.createObstacleSet(ObstacleType.LOG, y, count, leftToRight, speed);
-        manager.addObstacles(logs);
-        return logs;
     }
 
     @Override
@@ -97,7 +76,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
             return leftmost >= spawnDistance;
         } else {
             final int rightmost = obstacles.stream().mapToInt(obs -> obs.getX() + obs.getWidthInCells() - 1).max().orElse(10);
-            return rightmost <= ((cells - 1) - spawnDistance);
+            return rightmost <= ((CELLS - 1) - spawnDistance);
         }
     }
 
@@ -120,7 +99,7 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
         };
         final boolean leftToRight = chunkDirections.computeIfAbsent(y, k -> random.nextBoolean());
         final int speed = chunkSpeeds.computeIfAbsent(y, k -> factory.getRandomSpeed(type));
-        final int x = leftToRight ? -factory.getObstacleWidth(type) : cells;
+        final int x = leftToRight ? -factory.getObstacleWidth(type) : CELLS;
         final MovingObstacles obstacle = factory.createObstacleByType(type, x, y, leftToRight ? speed : -speed);
         manager.addObstacle(obstacle);
         chunk.addObjectAt(obstacle, 0);
