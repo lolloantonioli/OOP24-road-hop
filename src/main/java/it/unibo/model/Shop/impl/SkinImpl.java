@@ -74,7 +74,7 @@ public class SkinImpl implements Skin {
     public final void deselect() {
         this.selected = false;
     }
-    
+
     @Override
     public final Color getColor() {
         return color;

@@ -16,8 +16,8 @@ import javax.swing.JPanel;
  */
 public final class PausePanel extends JPanel {
 
-    private final String MENU_BUTTON_TEXT = "Menu";
-    private final String CONTINUE_BUTTON_TEXT = "Continue";
+    private final String menuButtonText = "Menu";
+    private final String continueButtonText = "Continue";
 
     private final JButton continueButton;;
     private final JButton menuButton;
@@ -28,8 +28,8 @@ public final class PausePanel extends JPanel {
      * @param onMenu the action to perform when the menu button is clicked
      */
     public PausePanel(final Runnable onContinue, final Runnable onMenu) {
-        menuButton = new JButton(MENU_BUTTON_TEXT);
-        continueButton = new JButton(CONTINUE_BUTTON_TEXT);
+        menuButton = new JButton(menuButtonText);
+        continueButton = new JButton(continueButtonText);
         this.setMenuAction(onMenu);
         this.setContinueAction(onContinue);
 

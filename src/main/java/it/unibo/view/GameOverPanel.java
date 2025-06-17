@@ -17,11 +17,11 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
-    private final static int LABEL_SIZE = 48;
-    private final static int LABEL_BTN_SIZE = 32;
-    private final static int HEIGHT_AREA = 40;
-    private final static int DIV_FACTOR_TITLE = 6;
-    private final static int DIV_FACTOR_BUTTON = 15;
+    private final int LABEL_SIZE = 48;
+    private final int LABEL_BTN_SIZE = 32;
+    private final int HEIGHT_AREA = 40;
+    private final int DIV_FACTOR_TITLE = 6;
+    private final int DIV_FACTOR_BUTTON = 15;
 
     private static final String GAME_OVER_TEXT = "Game Over";
     private static final String MENU_BUTTON_TEXT = "Menu";
