@@ -1,10 +1,10 @@
 package it.unibo.model.Map.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import it.unibo.model.Map.api.Cell;
 import it.unibo.model.Map.api.GameObject;
@@ -27,6 +27,14 @@ public class GameObjectImpl implements GameObject {
     private boolean platform;
     private int widthInCells = 1; // Default width in cells
 
+    /**
+     * Constructs a new {@code GameObjectImpl} with the specified coordinates.
+     * This constructor initializes the object with a default width of 1 cell.
+     *
+     * @param x the x coordinate of the object.
+     * @param y the y coordinate of the object.
+     * @throws NullPointerException if x or y is null.
+     */
     public GameObjectImpl(final int x, final int y) {
         this(checkNotNull(x), checkNotNull(y), 1);
     }
@@ -50,122 +58,80 @@ public class GameObjectImpl implements GameObject {
         this.widthInCells = widthInCells;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure consistency with {@link #setX(int)}.
-     */
+    
     @Override
     public int getX() {
         return this.x;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure consistency with {@link #setY(int)}.
-     */
+    
     @Override
     public int getY() {
         return this.y;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure consistency with {@link #setSpeed(double)}.
-     */
+
     @Override
     public int getSpeed() {
         return this.speed;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure the returned value reflects the object's movability.
-     */
+
     @Override
     public boolean isMovable() {
         return this.movable;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should update the movability state accordingly.
-     */
+
     @Override
     public void setMovable(final boolean movable) {
         this.movable = movable;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should update the speed state accordingly.
-     */
+
     @Override
     public void setSpeed(final int speed) {
         this.speed = checkNotNull(speed);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure the returned value reflects the object's platform state.
-     */
+
     @Override
     public boolean isPlatform() {
         return this.platform;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should update the platform state accordingly.
-     */
+
     @Override
     public void setPlatform(final boolean platform) {
         this.platform = checkNotNull(platform);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should update the X coordinate accordingly.
-     */
+
     @Override
     public void setX(final int x) {
         this.x = checkNotNull(x);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should update the Y coordinate accordingly.
-     */
+
     @Override
     public void setY(final int y) {
         this.y = checkNotNull(y);
     }
 
+
+    @Override
     public void setWidthInCells(final int widthInCells) {
         checkArgument(widthInCells >= 1, MSG);
         this.widthInCells = widthInCells;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure the returned value reflects the object's width in cells.
-     */
+
     @Override
     public int getWidthInCells() {
         return widthInCells;
     }
 
-    // tutte le posizioni x occupate da un oggetto
+
     @Override
     public List<Integer> getOccupiedCells() {
         final int width = getWidthInCells();
@@ -176,7 +142,7 @@ public class GameObjectImpl implements GameObject {
         return cells;
     }
 
-    // controlla se un oggetto occupa una specifica cella
+
     @Override
     public boolean occupiesCell(final int cellX) {
         checkArgument(cellX >= 0 && cellX <= ChunkImpl.CELLS_PER_ROW, CELL_MSG);
@@ -185,11 +151,7 @@ public class GameObjectImpl implements GameObject {
         return cellX >= startX && cellX < endX;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses overriding this method should ensure the returned list accurately represents all occupied cells.
-     */
+
     @Override
     public List<Cell> getOccupiedCells2() {
         final List<Cell> list = new ArrayList<>();
