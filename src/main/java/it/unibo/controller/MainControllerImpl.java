@@ -14,6 +14,7 @@ import it.unibo.controller.Util.CardName;
 import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.impl.GameMapImpl;
 import it.unibo.model.Obstacles.Util.GameConstant;
+import it.unibo.model.Obstacles.Util.SpeedConfig;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Shop.api.ShopModel;
@@ -58,7 +59,7 @@ public final class MainControllerImpl implements MainController {
     private void initializeGameComponents() {
         this.gameMap = new GameMapImpl();
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
-        obstacleController.resetObstacles(INITIAL_SPEED);
+        SpeedConfig.resetDefaultSpeeds();
         this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), INITIAL_X, INITIAL_Y);
         this.deathObserver = new DeathObserverImpl(this);
         playerController.getPlayer().addObserver(deathObserver);

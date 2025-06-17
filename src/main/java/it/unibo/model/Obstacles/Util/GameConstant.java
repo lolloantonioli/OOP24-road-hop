@@ -7,10 +7,10 @@ package it.unibo.model.Obstacles.Util;
 public final class GameConstant {
 
     private GameConstant() {
-       // costruttore privato per evitare instanziazioni
+       // Prevent instantiation
     }
 
     public static final int CELLS_PER_CHUNK = 9;
-    public static final int INCREASE_SPEED = 20;
+    public static final int INCREASE_SPEED = 15;
     
 }
