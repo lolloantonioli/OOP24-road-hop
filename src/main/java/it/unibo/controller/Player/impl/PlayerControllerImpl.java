@@ -108,24 +108,21 @@ public final class PlayerControllerImpl implements PlayerController {
 
         final List<GameObject> collidedObjects = collisionDetector.getCollidedObjects(player, gameMap);
 
+        collisionIdentifier.checkError(collidedObjects);
+
         MovingObstacles newPlatform = null;
 
         for (final GameObject obj : collidedObjects) {
-            try {
-                if (collisionIdentifier.isOnPlatform(obj)) {
-                    newPlatform = (MovingObstacles) obj;
-                }
+            if (collisionIdentifier.isOnPlatform(obj)) {
+                newPlatform = (MovingObstacles) obj;
+            }
 
-                if (collisionIdentifier.isFatalCollision(obj)) {
-                    collisionHandler.handleFatalCollision(player);
-                }
+            if (collisionIdentifier.isFatalCollision(obj)) {
+                collisionHandler.handleFatalCollision(player);
+            }
 
-                if (collisionIdentifier.isCollectibleCollision(obj)) {
-                    collisionHandler.handleCollectibleCollision(player, (Collectible) obj);
-                }
-
-            } catch (final Exception e) {
-                System.err.println("Error processing collision with: " + obj.getClass().getSimpleName() + " - " + e.getMessage());
+            if (collisionIdentifier.isCollectibleCollision(obj)) {
+                collisionHandler.handleCollectibleCollision(player, (Collectible) obj);
             }
         }
 

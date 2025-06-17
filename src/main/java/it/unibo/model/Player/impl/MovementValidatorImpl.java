@@ -35,7 +35,9 @@ public final class MovementValidatorImpl implements MovementValidator {
         checkNotNull(map, "not valid map");
 
         return !map.getVisibleChunks().stream()
-            .anyMatch(c -> c.getCells().contains(position));
+            .anyMatch(c -> c.getCells().getFirst().getY() == position.getY()
+                            && position.getX() >= 0
+                            && position.getX() < c.getCells().size());
     }
 
 }

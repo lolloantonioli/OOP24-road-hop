@@ -26,7 +26,16 @@ public enum Direction {
     private final int deltaX;
     private final int deltaY;
 
+    /**
+     * Constructor for Direction enum.
+     * @param deltaX the X-axis movement value associated with this direction
+     * @param deltaY the Y-axis movement value associated with this direction
+     * * @throws IllegalArgumentException if the direction is not valid (i.e., not a unit vector)
+     */
     Direction(final int deltaX, final int deltaY) {
+        if (Math.abs(deltaX + deltaY) != 1) {
+            throw new IllegalArgumentException("Direction is not valid.");
+        }
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }

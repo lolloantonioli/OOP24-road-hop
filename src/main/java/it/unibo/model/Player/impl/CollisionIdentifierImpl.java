@@ -4,8 +4,6 @@ import java.util.List;
 
 import it.unibo.model.Map.api.Collectible;
 import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 import it.unibo.model.Player.api.CollisionIdentifier;
 
@@ -35,11 +33,11 @@ public final class CollisionIdentifierImpl implements CollisionIdentifier {
     @Override
     public void checkError(final List<GameObject> collidedWith) {
         if (collidedWith.stream()
-            .filter(Obstacle.class::isInstance)
-            .map(Obstacle.class::cast)
-            .anyMatch(obstacle -> obstacle.getType().equals(ObstacleType.TREE))) {
+            .anyMatch(obj -> !isOnPlatform(obj) 
+                                && !isFatalCollision(obj)
+                                && !isCollectibleCollision(obj))) {
 
-                throw new IllegalStateException("not valid position");
+                throw new IllegalStateException("not valid collision");
 
             }
     }

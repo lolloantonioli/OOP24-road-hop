@@ -109,6 +109,7 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
 
     @Override
     public void die() {
+        // if the player is out of bounds, he dies
         if (isOutOfBounds) {
             isAlive = false;
             notifyObservers();
@@ -116,13 +117,13 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
         }
 
         if (isInvincible) {
-            return; // Non può morire se invincibile
+            return;
         }
 
         if (hasSecondLife) {
+            // if the player has a second life, he can use it and become invincible until he moves
             hasSecondLife = false;
             isInvincible = true;
-            //quando viene usata la seconda vita il player diventa invincibile fino a quando non si sarà mosso
         } else {
             isAlive = false;
             notifyObservers();
@@ -199,6 +200,9 @@ public final class PlayerImpl extends GameObjectImpl implements Player  {
         observers.remove(observer);
     }
 
+    /**
+     * Notifies all observers that the game has ended.
+     */
     private void notifyObservers() {
         observers.forEach(o -> o.endGame());
     }
