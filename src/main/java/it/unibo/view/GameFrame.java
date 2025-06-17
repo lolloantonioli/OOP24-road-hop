@@ -3,12 +3,12 @@ package it.unibo.view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-
 
 import it.unibo.controller.MainController;
 import it.unibo.controller.util.CardName;
@@ -32,6 +32,11 @@ public final class GameFrame extends JFrame {
     private final InstructionsPanel instructionsPanel;
     private final GamePanel gamePanel;
     private final GameOverPanel gameOverPanel;
+
+    @SuppressFBWarnings(
+        value = "EI",
+        justification = "Intentional: callers need direct access to the InstructionsPanel for layout/testing."
+    )
 
     /**
      * Constructs a new GameFrame with the specified MainController.
@@ -72,14 +77,6 @@ public final class GameFrame extends JFrame {
     }
 
     /**
-     * Returns the MenuPanel of this GameFrame.
-     * @return the MenuPanel instance
-     */
-    public MenuPanel getMenuPanel() {
-        return this.menuPanel;
-    }
-
-    /**
      * Returns the ShopView of this GameFrame.
      * @return the ShopView instance
      */
@@ -88,27 +85,11 @@ public final class GameFrame extends JFrame {
     }
 
     /**
-     * Returns the InstructionsPanel of this GameFrame.
-     * @return the InstructionsPanel instance
-     */
-    public InstructionsPanel getInstructionsPanel() {
-        return this.instructionsPanel;
-    }
-
-    /**
      * Returns the GamePanel of this GameFrame.
      * @return the GamePanel instance
      */
     public GamePanel getGamePanel() {
         return this.gamePanel;
-    }
-
-    /**
-     * Returns the GameOverPanel of this GameFrame.
-     * @return the GameOverPanel instance
-     */
-    public GameOverPanel getGameOverPanel() {
-        return this.gameOverPanel;
     }
 
     /**

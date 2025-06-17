@@ -1,7 +1,6 @@
 package it.unibo.controller;
 
-import java.util.Objects;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.obstacles.api.MovingObstacleController;
 import it.unibo.controller.state.api.GameState;
 import it.unibo.controller.state.impl.OnGameState;
@@ -10,7 +9,10 @@ import it.unibo.model.obstacles.util.SpeedConfig;
 import it.unibo.model.obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
-//aggiungere il playerController
+@SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "The Swing layout manager requires the concrete panel instance to insert it into the component hierarchy; JPanel does not support defensive copying."
+)
 
 /**
  * GameEngine is the main game loop that handles the game state, updates, and rendering.
@@ -53,7 +55,7 @@ public final class GameEngine implements Runnable {
                       final MainController mainController,
                       final GameController gameController) {
         this.gameMap = gameMap;
-        this.gamePanel = Objects.requireNonNull(gamePanel, "GamePanel cannot be null");
+        this.gamePanel = gamePanel;
         this.obstacleController = obstacleController;
         this.obstacleFactory = obstacleFactory;
         this.mainController = mainController;

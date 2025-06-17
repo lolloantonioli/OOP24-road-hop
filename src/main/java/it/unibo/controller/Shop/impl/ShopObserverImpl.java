@@ -2,11 +2,17 @@ package it.unibo.controller.shop.impl;
 
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.MainController;
 import it.unibo.controller.shop.api.ShopObserver;
 import it.unibo.view.ShopView;
 import it.unibo.model.shop.api.ShopModel;
 import it.unibo.model.shop.api.Skin;
+
+@SuppressFBWarnings(
+    value = "EI2",
+    justification = "“Necessary to keep a direct reference to the provided ShopModel to synchronize skin purchase and selection states in real time."
+)
 
 /**
  * Implementation of the ShopObserver interface.

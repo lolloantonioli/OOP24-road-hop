@@ -100,11 +100,6 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public ShopModel getShopModel() {
-        return shopModel;
-    }
-
-    @Override
     public GameMap getGameMap() {
         return gameMap;
     }

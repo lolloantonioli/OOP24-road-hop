@@ -50,12 +50,6 @@ public interface MainController {
     void showGameOverPanel();
 
     /**
-     * Getter for the ShopModel.
-     * @return the ShopModel instance
-     */
-    ShopModel getShopModel();
-
-    /**
      * Getter for the GameMap.
      * @return the GameMap instance
      */
