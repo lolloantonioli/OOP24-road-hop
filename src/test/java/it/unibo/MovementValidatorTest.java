@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Set;
 
-public class MovementValidatorTest {
+class MovementValidatorTest {
 
     private MovementValidator validator;
     private GameMap map;
@@ -31,31 +31,31 @@ public class MovementValidatorTest {
 
     @Test
     void testCanMoveToFreeCell() {
-        Cell cell = new CellImpl(2, 2);
-        Set<GameObject> objs = map.getAllChunks().get(2).getCellAt(2).getContent();
+        final Cell cell = new CellImpl(2, 2);
+        final Set<GameObject> objs = map.getAllChunks().get(2).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(2).getCellAt(2).removeObject(o));
         assertTrue(validator.canMoveTo(map, cell));
     }
 
     @Test
     void testCanMoveToCellWithTreeObstacle() {
-        Cell cell = new CellImpl(1, 1);
-        Obstacle tree = new ObstacleImpl(1, 1, ObstacleType.TREE, false);
+        final Cell cell = new CellImpl(1, 1);
+        final Obstacle tree = new ObstacleImpl(1, 1, ObstacleType.TREE, false);
         map.getVisibleChunks().get(1).getCellAt(1).addObject(tree);
         assertFalse(validator.canMoveTo(map, cell));
     }
 
     @Test
     void testIsOutOfBoundsInside() {
-        Cell cell = new CellImpl(0, 0);
+        final Cell cell = new CellImpl(0, 0);
         assertFalse(validator.isOutOfBounds(cell, map));
     }
 
     @Test
     void testIsOutOfBoundsOutside() {
-        Cell cell = new CellImpl(-1, 0);
+        final Cell cell = new CellImpl(-1, 0);
         assertTrue(validator.isOutOfBounds(cell, map));
-        Cell cell2 = new CellImpl(0, 10);
+        final Cell cell2 = new CellImpl(0, 10);
         assertTrue(validator.isOutOfBounds(cell2, map));
     }
 }

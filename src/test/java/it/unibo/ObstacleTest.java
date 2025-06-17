@@ -16,10 +16,10 @@ import it.unibo.model.map.util.ObstacleType;
  */
 class ObstacleTest {
 
-    private Obstacle staticObstacle;
     private static final int X_COORD = ChunkImpl.CELLS_PER_ROW - 1;
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
     private static final int INVALID_COORD = -1;
+    private Obstacle staticObstacle;
 
     /**
      * Initializes a valid static obstacle before each test.
@@ -50,14 +50,12 @@ class ObstacleTest {
         assertThrows(IllegalArgumentException.class, () -> {
             new ObstacleImpl(INVALID_COORD, Y_COORD, ObstacleType.TREE, false);
         });
-        
         assertThrows(IllegalArgumentException.class, () -> {
             new ObstacleImpl(X_COORD, INVALID_COORD, ObstacleType.TREE, false);
         });
-        
         assertThrows(IllegalArgumentException.class, () -> {
             new ObstacleImpl(INVALID_COORD, INVALID_COORD, ObstacleType.TREE, false);
         });
     }
-
+    
 }

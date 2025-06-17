@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Color;
 import java.util.Set;
 
-public class PlayerTest {
+class PlayerTest {
 
     private PlayerImpl player;
     private GameMap map;
@@ -40,13 +40,13 @@ public class PlayerTest {
         assertTrue(player.isAlive());
         assertTrue(player.isInvincible());
         assertFalse(player.isOutOfBounds());
-        assertEquals(skin , player.getCurrentSkin());
+        assertEquals(skin, player.getCurrentSkin());
     }
 
     @Test
     void testFailedMoveAndScore() {
         map.getAllChunks().get(3).getCellAt(2).addObject(new ObstacleImpl(2, 3, ObstacleType.TREE, false));
-        boolean moved = player.tryMove(Direction.UP, map, validator);
+        final boolean moved = player.tryMove(Direction.UP, map, validator);
 
         assertFalse(moved);
         assertEquals(0, player.getScore());
@@ -55,9 +55,9 @@ public class PlayerTest {
 
     @Test
     void testSuccessfulMoveAndScore() {
-        Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
+        final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
-        boolean moved = player.tryMove(Direction.UP, map, validator);
+        final boolean moved = player.tryMove(Direction.UP, map, validator);
         assertTrue(moved);
         assertEquals(1, player.getScore());
         assertFalse(player.isInvincible());
@@ -83,7 +83,7 @@ public class PlayerTest {
 
     @Test
     void testSecondLife() {
-        Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
+        final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
         player.tryMove(Direction.UP, map, validator);
         player.grantSecondLife();
@@ -96,7 +96,7 @@ public class PlayerTest {
 
     @Test
     void testSetSkin() {
-        Skin newSkin = new SkinImpl("idskin2", "name2", 105, true, Color.BLACK);
+        final Skin newSkin = new SkinImpl("idskin2", "name2", 105, true, Color.BLACK);
         player.setSkin(newSkin);
         assertEquals(newSkin, player.getCurrentSkin());
     }

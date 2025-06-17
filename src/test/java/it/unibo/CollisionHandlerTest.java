@@ -1,5 +1,14 @@
 package it.unibo;
 
+import java.awt.Color;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import it.unibo.model.collision.impl.CollisionHandlerImpl;
 import it.unibo.model.map.api.Collectible;
 import it.unibo.model.map.api.GameMap;
@@ -13,15 +22,7 @@ import it.unibo.model.player.impl.PlayerImpl;
 import it.unibo.model.player.util.Direction;
 import it.unibo.model.shop.impl.SkinImpl;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.awt.Color;
-import java.util.Set;
-
-public class CollisionHandlerTest {
+class CollisionHandlerTest {
 
     private Player player;
     private GameMap map;
@@ -34,9 +35,9 @@ public class CollisionHandlerTest {
 
     @Test
     void testHandleCollectibleCoin() {
-        Collectible coin = new CollectibleImpl(2, 6, CollectibleType.COIN);
+        final Collectible coin = new CollectibleImpl(2, 6, CollectibleType.COIN);
 
-        CollisionHandlerImpl handler = new CollisionHandlerImpl();
+        final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleCollectibleCollision(player, coin);
 
         assertEquals(1, player.getCollectedCoins());
@@ -45,9 +46,9 @@ public class CollisionHandlerTest {
 
     @Test
     void testHandleCollectibleSecondLife() {
-        Collectible secondLife = new CollectibleImpl(2, 6, CollectibleType.SECOND_LIFE);
+        final Collectible secondLife = new CollectibleImpl(2, 6, CollectibleType.SECOND_LIFE);
 
-        CollisionHandlerImpl handler = new CollisionHandlerImpl();
+        final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleCollectibleCollision(player, secondLife);
 
         assertTrue(player.hasSecondLife());
@@ -56,10 +57,10 @@ public class CollisionHandlerTest {
 
     @Test
     void testHandleCollectibleAlreadyCollected() {
-        Collectible coin = new CollectibleImpl(2, 6, CollectibleType.COIN);
+        final Collectible coin = new CollectibleImpl(2, 6, CollectibleType.COIN);
         coin.collect(); // già raccolto
 
-        CollisionHandlerImpl handler = new CollisionHandlerImpl();
+        final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleCollectibleCollision(player, coin);
 
         assertEquals(0, player.getCollectedCoins());
@@ -70,7 +71,7 @@ public class CollisionHandlerTest {
     void testHandleFatalCollisionImmortal() {
     
         map = new GameMapImpl();
-        CollisionHandlerImpl handler = new CollisionHandlerImpl();
+        final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleFatalCollision(player);
         assertTrue(player.isAlive());
     }
@@ -79,10 +80,10 @@ public class CollisionHandlerTest {
     void testHandleFatalCollisionMortal() {
     
         map = new GameMapImpl();
-        Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
+        final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
         player.tryMove(Direction.UP, map, new MovementValidatorImpl());
-        CollisionHandlerImpl handler = new CollisionHandlerImpl();
+        final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleFatalCollision(player);
         assertFalse(player.isAlive());
     }

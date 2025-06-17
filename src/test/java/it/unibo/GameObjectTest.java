@@ -10,11 +10,10 @@ import it.unibo.model.map.impl.GameObjectImpl;
 
 class GameObjectTest {
 
-    private GameObject gameObject;
-
     private static final int X_COORD = 5;
     private static final int Y_COORD = 10;
     private static final int INVALID_COORD = -1;
+    private GameObject gameObject;
 
     @BeforeEach
     void setUp() {

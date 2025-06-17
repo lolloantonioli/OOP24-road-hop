@@ -1,7 +1,9 @@
 package it.unibo;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +18,10 @@ import it.unibo.model.map.util.CollectibleType;
  */
 class CollectibleTest {
 
-    private Collectible collectible;
-
     private static final int X_COORD = ChunkImpl.CELLS_PER_ROW - 1;
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
     private static final int INVALID_COORD = -1;
+    private Collectible collectible;
 
     /**
      * Initializes a collectible before each test.
@@ -63,5 +64,5 @@ class CollectibleTest {
         collectible.collect();
         assertTrue(collectible.isCollected());
     }
-    
+
 }

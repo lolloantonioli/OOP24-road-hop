@@ -22,8 +22,8 @@ import it.unibo.model.map.util.ChunkType;
 
 class ObjectPlacerTest {
 
-    private final static int NUM_CHUNKS = 1_000;
-    private final static int N = ChunkImpl.CELLS_PER_ROW;
+    private static final int NUM_CHUNKS = 1_000;
+    private static final int N = ChunkImpl.CELLS_PER_ROW;
 
     private List<Chunk> chunks;
 

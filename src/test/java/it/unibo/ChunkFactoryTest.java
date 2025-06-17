@@ -1,12 +1,15 @@
 package it.unibo;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,10 +29,9 @@ import it.unibo.model.map.util.ObstacleType;
  */
 class ChunkFactoryTest {
 
-    private ChunkFactory chunkFactory;
-
     private static final int INVALID_COORD = -1;
     private static final int VALID_COORD = 1;
+    private ChunkFactory chunkFactory;
 
     /**
      * Initializes a new ChunkFactory before each test.

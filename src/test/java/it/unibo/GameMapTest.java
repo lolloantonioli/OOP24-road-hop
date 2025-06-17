@@ -17,12 +17,11 @@ import it.unibo.model.map.impl.GameMapImpl;
  * Test class for the {@link GameMapImpl} class.
  */
 class GameMapTest {
-    
-    private GameMap gameMap;
 
     private static final int INITIAL_SPEED = 1;
     private static final int BUFFER_SIZE = 5;
     private static final int MAX_SPEED = 10;
+    private GameMap gameMap;
 
     /**
      * Sets up a new GameMap instance before each test.
@@ -117,7 +116,7 @@ class GameMapTest {
     void testBufferChunks() {
         IntStream.range(0, 20).forEach(i -> gameMap.update());
         int farthestPosition = 0;
-        for (Chunk chunk : gameMap.getAllChunks()) {
+        for (final Chunk chunk : gameMap.getAllChunks()) {
             farthestPosition = Math.max(farthestPosition, chunk.getPosition());
         }
         final int currentPosition = gameMap.getCurrentPosition();

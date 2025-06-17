@@ -1,15 +1,15 @@
 package it.unibo;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import it.unibo.model.collision.api.CollisionDetector;
 import it.unibo.model.collision.impl.CollisionDetectorImpl;
 import it.unibo.model.map.api.GameObject;
 import it.unibo.model.map.impl.GameObjectImpl;
 
-import org.junit.jupiter.api.Test;
-
-public class CollisionDetectorTest {
+class CollisionDetectorTest {
 
     private final CollisionDetector collisionDetector = new CollisionDetectorImpl();
 

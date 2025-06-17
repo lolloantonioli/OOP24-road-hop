@@ -1,10 +1,13 @@
 package it.unibo;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,12 +28,11 @@ import it.unibo.model.map.util.ObstacleType;
  */
 class ChunkTest {
 
-    private Chunk chunk;
-    private GameObject testObject;
-
     private static final int TEST_CHUNK_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
     private static final int TEST_X_COORD = ChunkImpl.CELLS_PER_ROW - 1;
     private static final int INVALID_COORD = -1;
+    private Chunk chunk;
+    private GameObject testObject;
 
     /**
      * Initializes a chunk and a test object before each test.

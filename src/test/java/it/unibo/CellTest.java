@@ -1,9 +1,11 @@
 package it.unibo;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,12 +24,11 @@ import it.unibo.model.map.util.ObstacleType;
  */
 class CellTest {
 
-    private Cell cell;
-    private GameObject testObject;
-
     private static final int X_COORD = ChunkImpl.CELLS_PER_ROW - 1;
     private static final int Y_COORD = GameMapImpl.CHUNKS_NUMBER - 1;
     private static final int INVALID_COORD = -1;
+    private Cell cell;
+    private GameObject testObject;
 
     /**
      * Initializes a cell and a test object before each test.
@@ -144,6 +145,7 @@ class CellTest {
     void testGetContent() {
         cell.addObject(testObject);
         final Set<GameObject> content = cell.getContent();
-        assertThrows(UnsupportedOperationException.class, () -> content.add(new CollectibleImpl(X_COORD, Y_COORD, CollectibleType.COIN)));
+        assertThrows(UnsupportedOperationException.class, 
+                    () -> content.add(new CollectibleImpl(X_COORD, Y_COORD, CollectibleType.COIN)));
     }
 }
