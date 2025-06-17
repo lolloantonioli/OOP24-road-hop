@@ -17,6 +17,17 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
+<<<<<<< HEAD
+    private final int labelSize = 48;
+    private final int labelBinSize = 32;
+    private final int heightArea = 40;
+    private final int divFactorTitle = 6;
+    private final int divFactonButton = 15;
+
+
+    private final String gameOverText = "Game Over";
+    private final String menuButtonText = "Menu";
+=======
     private final static int LABEL_SIZE = 48;
     private final static int LABEL_BTN_SIZE = 32;
     private final static int HEIGHT_AREA = 40;
@@ -25,6 +36,7 @@ public final class GameOverPanel extends JPanel {
     private final static String GAME_OVER_TEXT = "Game Over";
     private final static String MENU_BUTTON_TEXT = "Menu";
 
+>>>>>>> ef1a682268bc7c28b9e2ef8f7ee55dfda1a05157
     private final JButton menuButton;
     private final JLabel gameOverLabel;
 
@@ -36,11 +48,11 @@ public final class GameOverPanel extends JPanel {
     public GameOverPanel(final Runnable onMenu) {
         setLayout(new GridBagLayout());
         setBackground(Color.BLUE);
-        gameOverLabel = new JLabel(GAME_OVER_TEXT);
+        gameOverLabel = new JLabel(gameOverText);
         gameOverLabel.setForeground(Color.WHITE);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, LABEL_SIZE));
-        menuButton = new JButton(MENU_BUTTON_TEXT);
-        menuButton.setFont(new Font("Arial", Font.BOLD, LABEL_BTN_SIZE));
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, labelSize));
+        menuButton = new JButton(menuButtonText);
+        menuButton.setFont(new Font("Arial", Font.BOLD, labelBinSize));
         menuButton.addActionListener(e -> onMenu.run());
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -48,7 +60,7 @@ public final class GameOverPanel extends JPanel {
         gameOverLabel.setAlignmentX(CENTER_ALIGNMENT);
         menuButton.setAlignmentX(CENTER_ALIGNMENT);
         centerPanel.add(gameOverLabel);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, HEIGHT_AREA)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, heightArea)));
         centerPanel.add(menuButton);
         add(centerPanel);
     }
@@ -57,17 +69,17 @@ public final class GameOverPanel extends JPanel {
     public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
         final int minDim = Math.min(width, height);
-        final int titleFontSize = Math.max(32, minDim / DIVFACTORTITLE);
-        final int buttonFontSize = Math.max(12, minDim / DIVFACTORBUTTON);
+        final int titleFontSize = Math.max(32, minDim / divFactorTitle);
+        final int buttonFontSize = Math.max(12, minDim / divFactonButton);
         gameOverLabel.setFont(gameOverLabel.getFont().deriveFont((float) titleFontSize));
         menuButton.setFont(menuButton.getFont().deriveFont((float) buttonFontSize));
-        final int minButtonWidth = getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT) + 40;
+        final int minButtonWidth = getFontMetrics(menuButton.getFont()).stringWidth(menuButtonText) + 40;
         final int buttonWidth = Math.max(minButtonWidth, width / 3);
         final int buttonHeight = Math.max(40, height / 10);
         menuButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         menuButton.setMinimumSize(new Dimension(minButtonWidth, buttonHeight));
         menuButton.setPreferredSize(null);
         menuButton.setHorizontalTextPosition(JButton.CENTER);
-        menuButton.setText(MENU_BUTTON_TEXT);
+        menuButton.setText(menuButtonText);
     }
 }

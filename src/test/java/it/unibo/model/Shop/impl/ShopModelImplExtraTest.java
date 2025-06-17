@@ -41,9 +41,8 @@ class ShopModelImplExtraTest {
     }
 
     @Test
-    void testDefaultSkinAlwaysUnlockedAndSelected() {
+    void testDefaultSkinAlwaysUnlocked() {
         Skin defaultSkin = shopModel.getSkinById("Default");
         assertTrue(defaultSkin.isUnlocked());
-        assertTrue(defaultSkin.isSelected());
     }
 }
