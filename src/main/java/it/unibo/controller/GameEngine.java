@@ -8,7 +8,6 @@ import it.unibo.model.Obstacles.Util.GameConstant;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
-
 //aggiungere il playerController
 
 /**

@@ -11,6 +11,7 @@ import it.unibo.model.Map.api.GameMap;
 import it.unibo.model.Map.util.ChunkType;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.Util.GameConstant;
+import it.unibo.model.Obstacles.Util.SpeedConfig;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 import it.unibo.model.Obstacles.api.MovingObstacleManager;
 import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
@@ -136,11 +137,11 @@ public final class MovingObstacleControllerImpl implements MovingObstacleControl
     }
 
     @Override
-    public void resetObstacles(final int amount) {
+    public void resetObstacles() {
         chunkSpeeds.clear();
         chunkDirections.clear();
         manager.resetAll(); 
-        manager.increaseSpeed(-amount); 
+        SpeedConfig.resetDefaultSpeeds();
     }
 
     @Override
