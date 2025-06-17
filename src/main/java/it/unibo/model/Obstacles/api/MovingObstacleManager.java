@@ -68,7 +68,6 @@ public interface MovingObstacleManager {
 
     /**
      * Removes obstacles that are outside the visible area.
-    
      */
     void cleanupOffscreenObstacles();
 
@@ -83,7 +82,7 @@ public interface MovingObstacleManager {
     * Resets all obstacles to their initial position and state.
     */
     void resetAll();
-    
+
     /**
      * Checks if a position is safe for placing a new obstacle.
      * 

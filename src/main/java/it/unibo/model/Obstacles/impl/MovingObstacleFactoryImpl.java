@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.util.ObstacleType;
 import it.unibo.model.Obstacles.api.MovingObstacleFactory;
 
@@ -15,10 +16,10 @@ import it.unibo.model.Obstacles.api.MovingObstacleFactory;
  */
 public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
 
-    public static final int CELLS_PER_CHUNK = 9;
     private static final int MIN_CAR_DISTANCE = 3;
     private static final int MIN_TRAIN_DISTANCE = 6;
     private static final int MIN_LOG_DISTANCE = 1;
+    
     private static int minCarSpeed = 15;
     private static int maxCarSpeed = 20;
     private static int minTrainSpeed = 25;
@@ -70,7 +71,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
         }
         if (leftToRight) {
             final int start = -obstacleWidth + 1;
-            final int end = CELLS_PER_CHUNK - 1 + obstacleWidth - 1;
+            final int end = ChunkImpl.CELLS_PER_ROW - 1 + obstacleWidth - 1;
             for (int pos = start; placed < minObstacles && pos <= end; pos += spacing) {
                 final int baseX = pos;
                 final MovingObstacles obstacle = createObstacleByType(type, baseX, y, speed);
@@ -78,7 +79,7 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
                 placed++;
             }
         } else {
-            final int start = CELLS_PER_CHUNK + obstacleWidth - 1;
+            final int start = ChunkImpl.CELLS_PER_ROW + obstacleWidth - 1;
             final int end = -obstacleWidth + 1;
             for (int pos = start; placed < minObstacles && pos >= end; pos -= spacing) {
                 final int baseX = pos;

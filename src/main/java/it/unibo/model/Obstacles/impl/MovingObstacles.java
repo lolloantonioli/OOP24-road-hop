@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.unibo.controller.Player.api.PlatformMovementObserver;
 import it.unibo.model.Map.api.Obstacle;
+import it.unibo.model.Map.impl.ChunkImpl;
 import it.unibo.model.Map.impl.GameObjectImpl;
 import it.unibo.model.Map.util.ObstacleType;
 
@@ -15,11 +16,11 @@ import it.unibo.model.Map.util.ObstacleType;
  */
 public final class MovingObstacles extends GameObjectImpl implements Obstacle {
 
-    public static final int CAR_WIDTH_CELLS = 1;
+    private static final int CAR_WIDTH_CELLS = 1;
+    private static final int BASE_MOVEMENT_THRESHOLD = 50;
     public static final int TRAIN_WIDTH_CELLS = 4;
     public static final int LOG_WIDTH_CELLS = 3;
-    public static final int CELLS_PER_CHUNK = 9;
-    private static final int BASE_MOVEMENT_THRESHOLD = 50; 
+
     private final ObstacleType type;
     private boolean visible;
     private int updateCounter; // Per gestire movimento sub-cella
@@ -67,7 +68,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
             int deltaX = 0;
             if (getSpeed() > 0) {
                 setX(getX() + 1);
-                if (getX() >= CELLS_PER_CHUNK) {
+                if (getX() >= ChunkImpl.CELLS_PER_ROW) {
                     this.visible = false;
                 }
                 deltaX = 1;
@@ -81,7 +82,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
             notifyObservers(deltaX);
         }
     }
-    
+
     /**
      * Aumenta la velocità dell'ostacolo mantenendo la direzione.
      * 
