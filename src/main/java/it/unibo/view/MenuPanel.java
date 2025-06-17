@@ -34,7 +34,7 @@ public final class MenuPanel extends JPanel {
     private final JButton instructionsButton;
     private final JButton shopButton;
     private final JLabel titleLabel;
-    private final MainController controller;
+    private transient final MainController controller;
 
     /**
      * Constructor for the MenuPanel.

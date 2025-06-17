@@ -32,7 +32,7 @@ public final class InstructionsPanel extends JPanel {
 
     private final JTextArea instructions;
     private final JButton backButton;
-    private final MainController controller;
+    private transient final MainController controller;
 
     /**
      * Constructor for InstructionsPanel.

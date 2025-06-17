@@ -29,7 +29,7 @@ public final class GameEngine implements Runnable {
     private final MainController mainController;
     private final GameController gameController;
     private GameState currentState;
-    private boolean running = true;
+    private volatile boolean running = true;
     private int frameCounter;
 
     /**

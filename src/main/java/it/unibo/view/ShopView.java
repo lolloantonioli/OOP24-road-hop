@@ -42,10 +42,10 @@ public final class ShopView extends JPanel {
     private final JPanel skinsPanel;
     private final JScrollPane scrollPane;
 
-    private List<Skin> skins = new ArrayList<>();
-    private Runnable onBackToMainMenu;
-    private BiConsumer<String, Integer> onSkinPurchase;
-    private Consumer<String> onSkinSelected;
+    private transient List<Skin> skins = new ArrayList<>();
+    private transient Runnable onBackToMainMenu;
+    private transient BiConsumer<String, Integer> onSkinPurchase;
+    private transient Consumer<String> onSkinSelected;
 
     /**
      * Constructs a ShopView with a header, skins display area, and footer.

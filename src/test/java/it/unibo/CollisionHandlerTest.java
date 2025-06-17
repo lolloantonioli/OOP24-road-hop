@@ -33,6 +33,7 @@ class CollisionHandlerTest {
     @BeforeEach
     void setUp() {
         player = new PlayerImpl(PLAYER_START_X, PLAYER_START_Y, new SkinImpl("id", "name", 10, false, Color.CYAN));
+        map = new GameMapImpl();
     }
 
     @Test
@@ -71,7 +72,6 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleFatalCollisionImmortal() {
-        map = new GameMapImpl();
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
         handler.handleFatalCollision(player);
         assertTrue(player.isAlive());
@@ -79,7 +79,6 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleFatalCollisionMortal() {
-        map = new GameMapImpl();
         final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
         objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
         player.tryMove(Direction.UP, map, new MovementValidatorImpl());

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import org.slf4j.Logger;
@@ -57,6 +58,9 @@ public final class ShopDataManagerImpl {
 
             // Crea la directory se non esiste
             final File file = new File(SAVE_FILE_PATH);
+            if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
+                throw new IOException("Could not create directory: " + file.getParentFile());
+            }
             file.getParentFile().mkdirs();
 
             // Salva il file con try-with-resources
@@ -202,7 +206,7 @@ public final class ShopDataManagerImpl {
          * @return the list of skins
          */
         public final List<SkinSaveData> getSkins() {
-            return skins;
+            return Collections.unmodifiableList(skins);
         }
     }
 

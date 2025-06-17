@@ -51,13 +51,13 @@ public final class GamePanel extends JPanel {
     private static final int BROWN_G = 69;
     private static final int BROWN_B = 19;
 
-    private MovingObstacleController obstacleController;
-    private GameController gameController;
-    private MapFormatter mapFormatter;
-    private int chunksNumber;
-    private int cellsPerRow;
-    private int animationOffset;
-    private Optional<Integer> countdownValue = Optional.empty();
+    private transient MovingObstacleController obstacleController;
+    private transient GameController gameController;
+    private transient MapFormatter mapFormatter;
+    private transient int chunksNumber;
+    private transient int cellsPerRow;
+    private transient int animationOffset;
+    private transient Optional<Integer> countdownValue = Optional.empty();
 
     /**
      * Sets the controllers and initializes the panel.

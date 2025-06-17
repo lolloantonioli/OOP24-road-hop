@@ -2,6 +2,7 @@ package it.unibo.model.shop.impl;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.model.shop.api.ShopModel;
@@ -90,7 +91,7 @@ public class ShopModelImpl implements ShopModel {
 
     @Override
     public final List<Skin> getAllSkins() {
-        return new ArrayList<>(skins);
+        return Collections.unmodifiableList(skins);
     }
 
     @Override
