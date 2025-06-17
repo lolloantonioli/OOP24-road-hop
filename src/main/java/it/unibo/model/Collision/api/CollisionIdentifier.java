@@ -1,4 +1,4 @@
-package it.unibo.model.Player.api;
+package it.unibo.model.Collision.api;
 
 import java.util.List;
 

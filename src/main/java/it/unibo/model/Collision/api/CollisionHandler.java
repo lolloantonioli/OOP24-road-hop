@@ -1,6 +1,7 @@
-package it.unibo.model.Player.api;
+package it.unibo.model.Collision.api;
 
 import it.unibo.model.Map.api.Collectible;
+import it.unibo.model.Player.api.Player;
 
 /**
  * Interface for handling collisions between the player and other game objects.
