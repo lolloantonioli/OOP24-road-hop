@@ -20,21 +20,14 @@ import it.unibo.controller.MainController;
  */
 public final class MenuPanel extends JPanel {
 
-<<<<<<< HEAD
+
     private final String playText = "Play";
     private final String instructionsText = "Instructions";
     private final String shopText = "Shop";
     private final int betweenLogo = 20;
     private final int betweenButtons = 10;
     private final int fontSize = 48;
-=======
-    private static final String PLAY_TEXT = "Play";
-    private static final String INSTRUCTIONS_TEXT = "Instructions";
-    private static final String SHOP_TEXT = "Shop";
-    private static final int BETWEEN_LOGO = 20;
-    private static final int BETWEEN_BUTTONS = 10;
-    private static final int FONT_SIZE = 48;
->>>>>>> aa6eaeeeac298eaac569d0c231e192add2824359
+
 
     private final JButton playButton;
     private final JButton instructionsButton;

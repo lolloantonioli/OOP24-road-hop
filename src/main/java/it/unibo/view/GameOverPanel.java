@@ -17,22 +17,15 @@ import javax.swing.JPanel;
  */
 public final class GameOverPanel extends JPanel {
 
-<<<<<<< HEAD
     private final int LABEL_SIZE = 48;
     private final int LABEL_BTN_SIZE = 32;
     private final int HEIGHT_AREA = 40;
-    private final int DIV_FACTOR_TITLE = 6;
-    private final int DIV_FACTOR_BUTTON = 15;
-=======
-    private static final int LABEL_SIZE = 48;
-    private static final int LABEL_BTN_SIZE = 32;
-    private static final int HEIGHT_AREA = 40;
-    private static final int DIV_FACTOR_TITLE = 6;
-    private static final int DIV_FACTOR_BUTTON = 15;
->>>>>>> aa6eaeeeac298eaac569d0c231e192add2824359
+    private final int DIVFACTORTITLE = 6;
+    private final int DIVFACTORBUTTON = 15;
 
-    private static final String GAME_OVER_TEXT = "Game Over";
-    private static final String MENU_BUTTON_TEXT = "Menu";
+
+    private final String GAME_OVER_TEXT = "Game Over";
+    private final String MENU_BUTTON_TEXT = "Menu";
     private final JButton menuButton;
     private final JLabel gameOverLabel;
 
@@ -65,8 +58,8 @@ public final class GameOverPanel extends JPanel {
     public void setBounds(final int x, final int y, final int width, final int height) {
         super.setBounds(x, y, width, height);
         final int minDim = Math.min(width, height);
-        final int titleFontSize = Math.max(32, minDim / DIV_FACTOR_TITLE);
-        final int buttonFontSize = Math.max(12, minDim / DIV_FACTOR_BUTTON);
+        final int titleFontSize = Math.max(32, minDim / DIVFACTORTITLE);
+        final int buttonFontSize = Math.max(12, minDim / DIVFACTORBUTTON);
         gameOverLabel.setFont(gameOverLabel.getFont().deriveFont((float) titleFontSize));
         menuButton.setFont(menuButton.getFont().deriveFont((float) buttonFontSize));
         final int minButtonWidth = getFontMetrics(menuButton.getFont()).stringWidth(MENU_BUTTON_TEXT) + 40;
