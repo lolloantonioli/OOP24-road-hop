@@ -26,6 +26,7 @@ public class ShopModelImpl implements ShopModel {
     private final List<Skin> skins;
     private Skin selectedSkin;
     private int coins;
+    private int maxScore;
 
 
     /**
@@ -40,6 +41,7 @@ public class ShopModelImpl implements ShopModel {
     private void loadShopData() {
         final ShopSaveData saveData = ShopDataManagerImpl.loadShopData();
         this.coins = saveData.getCoins();
+        this.maxScore = saveData.getMaxScore();
 
         initializeSkins(saveData);
 
@@ -81,7 +83,7 @@ public class ShopModelImpl implements ShopModel {
 
     private void saveData() {
         final String selectedSkinId = (selectedSkin != null) ? selectedSkin.getId() : "Default";
-        ShopDataManagerImpl.saveShopData(skins, selectedSkinId, coins);
+        ShopDataManagerImpl.saveShopData(skins, selectedSkinId, coins, maxScore);
     }
 
     @Override
@@ -162,5 +164,23 @@ public class ShopModelImpl implements ShopModel {
      */
     public final void saveDataToFile() {
         saveData();
+    }
+
+    /**
+     * Returns the max score saved.
+     * @return the max score
+     */
+    public int getMaxScore() {
+        return maxScore;
+    }
+    /**
+     * Updates the max score if the new score is higher and saves the data.
+     * @param score the new score to check
+     */
+    public void updateMaxScore(int score) {
+        if (score > maxScore) {
+            maxScore = score;
+            saveData();
+        }
     }
 }

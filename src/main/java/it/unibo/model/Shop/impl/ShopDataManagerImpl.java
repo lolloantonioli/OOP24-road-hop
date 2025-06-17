@@ -32,14 +32,16 @@ public final class ShopDataManagerImpl {
      * @param skins list of the available skins.
      * @param selectedSkinId the selected skin's ID.
      * @param coins the number of coins available.
+     * @param maxScore the maximum score achieved.
      */
-    static void saveShopData(final List<Skin> skins, final String selectedSkinId, final int coins) {
+    static void saveShopData(final List<Skin> skins, final String selectedSkinId, final int coins, final int maxScore) {
         final Properties props = new Properties();
 
         try {
-            // Salva coins e selected skin
+            // Salva coins, selected skin e maxScore
             props.setProperty("coins", String.valueOf(coins));
             props.setProperty("selectedSkin", selectedSkinId);
+            props.setProperty("maxScore", String.valueOf(maxScore));
 
             // Salva ogni skin
             for (final Skin skin : skins) {
@@ -84,12 +86,9 @@ public final class ShopDataManagerImpl {
             }
 
             final ShopSaveData saveData = new ShopSaveData();
-
-            // Carica coins
-            saveData.coins = Integer.parseInt(props.getProperty("coins", "100"));
-
-            // Carica selected skin
-            saveData.selectedSkin = props.getProperty("selectedSkin", "Default");
+            saveData.setCoins(Integer.parseInt(props.getProperty("coins", "0")));
+            saveData.setSelectedSkin(props.getProperty("selectedSkin", "Default"));
+            saveData.setMaxScore(Integer.parseInt(props.getProperty("maxScore", "0")));
 
             // Carica le skin
             final String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
@@ -141,6 +140,7 @@ public final class ShopDataManagerImpl {
     public static class ShopSaveData {
         private int coins;
         private String selectedSkin;
+        private int maxScore;
         private List<SkinSaveData> skins = new ArrayList<>();
 
         /**
@@ -170,6 +170,20 @@ public final class ShopDataManagerImpl {
          */
         public final void setSelectedSkin(final String selectedSkin) {
             this.selectedSkin = selectedSkin;
+        }
+        /**
+         * Gets the maximum score achieved.
+         * @return the maxScore
+         */
+        public final int getMaxScore() {
+            return maxScore;
+        }
+        /**
+         * Sets the maximum score achieved.
+         * @param maxScore the maxScore to set
+         */
+        public final void setMaxScore(final int maxScore) {
+            this.maxScore = maxScore;
         }
 
         /**
