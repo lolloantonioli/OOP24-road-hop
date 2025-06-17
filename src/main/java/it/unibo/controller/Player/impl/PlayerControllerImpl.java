@@ -87,7 +87,7 @@ public final class PlayerControllerImpl implements PlayerController {
      */
     private boolean isPlayerDrowned() {
         return gameMap.getVisibleChunks().stream()
-            .filter(chunk -> chunk.getCells().getFirst().getY() == player.getCurrentCell().getY())
+            .filter(chunk -> chunk.getCells().get(0).getY() == player.getCurrentCell().getY())
             .findFirst()
             .get()
             .getType().equals(ChunkType.RIVER) && !isPlayerOnPlatform();
