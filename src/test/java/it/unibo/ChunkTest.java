@@ -148,7 +148,7 @@ class ChunkTest {
         final List<Cell> cells = chunk.getCells();
         assertEquals(ChunkImpl.CELLS_PER_ROW, cells.size());
         IntStream.range(0, ChunkImpl.CELLS_PER_ROW).forEach(i -> {
-            Cell cell = cells.get(i);
+            final Cell cell = cells.get(i);
             assertEquals(i, cell.getX());
             assertEquals(TEST_CHUNK_COORD, cell.getY());
             assertFalse(cell.hasObject());

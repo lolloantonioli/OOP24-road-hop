@@ -146,7 +146,7 @@ class ChunkFactoryTest {
         boolean hasCollectibles = false;
         for (int i = 0; i < 100; i++) {
             final Chunk grassChunk = chunkFactory.createGrassChunk(i);
-            for (GameObject obj : grassChunk.getObjects()) {
+            for (final GameObject obj : grassChunk.getObjects()) {
                 if (obj instanceof Obstacle) {
                     hasObstacles = true;
                 }
