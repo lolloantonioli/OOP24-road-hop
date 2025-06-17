@@ -44,6 +44,13 @@ public class SpeedConfig {
     private static int minLogSpeed = DEFAULT_MIN_LOG_SPEED;
     private static int maxLogSpeed = DEFAULT_MAX_LOG_SPEED;
 
+    private SpeedConfig() {
+        // Private constructor to prevent instantiation
+    }
+
+    /**
+     * Resets the speed limits to their default values.
+     */
     public static void resetDefaultSpeeds() {
         minCarSpeed = DEFAULT_MIN_CAR_SPEED;
         maxCarSpeed = DEFAULT_MAX_CAR_SPEED;
