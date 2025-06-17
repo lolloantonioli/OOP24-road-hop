@@ -50,7 +50,7 @@ public final class MapFormatterImpl implements MapFormatter {
         final Chunk chunk = chunks.get(chunkIndex);
 
         final boolean hasCollectible = chunk.getCellAt(cellIndex).getContent().stream()
-            .anyMatch(obj -> obj instanceof Collectible && !((Collectible)obj).isCollected());
+            .anyMatch(obj -> obj instanceof Collectible && !((Collectible) obj).isCollected());
         final boolean hasTree = chunk.getType() == ChunkType.GRASS
             && chunk.getCellAt(cellIndex).getContent().stream()
                 .anyMatch(obj -> obj instanceof Obstacle);
@@ -64,7 +64,7 @@ public final class MapFormatterImpl implements MapFormatter {
         final Chunk chunk = chunks.get(chunkIndex);
 
         final var collectible = chunk.getCellAt(cellIndex).getContent().stream()
-            .filter(obj -> obj instanceof Collectible && !((Collectible)obj).isCollected())
+            .filter(obj -> obj instanceof Collectible && !((Collectible) obj).isCollected())
             .map(obj -> (Collectible) obj)
             .findFirst();
 
@@ -93,7 +93,7 @@ public final class MapFormatterImpl implements MapFormatter {
         final Chunk chunk = chunks.get(chunkIndex);
 
         return chunk.getCellAt(cellIndex).getContent().stream()
-            .anyMatch(obj -> obj instanceof Collectible && !((Collectible)obj).isCollected());
+            .anyMatch(obj -> obj instanceof Collectible && !((Collectible) obj).isCollected());
     }
 
     @Override

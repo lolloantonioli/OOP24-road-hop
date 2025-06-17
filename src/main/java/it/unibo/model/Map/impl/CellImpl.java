@@ -18,8 +18,8 @@ import it.unibo.model.Map.util.Position;
  */
 public final class CellImpl implements Cell {
 
-    private final static String CONSTRUCTOR_MSG = "Coordinates must be non-negative";
-    private final static String NULL_MSG = "GameObject cannot be null";
+    private static final String CONSTRUCTOR_MSG = "Coordinates must be non-negative";
+    private static final String NULL_MSG = "GameObject cannot be null";
 
     private final Set<GameObject> content;
     private final Position position;

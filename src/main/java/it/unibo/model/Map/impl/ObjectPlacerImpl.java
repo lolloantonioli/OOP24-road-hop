@@ -23,9 +23,9 @@ public final class ObjectPlacerImpl implements ObjectPlacer {
     private static final double SAFE_CELL_PROBABILITY = 0.4;
     private static final double SECOND_LIFE_PROBABILITY = 0.1;
     private static final List<List<Integer>> PATTERNS = List.of(
-        List.of(0,2,4), List.of(1,3,5), List.of(0,3,6),
-        List.of(1,4,7), List.of(2,5,8), List.of(0,4,8),
-        List.of(0,2), List.of(5,7), List.of()
+        List.of(0, 2, 4), List.of(1, 3, 5), List.of(0, 3, 6),
+        List.of(1, 4, 7), List.of(2, 5, 8), List.of(0, 4, 8),
+        List.of(0, 2), List.of(5, 7), List.of()
     );
 
     private final Random random;
@@ -73,8 +73,8 @@ public final class ObjectPlacerImpl implements ObjectPlacer {
                 .forEach(i -> availablePositions.add(i));
             if (!availablePositions.isEmpty()) {
                 final int collectiblePos = availablePositions.get(random.nextInt(availablePositions.size()));
-                final CollectibleType type = random.nextDouble() < SECOND_LIFE_PROBABILITY ? 
-                CollectibleType.SECOND_LIFE : CollectibleType.COIN;
+                final CollectibleType type = random.nextDouble() < SECOND_LIFE_PROBABILITY
+                ? CollectibleType.SECOND_LIFE : CollectibleType.COIN;
                 final Collectible collectible = new CollectibleImpl(collectiblePos, chunk.getPosition(), type);
                 chunk.addObjectAt(collectible, collectiblePos);
             }

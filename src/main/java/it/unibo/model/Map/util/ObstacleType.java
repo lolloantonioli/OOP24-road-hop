@@ -5,14 +5,26 @@ package it.unibo.model.Map.util;
  */
 public final class ObstacleType {
 
-    // CHECKSTYLE: CostantNameCheck OFF
-    // Chunk type names are esplictly
+    /**
+     * Obstacle type representing a car.
+     */
     public static final ObstacleType CAR = new ObstacleType("CAR");
+    /**
+     * Obstacle type representing a train.
+     */
     public static final ObstacleType TRAIN = new ObstacleType("TRAIN");
+    /**
+     * Obstacle type representing a tree.
+     */
     public static final ObstacleType TREE = new ObstacleType("TREE");
+    /**
+     * Obstacle type representing a water body.
+     */
     public static final ObstacleType WATER = new ObstacleType("WATER");
+    /**
+     * Obstacle type representing a log.
+     */
     public static final ObstacleType LOG = new ObstacleType("LOG");
-    // CHECKSTYLE: CostantNameCheck ON
 
     private final String name;
 

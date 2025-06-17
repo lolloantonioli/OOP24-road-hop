@@ -19,14 +19,14 @@ import it.unibo.model.Map.util.ChunkType;
  */
 public final class ChunkImpl implements Chunk {
 
-    private final List<Cell> cells;
-    private final ChunkType type;
-    private final int position;
-
     /**
      * The number of cells in a chunk row.
      */
-    public final static int CELLS_PER_ROW = 9;
+    public static final int CELLS_PER_ROW = 9;
+
+    private final List<Cell> cells;
+    private final ChunkType type;
+    private final int position;
 
     /**
      * Constructs a new {@code ChunkImpl} with the specified position and type.

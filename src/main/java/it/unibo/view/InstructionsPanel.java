@@ -21,9 +21,9 @@ import it.unibo.controller.MainController;
  */
 public final class InstructionsPanel extends JPanel {
 
-    private final static int HEIGHT = 20;
-    private final static String BACK_BUTTON_TEXT = "Back";
-    private final static String INSTRUCTIONS_TEXT = "Instructions:\n"
+    private static final int HEIGHT = 20;
+    private static final String BACK_BUTTON_TEXT = "Back";
+    private static final String INSTRUCTIONS_TEXT = "Instructions:\n"
             + "1. Use WASD to move your character.\n"
             + "2. Collect coins.\n"
             + "3. Avoid obstacles to stay alive.\n"

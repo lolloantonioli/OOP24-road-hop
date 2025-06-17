@@ -55,7 +55,6 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
         return type;
     }
 
-    @Override
     public void update() {
         if (!isMovable()) {
             return;
