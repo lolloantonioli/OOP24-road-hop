@@ -4,9 +4,9 @@ import java.util.List;
 
 import it.unibo.controller.MainController;
 import it.unibo.controller.shop.api.ShopObserver;
+import it.unibo.view.ShopView;
 import it.unibo.model.shop.api.ShopModel;
 import it.unibo.model.shop.api.Skin;
-import it.unibo.view.ShopView;
 
 /**
  * Implementation of the ShopObserver interface.
@@ -35,7 +35,8 @@ public class ShopObserverImpl implements ShopObserver {
 
     @Override
     public final void activate() {
-        shopPanel.setOnBackToMainMenu(() -> mainController.goToMenu());
+        shopPanel.setOnBackToMainMenu(mainController::goToMenu);
+
 
         shopPanel.setOnSkinPurchase((skinId, price) -> {
             shopModel.purchaseSkin(skinId);

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import it.unibo.model.shop.api.Skin;
 
@@ -17,8 +19,12 @@ import it.unibo.model.shop.api.Skin;
  */
 public final class ShopDataManagerImpl {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShopDataManagerImpl.class);
     private static final String SAVE_FILE_PATH = "src" + File.separator + "main" + File.separator + "resources"
                                                 + File.separator + "ShopSave.properties";
+    private static final String SKIN_PREFIX = "skin.";
+    private static final String DEFAULT_SKIN_ID = "Default";
+
 
     /**
      * Private constructor to prevent instantiation of utility class.
@@ -45,8 +51,8 @@ public final class ShopDataManagerImpl {
 
             // Salva ogni skin
             for (final Skin skin : skins) {
-                props.setProperty("skin." + skin.getId() + ".unlocked", String.valueOf(skin.isUnlocked()));
-                props.setProperty("skin." + skin.getId() + ".selected", String.valueOf(skin.isSelected()));
+                props.setProperty(SKIN_PREFIX + skin.getId() + ".unlocked", String.valueOf(skin.isUnlocked()));
+                props.setProperty(SKIN_PREFIX + skin.getId() + ".selected", String.valueOf(skin.isSelected()));
             }
 
             // Crea la directory se non esiste
@@ -58,10 +64,10 @@ public final class ShopDataManagerImpl {
                 props.store(out, "Shop Save Data");
             }
 
-            System.out.println("Dati shop salvati con successo");
+            LOGGER.info("Dati shop salvati con successo");
 
         } catch (final IOException e) {
-            System.err.println("Errore nel salvare i dati dello shop: " + e.getMessage());
+            LOGGER.error("Errore nel salvare i dati dello shop", e);
         }
     }
 
@@ -76,7 +82,7 @@ public final class ShopDataManagerImpl {
         try {
             final File file = new File(SAVE_FILE_PATH);
             if (!file.exists()) {
-                System.out.println("File di salvataggio non trovato, uso dati di default");
+                LOGGER.info("File di salvataggio non trovato, uso dati di default");
                 return getDefaultSaveData();
             }
 
@@ -87,25 +93,30 @@ public final class ShopDataManagerImpl {
 
             final ShopSaveData saveData = new ShopSaveData();
             saveData.setCoins(Integer.parseInt(props.getProperty("coins", "0")));
-            saveData.setSelectedSkin(props.getProperty("selectedSkin", "Default"));
+            saveData.setSelectedSkin(props.getProperty("selectedSkin", DEFAULT_SKIN_ID));
             saveData.setMaxScore(Integer.parseInt(props.getProperty("maxScore", "0")));
 
             // Carica le skin
-            final String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
+            final String[] skinIds = {DEFAULT_SKIN_ID, "red", "blue", "gold", "rainbow"};
             for (final String id : skinIds) {
                 final SkinSaveData skinData = new SkinSaveData();
                 skinData.id = id;
-                skinData.unlocked = Boolean.parseBoolean(props.getProperty("skin." + id + ".unlocked",
-                                                        "Default".equals(id) ? "true" : "false"));
-                skinData.selected = Boolean.parseBoolean(props.getProperty("skin." + id + ".selected", "false"));
+                skinData.unlocked = Boolean.parseBoolean(props.getProperty(SKIN_PREFIX + id + ".unlocked",
+                                                        DEFAULT_SKIN_ID.equals(id) ? "true" : "false"));
+                skinData.selected = Boolean.parseBoolean(props.getProperty(SKIN_PREFIX + id + ".selected", "false"));
                 saveData.skins.add(skinData);
             }
 
-            System.out.println("Dati shop caricati con successo!");
+            LOGGER.info("Dati shop caricati con successo");
             return saveData;
 
-        } catch (final Exception e) {
-            System.err.println("Errore nel caricare i dati dello shop: " + e.getMessage());
+        }  catch (IOException ioe) {
+            LOGGER.error("Errore nel caricare i dati dello shop, uso dati di default", ioe);
+
+            return getDefaultSaveData();
+        } catch (NumberFormatException nfe) {
+            LOGGER.error("Errore nel formato dei dati dello shop, uso dati di default", nfe);
+
             return getDefaultSaveData();
         }
     }
@@ -119,15 +130,15 @@ public final class ShopDataManagerImpl {
     private static ShopSaveData getDefaultSaveData() {
         final ShopSaveData defaultData = new ShopSaveData();
         defaultData.coins = 1000;
-        defaultData.selectedSkin = "Default";
+        defaultData.selectedSkin = DEFAULT_SKIN_ID;
 
         // Skin di default
-        final String[] skinIds = {"Default", "red", "blue", "gold", "rainbow"};
+        final String[] skinIds = {DEFAULT_SKIN_ID, "red", "blue", "gold", "rainbow"};
         for (final String id : skinIds) {
             final SkinSaveData skinData = new SkinSaveData();
             skinData.id = id;
-            skinData.unlocked = "Default".equals(id);
-            skinData.selected = "Default".equals(id);
+            skinData.unlocked = DEFAULT_SKIN_ID.equals(id);
+            skinData.selected = DEFAULT_SKIN_ID.equals(id);
             defaultData.skins.add(skinData);
         }
 
