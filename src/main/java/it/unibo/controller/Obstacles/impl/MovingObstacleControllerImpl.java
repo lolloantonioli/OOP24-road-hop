@@ -18,7 +18,7 @@ import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
 import it.unibo.model.Obstacles.impl.MovingObstacles;
 
-//CONTROLLA CHE è DIFFICULTYLEVEL + SPAWN DISTANCE
+// CONTROLLA CHE è DIFFICULTYLEVEL
 
 /**
  * Implementation of MovingObstacleController.

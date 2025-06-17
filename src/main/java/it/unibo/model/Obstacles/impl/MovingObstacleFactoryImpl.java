@@ -12,9 +12,6 @@ import it.unibo.model.Obstacles.Util.SpeedConfig;
  */
 public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
 
-    private static final int MIN_CAR_DISTANCE = 4;
-    private static final int MIN_TRAIN_DISTANCE = 7;
-    private static final int MIN_LOG_DISTANCE = 1;
     private final Random random;
 
     /**
@@ -70,21 +67,9 @@ public final class MovingObstacleFactoryImpl implements MovingObstacleFactory {
     }
 
     @Override
-    public int getMinDistance(final ObstacleType type) {
-        if (type == ObstacleType.CAR) {
-            return MIN_CAR_DISTANCE;
-        } else if (type == ObstacleType.TRAIN) {
-            return MIN_TRAIN_DISTANCE;
-        } else if (type == ObstacleType.LOG) {
-            return MIN_LOG_DISTANCE;
-        }
-        throw new IllegalArgumentException("Unknown obstacle type: " + type);
-    }
-
-    @Override
     public int getObstacleWidth(final ObstacleType type) {
         if (type == ObstacleType.CAR) {
-            return 1;
+            return MovingObstacles.CAR_WIDTH_CELLS;
         } else if (type == ObstacleType.TRAIN) {
             return MovingObstacles.TRAIN_WIDTH_CELLS;
         } else if (type == ObstacleType.LOG) {

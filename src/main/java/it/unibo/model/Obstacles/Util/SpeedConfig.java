@@ -8,12 +8,23 @@ import java.util.Random;
 public class SpeedConfig {
 
     /**
-     * Maximum speed limits for different types of obstacles.
+     * Maximum speed limits for car.
      */
     public static final int CAP_CAR_SPEED = 40;
+
+    /**
+     * Maximum speed limits for train.
+     */
     public static final int CAP_TRAIN_SPEED = 45;
+
+    /**
+     * Maximum speed limits for log.
+     */
     public static final int CAP_LOG_SPEED = 35;
 
+    /**
+     * Speed increase value for obstacles.
+     */
     public static final int INCREASE_SPEED = 5;
 
     /**
@@ -68,7 +79,7 @@ public class SpeedConfig {
     public static int randomLogSpeed(final Random rnd) {
         return minLogSpeed + rnd.nextInt(maxLogSpeed - minLogSpeed + 1);
     }
-    
+
     /**
      * Increases all speed limits by a specified delta, ensuring they do not exceed their maximum caps.
      * @param delta the amount to increase the speeds by

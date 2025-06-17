@@ -91,6 +91,4 @@ public interface GameObject {
      */
     List<Integer> getXes();
 
-    boolean occupiesCell(int cellX);
-
 }
