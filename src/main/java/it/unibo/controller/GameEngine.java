@@ -53,7 +53,7 @@ public final class GameEngine implements Runnable {
                       final MainController mainController,
                       final GameController gameController) {
         this.gameMap = gameMap;
-        this.gamePanel = Objects.requireNonNull(gamePanel, "GamePanel cannot be null");;
+        this.gamePanel = Objects.requireNonNull(gamePanel, "GamePanel cannot be null");
         this.obstacleController = obstacleController;
         this.obstacleFactory = obstacleFactory;
         this.mainController = mainController;
