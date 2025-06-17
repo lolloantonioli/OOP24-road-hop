@@ -1,4 +1,4 @@
-package it.unibo.controller.Util;
+package it.unibo.controller.util;
 
 /**
  * Represents the names of different .

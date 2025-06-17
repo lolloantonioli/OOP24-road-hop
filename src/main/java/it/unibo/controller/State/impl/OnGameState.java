@@ -1,8 +1,8 @@
-package it.unibo.controller.State.impl;
+package it.unibo.controller.state.impl;
 
 import it.unibo.controller.GameEngine;
-import it.unibo.controller.State.api.GameState;
-import it.unibo.controller.Util.StateName;
+import it.unibo.controller.state.api.GameState;
+import it.unibo.controller.util.StateName;
 
 /**
  * OnGameState represents the state of the game when it is actively being played.

@@ -1,4 +1,4 @@
-package it.unibo.controller.Map.api;
+package it.unibo.controller.map.api;
 
 import java.awt.Color;
 

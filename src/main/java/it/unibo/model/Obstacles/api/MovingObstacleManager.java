@@ -1,8 +1,8 @@
-package it.unibo.model.Obstacles.api;
+package it.unibo.model.obstacles.api;
 
 import java.util.List;
 
-import it.unibo.model.Obstacles.impl.MovingObstacles;
+import it.unibo.model.obstacles.impl.MovingObstacles;
 
 /**
  * Interface for managing moving obstacles in the game.

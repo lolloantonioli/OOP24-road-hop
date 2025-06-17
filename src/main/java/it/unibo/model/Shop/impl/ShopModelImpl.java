@@ -1,13 +1,13 @@
-package it.unibo.model.Shop.impl;
+package it.unibo.model.shop.impl;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.model.Shop.api.ShopModel;
-import it.unibo.model.Shop.api.Skin;
-import it.unibo.model.Shop.impl.ShopDataManagerImpl.ShopSaveData;
-import it.unibo.model.Shop.impl.ShopDataManagerImpl.SkinSaveData;
+import it.unibo.model.shop.api.ShopModel;
+import it.unibo.model.shop.api.Skin;
+import it.unibo.model.shop.impl.ShopDataManagerImpl.ShopSaveData;
+import it.unibo.model.shop.impl.ShopDataManagerImpl.SkinSaveData;
 
 /**
  * Implementation of the ShopModel interface.

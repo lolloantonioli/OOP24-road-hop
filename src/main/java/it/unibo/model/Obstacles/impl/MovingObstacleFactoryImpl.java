@@ -1,10 +1,10 @@
-package it.unibo.model.Obstacles.impl;
+package it.unibo.model.obstacles.impl;
 
 import java.util.Random;
 
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.api.MovingObstacleFactory;
-import it.unibo.model.Obstacles.Util.SpeedConfig;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.Util.SpeedConfig;
+import it.unibo.model.obstacles.api.MovingObstacleFactory;
 
 /**
  * Implementation of MovingObstacleFactory.

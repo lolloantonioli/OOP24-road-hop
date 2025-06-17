@@ -1,11 +1,11 @@
-package it.unibo.controller.Shop.impl;
+package it.unibo.controller.shop.impl;
 
 import java.util.List;
 
 import it.unibo.controller.MainController;
-import it.unibo.controller.Shop.api.ShopObserver;
-import it.unibo.model.Shop.api.ShopModel;
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.controller.shop.api.ShopObserver;
+import it.unibo.model.shop.api.ShopModel;
+import it.unibo.model.shop.api.Skin;
 import it.unibo.view.ShopView;
 
 /**

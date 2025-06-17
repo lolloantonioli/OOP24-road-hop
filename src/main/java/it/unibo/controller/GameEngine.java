@@ -1,11 +1,11 @@
 package it.unibo.controller;
 
-import it.unibo.controller.Obstacles.api.MovingObstacleController;
-import it.unibo.controller.State.api.GameState;
-import it.unibo.controller.State.impl.OnGameState;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Obstacles.Util.SpeedConfig;
-import it.unibo.model.Obstacles.api.MovingObstacleFactory;
+import it.unibo.controller.obstacles.api.MovingObstacleController;
+import it.unibo.controller.state.api.GameState;
+import it.unibo.controller.state.impl.OnGameState;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.obstacles.Util.SpeedConfig;
+import it.unibo.model.obstacles.api.MovingObstacleFactory;
 import it.unibo.view.GamePanel;
 
 //aggiungere il playerController
@@ -20,7 +20,7 @@ public final class GameEngine implements Runnable {
     private static final int SCROLL_TIME_MS = 1000;
     private static final int WAIT_TIME = 700; // 700ms for countdown
     private static final double SPEED_FACTOR = 0.5;
-    private final int increaseSpeed = SpeedConfig.INCREASE_SPEED; // Speed increase for obstacles
+    private static final int increaseSpeed = SpeedConfig.INCREASE_SPEED; // Speed increase for obstacles
 
     private final GameMap gameMap;
     private final GamePanel gamePanel;
@@ -175,7 +175,7 @@ public final class GameEngine implements Runnable {
         final int scrollTime = (int) (SCROLL_TIME_MS / effectiveSpeed);
         final double framesPerCell = scrollTime / (double) PERIOD;
         frameCounter = frameCounter + 1;
-        final int offset = (int) ((cellHeight * frameCounter) / framesPerCell);
+        final int offset = (int) (cellHeight * frameCounter / framesPerCell);
 
         if (frameCounter < framesPerCell) {
             gamePanel.setAnimationOffset(offset);

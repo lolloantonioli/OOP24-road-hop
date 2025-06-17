@@ -1,14 +1,14 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
 import com.google.common.collect.ImmutableList;
+
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.ChunkFactory;
+import it.unibo.model.map.api.GameMap;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.ChunkFactory;
-import it.unibo.model.Map.api.GameMap;
 
 /**
  * Implementation of the {@code GameMap} interface.

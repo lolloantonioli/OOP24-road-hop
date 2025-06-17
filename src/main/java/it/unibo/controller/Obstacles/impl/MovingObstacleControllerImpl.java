@@ -1,22 +1,22 @@
-package it.unibo.controller.Obstacles.impl;
+package it.unibo.controller.obstacles.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import it.unibo.controller.Obstacles.api.MovingObstacleController;
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.util.ChunkType;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.Util.GameConstant;
-import it.unibo.model.Obstacles.Util.SpeedConfig;
-import it.unibo.model.Obstacles.api.MovingObstacleFactory;
-import it.unibo.model.Obstacles.api.MovingObstacleManager;
-import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
-import it.unibo.model.Obstacles.impl.MovingObstacleManagerImpl;
-import it.unibo.model.Obstacles.impl.MovingObstacles;
+import it.unibo.controller.obstacles.api.MovingObstacleController;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.util.ChunkType;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.Util.GameConstant;
+import it.unibo.model.obstacles.Util.SpeedConfig;
+import it.unibo.model.obstacles.api.MovingObstacleFactory;
+import it.unibo.model.obstacles.api.MovingObstacleManager;
+import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
+import it.unibo.model.obstacles.impl.MovingObstacleManagerImpl;
+import it.unibo.model.obstacles.impl.MovingObstacles;
 
 /**
  * Implementation of MovingObstacleController.

@@ -1,15 +1,15 @@
-package it.unibo.controller.Map.impl;
+package it.unibo.controller.map.impl;
 
 import java.awt.Color;
 import java.util.List;
 
-import it.unibo.controller.Map.api.MapFormatter;
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.util.ChunkType;
-import it.unibo.model.Map.util.CollectibleType;
+import it.unibo.controller.map.api.MapFormatter;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.util.ChunkType;
+import it.unibo.model.map.util.CollectibleType;
 
 /**
  * Implementation of the MapController interface.

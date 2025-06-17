@@ -2,10 +2,11 @@ package it.unibo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.unibo.model.Collision.api.CollisionDetector;
-import it.unibo.model.Collision.impl.CollisionDetectorImpl;
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.impl.GameObjectImpl;
+import it.unibo.model.collision.api.CollisionDetector;
+import it.unibo.model.collision.impl.CollisionDetectorImpl;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.impl.GameObjectImpl;
+
 import org.junit.jupiter.api.Test;
 
 public class CollisionDetectorTest {

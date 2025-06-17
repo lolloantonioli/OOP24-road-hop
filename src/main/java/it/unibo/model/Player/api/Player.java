@@ -1,11 +1,11 @@
-package it.unibo.model.Player.api;
+package it.unibo.model.player.api;
 
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Player.util.Direction;
-import it.unibo.controller.Player.api.DeathObserver;
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.controller.player.api.DeathObserver;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.player.util.Direction;
+import it.unibo.model.shop.api.Skin;
 
 /**
  * Interface representing a player in the game.

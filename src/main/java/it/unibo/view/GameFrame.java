@@ -11,7 +11,7 @@ import java.awt.Dimension;
 
 
 import it.unibo.controller.MainController;
-import it.unibo.controller.Util.CardName;
+import it.unibo.controller.util.CardName;
 
 /**
  * The main game frame that contains all the panels for the game.
@@ -19,6 +19,7 @@ import it.unibo.controller.Util.CardName;
  */
 public final class GameFrame extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private static final String FRAME_NAME = "Road Hop";
     private static final String MSG = "CardName cannot be null";
     private static final int FRAME_WIDTH = 800;
@@ -44,7 +45,7 @@ public final class GameFrame extends JFrame {
         this.shopView = new ShopView();
         this.instructionsPanel = new InstructionsPanel(controller);
         this.gamePanel = new GamePanel();
-        this.gameOverPanel = new GameOverPanel(() -> controller.goToMenu());
+        this.gameOverPanel = new GameOverPanel(controller::goToMenu);
 
         this.setTitle(FRAME_NAME);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

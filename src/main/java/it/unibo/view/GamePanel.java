@@ -9,13 +9,13 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import it.unibo.controller.GameController;
-import it.unibo.controller.Map.api.MapFormatter;
-import it.unibo.controller.Obstacles.api.MovingObstacleController;
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.impl.MovingObstacles;
-import it.unibo.model.Player.api.Player;
+import it.unibo.controller.map.api.MapFormatter;
+import it.unibo.controller.obstacles.api.MovingObstacleController;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.impl.MovingObstacles;
+import it.unibo.model.player.api.Player;
 
 /**
  * GamePanel is a custom JPanel that renders the game map, player, and moving obstacles.

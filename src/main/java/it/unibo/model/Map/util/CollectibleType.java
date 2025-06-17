@@ -1,4 +1,4 @@
-package it.unibo.model.Map.util;
+package it.unibo.model.map.util;
 
 /**
  * Represents the type of a collectible in the game.

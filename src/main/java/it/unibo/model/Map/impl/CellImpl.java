@@ -1,4 +1,4 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,9 +8,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ImmutableSet;
 
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.util.Position;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.util.Position;
 
 /**
  * Implementation of the {@code Cell} interface.

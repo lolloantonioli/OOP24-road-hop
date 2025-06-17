@@ -2,21 +2,20 @@ package it.unibo.controller;
 
 import java.util.Optional;
 
-import it.unibo.controller.Obstacles.api.MovingObstacleController;
-import it.unibo.controller.Obstacles.impl.MovingObstacleControllerImpl;
-import it.unibo.controller.Player.api.DeathObserver;
-import it.unibo.controller.Player.api.PlayerController;
-import it.unibo.controller.Player.impl.DeathObserverImpl;
-import it.unibo.controller.Player.impl.PlayerControllerImpl;
-import it.unibo.controller.Shop.api.ShopObserver;
-import it.unibo.controller.Shop.impl.ShopObserverImpl;
-import it.unibo.controller.Util.CardName;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Obstacles.api.MovingObstacleFactory;
-import it.unibo.model.Obstacles.impl.MovingObstacleFactoryImpl;
-import it.unibo.model.Shop.api.ShopModel;
-import it.unibo.model.Shop.impl.ShopModelImpl;
+import it.unibo.controller.obstacles.api.MovingObstacleController;
+import it.unibo.controller.obstacles.impl.MovingObstacleControllerImpl;
+import it.unibo.controller.player.api.PlayerController;
+import it.unibo.controller.player.impl.DeathObserverImpl;
+import it.unibo.controller.player.impl.PlayerControllerImpl;
+import it.unibo.controller.shop.api.ShopObserver;
+import it.unibo.controller.shop.impl.ShopObserverImpl;
+import it.unibo.controller.util.CardName;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.impl.GameMapImpl;
+import it.unibo.model.obstacles.api.MovingObstacleFactory;
+import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
+import it.unibo.model.shop.api.ShopModel;
+import it.unibo.model.shop.impl.ShopModelImpl;
 import it.unibo.view.GameFrame;
 
 /**
@@ -37,7 +36,6 @@ public final class MainControllerImpl implements MainController {
     private GameMap gameMap;
     private MovingObstacleController obstacleController;
     private PlayerController playerController;
-    private DeathObserver deathObserver;
 
     /**
      * Constructor for MainControllerImpl.
@@ -58,8 +56,7 @@ public final class MainControllerImpl implements MainController {
         this.obstacleController = new MovingObstacleControllerImpl(gameMap);
         obstacleController.resetObstacles();
         this.playerController = new PlayerControllerImpl(gameMap, shopModel.getSelectedSkin(), INITIAL_X, INITIAL_Y);
-        this.deathObserver = new DeathObserverImpl(this);
-        playerController.getPlayer().addObserver(deathObserver);
+        playerController.getPlayer().addObserver(new DeathObserverImpl(this));
     }
 
     @Override

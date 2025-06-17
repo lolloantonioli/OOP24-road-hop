@@ -1,4 +1,4 @@
-package it.unibo.controller.Player.api;
+package it.unibo.controller.player.api;
 
 /**
  * Observer interface for detecting when a platform moves.

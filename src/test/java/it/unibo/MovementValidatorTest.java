@@ -1,15 +1,16 @@
 package it.unibo;
 
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.CellImpl;
-import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Map.impl.ObstacleImpl;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Player.impl.MovementValidatorImpl;
-import it.unibo.model.Player.api.MovementValidator;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.impl.CellImpl;
+import it.unibo.model.map.impl.GameMapImpl;
+import it.unibo.model.map.impl.ObstacleImpl;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.player.api.MovementValidator;
+import it.unibo.model.player.impl.MovementValidatorImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

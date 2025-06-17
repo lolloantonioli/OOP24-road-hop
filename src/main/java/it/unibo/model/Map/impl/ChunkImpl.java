@@ -1,4 +1,4 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,10 +8,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.ImmutableList;
 
-import it.unibo.model.Map.api.Cell;
-import it.unibo.model.Map.api.Chunk;
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.util.ChunkType;
+import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.Chunk;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.util.ChunkType;
 
 /**
  * Implementation of the {@code Chunk} interface.

@@ -1,6 +1,6 @@
-package it.unibo.model.Map.api;
+package it.unibo.model.map.api;
 
-import it.unibo.model.Map.util.CollectibleType;
+import it.unibo.model.map.util.CollectibleType;
 
 /**
  * Represents a collectible item in the game.

@@ -1,9 +1,9 @@
-package it.unibo.model.Collision.impl;
+package it.unibo.model.collision.impl;
 
-import it.unibo.model.Collision.api.CollisionHandler;
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.util.CollectibleType;
-import it.unibo.model.Player.api.Player;
+import it.unibo.model.collision.api.CollisionHandler;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.util.CollectibleType;
+import it.unibo.model.player.api.Player;
 
 /**
  * Implementation of the CollisionHandler interface.

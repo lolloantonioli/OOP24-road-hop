@@ -3,16 +3,16 @@ package it.unibo.controller;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import it.unibo.controller.Map.api.MapFormatter;
-import it.unibo.controller.Map.impl.MapFormatterImpl;
-import it.unibo.controller.Obstacles.api.MovingObstacleController;
-import it.unibo.controller.Player.api.PlayerController;
-import it.unibo.controller.State.impl.PauseState;
-import it.unibo.controller.Util.StateName;
-import it.unibo.model.Map.api.GameMap;
-import it.unibo.model.Map.impl.ChunkImpl;
-import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Player.util.Direction;
+import it.unibo.controller.map.api.MapFormatter;
+import it.unibo.controller.map.impl.MapFormatterImpl;
+import it.unibo.controller.obstacles.api.MovingObstacleController;
+import it.unibo.controller.player.api.PlayerController;
+import it.unibo.controller.state.impl.PauseState;
+import it.unibo.controller.util.StateName;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.impl.ChunkImpl;
+import it.unibo.model.map.impl.GameMapImpl;
+import it.unibo.model.player.util.Direction;
 
 /**
  * Main game controller that handles all game logic and input.

@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.impl.GameObjectImpl;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.impl.GameObjectImpl;
 
 class GameObjectTest {
 

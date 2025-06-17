@@ -1,7 +1,7 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.util.CollectibleType;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.util.CollectibleType;
 
 /**
  * Implementation of the Collectible interface, representing a collectible item in the game.

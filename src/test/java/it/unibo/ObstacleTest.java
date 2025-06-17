@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.impl.ChunkImpl;
-import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Map.impl.ObstacleImpl;
-import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.impl.ChunkImpl;
+import it.unibo.model.map.impl.GameMapImpl;
+import it.unibo.model.map.impl.ObstacleImpl;
+import it.unibo.model.map.util.ObstacleType;
 
 /**
  * Test class for the {@link ObstacleImpl} class.

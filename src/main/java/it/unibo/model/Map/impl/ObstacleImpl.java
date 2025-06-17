@@ -1,7 +1,7 @@
-package it.unibo.model.Map.impl;
+package it.unibo.model.map.impl;
 
-import it.unibo.model.Map.api.Obstacle;
-import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.map.api.Obstacle;
+import it.unibo.model.map.util.ObstacleType;
 
 /**
  * Implementation of the {@code Obstacle} interface.

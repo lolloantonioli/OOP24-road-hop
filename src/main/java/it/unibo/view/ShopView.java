@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import it.unibo.model.Shop.api.Skin;
+import it.unibo.model.shop.api.Skin;
 /**
  * ShopView class that represents the shop interface in the game.
  * It displays a list of skins available for purchase or selection,

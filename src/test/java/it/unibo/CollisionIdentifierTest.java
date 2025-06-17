@@ -8,13 +8,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.Collision.impl.CollisionIdentifierImpl;
-import it.unibo.model.Map.api.GameObject;
-import it.unibo.model.Map.impl.CollectibleImpl;
-import it.unibo.model.Map.impl.ObstacleImpl;
-import it.unibo.model.Map.util.CollectibleType;
-import it.unibo.model.Map.util.ObstacleType;
-import it.unibo.model.Obstacles.impl.MovingObstacles;
+import it.unibo.model.collision.impl.CollisionIdentifierImpl;
+import it.unibo.model.map.api.GameObject;
+import it.unibo.model.map.impl.CollectibleImpl;
+import it.unibo.model.map.impl.ObstacleImpl;
+import it.unibo.model.map.util.CollectibleType;
+import it.unibo.model.map.util.ObstacleType;
+import it.unibo.model.obstacles.impl.MovingObstacles;
 
 public class CollisionIdentifierTest {
 

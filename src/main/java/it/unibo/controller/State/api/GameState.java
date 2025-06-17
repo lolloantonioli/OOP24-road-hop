@@ -1,7 +1,7 @@
-package it.unibo.controller.State.api;
+package it.unibo.controller.state.api;
 
 import it.unibo.controller.GameEngine;
-import it.unibo.controller.Util.StateName;
+import it.unibo.controller.util.StateName;
 
 /**
  * Represents a game state in the game engine.

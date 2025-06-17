@@ -1,10 +1,10 @@
-package it.unibo.controller.Player.impl;
+package it.unibo.controller.player.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import it.unibo.controller.Player.api.PlatformMovementObserver;
-import it.unibo.model.Map.impl.CellImpl;
-import it.unibo.model.Player.api.Player;
+import it.unibo.controller.player.api.PlatformMovementObserver;
+import it.unibo.model.map.impl.CellImpl;
+import it.unibo.model.player.api.Player;
 
 /**
  * Implementation of the PlatformMovementObserver interface.

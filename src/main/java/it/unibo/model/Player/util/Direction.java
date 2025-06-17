@@ -1,4 +1,4 @@
-package it.unibo.model.Player.util;
+package it.unibo.model.player.util;
 
 /**
  * Enum representing the four cardinal directions with their associated movement values.

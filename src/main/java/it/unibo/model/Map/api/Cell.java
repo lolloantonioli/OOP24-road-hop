@@ -1,4 +1,4 @@
-package it.unibo.model.Map.api;
+package it.unibo.model.map.api;
 
 import java.util.Set;
 

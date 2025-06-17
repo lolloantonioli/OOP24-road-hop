@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.Map.api.Collectible;
-import it.unibo.model.Map.impl.ChunkImpl;
-import it.unibo.model.Map.impl.CollectibleImpl;
-import it.unibo.model.Map.impl.GameMapImpl;
-import it.unibo.model.Map.util.CollectibleType;
+import it.unibo.model.map.api.Collectible;
+import it.unibo.model.map.impl.ChunkImpl;
+import it.unibo.model.map.impl.CollectibleImpl;
+import it.unibo.model.map.impl.GameMapImpl;
+import it.unibo.model.map.util.CollectibleType;
 
 /**
  * Test class for the {@link CollectibleImpl} class.

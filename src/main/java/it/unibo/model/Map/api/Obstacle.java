@@ -1,6 +1,6 @@
-package it.unibo.model.Map.api;
+package it.unibo.model.map.api;
 
-import it.unibo.model.Map.util.ObstacleType;
+import it.unibo.model.map.util.ObstacleType;
 
 /**
  * Represents an obstacle in the game.

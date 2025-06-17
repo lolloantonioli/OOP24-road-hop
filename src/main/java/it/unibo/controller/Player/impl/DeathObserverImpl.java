@@ -1,9 +1,9 @@
-package it.unibo.controller.Player.impl;
+package it.unibo.controller.player.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import it.unibo.controller.MainController;
-import it.unibo.controller.Player.api.DeathObserver;
+import it.unibo.controller.player.api.DeathObserver;
 
 /**
  * Implementation of the DeathObserver interface.
