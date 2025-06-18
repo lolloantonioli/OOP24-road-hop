@@ -71,7 +71,7 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
         super.setMovable(other.isMovable());
         this.visible = other.visible;
         this.updateCounter = other.updateCounter;
-        
+
         other.observers.forEach(this::addObserver);
     }
 

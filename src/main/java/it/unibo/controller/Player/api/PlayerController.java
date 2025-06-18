@@ -116,6 +116,7 @@ public interface PlayerController {
 
     /**
      * Returns the current game map.
+     * @return the game map instance
      */
     GameMap getGameMap();
 

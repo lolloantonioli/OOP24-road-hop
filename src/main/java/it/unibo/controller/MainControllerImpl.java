@@ -99,10 +99,6 @@ public final class MainControllerImpl implements MainController {
         shopObserver.activate();
     }
 
-    public ShopModel getShopModel() {
-        return shopModel;
-    }
-
     @Override
     public GameMap getGameMap() {
         return gameMap;
