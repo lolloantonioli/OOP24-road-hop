@@ -197,4 +197,15 @@ public class ShopModelImpl implements ShopModel {
     public void setCoinsForTest(final int coins) {
         this.coins = coins;
     }
+    /**
+    * ONLY FOR TESTS: Resetta coins e maxScore e salva su file, ignorando la logica di updateMaxScore.
+    * Da usare solo nei test per ripulire la persistenza.
+    * @param coins the number of coins to set
+    * @param maxScore the max Score to set
+    */
+    public void resetPersistenceForTest(final int coins, final int maxScore) {
+        this.coins = coins;
+        this.maxScore = maxScore;
+        saveData();
+}
 }
