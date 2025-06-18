@@ -6,6 +6,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ import it.unibo.model.shop.impl.SkinImpl;
 class CollisionHandlerTest {
 
     private static final int PLAYER_START_X = 2;
-    private static final int PLAYER_START_Y = 6;
+    private static final int PLAYER_START_Y = 2;
 
     private Player player;
     private GameMap map;
@@ -79,8 +80,8 @@ class CollisionHandlerTest {
 
     @Test
     void testHandleFatalCollisionMortal() {
-        final Set<GameObject> objs = map.getAllChunks().get(3).getCellAt(2).getContent();
-        objs.forEach(o -> map.getAllChunks().get(3).getCellAt(2).removeObject(o));
+        final Set<GameObject> objs = map.getAllChunks().get(PLAYER_START_Y + 1).getCellAt(PLAYER_START_X).getContent();
+        objs.forEach(o -> map.getAllChunks().get(PLAYER_START_Y + 1).getCellAt(PLAYER_START_X).removeObject(o));
         final boolean move = player.tryMove(Direction.UP, map, new MovementValidatorImpl());
         assertTrue(move);
         final CollisionHandlerImpl handler = new CollisionHandlerImpl();
