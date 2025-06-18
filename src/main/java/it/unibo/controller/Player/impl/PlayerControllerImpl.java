@@ -235,10 +235,9 @@ public final class PlayerControllerImpl implements PlayerController {
 
     @Override
     public MovingObstacles getCurrentPlatform() {
-        if(isPlayerOnPlatform()) {
+        if (isPlayerOnPlatform()) {
             return new MovingObstacles(currentPlatform);
-        }
-        else {
+        } else {
             return null;
         }
     }

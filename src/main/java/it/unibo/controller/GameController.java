@@ -3,6 +3,7 @@ package it.unibo.controller;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.map.api.MapFormatter;
 import it.unibo.controller.map.impl.MapFormatterImpl;
 import it.unibo.controller.obstacles.api.MovingObstacleController;
@@ -14,6 +15,16 @@ import it.unibo.model.map.api.GameMap;
 import it.unibo.model.map.impl.ChunkImpl;
 import it.unibo.model.map.impl.GameMapImpl;
 import it.unibo.model.player.util.Direction;
+
+/**
+ * This class is part of the controller package and is responsible for managing the game state,
+ * handling user input, and coordinating between different controllers such as player and obstacles.
+ * It extends KeyAdapter to handle keyboard events for player movement and game control.
+ */
+@SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "GameController manages the game state and should expose its map and controllers."
+)
 
 /**
  * Main game controller that handles all game logic and input.
