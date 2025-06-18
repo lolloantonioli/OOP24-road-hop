@@ -72,7 +72,6 @@ public final class GameEngine implements Runnable {
         showStartCountdown();
         while (running) {
             final long frameStart = System.currentTimeMillis();
-            processInput();
             update();
             render();
             waitForNextFrame(frameStart);
@@ -93,10 +92,6 @@ public final class GameEngine implements Runnable {
      */
     public GameState getState() {
         return this.currentState;
-    }
-
-    private void processInput() {
-        // Il GameController (KeyListener) chiama metodi su GameEngine per cambiare stato
     }
 
     private void update() {

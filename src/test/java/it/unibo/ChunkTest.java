@@ -87,21 +87,6 @@ class ChunkTest {
     }
 
     /**
-     * Tests adding multiple objects to the same cell in the chunk.
-    @Test
-    void testAddObjectToOccupiedCell() {
-        final GameObject firstObject = new CollectibleImpl(TEST_X_COORD, TEST_CHUNK_COORD, CollectibleType.COIN);
-        final GameObject secondObject = new ObstacleImpl(TEST_X_COORD, TEST_CHUNK_COORD, ObstacleType.TREE, false);
-
-        assertTrue(chunk.addObjectAt(firstObject, TEST_X_COORD));
-        assertTrue(chunk.addObjectAt(secondObject, TEST_X_COORD));
-
-        final List<GameObject> objects = chunk.getObjects();
-        assertEquals(2, objects.size());
-        assertEquals(firstObject, objects.get(0));
-    }*/
-
-    /**
      * Tests that getObjects returns an empty list for a new chunk.
      */
     @Test

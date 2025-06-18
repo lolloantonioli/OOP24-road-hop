@@ -19,7 +19,7 @@ import it.unibo.controller.util.CardName;
 */
 @SuppressFBWarnings(
     value = "EI",
-    justification = "Intentional: callers need direct access to the InstructionsPanel for layout/testing."
+    justification = "GamePanel and ShopView are Swing components that must be returned directly for layout management"
 )
 
 /**
