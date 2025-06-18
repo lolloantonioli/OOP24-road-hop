@@ -7,6 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.controller.obstacles.api.MovingObstacleController;
+import it.unibo.controller.obstacles.impl.MovingObstacleControllerImpl;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.map.impl.GameMapImpl;
 import it.unibo.model.map.util.ObstacleType;
 import it.unibo.model.obstacles.impl.MovingObstacleFactoryImpl;
 import it.unibo.model.obstacles.impl.MovingObstacleManagerImpl;
@@ -149,4 +153,35 @@ class MovingObstaclesTest {
         assertEquals(speed, log.getSpeed());
     }
 
+    @Test
+    void testInitialObstacleCreation() {
+        final GameMap gameMap = new GameMapImpl();
+        final MovingObstacleController controller = new MovingObstacleControllerImpl(gameMap);
+        final int nUpdates = 10;
+        controller.generateObstacles(1);
+        boolean obstaclesGenerated = false;
+        for (int i = 0; i < nUpdates && !obstaclesGenerated; i++) {
+            gameMap.update();
+            controller.update();
+            obstaclesGenerated = !controller.getAllObstacles().isEmpty();
+        }
+        assertTrue(obstaclesGenerated, "Gli ostacoli dovrebbero essere creati dopo alcuni aggiornamenti.");
+    }
+
+    @Test
+    void testObstacleResetFunctionality() {
+        final GameMap gameMap = new GameMapImpl();
+        final MovingObstacleController controller = new MovingObstacleControllerImpl(gameMap);
+        final int nUpdates = 10;
+        controller.generateObstacles(1);
+        boolean obstaclesGenerated = false;
+        for (int i = 0; i < nUpdates && !obstaclesGenerated; i++) {
+            gameMap.update();
+            controller.update();
+            obstaclesGenerated = !controller.getAllObstacles().isEmpty();
+        }
+        assertTrue(obstaclesGenerated, "Dovrebbero esserci ostacoli prima del reset.");
+        controller.resetObstacles();
+        assertTrue(controller.getAllObstacles().isEmpty(), "Tutti gli ostacoli dovrebbero essere rimossi dopo il reset.");
+    }
 }
