@@ -61,6 +61,21 @@ public final class MovingObstacles extends GameObjectImpl implements Obstacle {
     }
 
     /**
+     * Copy constructor for MovingObstacles.
+     * @param other The MovingObstacles instance to copy from.
+     */
+    public MovingObstacles(final MovingObstacles other) {
+        super(other.getX(), other.getY(), other.getWidthInCells());
+        this.type = other.type;
+        super.setSpeed(other.getSpeed());
+        super.setMovable(other.isMovable());
+        this.visible = other.visible;
+        this.updateCounter = other.updateCounter;
+        
+        other.observers.forEach(this::addObserver);
+    }
+
+    /**
      * Returns the width of the obstacle in cells based on its type.
      * 
      * @param type The type of the obstacle.

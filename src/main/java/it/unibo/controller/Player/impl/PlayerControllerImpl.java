@@ -61,6 +61,21 @@ public final class PlayerControllerImpl implements PlayerController {
         this.platformObserver = new PlatformMovementObserverImpl(player);
     }
 
+    /**
+     * Constructor for PlayerControllerImpl creating a player controller from an existing PlayerController instance.
+     * @param playerController the PlayerController instance to initialize from
+     */
+    public PlayerControllerImpl(final PlayerController playerController) {
+        this.gameMap = playerController.getGameMap();
+        this.player = new PlayerImpl(playerController.getPlayer());
+        this.collisionDetector = new CollisionDetectorImpl();
+        this.collisionIdentifier = new CollisionIdentifierImpl();
+        this.movementValidator = new MovementValidatorImpl();
+        this.collisionHandler = new CollisionHandlerImpl();
+        this.platformObserver = new PlatformMovementObserverImpl(player);
+        setNewPlatform(playerController.getCurrentPlatform());
+    }
+
     @Override
     public boolean movePlayer(final Direction direction) {
         checkNotNull(direction, "Direction cannot be null");
@@ -211,6 +226,16 @@ public final class PlayerControllerImpl implements PlayerController {
     @Override
     public Player getPlayer() {
         return new PlayerImpl(player);
+    }
+
+    @Override
+    public GameMap getGameMap() {
+        return this.gameMap;
+    }
+
+    @Override
+    public MovingObstacles getCurrentPlatform() {
+        return new MovingObstacles(currentPlatform);
     }
 
 }

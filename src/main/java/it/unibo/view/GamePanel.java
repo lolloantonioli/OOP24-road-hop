@@ -128,7 +128,7 @@ public final class GamePanel extends JPanel {
     }
 
     private void drawScore(final Graphics g) {
-        if (gameController == null || gameController.getPlayerController() == null) {
+        if (gameController == null) {
             return;
         }
 

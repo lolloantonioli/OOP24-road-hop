@@ -7,6 +7,7 @@ import it.unibo.controller.map.api.MapFormatter;
 import it.unibo.controller.map.impl.MapFormatterImpl;
 import it.unibo.controller.obstacles.api.MovingObstacleController;
 import it.unibo.controller.player.api.PlayerController;
+import it.unibo.controller.player.impl.PlayerControllerImpl;
 import it.unibo.controller.state.impl.PauseState;
 import it.unibo.controller.util.StateName;
 import it.unibo.model.map.api.GameMap;
@@ -105,7 +106,7 @@ public final class GameController extends KeyAdapter {
      * @return the player controller
      */
     public PlayerController getPlayerController() {
-        return playerController;
+        return new PlayerControllerImpl(playerController);
     }
 
     /**

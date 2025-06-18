@@ -1,6 +1,8 @@
 package it.unibo.controller.player.api;
 
 import it.unibo.model.map.api.Cell;
+import it.unibo.model.map.api.GameMap;
+import it.unibo.model.obstacles.impl.MovingObstacles;
 import it.unibo.model.player.api.Player;
 import it.unibo.model.player.util.Direction;
 import it.unibo.model.shop.api.Skin;
@@ -111,4 +113,15 @@ public interface PlayerController {
      * @return the current player
      */
     Player getPlayer();
+
+    /**
+     * Returns the current game map.
+     */
+    GameMap getGameMap();
+
+    /**
+     * Gets the current platform the player is on, if any.
+     * @return the current platform, or null if the player is not on a platform
+     */
+    MovingObstacles getCurrentPlatform();
 }
