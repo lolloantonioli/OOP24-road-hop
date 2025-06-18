@@ -59,7 +59,8 @@ public final class GameController extends KeyAdapter {
     @Override
     public void keyPressed(final KeyEvent e) {
         Direction movementDirection = null;
-        if (mainController.getGameEngine().get().getState().getName() == StateName.ON_GAME) {
+        if (mainController.getGameEngine().get().getState().getName() == StateName.ON_GAME
+            && !mainController.getGameEngine().get().getGamePanel().isCountdownActive()) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_P -> mainController.getGameEngine().get().setState(new PauseState());
                 case KeyEvent.VK_LEFT, KeyEvent.VK_A -> movementDirection = Direction.LEFT;

@@ -58,6 +58,7 @@ public final class GamePanel extends JPanel {
     private transient int cellsPerRow;
     private transient int animationOffset;
     private transient Optional<Integer> countdownValue = Optional.empty();
+    private transient boolean isCountdownActive;
 
     /**
      * Sets the controllers and initializes the panel.
@@ -80,6 +81,7 @@ public final class GamePanel extends JPanel {
      */
     public void showCountdown(final int value) {
         this.countdownValue = Optional.of(value);
+        this.isCountdownActive = true;
         repaint();
     }
 
@@ -88,7 +90,16 @@ public final class GamePanel extends JPanel {
      */
     public void hideCountdown() {
         this.countdownValue = Optional.empty();
+        this.isCountdownActive = false;
         repaint();
+    }
+
+    /**
+     * Checks if the countdown is currently active.
+     * @return true if the countdown is active, false otherwise
+     */
+    public boolean isCountdownActive() {
+        return isCountdownActive;
     }
 
     @Override
