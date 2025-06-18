@@ -31,6 +31,7 @@ class PersistenceTest {
         final int oldMax = shopModel.getMaxScore();
         shopModel.updateMaxScore(oldMax - 1);
         assertEquals(oldMax, shopModel.getMaxScore());
+        shopModel.updateMaxScore(0);
     }
 
     @Test
