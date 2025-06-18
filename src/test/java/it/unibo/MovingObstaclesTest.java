@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.controller.obstacles.MovingObstacleController;
+import it.unibo.controller.obstacles.api.MovingObstacleController;
 import it.unibo.controller.obstacles.impl.MovingObstacleControllerImpl;
 import it.unibo.model.map.api.GameMap;
 import it.unibo.model.map.impl.GameMapImpl;
